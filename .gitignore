@@ -1,0 +1,12 @@
+*.DS_Store
+*/.DS_Store
+*.swp
+*~
+*.un~
+
+# Compiled Resources
+*.class
+
+# Directories
+meeting minutes/
+.vscode/
