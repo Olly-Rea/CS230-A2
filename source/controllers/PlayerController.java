@@ -55,17 +55,17 @@ public class PlayerController {
     }
 
     /**
-     * @return an array of strings representing the players position and inventory
-     * @author xxxxx
-     */
-    public String[] export() {
-    }
-
-    /**
      * Renders the players position
      * 
      * @author xxxxx
      */
     public void render() {
+    }
+
+    /**
+     * @return an array of strings representing the players position and inventory
+     * @author xxxxx
+     */
+    public String[] export() {
     }
 }
