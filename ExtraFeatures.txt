@@ -1,0 +1,8 @@
+Laturn light is the 7x7 viewport
+	- decreases with time, can be replenished with new 'fuel' item type
+
+Animations
+	- Particle effects
+	- Fire and water effects
+		- I believe this is possible via GIF files in JavaFX
+	- Goal/item pick-up animations
