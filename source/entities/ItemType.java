@@ -1,10 +1,10 @@
 
 public enum ItemType {
-	Token, 
-	Fireboots, 
-	Flippers, 
-	RedKey,
-	BlueKey,
-	GreenKey,
-	YellowKey
+	TOKEN, 
+	FIREBOOTS, 
+	FLIPPERS, 
+	REDKEY,
+	BLUEKEY,
+	GREENKEY,
+	YELLOWKEY
 }

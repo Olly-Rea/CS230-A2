@@ -1,4 +1,4 @@
 
 public enum CellType {
-	Wall, Ground, Fire, Water
+	WALL, GROUND, FIRE, WATER
 }
