@@ -12,8 +12,8 @@
 
 public class Player extends Entity {
 
-  private Boolean hasFireBoots;
-  private Boolean hasFlippers;
+  private boolean hasFireBoots;
+  private boolean hasFlippers;
   private int tokens;
   private int redKeys;
   private int greenKeys;
