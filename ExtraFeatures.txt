@@ -4,5 +4,5 @@ Laturn light is the 7x7 viewport
 Animations
 	- Particle effects
 	- Fire and water effects
-		- I believe is possible via GIF files in JavaFX
+		- I believe this is possible via GIF files in JavaFX
 	- Goal/item pick-up animations
