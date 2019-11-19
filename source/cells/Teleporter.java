@@ -1,3 +1,5 @@
+package cells;
+
 /**
 * Teleporter.java
 * @version 1.0.0

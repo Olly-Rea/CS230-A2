@@ -1,9 +1,9 @@
-
+package entities;
 
 public class Item {
-	
+
 	private  ItemType type;
-	
+
 	/**
 	 * Instantiates a new item.
 	 *
@@ -11,15 +11,15 @@ public class Item {
 	 * @param type the item type
 	 */
 	public Item (Vector vector, ItemType type) {
-		
+
 	}
-	
+
 	/**
 	 * Gets the type of item in question.
 	 *
 	 * @return the item type
 	 */
 	public ItemType getType() {
-		
+
 	}
 }

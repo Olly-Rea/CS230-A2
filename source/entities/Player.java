@@ -1,3 +1,5 @@
+package entities;
+
 /**
 * Player.java
 * @version 1.0.0
