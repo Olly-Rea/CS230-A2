@@ -1,3 +1,5 @@
+package utils;
+
 /**
 * Vector.java
 * @version 1.0.0
@@ -18,7 +20,7 @@ public class Vector {
   /**
   * Create a vector with given coordinates
   * @param x The x coordinate
-  * @param y The y coordinate 
+  * @param y The y coordinate
   */
   public Vector (int x, int y){
 

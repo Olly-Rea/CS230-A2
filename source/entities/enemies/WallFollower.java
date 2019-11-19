@@ -1,10 +1,10 @@
-package entities;
+package entities.enemies;
 
 import javafx.scene.image.Image;
 import utils.Direction;
 
 public class WallFollower extends Enemy {
-    
+
     /** Needed to find whether the wall follower's rotation is clockwise or anti clockwise */
     public enum Rotation { CW, ACW; }
 
@@ -22,18 +22,18 @@ public class WallFollower extends Enemy {
     public WallFollower(Vector pos, Rotation type) {
         this.pos = pos;
         this.type = type;
-    }    
+    }
 
     /**
      * Calculates the wallfollowers next move based on the map.
      * @param map MapController used to figure out the surroundings of the enemy.
      */
     public void algorithm(MapController map) {
-        
+
     }
 
     /**
-     * Renders the enemy at the enemies position 
+     * Renders the enemy at the enemies position
      */
     public void render() {
 
