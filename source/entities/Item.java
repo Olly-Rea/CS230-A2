@@ -6,12 +6,10 @@ public class Item {
 
 	/**
 	 * Instantiates a new item.
-	 *
-	 * @param vector the position of the item
 	 * @param type the item type
 	 */
-	public Item (Vector vector, ItemType type) {
-
+	public Item (ItemType type) {
+		this.type = type;
 	}
 
 	/**
@@ -20,6 +18,6 @@ public class Item {
 	 * @return the item type
 	 */
 	public ItemType getType() {
-
+		return type;
 	}
 }
