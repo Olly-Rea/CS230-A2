@@ -17,7 +17,7 @@ import cells.*;
 public class MapController {
 
     // 2D array of cells that make up the game map
-    private Cell[][] map;
+    private final Cell[][] map;
     private Entity[][] entityMap;
 
     /**
@@ -73,13 +73,34 @@ public class MapController {
          * Change to render whole map and then obscure hidden-from-view parts
          * Saves having to re-render each map (and wall) each move
          *
+         * Canvas canvas = new Canvas(800, 800);
+         *
          * Have an x and y value for the canvas on which the map is rendered and
          * move the map instead of the player to maintain centred focus
          *
          */
 
     }
+
+    /**
+    * Possible method to re-render destroyed entities as null, without
+    * re-rendering the whole map
+    */
     public void reRenderEntities() {
+
+    }
+
+
+    /**
+    * With the possibility of adding further graphical effects, it might
+    * be worth implementing an "AssetsBuilder" class
+    */
+
+
+    /**
+    * Possible method to aid in implementation of 'lighting' effects
+    */
+    public String groundCheck() {
 
     }
 
@@ -96,7 +117,7 @@ public class MapController {
         //boolean tLCell = map[x - 1][y + 1].getType() == CellType.WALL;
         boolean tCell = map[x][y + 1].getType() == CellType.WALL;
         //boolean tRCell = map[x + 1][y + 1].getType() == CellType.WALL;
-        
+
         //Check the left/right cells
         boolean lCell = map[x - 1][y].getType() == CellType.WALL;
         boolean rCell = map[x + 1][y].getType() == CellType.WALL;
@@ -167,7 +188,7 @@ public class MapController {
             assetPath = basePath + "wall_x";
         }
 
-        //I DON'T LIKE THIS - trying to find a better way
+        //I DON'T LIKE THE ABOVE - trying to find a better way
 
 //        //Check for left and right wall cells
 //        if (lCell || rCell) {

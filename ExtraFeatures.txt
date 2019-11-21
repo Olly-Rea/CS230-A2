@@ -18,3 +18,6 @@ If teleporters were 'loose ground' so to speak;
 
 Torches in walls with 'lighting' effects (wall and floor check for wall-torch tile)
 	- 'lighting' demo-ed in Graphics Mk_2.1
+
+POSSIBLY very basic sound effects
+	- e.g. make a noise when trying to walk into a wall (audible feedback)
