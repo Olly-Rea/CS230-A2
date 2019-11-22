@@ -9,8 +9,7 @@ import java.net.URL;
 /**
  * Handles http requests.
  * 
- * @author Alexandros
- *
+ * @author 
  */
 public class RequestHandler {
 
