@@ -1,3 +1,5 @@
+Main menu UI
+
 Laturn light is the 7x7 viewport
 	- decreases with time, can be replenished with new 'fuel' item type
 
@@ -6,3 +8,16 @@ Animations
 	- Fire and water effects
 		- I believe this is possible via GIF files in JavaFX
 	- Goal/item pick-up animations
+
+In-and-out fade-to-black effect between levels
+
+If teleporters were 'loose ground' so to speak;
+	- have the same effect with a message
+	- for example: "you fall through the ground and discover a hidden passage to a new part of the cave"
+	- Displays once per teleporter so as not to be repetitive
+
+Torches in walls with 'lighting' effects (wall and floor check for wall-torch tile)
+	- 'lighting' demo-ed in Graphics Mk_2.1
+
+POSSIBLY very basic sound effects
+	- e.g. make a noise when trying to walk into a wall (audible feedback)
