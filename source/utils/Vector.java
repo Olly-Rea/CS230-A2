@@ -23,7 +23,8 @@ public class Vector {
   * @param y The y coordinate
   */
   public Vector (int x, int y){
-
+    this.x = x;
+    this.y = y;
   }
 
   /**
