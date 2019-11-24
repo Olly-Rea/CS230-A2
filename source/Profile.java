@@ -1,3 +1,4 @@
+
 /**
  * Contains a name and the highest level completed by profile.
  * @author Alexandros

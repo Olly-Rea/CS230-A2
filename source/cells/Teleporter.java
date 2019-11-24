@@ -19,8 +19,9 @@ public class Teleporter extends Cell {
  /**
  * Create a cell of type teleporter with a given position in the map
  */
- public Teleporter (Vector position){
-
+ public Teleporter (Vector position, cellType teleporter){
+     super.cellType = TELEPORTER;
+     
  }
 
  /**

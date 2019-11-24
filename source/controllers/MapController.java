@@ -32,7 +32,7 @@ public class MapController {
     public MapController(Cell[][] cellArray) {
         map = cellArray;
         AssetBuilder assetUtil = new AssetBuilder(map);
-        canvas = new Canvas(getMapWidth()*200, getMapHeight()*200);
+        canvas = new Canvas(getMapWidth()*200, getMapHeight()*200);        
     }
 
     /**
@@ -62,15 +62,15 @@ public class MapController {
      * @return String[]
      */
     public String[] export() {
-
+        
         //Create the export String ArrayList
         ArrayList<String> mapExport = new ArrayList<>();
-
-        //Loop through the 'map' Cell array, converting each cell to it's
+        
+        //Loop through the 'map' Cell array, converting each cell to it's 
         //string counterpart
         for(int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[y].length; x++ ) {
-                //Switch case to add respective characters to the output string
+                //Switch case to add respective characters to the output string 
                 //depending on the cellType
                 if (null == map[x][y].getType()) {
                     mapExport.add(" ");
@@ -114,34 +114,34 @@ public class MapController {
     public void render(PlayerController playerLocation) {
 
         for(int x = 0; x < map.length; x++) {
-            for (int y = 0; y < map[x].length; x++ ) {
+            for (int y = 0; y < map[x].length; x++ ) {  
                 //canvas
-            }
+            }   
         }
-
+        
         /*
-
+        
         Change to render whole map and then obscure hidden-from-view parts
         Saves having to re-render each map (and wall) each move
-
+         
         using JavaFX 'TilePane' Canvas canvas = new Canvas(800, 800);
-
+        
         Have an x and y value for the canvas on which the map is rendered and
         move the map instead of the player to maintain centred focus
-
+        
         */
-
+        
         //assetUtil.getWallType(x,y);
-
+        
     }
-
+    
     public void moveMap(Direction dir) {
-
+        
     }
-
+    
     /**
      * getMapHeight is a method to return the height of the 2D map array
-     * @return
+     * @return 
      */
     public final int getMapHeight(){
         //Return the height of the map array
@@ -149,23 +149,23 @@ public class MapController {
     }
     /**
      * getMapWidth is a method to return the max width of the 2D map array
-     * @return
+     * @return 
      */
     public final int getMapWidth(){
-
+        
         int maxLength = 0;
-
+        
         for(int x = 0; x < map.length; x++) {
             int xLength = 0;
             for (int y = 0; y < map[x].length; x++ ) {
                 xLength++;
-            }
+            } 
             if (maxLength < xLength) {
                 maxLength = xLength;
             }
         }
-
+        
         return maxLength;
     }
-
+    
 }
