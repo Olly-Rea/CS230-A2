@@ -8,8 +8,6 @@ import java.net.URL;
 
 /**
  * Handles http requests.
- *
- * @author
  */
 public class RequestHandler {
 

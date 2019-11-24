@@ -14,7 +14,15 @@ import java.io.BufferedReader;
  */
 public class FileHandler {
 
+	/**
+	 * Reads a file and if it's unable to open it, it throws an exception, prints a
+	 * message and exits the program.
+	 * 
+	 * @param path The local path of that file.
+	 */
+	public FileHandler(String path) {
     private BufferedReader reader;
+
 
     /**
      * Reads a file and if it's unable to open it, it throws an exception,
@@ -23,7 +31,21 @@ public class FileHandler {
      * @param path The local path of that file.
      */
     public FileHandler(String path) {
+        
+    }
 
+	/**
+	 * Reads every line of the file. If it finds an empty line it returns empty "".
+	 * 
+	 * @return Returns the line of the file or an empty String.
+	 */
+	public String nextLine() {
+		try {
+			return reader.readLine();
+		} catch (IOException e) {
+			return "";
+		}
+	}
         try {
             FileReader fReader = new FileReader(path);
             reader = new BufferedReader(fReader);
@@ -46,5 +68,4 @@ public class FileHandler {
             return "";
         }
     }
-
 }
