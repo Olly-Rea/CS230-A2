@@ -1,6 +1,7 @@
 package controllers;
 
 import javafx.scene.input.KeyEvent;
+import sun.java2d.cmm.Profile;
 
 /**
  * 
@@ -49,7 +50,7 @@ public class GameController {
      * @return array of profiles retrieved from {@code PROFILE_PATH}.
      */
     public Profile[] loadProfiles() {
-        
+        return null;
     }
 
     /**

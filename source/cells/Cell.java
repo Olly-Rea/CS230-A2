@@ -38,6 +38,6 @@ public class Cell {
 	 * @return the type of cell in question
 	 */
 	public CellType getType() {
-
+            return null;
 	}
 }
