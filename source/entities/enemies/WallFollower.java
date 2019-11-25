@@ -21,7 +21,7 @@ public class WallFollower extends Enemy {
     /**
      * Path to the WallFollower image
      */
-    private static Image sprite = new Image("...");
+    private static final Image SPRITE = new Image("...");
 
     private Direction dir;
     private Rotation type;

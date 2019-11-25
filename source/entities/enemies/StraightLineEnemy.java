@@ -6,8 +6,11 @@ import controllers.MapController;
 import entities.Enemy;
 import utils.Direction;
 import utils.Vector;
+import javafx.scene.image.Image;
 
 public class StraightLineEnemy extends Enemy {
+	
+	private static final Image SPRITE = new Image("...");
 
 	private Direction dir;
 
@@ -22,7 +25,8 @@ public class StraightLineEnemy extends Enemy {
 	}
 
 	/**
-	 * The algorithm used by the enemy to calculate next move
+	 * The algorithm used by the enemy to calculate next move, checks whether the
+	 * next cell in the direction it is facing is a wall, if so it turns around
 	 *
 	 * @param map the map
 	 */
@@ -35,10 +39,10 @@ public class StraightLineEnemy extends Enemy {
 		this.pos.add(dir);
 	}
 
-    /**
-     * Renders the enemy
-     */
-    public void render() {
+	/**
+	 * Renders the enemy
+	 */
+	public void render() {
 
 	}
 }

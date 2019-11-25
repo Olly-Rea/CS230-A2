@@ -9,6 +9,7 @@ import entities.Enemy;
 import entities.Player;
 import utils.Direction;
 import utils.Vector;
+import javafx.scene.image.Image;
 
 /**
  * SmartTargeter class which always takes the path which leads to the Player.
@@ -16,6 +17,8 @@ import utils.Vector;
  * @author Scott Barr
  */
 public class SmartTargeter extends Enemy {
+    
+	private static final Image SPRITE = new Image("...");
 
     private Direction dir;
     private Player player;
