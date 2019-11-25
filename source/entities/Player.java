@@ -2,14 +2,9 @@ package entities;
 
 /**
 * Player.java
-* @version 2.0.0
-* @author Daniel Clenaghan
-*/
-
-
-/**
 * The player class is responsible for storing and manipulating the
 * player inventory and its attributes
+* @author Daniel Clenaghan
 */
 
 public class Player extends Entity {
@@ -27,7 +22,7 @@ public class Player extends Entity {
   * @param location Takes a vector location when created
   */
   public Player (Vector location){
-    super (Vector);
+    super (location);
     this.hasFireBoots = false;
     this.hasFlippers = false;
     this.tokens = 0;
@@ -73,7 +68,7 @@ public class Player extends Entity {
   * @return The player's vector
   */
   public Vector getPos (){
-    return Vector;
+    return pos;
   }
 
   /**
@@ -128,14 +123,12 @@ public class Player extends Entity {
         } else {
           return false;
         }
-        break;
       case FLIPPERS:
         if (hasFlippers == true){
           return true;
         } else {
           return false;
         }
-        break;
       case REDKEY:
         if (redKeys > 0){
           redKeys--;
@@ -143,7 +136,6 @@ public class Player extends Entity {
         } else {
           return false;
         }
-        break;
       case BLUEKEY:
         if (blueKeys > 0){
           blueKeys--;
@@ -151,7 +143,6 @@ public class Player extends Entity {
         } else {
           return false;
         }
-        break;
       case GREENKEY:
         if (greenKeys > 0){
           greenKeys--;
@@ -159,7 +150,6 @@ public class Player extends Entity {
         } else {
           return false;
         }
-        break;
       case YELLOWKEY:
         if (yellowKeys > 0){
           yellowKeys--;
@@ -167,8 +157,6 @@ public class Player extends Entity {
         } else {
           return false;
         }
-        break;
-    return null;
     }
   }
 }
