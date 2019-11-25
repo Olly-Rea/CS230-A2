@@ -5,12 +5,13 @@ import utils.AssetBuilder;
 import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
 import utils.Direction;
+import utils.Vector;
 
 /**
  * MapController.java
  *
  * @version 1.0.0
- * @author Olly Rea, Daniel Clenaghan
+ * @author Olly Rea, Daniel Clenaghan, Scott Barr
  */
 
 /**
@@ -21,18 +22,22 @@ import utils.Direction;
 public class MapController {
 
     // 2D array of cells that make up the game map
-    private final Cell[][] map;
+    private Cell[][] map;
     private final Canvas canvas;
+    public final int width;
+    public final int height;
 
     /**
      * Creates a MapController
      *
      * @param cellArray The 2D array of cells that make up the MapController
      */
-    public MapController(Cell[][] cellArray) {
+    public MapController(int width, int height, Cell[][] cellArray) {
+        this.width = width;
+        this.height = height;
         map = cellArray;
         AssetBuilder assetUtil = new AssetBuilder(map);
-        canvas = new Canvas(getMapWidth()*200, getMapHeight()*200);        
+        canvas = new Canvas(width*200, height*200);        
     }
 
     /**
@@ -43,7 +48,18 @@ public class MapController {
      * @return the Cell at map[x][y]
      */
     public Cell getCell(int x, int y) {
-        return map[x][y];
+        return map[y][x];
+    }
+
+    /**
+     * Reutrns the next cell in any direction from a given position.
+     * 
+     * @param pos The position of the cell in the grid
+     * @param d The Direction to look for the next cell
+     * @return The first cell in the direction d from pos.
+     */
+    public Cell getCell(Vector pos, Direction d) {
+        return map[pos.getY()+d.Y][pos.getX()+d.X];
     }
 
     /**
@@ -53,7 +69,7 @@ public class MapController {
      * @param y The y value of the desired door
      */
     public void openDoor(int x, int y) {
-        map[x][y] = new Cell(CellType.GROUND);
+        map[y][x] = new Cell(CellType.GROUND);
     }
 
     /**
@@ -72,9 +88,9 @@ public class MapController {
             for (int x = 0; x < map[y].length; x++ ) {
                 //Switch case to add respective characters to the output string 
                 //depending on the cellType
-                if (null == map[x][y].getType()) {
+                if (null == map[y][x].getType()) {
                     mapExport.add(" ");
-                } else switch (map[x][y].getType()) {
+                } else switch (map[y][x].getType()) {
                     case WALL:
                         mapExport.add("#");
                         break;
@@ -113,8 +129,8 @@ public class MapController {
      */
     public void render(PlayerController playerLocation) {
 
-        for(int x = 0; x < map.length; x++) {
-            for (int y = 0; y < map[x].length; x++ ) {  
+        for(int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[y].length; x++ ) {  
                 //canvas
             }   
         }
@@ -139,33 +155,33 @@ public class MapController {
         
     }
     
-    /**
-     * getMapHeight is a method to return the height of the 2D map array
-     * @return 
-     */
-    public final int getMapHeight(){
-        //Return the height of the map array
-        return map.length;
-    }
-    /**
-     * getMapWidth is a method to return the max width of the 2D map array
-     * @return 
-     */
-    public final int getMapWidth(){
+    // /**
+    //  * getMapHeight is a method to return the height of the 2D map array
+    //  * @return 
+    //  */
+    // public final int getMapHeight(){
+    //     //Return the height of the map array
+    //     return map.length;
+    // }
+    // /**
+    //  * getMapWidth is a method to return the max width of the 2D map array
+    //  * @return 
+    //  */
+    // public final int getMapWidth(){
         
-        int maxLength = 0;
+    //     int maxLength = 0;
         
-        for(int x = 0; x < map.length; x++) {
-            int xLength = 0;
-            for (int y = 0; y < map[x].length; x++ ) {
-                xLength++;
-            } 
-            if (maxLength < xLength) {
-                maxLength = xLength;
-            }
-        }
+    //     for(int x = 0; x < map.length; x++) {
+    //         int xLength = 0;
+    //         for (int y = 0; y < map[x].length; x++ ) {
+    //             xLength++;
+    //         } 
+    //         if (maxLength < xLength) {
+    //             maxLength = xLength;
+    //         }
+    //     }
         
-        return maxLength;
-    }
+    //     return maxLength;
+    // }
     
 }
