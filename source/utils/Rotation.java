@@ -8,5 +8,14 @@ package utils;
  * @author Scott
  */
 public enum Rotation {
-    CW, ACW;
+    CW {
+        @Override
+        public Rotation reverse() { return ACW; }
+    }, 
+    ACW {
+        @Override
+        public Rotation reverse() { return CW; }
+    };
+
+    public abstract Rotation reverse();
 }
