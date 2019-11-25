@@ -1,6 +1,7 @@
 package entities;
 
-import controllers.*;
+import controllers.MapController;
+import controllers.PlayerController;
 import utils.Vector;
 
 /**
@@ -9,15 +10,21 @@ import utils.Vector;
  * algorithm based on the environment
  */
 
-public class Enemy {
+public class Enemy extends Entity{
 
+    /**
+     * Constructs an enemy
+     */
+    public Enemy(Vector pos) {
+        super(pos);
+    }
     /**
      * Provides the next move based on the current map state
      *
      * @param Map The current map state
      * @return Returns a vector containing the next position
      */
-    public Vector pathingAlgorithm(Mapcontroller mapC) {
+    public Vector pathingAlgorithm(MapController mapC) {
         return null;
     }
     
@@ -28,9 +35,4 @@ public class Enemy {
         return false;
     }
 
-    /**
-     * Constructs an enemy
-     */
-    public Enemy() {
-    }
 }

@@ -1,6 +1,6 @@
 package cells;
 
-import com.sun.prism.paint.Color;
+import javafx.scene.paint.Color;
 
 public class Cell {
 

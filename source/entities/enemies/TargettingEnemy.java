@@ -1,5 +1,8 @@
 package entities.enemies;
 
+import entities.Player;
+import utils.Vector;
+
 public abstract class TargettingEnemy extends Enemy{
 
 	/** The player. */
@@ -10,8 +13,9 @@ public abstract class TargettingEnemy extends Enemy{
 	 *
 	 * @param vector the position of targetting enemy
 	 */
-	public TargettingEnemy(Vector vector) {
-
+	public TargettingEnemy(Vector vector, Player p) {
+		super(vector);
+		this.player = p;
 	}
 
 }

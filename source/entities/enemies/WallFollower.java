@@ -2,21 +2,17 @@ package entities.enemies;
 
 //Local imports
 import controllers.MapController;
-import entities.*;
-import utils.*;
+import utils.Direction;
+import utils.Rotation;
+import utils.Vector;
+import entities.Enemy;
 //JavaFX imports
 import javafx.scene.image.Image;
 
 
 public class WallFollower extends Enemy {
 
-    /**
-     * Needed to find whether the wall follower's rotation is clockwise or anti
-     * clockwise
-     */
-    public enum Rotation {
-        CW, ACW;
-    }
+
 
     /**
      * Path to the WallFollower image
@@ -32,7 +28,8 @@ public class WallFollower extends Enemy {
      *
      * @param pos
      */
-    public WallFollower(Vector pos, Rotation type) {
+    public WallFollower(Vector pos, Rotation type, Direction dir) {
+        super(pos);
         this.pos = pos;
         this.type = type;
     }
