@@ -10,7 +10,7 @@ import utils.Vector;
  * algorithm based on the environment
  */
 
-public class Enemy extends Entity{
+public abstract class Enemy extends Entity{
 
     /**
      * Constructs an enemy
@@ -24,15 +24,13 @@ public class Enemy extends Entity{
      * @param Map The current map state
      * @return Returns a vector containing the next position
      */
-    public Vector pathingAlgorithm(MapController mapC) {
-        return null;
-    }
+    public abstract void algorithm(MapController map);
     
     /**
      * Checks to see if the enemy has collided with the player
      */
-    protected boolean PlayerCheck(MapController mapC, PlayerController PlayerC) {
-        return false;
+    public boolean PlayerCheck(PlayerController playerCon) {
+        return this.pos == playerCon.getPlayerPos() ? true : false;
     }
 
 }
