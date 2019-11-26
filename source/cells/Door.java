@@ -7,16 +7,16 @@ import javafx.scene.paint.Color;
  * @version 1.00
  */
 public class Door {
-	
+
 	/** The type. */
 	private DoorType type;
-	
+
 	/** The tokens. */
 	private int tokens = 0;
-	
+
 	/** The colour. */
 	private Color colour;
-	
+
 	/**
 	 * Instantiates a new door.
 	 *
@@ -25,11 +25,11 @@ public class Door {
 	public Door(DoorType type) {
 		this.type = type;
 	}
-	
+
 	public Door(int tokens) {
 		this.tokens = tokens;
 	}
-	
+
 	/**
 	 * Sets the number of tokens.
 	 *
@@ -38,7 +38,7 @@ public class Door {
 	public void setTokens(int tokens) {
 		this.tokens = tokens;
 	}
-	
+
 	/**
 	 * Gets the tokens.
 	 *
@@ -47,7 +47,7 @@ public class Door {
 	public int getTokens() {
 		return tokens;
 	}
-	
+
 	/**
 	 * Gets the door type.
 	 *
