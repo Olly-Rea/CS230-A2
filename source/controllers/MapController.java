@@ -65,11 +65,11 @@ public class MapController {
         //Create the export String ArrayList
         ArrayList<String> mapExport = new ArrayList<>();
 
-        //Loop through the 'map' Cell array, converting each cell to it's 
+        //Loop through the 'map' Cell array, converting each cell to it's
         //string counterpart
         for (int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[y].length; x++) {
-                //Switch case to add respective characters to the output string 
+                //Switch case to add respective characters to the output string
                 //depending on the cellType
                 if (map[x][y].getType() == null) {
                     mapExport.add(" ");
@@ -105,9 +105,11 @@ public class MapController {
             //Add a delimiter for the filehandler to create a newline at
             mapExport.add("|");
         }
-        
+
+        //Create line as one string, each element is a line
+
         //ADD IN LINES FOR EACH TELEPORTER, DOOR, ETC
-        
+
         //return the String array of the mapExport ArrayList
         return mapExport.toArray(new String[mapExport.size()]);
     }
@@ -117,13 +119,13 @@ public class MapController {
      *
      * @param playerLocation The player controller is used to access the
      * player's current location
-     * 
-     * @return 
+     *
+     * @return
      */
     public GridPane renderMap(PlayerController playerLocation) {
-        
+
         //Vector PlayerPos = playerLocation.getPlayerPos();
-        
+
         //Loop through the map
         for (int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[x].length; x++) {
@@ -131,7 +133,7 @@ public class MapController {
                 if (map[y][x].getType() == null) {
                     System.out.println("Mapfile error at: (" + x + ", " + y + ")");
                 }
-                //If no error occurs; check cell type and add to the javaFX 
+                //If no error occurs; check cell type and add to the javaFX
                 //gridPane accordingly
                 if (map[y][x].getType() == CellType.WALL) {
                     //Get the wall asset Image from the AssetBuilder class
@@ -141,13 +143,13 @@ public class MapController {
                 } else {
                     //Add the cell image to the GridPane
                     mapGrid.add(map[y][x].render(), x, y, 1, 1);
-                }                
-                
+                }
+
             }
         }
-        
+
         return mapGrid;
-        
+
         //Have an x and y value for the GridPane on which the map is rendered and
         //move the map instead of the player to maintain centred focus
 
