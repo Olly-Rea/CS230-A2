@@ -1,12 +1,17 @@
 package controllers;
 
 import cells.*;
+import utils.AssetBuilder;
+import java.util.ArrayList;
+import javafx.scene.canvas.Canvas;
+import utils.Direction;
+import utils.Vector;
 
 /**
  * MapController.java
  *
  * @version 1.0.0
- * @author Olly Rea, Daniel Clenaghan
+ * @author Olly Rea, Daniel Clenaghan, Scott Barr
  */
 
 /**
@@ -17,16 +22,22 @@ import cells.*;
 public class MapController {
 
     // 2D array of cells that make up the game map
-    private final Cell[][] map;
-    private Entity[][] entityMap;
+    private Cell[][] map;
+    private final Canvas canvas;
+    public final int width;
+    public final int height;
 
     /**
      * Creates a MapController
      *
      * @param cellArray The 2D array of cells that make up the MapController
      */
-    public MapController(Cell[][] cellArray) {
+    public MapController(int width, int height, Cell[][] cellArray) {
+        this.width = width;
+        this.height = height;
         map = cellArray;
+        AssetBuilder assetUtil = new AssetBuilder(map);
+        canvas = new Canvas(width*200, height*200);        
     }
 
     /**
@@ -34,10 +45,21 @@ public class MapController {
      *
      * @param x The x value of desired cell
      * @param y The y value of the desired cell
-     * @return
+     * @return the Cell at map[x][y]
      */
     public Cell getCell(int x, int y) {
-        return null;
+        return map[y][x];
+    }
+
+    /**
+     * Reutrns the next cell in any direction from a given position.
+     * 
+     * @param pos The position of the cell in the grid
+     * @param d The Direction to look for the next cell
+     * @return The first cell in the direction d from pos.
+     */
+    public Cell getCell(Vector pos, Direction d) {
+        return map[pos.getY()+d.Y][pos.getX()+d.X];
     }
 
     /**
@@ -47,8 +69,7 @@ public class MapController {
      * @param y The y value of the desired door
      */
     public void openDoor(int x, int y) {
-        entityMap[x][y] = null;
-        render
+        map[y][x] = new Cell(CellType.GROUND);
     }
 
     /**
@@ -57,7 +78,47 @@ public class MapController {
      * @return String[]
      */
     public String[] export() {
-        return null;
+        
+        //Create the export String ArrayList
+        ArrayList<String> mapExport = new ArrayList<>();
+        
+        //Loop through the 'map' Cell array, converting each cell to it's 
+        //string counterpart
+        for(int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[y].length; x++ ) {
+                //Switch case to add respective characters to the output string 
+                //depending on the cellType
+                if (null == map[y][x].getType()) {
+                    mapExport.add(" ");
+                } else switch (map[y][x].getType()) {
+                    case WALL:
+                        mapExport.add("#");
+                        break;
+                    case GROUND:
+                        mapExport.add(" ");
+                        break;
+                    case FIRE:
+                        mapExport.add("F");
+                        break;
+                    case WATER:
+                        mapExport.add("W");
+                        break;
+                    case TELEPORTER:
+                        mapExport.add("T");
+                        break;
+                    case DOOR:
+                        mapExport.add("D");
+                        break;
+                    default:
+                        mapExport.add(" ");
+                        break;
+                }
+            }
+            //Add a delimiter for the filehandler to create a newline at
+            mapExport.add("|");
+        }
+        //return the String array of the mapExport ArrayList
+        return mapExport.toArray(new String[mapExport.size()]);
     }
 
     /**
@@ -66,173 +127,61 @@ public class MapController {
      * @param playerLocation The player controller is used to access the
      * player's current location
      */
-    public void render(/*PlayerController playerLocation*/) {
+    public void render(PlayerController playerLocation) {
 
-        /**
-         *
-         * Change to render whole map and then obscure hidden-from-view parts
-         * Saves having to re-render each map (and wall) each move
-         *
-         * Canvas canvas = new Canvas(800, 800);
-         *
-         * Have an x and y value for the canvas on which the map is rendered and
-         * move the map instead of the player to maintain centred focus
-         *
-         */
-
+        for(int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[y].length; x++ ) {  
+                //canvas
+            }   
+        }
+        
+        /*
+        
+        Change to render whole map and then obscure hidden-from-view parts
+        Saves having to re-render each map (and wall) each move
+         
+        using JavaFX 'TilePane' Canvas canvas = new Canvas(800, 800);
+        
+        Have an x and y value for the canvas on which the map is rendered and
+        move the map instead of the player to maintain centred focus
+        
+        */
+        
+        //assetUtil.getWallType(x,y);
+        
     }
-
-    /**
-    * Possible method to re-render destroyed entities as null, without
-    * re-rendering the whole map
-    */
-    public void reRenderEntities() {
-
+    
+    public void moveMap(Direction dir) {
+        
     }
-
-
-    /**
-    * With the possibility of adding further graphical effects, it might
-    * be worth implementing an "AssetsBuilder" class
-    */
-
-
-    /**
-    * Possible method to aid in implementation of 'lighting' effects
-    */
-    public String groundCheck() {
-
-    }
-
-    /**
-     * Method to check which wall graphic should be assigned to a wall cell -
-     * Checks the surrounding cells - 9x9 grid - to determine the graphic
-     *
-     * @param x The x value of the wall cell
-     * @param y The y value of the wall cell
-     */
-    public String wallCheck(int x, int y) {
-
-        //Check the top row of cells
-        //boolean tLCell = map[x - 1][y + 1].getType() == CellType.WALL;
-        boolean tCell = map[x][y + 1].getType() == CellType.WALL;
-        //boolean tRCell = map[x + 1][y + 1].getType() == CellType.WALL;
-
-        //Check the left/right cells
-        boolean lCell = map[x - 1][y].getType() == CellType.WALL;
-        boolean rCell = map[x + 1][y].getType() == CellType.WALL;
-
-        //Check the bottom row of cells
-        //boolean bLCell = map[x - 1][y - 1].getType() == CellType.WALL;
-        boolean bCell = map[x][y - 1].getType() == CellType.WALL;
-        //boolean bRCell = map[x + 1][y - 1].getType() == CellType.WALL;
-
-        String basePath = "../../assets/cells/";
-        String assetPath;
-
-        //base case
-        assetPath = basePath + "wall_o";
-
-        //Check for wall_e edge
-        if (bCell) {
-            assetPath = basePath + "wall_e1";
-        }
-        if (tCell) {
-            assetPath = basePath + "wall_e2";
-        }
-        if (lCell) {
-            assetPath = basePath + "wall_e3";
-        }
-        if (rCell) {
-            assetPath = basePath + "wall_e4";
-        }
-
-        //Check for wall_v / wall_h join
-        if (bCell && tCell) {
-            assetPath = basePath + "wall_v";
-        }
-        if (rCell && lCell) {
-            assetPath = basePath + "wall_h";
-        }
-
-        //Check for wall_c corner
-        if (tCell && lCell) {
-            assetPath = basePath + "wall_c1";
-        }
-        if (lCell && bCell) {
-            assetPath = basePath + "wall_c2";
-        }
-        if (bCell && rCell) {
-            assetPath = basePath + "wall_c3";
-        }
-        if (rCell && tCell) {
-            assetPath = basePath + "wall_c4";
-        }
-
-        //Check for wall_t junc
-        if (lCell && bCell && rCell) {
-            assetPath = basePath + "wall_t1";
-        }
-        if (tCell && bCell && rCell) {
-            assetPath = basePath + "wall_t2";
-        }
-        if (tCell && lCell && rCell) {
-            assetPath = basePath + "wall_t3";
-        }
-        if (tCell && lCell && bCell) {
-            assetPath = basePath + "wall_t4";
-        }
-
-        //Check for wall_x junc
-        if (tCell && lCell && bCell && rCell) {
-            assetPath = basePath + "wall_x";
-        }
-
-        //I DON'T LIKE THE ABOVE - trying to find a better way
-
-//        //Check for left and right wall cells
-//        if (lCell || rCell) {
-//            if (lCell && rCell) {
-//                assetPath = basePath + "wall_h";
-//                //Check for top and bottom wall cells
-//                if (tCell || bCell) {
-//                    if (tCell && bCell) {
-//                        assetPath = basePath + "wall_x";
-//                        //Check for topL and topR wall cells
-//                        if (tLCell && tRCell) {
-//                            assetPath = basePath + "wall_T";
-//                            //Check for bottomL and bottomR wall cells
-//                            if (bLCell && bRCell) {
-//                                assetPath = basePath + "wall_X";
-//                            }
-//                        } else {
-//
-//                        }
-//                    } else if (tCell) {
-//
-//                    } else {
-//
-//                    }
-//                } else if (lCell) {
-//                    assetPath = basePath + "wall_endL";
-//                } else {
-//
-//                }
-//            //Check for top but not bottom cell
-//            } else if (tCell && !bCell) {
-//
-//            } else {
-//
-//            }
-//
-//        //Check for top and bottom wall cells
-//        } else if (tCell && bCell) {
-//            assetPath = basePath + "wall_v";
-//
-//        } else {
-//            assetPath = basePath + "wall_o";
-//        }
-        return assetPath + ".jpg";
-    }
-
+    
+    // /**
+    //  * getMapHeight is a method to return the height of the 2D map array
+    //  * @return 
+    //  */
+    // public final int getMapHeight(){
+    //     //Return the height of the map array
+    //     return map.length;
+    // }
+    // /**
+    //  * getMapWidth is a method to return the max width of the 2D map array
+    //  * @return 
+    //  */
+    // public final int getMapWidth(){
+        
+    //     int maxLength = 0;
+        
+    //     for(int x = 0; x < map.length; x++) {
+    //         int xLength = 0;
+    //         for (int y = 0; y < map[x].length; x++ ) {
+    //             xLength++;
+    //         } 
+    //         if (maxLength < xLength) {
+    //             maxLength = xLength;
+    //         }
+    //     }
+        
+    //     return maxLength;
+    // }
+    
 }

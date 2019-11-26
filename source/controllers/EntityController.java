@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import entities.*;
 
 public class EntityController {
     private Entity[][] entityGrid;
@@ -50,7 +51,7 @@ public class EntityController {
      * Iterates through each enemy and moves them to their next position.
      * @param map the map will be passed through to each enemy to assist their next move calculation.
      */
-    public moveEnemies(MapController map) {
+    public void moveEnemies(MapController map) {
 
     }
 
