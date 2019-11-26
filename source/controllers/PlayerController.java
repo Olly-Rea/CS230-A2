@@ -1,5 +1,9 @@
 package controllers;
 
+import utils.Vector;
+import entities.Player;
+import cells.Cell;
+
 /**
  * PlayerController.java
  * 

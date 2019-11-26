@@ -1,11 +1,11 @@
 package cells;
 
-import com.sun.prism.paint.Color;
+import javafx.scene.paint.Color;
 
 public class Cell {
 
 	/** The size of the cell*/
-	public int size;
+	public static final int SIZE = 10000000;
 
 	/** The colour of the cell. */
 	private Color colour;
@@ -13,13 +13,18 @@ public class Cell {
 	/** The type of cell (i.e ground, wall). */
 	private CellType type;
 
+	public final int x;
+	public final int y;
+
 	/**
 	 * Instantiates a new cell.
 	 *
 	 * @param type the type of cell being instantiated
 	 */
-	public Cell (CellType type) {
-
+	public Cell (CellType type, int x, int y) {
+		this.type = type;
+		this.x = x;
+		this.y = y;
 	}
 
 	/**

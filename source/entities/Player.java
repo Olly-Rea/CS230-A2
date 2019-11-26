@@ -1,5 +1,7 @@
 package entities;
 
+import utils.Vector;
+
 /**
 * Player.java
 * @version 1.0.0
@@ -26,8 +28,8 @@ public class Player extends Entity {
   * Creates a Player object
   * @param location Takes a vector location when created
   */
-  public Player (Vector location){
-
+  public Player (Vector pos){
+    super(pos);
   }
 
   /**
@@ -43,7 +45,7 @@ public class Player extends Entity {
   * @return The player's vector
   */
   public Vector getPos (){
-    return Vector;
+    return pos;
   }
 
   /**
