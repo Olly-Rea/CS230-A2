@@ -45,20 +45,11 @@ public class Teleporter extends Cell {
 	}
 
 	/**
-	 * Method to get the teleporter's location
-	 * 
-	 * @return position This teleporter's location
-	 */
-	public Vector getPos() {
-		return cellPos;
-	}
-
-	/**
 	 * Method to get the linked teleporter's location
 	 * 
 	 * @return linkedTele The vector of the linked teleporter
 	 */
-	public Teleporter getLinkedPos() {
+	public Teleporter getLinked() {
 		return linkedTele;
 	}
 }
