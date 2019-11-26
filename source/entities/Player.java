@@ -3,8 +3,8 @@ package entities;
 import utils.Vector;
 
 /**
- * Player.java The player class is responsible for storing and manipulating the
- * player inventory and its attributes
+ * The player class is responsible for storing and manipulating the player
+ * inventory and its attributes
  *
  * @author Daniel Clenaghan
  */
@@ -113,7 +113,7 @@ public class Player extends Entity {
 	/**
 	 * Method to return the number of tokens in the player's inventory
 	 *
-	 * @return tokens 
+	 * @return tokens
 	 */
 	public int getTokens() {
 		return tokens;
@@ -124,7 +124,7 @@ public class Player extends Entity {
 	 *
 	 * @return true if the player has picked up fire boots, else false
 	 */
-	public Boolean hasFireBoots() {
+	public boolean hasFireBoots() {
 		return hasFireBoots;
 	}
 
@@ -133,7 +133,7 @@ public class Player extends Entity {
 	 *
 	 * @return true if the player has picked up flippers, else false
 	 */
-	public Boolean hasFlippers() {
+	public boolean hasFlippers() {
 		return hasFlippers;
 	}
 
@@ -143,7 +143,7 @@ public class Player extends Entity {
 	 * @param tokensReq Tokens required
 	 * @return true if the tokens are present in the inventory, false otherwise
 	 */
-	public Boolean useTokens(int tokensReq) {
+	public boolean useTokens(int tokensReq) {
 		if (tokensReq <= tokens) {
 			tokens = tokens - tokensReq;
 			return true;
@@ -158,51 +158,40 @@ public class Player extends Entity {
 	 * @param item The item the game would like to use
 	 * @return true if the item is present, false otherwise
 	 */
-	public Boolean useItem(Item item) {
+	public boolean useItem(Item item) {
 		ItemType use = item.getType();
+		boolean itemPresent = false;
 		switch (use) {
 		case FIREBOOTS:
 			if (hasFireBoots == true) {
-				return true;
-			} else {
-				return false;
+				itemPresent = true;
 			}
 		case FLIPPERS:
 			if (hasFlippers == true) {
-				return true;
-			} else {
-				return false;
+				itemPresent = true;
 			}
 		case REDKEY:
 			if (redKeys > 0) {
 				redKeys--;
-				return true;
-			} else {
-				return false;
+				itemPresent = true;
 			}
 		case BLUEKEY:
 			if (blueKeys > 0) {
 				blueKeys--;
-				return true;
-			} else {
-				return false;
+				itemPresent = true;
 			}
 		case GREENKEY:
 			if (greenKeys > 0) {
 				greenKeys--;
-				return true;
-			} else {
-				return false;
+				itemPresent = true;
 			}
 		case YELLOWKEY:
 			if (yellowKeys > 0) {
 				yellowKeys--;
-				return true;
-			} else {
-				return false;
+				itemPresent = true;
 			}
 		}
-		return null;
+		return itemPresent;
 	}
 
 	/**

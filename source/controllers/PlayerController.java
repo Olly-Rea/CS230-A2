@@ -8,7 +8,7 @@ import entities.Player;
 import utils.Vector;
 
 /**
- * PlayerController.java Class to handle player movement and rendering
+ * Class to handle player movement and rendering
  *
  * @author Scott, Danny
  */
