@@ -85,7 +85,7 @@ public class Cell {
         return type;
     }
 
-    public Vector getVector() {
+    public Vector getPos() {
         return cellPos;
     }
 }

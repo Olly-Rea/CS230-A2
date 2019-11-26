@@ -1,7 +1,7 @@
 package controllers;
 
-import entities.Cell;
-import entities.CellType;
+import cells.Cell;
+import cells.CellType;
 import entities.Item;
 import entities.ItemType;
 import entities.Player;
@@ -37,7 +37,7 @@ public class PlayerController {
 	 */
 	public void move(MOVES dir, MapController mc) {
 		Vector current = getPlayerPos();
-		Vector desired;
+		Vector desired = null; //TODO: review 
 		if (dir == MOVES.UP) {
 			desired = new Vector(current.getX(), current.getY() + 1);
 		} else if (dir == MOVES.DOWN) {
@@ -62,7 +62,7 @@ public class PlayerController {
 	 *         wall, false if the move is invalid and not possible
 	 * @author Danny
 	 */
-	private boolean validMove(Cell targetCell) {
+	private boolean validMove(Cell targetCell) { //TODO: review - CellType not necessarily DoorType?
 		CellType move = targetCell.getType();
 		Boolean valid = null;
 		if (move == (CellType.GROUND) || move == (CellType.FIRE) || move == (CellType.WATER)) {
