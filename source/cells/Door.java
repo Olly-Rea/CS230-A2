@@ -1,3 +1,5 @@
+package cells;
+
 import javafx.scene.paint.Color;
 
 // TODO: Auto-generated Javadoc
