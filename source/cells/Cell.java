@@ -5,9 +5,6 @@ import utils.Vector;
 
 public class Cell {
 
-	//The size of the cell
-	public static final int SIZE = 10000000;
-
 	//The type of cell (i.e ground, wall)
 	private CellType type;
 
