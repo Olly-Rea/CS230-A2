@@ -70,7 +70,7 @@ public class EntityController {
      * @param y The vertical position of the item in the grid.
      */
     private void removeItem(int x, int y) {
-      entityGrid[x][y] = new String[] {" "};
+      entityGrid[x][y] = new String(" ");
     }
 
     /**
@@ -83,7 +83,7 @@ public class EntityController {
       for (int i = 0; i < enemies.size(); i++) {
         enemyPos = (enemies.get(i)).getPos();
         newEnemyPos = (enemies.get(i)).pathingAlgorithm(map);
-        entityGrid[newEnemyPos.x][newEnemyPos.y] = new String[] {enemy.get(i)};
+        entityGrid[newEnemyPos.x][newEnemyPos.y] = new String(enemy.get(i));
         removeItem(enemyPos.x,enemyPos.y);
       }
     }
