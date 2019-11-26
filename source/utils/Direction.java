@@ -5,7 +5,7 @@ package utils;
  * required through {@code Direction.cw()} or {@code Direction.acw()}.
  */
 public enum Direction {
-    UP {
+    UP(0, -1) {
         @Override
         public Direction cw() {
             return RIGHT;
@@ -17,7 +17,7 @@ public enum Direction {
 
     },
 
-    RIGHT {
+    RIGHT(1,0) {
         @Override
         public Direction cw() {
             return DOWN;
@@ -28,7 +28,7 @@ public enum Direction {
         }
     },
 
-    DOWN {
+    DOWN(0, 1) {
         @Override
         public Direction cw() {
             return LEFT;
@@ -39,7 +39,7 @@ public enum Direction {
         }
     },
 
-    LEFT {
+    LEFT(-1, 0) {
         @Override
         public Direction cw() {
             return UP;
@@ -49,6 +49,13 @@ public enum Direction {
             return DOWN;
         }
     };
+
+    public final int X, Y;
+
+    private Direction(int X, int Y) {
+        this.X = X;
+        this.Y = Y;
+    }
 
     public abstract Direction cw();
     public abstract Direction acw();

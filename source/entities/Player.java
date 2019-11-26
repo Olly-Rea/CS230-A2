@@ -28,8 +28,8 @@ public class Player extends Entity {
   * Creates a Player object
   * @param location Takes a vector location when created
   */
-  public Player (Vector location){
-
+  public Player (Vector pos){
+    super(pos);
   }
 
   /**
@@ -45,7 +45,7 @@ public class Player extends Entity {
   * @return The player's vector
   */
   public Vector getPos (){
-    return super.pos;
+    return pos;
   }
 
   /**
