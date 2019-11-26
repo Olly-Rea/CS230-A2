@@ -1,17 +1,15 @@
 package controllers;
 
 import cells.*;
-import utils.AssetBuilder;
+import utils.*;
 import java.util.ArrayList;
-import javafx.scene.canvas.Canvas;
-import utils.Direction;
-import utils.Vector;
+import javafx.scene.layout.GridPane;
 
 /**
  * MapController.java
  *
  * @version 1.0.0
- * @author Olly Rea, Daniel Clenaghan, Scott Barr
+ * @author Olly Rea, Daniel Clenaghan
  */
 
 /**
@@ -22,22 +20,18 @@ import utils.Vector;
 public class MapController {
 
     // 2D array of cells that make up the game map
-    private Cell[][] map;
-    private final Canvas canvas;
-    public final int width;
-    public final int height;
+    private final Cell[][] map;
+    private GridPane mapGrid = new GridPane();
+    AssetBuilder assetUtil;
 
     /**
-     * Creates a MapController
+     * MapController constructor; Instantiates a new MapController
      *
      * @param cellArray The 2D array of cells that make up the MapController
      */
-    public MapController(int width, int height, Cell[][] cellArray) {
-        this.width = width;
-        this.height = height;
+    public MapController(Cell[][] cellArray) {
         map = cellArray;
-        AssetBuilder assetUtil = new AssetBuilder(map);
-        canvas = new Canvas(width*200, height*200);        
+        assetUtil = new AssetBuilder(map);
     }
 
     /**
@@ -48,18 +42,7 @@ public class MapController {
      * @return the Cell at map[x][y]
      */
     public Cell getCell(int x, int y) {
-        return map[y][x];
-    }
-
-    /**
-     * Reutrns the next cell in any direction from a given position.
-     * 
-     * @param pos The position of the cell in the grid
-     * @param d The Direction to look for the next cell
-     * @return The first cell in the direction d from pos.
-     */
-    public Cell getCell(Vector pos, Direction d) {
-        return map[pos.getY()+d.Y][pos.getX()+d.X];
+        return map[x][y];
     }
 
     /**
@@ -69,7 +52,7 @@ public class MapController {
      * @param y The y value of the desired door
      */
     public void openDoor(int x, int y) {
-        map[y][x] = new Cell(CellType.GROUND);
+        map[y][x] = new Cell(CellType.GROUND, x, y);
     }
 
     /**
@@ -78,45 +61,53 @@ public class MapController {
      * @return String[]
      */
     public String[] export() {
-        
+
         //Create the export String ArrayList
         ArrayList<String> mapExport = new ArrayList<>();
-        
+
         //Loop through the 'map' Cell array, converting each cell to it's 
         //string counterpart
-        for(int y = 0; y < map.length; y++) {
-            for (int x = 0; x < map[y].length; x++ ) {
+        for (int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[y].length; x++) {
                 //Switch case to add respective characters to the output string 
                 //depending on the cellType
-                if (null == map[y][x].getType()) {
+                if (map[x][y].getType() == null) {
                     mapExport.add(" ");
-                } else switch (map[y][x].getType()) {
-                    case WALL:
-                        mapExport.add("#");
-                        break;
-                    case GROUND:
-                        mapExport.add(" ");
-                        break;
-                    case FIRE:
-                        mapExport.add("F");
-                        break;
-                    case WATER:
-                        mapExport.add("W");
-                        break;
-                    case TELEPORTER:
-                        mapExport.add("T");
-                        break;
-                    case DOOR:
-                        mapExport.add("D");
-                        break;
-                    default:
-                        mapExport.add(" ");
-                        break;
+                } else {
+                    switch (map[x][y].getType()) {
+                        case WALL:
+                            mapExport.add("#");
+                            break;
+                        case GROUND:
+                            mapExport.add(" ");
+                            break;
+                        case FIRE:
+                            mapExport.add("F");
+                            break;
+                        case WATER:
+                            mapExport.add("W");
+                            break;
+                        case TELEPORTER:
+                            mapExport.add("T");
+                            break;
+                        case DOOR:
+                            mapExport.add("D");
+                            break;
+                        case GOAL:
+                            mapExport.add("!");
+                            break;
+                        default:
+                            mapExport.add(" ");
+                            break;
+                    }
                 }
             }
             //Add a delimiter for the filehandler to create a newline at
             mapExport.add("|");
         }
+        
+        //ADD IN LINES FOR EACH TELEPORTER, DOOR, ETC
+        
         //return the String array of the mapExport ArrayList
         return mapExport.toArray(new String[mapExport.size()]);
     }
@@ -126,62 +117,76 @@ public class MapController {
      *
      * @param playerLocation The player controller is used to access the
      * player's current location
+     * 
+     * @return 
      */
-    public void render(PlayerController playerLocation) {
-
-        for(int y = 0; y < map.length; y++) {
-            for (int x = 0; x < map[y].length; x++ ) {  
-                //canvas
-            }   
+    public GridPane renderMap(PlayerController playerLocation) {
+        
+        //Vector PlayerPos = playerLocation.getPlayerPos();
+        
+        //Loop through the map
+        for (int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[x].length; x++) {
+                //Check that there is a cell at this section of the map array
+                if (map[y][x].getType() == null) {
+                    System.out.println("Mapfile error at: (" + x + ", " + y + ")");
+                }
+                //If no error occurs; check cell type and add to the javaFX 
+                //gridPane accordingly
+                if (map[y][x].getType() == CellType.WALL) {
+                    //Get the wall asset Image from the AssetBuilder class
+                    String newAssetPath = assetUtil.getWallType(x, y);
+                    //Add the cell image to the GridPane
+                    mapGrid.add(map[y][x].render(newAssetPath), x, y, 1, 1);
+                } else {
+                    //Add the cell image to the GridPane
+                    mapGrid.add(map[y][x].render(), x, y, 1, 1);
+                }                
+                
+            }
         }
         
-        /*
+        return mapGrid;
         
-        Change to render whole map and then obscure hidden-from-view parts
-        Saves having to re-render each map (and wall) each move
-         
-        using JavaFX 'TilePane' Canvas canvas = new Canvas(800, 800);
-        
-        Have an x and y value for the canvas on which the map is rendered and
-        move the map instead of the player to maintain centred focus
-        
-        */
-        
-        //assetUtil.getWallType(x,y);
-        
+        //Have an x and y value for the GridPane on which the map is rendered and
+        //move the map instead of the player to maintain centred focus
+
     }
-    
+
     public void moveMap(Direction dir) {
-        
+
     }
-    
-    // /**
-    //  * getMapHeight is a method to return the height of the 2D map array
-    //  * @return 
-    //  */
-    // public final int getMapHeight(){
-    //     //Return the height of the map array
-    //     return map.length;
-    // }
-    // /**
-    //  * getMapWidth is a method to return the max width of the 2D map array
-    //  * @return 
-    //  */
-    // public final int getMapWidth(){
-        
-    //     int maxLength = 0;
-        
-    //     for(int x = 0; x < map.length; x++) {
-    //         int xLength = 0;
-    //         for (int y = 0; y < map[x].length; x++ ) {
-    //             xLength++;
-    //         } 
-    //         if (maxLength < xLength) {
-    //             maxLength = xLength;
-    //         }
-    //     }
-        
-    //     return maxLength;
-    // }
-    
+
+    /**
+     * getMapHeight is a method to return the height of the 2D map array
+     *
+     * @return
+     */
+    public final int getMapHeight() {
+        //Return the height of the map array
+        return map.length;
+    }
+
+    /**
+     * getMapWidth is a method to return the max width of the 2D map array
+     *
+     * @return
+     */
+    public final int getMapWidth() {
+
+        int maxLength = 0;
+
+        for (int y = 0; y < map.length; y++) {
+            int xLength = 0;
+            for (int x = 0; x < map[x].length; x++) {
+                xLength++;
+            }
+            if (maxLength < xLength) {
+                maxLength = xLength;
+            }
+        }
+
+        return maxLength;
+    }
+
 }
