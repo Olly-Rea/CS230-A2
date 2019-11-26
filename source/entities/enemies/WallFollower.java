@@ -47,7 +47,7 @@ public class WallFollower extends Enemy {
      * enemy.
      */
     public void algorithm(MapController map) {
-        Cell next = map.getCell(pos, dir);
+        Cell next = map.getNextCell(pos, dir);
         while (checkWall(map) && next.getType() == CellType.WALL) {
             turn(type.reverse());
         }
@@ -65,7 +65,7 @@ public class WallFollower extends Enemy {
      */
     private boolean checkWall(MapController map) {
         Direction checkDir = type == Rotation.ACW ? dir.acw() : dir.cw();
-        Cell checkCell = map.getCell(pos, checkDir);
+        Cell checkCell = map.getNextCell(pos, checkDir);
         return checkCell.getType() == CellType.WALL;
     }
 

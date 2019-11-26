@@ -57,7 +57,7 @@ public abstract class DumbTargeter extends Enemy {
 		// For any potential directions check whether that direction is a valid move
 		for (int i = 0; i < potential.size(); i++) {
 			Direction d = potential.get(i);
-			Cell next = map.getCell(pos, d);
+			Cell next = map.getNextCell(pos, d);
 			if (next.getType() == CellType.GROUND) {
 				dir = d;
 			}

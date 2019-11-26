@@ -56,12 +56,16 @@ public class SmartTargeter extends Enemy {
         while (!queue.isEmpty()) {
             Cell q = queue.poll(); // q = the next cell in the queue
             for (Direction d : Direction.values()) { // For all directions (UP/RIGHT/DOWN/LEFT)
-                Cell next = map.getCell(new Vector(q.x, q.y), d); // get the next cell
+                int x = q.getPos().getX();
+                int y = q.getPos().getY();
+                Cell next = map.getNextCell(new Vector(x, y), d); // get the next cell
+
                 if (next.getType() == CellType.GROUND) { // if the cell is of type GROUND
-                    int dist = distGrid[q.y][q.x] + 1; // distance is incremented by 1
+                    int dist = distGrid[y][x] + 1; // distance is incremented by 1
                     // if distGrid at next position is empty then add it to the queue & set to dist
-                    if (distGrid[next.y][next.x] == null) {
-                        distGrid[next.y][next.x] = dist;
+                    Integer val = distGrid[next.getPos().getY()][next.getPos().getX()];
+                    if (val == null) {
+                        val = dist;
                         queue.add(next);
                     }
                 }
@@ -80,7 +84,7 @@ public class SmartTargeter extends Enemy {
         // If the distGrid at the enemies position is 0 then do not move
         if (distGrid[pos.getY()][pos.getX()] != 0) {
             for (Direction d : Direction.values()) { // for all Directions (UP, RIGHT, DOWN, LEFT)
-                Cell next = map.getCell(new Vector(pos.getX(), pos.getY()), d); // get the next cell in that direction
+                Cell next = map.getNextCell(new Vector(pos.getX(), pos.getY()), d); // get the next cell in that direction
                 if (next.getType() == CellType.GROUND) { // Confirm it's a ground cell
                     Integer dist = distGrid[pos.getY() + d.Y][pos.getX() + d.X]; // check the distance at that cell in
                                                                                  // distGrid
