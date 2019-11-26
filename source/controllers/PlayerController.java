@@ -43,13 +43,14 @@ public class PlayerController {
 		} else if (dir == MOVES.DOWN) {
 			desired = new Vector(current.getX(), current.getY() - 1);
 		} else if (dir == MOVES.LEFT) {
-			desired = new Vector(current.getX() + 1, current.getY());
-		} else if (dir == MOVES.RIGHT) {
 			desired = new Vector(current.getX() - 1, current.getY());
+		} else if (dir == MOVES.RIGHT) {
+			desired = new Vector(current.getX() + 1, current.getY());
 		}
 		Cell desiredCell = mc.getCell(desired.getX(), desired.getY());
 		if (validMove(desiredCell)) {
 			player.setPos(desired);
+      // mc.render? Set new location to render around
 		}
 	}
 
@@ -119,7 +120,7 @@ public class PlayerController {
 	}
 
 	/**
-	 * Renders the players position
+	 * Renders the player
 	 *
 	 * @author xxxxx
 	 */

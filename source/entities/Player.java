@@ -36,7 +36,7 @@ public class Player extends Entity {
 	}
 
 	/**
-	 * Creates a player object form a int array
+	 * Creates a player object from a int array
 	 * {X,Y,fireShoes,flippers,tokens,red,green,blue,yellow}
 	 *
 	 * @param inventory
@@ -63,7 +63,7 @@ public class Player extends Entity {
 	/**
 	 * Adds an item to the players inventory
 	 *
-	 * @param Item The item to be added
+	 * @param Item
 	 */
 	public void addItem(Item item) {
 		ItemType add = item.getType();
@@ -104,7 +104,7 @@ public class Player extends Entity {
 	/**
 	 * Method to change the player's location
 	 *
-	 * @param The player's new vector
+	 * @param newPos player's new vector
 	 */
 	public void setPos(Vector newPos) {
 		this.pos = newPos;
@@ -113,7 +113,7 @@ public class Player extends Entity {
 	/**
 	 * Method to return the number of tokens in the player's inventory
 	 *
-	 * @return The number of tokens
+	 * @return tokens 
 	 */
 	public int getTokens() {
 		return tokens;
