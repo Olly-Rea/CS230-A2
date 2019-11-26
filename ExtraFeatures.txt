@@ -6,7 +6,7 @@ Laturn light is the 7x7 viewport
 Animations
 	- Particle effects
 	- Fire and water effects
-		- I believe this is possible via GIF files in JavaFX
+			- I believe this is possible via GIF files in JavaFX
 	- Goal/item pick-up animations
 
 In-and-out fade-to-black effect between levels
@@ -19,5 +19,5 @@ If teleporters were 'loose ground' so to speak;
 Torches in walls with 'lighting' effects (wall and floor check for wall-torch tile)
 	- 'lighting' demo-ed in Graphics Mk_2.1
 
-POSSIBLY very basic sound effects
-	- e.g. make a noise when trying to walk into a wall (audible feedback)
+'Dynamic' Rendering for light sources
+	- Implement ground tile bitmasking for different light positions

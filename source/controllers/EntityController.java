@@ -4,6 +4,7 @@ package controllers;
 * @version 1.1
 */
 import java.util.ArrayList;
+import entities.*;
 
 public class EntityController {
     private Entity[][] entityGrid;
@@ -76,6 +77,7 @@ public class EntityController {
      * Iterates through each enemy and moves them to their next position.
      * @param map the map will be passed through to each enemy to assist their next move calculation.
      */
+<<<<<<< HEAD
     public moveEnemies(MapController map) {
       private Vector enemyPos;
       private Vector newEnemyPos;
@@ -85,6 +87,10 @@ public class EntityController {
         entityGrid[newEnemyPos.x][newEnemyPos.y] == enemy.get(i);
         entityGrid[enemyPos.x][enemyPos.y] == " ";
       }
+=======
+    public void moveEnemies(MapController map) {
+
+>>>>>>> Master
     }
 
     /**
