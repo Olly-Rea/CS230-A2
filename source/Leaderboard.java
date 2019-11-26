@@ -7,7 +7,7 @@ import java.io.File;
 
 public class Leaderboard {
 	int levelNumber;
-	Profile[3] best;
+	Profile best;
 	
 	public void Leaderboard() {
 		
@@ -22,6 +22,6 @@ public class Leaderboard {
 	}
 	
 	public int loadTimes (File file) {
-		
+		return 0;
 	}
 }
