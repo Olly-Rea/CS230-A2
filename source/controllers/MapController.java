@@ -5,6 +5,7 @@ import utils.*;
 import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
 
+
 /**
  * MapController.java
  *
@@ -64,11 +65,11 @@ public class MapController {
         //Create the export String ArrayList
         ArrayList<String> mapExport = new ArrayList<>();
 
-        //Loop through the 'map' Cell array, converting each cell to it's
+        //Loop through the 'map' Cell array, converting each cell to it's 
         //string counterpart
         for (int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[y].length; x++) {
-                //Switch case to add respective characters to the output string
+                //Switch case to add respective characters to the output string 
                 //depending on the cellType
                 if (map[x][y].getType() == null) {
                     mapExport.add(" ");
@@ -113,64 +114,44 @@ public class MapController {
      *
      * @param playerLocation The player controller is used to access the
      * player's current location
-     *
-     * @return
+     * 
+     * @return 
      */
     public GridPane renderMap(PlayerController playerLocation) {
-
+        
         //Vector PlayerPos = playerLocation.getPlayerPos();
-
+        
         //Loop through the map
         for (int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[x].length; x++) {
                 //Check that there is a cell at this section of the map array
                 if (map[y][x].getType() == null) {
                     System.out.println("Mapfile error at: (" + x + ", " + y + ")");
-                //If no error occurs; check cell type and add to the javaFX
-                //gridPane accordingly
-                } else {
-                    switch (map[y][x].getType()) {
-                        case WALL:
-                            mapImg.add(Cell.render(AssetBuilder.getWallType(x, y)), x, y, 1, 1);
-                            break;
-                        case GROUND:
-                            mapImg.add(Cell.render(), x, y, 1, 1);
-                            break;
-                        case FIRE:
-                            mapImg.add(Cell.render(), x, y, 1, 1);
-                            break;
-                        case WATER:
-                            mapImg.add(Cell.render(), x, y, 1, 1);
-                            break;
-                        case TELEPORTER:
-                            mapImg.add(Cell.render(), x, y, 1, 1);
-                            break;
-                        case DOOR:
-                            mapImg.add(Cell.render(), x, y, 1, 1);
-                            break;
-                        case GOAL:
-                            mapImg.add(Cell.render(), x, y, 1, 1);
-                            break;
-                        default:
-                            mapImg.add(Cell.render(), x, y, 1, 1);
-                            break;
-                    }
                 }
+                //If no error occurs; check cell type and add to the javaFX 
+                //gridPane accordingly
+                if (map[y][x].getType() == CellType.WALL) {
+                    String newAssetPath = AssetBuilder.getWallType(x, y);
+                    mapImg.add(map[y][x].render(newAssetPath), x, y, 1, 1);
+                } else {
+                    mapImg.add(map[y][x].render(), x, y, 1, 1));
+                }                
+                
             }
         }
-
+        
         return mapImg;
 
         /*
-
+        
         Change to render whole map and then obscure hidden-from-view parts
         Saves having to re-render each map (and wall) each move
-
+         
         using JavaFX 'TilePane' Canvas canvas = new Canvas(800, 800);
-
+        
         Have an x and y value for the canvas on which the map is rendered and
         move the map instead of the player to maintain centred focus
-
+        
          */
         //assetUtil.getWallType(x,y);
     }
