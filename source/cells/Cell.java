@@ -10,13 +10,13 @@ public class Cell {
 
 	//The type of cell (i.e ground, wall)
 	private CellType type;
-        
+
         //The Vector for the Cell
-        Vector cellVector;
-        
+        protected final Vector cellPos;
+
         //The asset path for all cells
         private String assetPath = "../../assets/visuals/cells/";
-        
+
         //The JavaFX image that the asset image will be stored as
         private Image assetImg;
 
@@ -67,14 +67,14 @@ public class Cell {
 	 * Method to return the asset image as a JavaFX 'Image' for the cell
 	 */
 	public Image render() {
-            return assetImg;            
+            return assetImg;
 	}
         //Overloaded method to overwrite assetPath (used purely for wall cells atm)
 	public Image render(String assetPath) {
             assetImg = new Image(assetPath, true);
             return assetImg;
 	}
-        
+
 	/**
 	 * Gets the type of cell.
 	 *
@@ -83,7 +83,7 @@ public class Cell {
 	public CellType getType() {
             return type;
 	}
-        
+
         public Vector getVector() {
             return cellVector;
         }
