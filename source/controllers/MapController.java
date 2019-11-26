@@ -5,7 +5,6 @@ import utils.*;
 import java.util.ArrayList;
 import javafx.scene.layout.GridPane;
 
-
 /**
  * MapController.java
  *
@@ -22,7 +21,8 @@ public class MapController {
 
     // 2D array of cells that make up the game map
     private final Cell[][] map;
-    private GridPane mapImg = new GridPane();
+    private GridPane mapGrid = new GridPane();
+    AssetBuilder assetUtil;
 
     /**
      * MapController constructor; Instantiates a new MapController
@@ -31,7 +31,7 @@ public class MapController {
      */
     public MapController(Cell[][] cellArray) {
         map = cellArray;
-        AssetBuilder assetUtil = new AssetBuilder(map);
+        assetUtil = new AssetBuilder(map);
     }
 
     /**
@@ -52,7 +52,7 @@ public class MapController {
      * @param y The y value of the desired door
      */
     public void openDoor(int x, int y) {
-        map[x][y] = new Cell(CellType.GROUND);
+        map[y][x] = new Cell(CellType.GROUND, x, y);
     }
 
     /**
@@ -105,6 +105,9 @@ public class MapController {
             //Add a delimiter for the filehandler to create a newline at
             mapExport.add("|");
         }
+        
+        //ADD IN LINES FOR EACH TELEPORTER, DOOR, ETC
+        
         //return the String array of the mapExport ArrayList
         return mapExport.toArray(new String[mapExport.size()]);
     }
@@ -131,29 +134,23 @@ public class MapController {
                 //If no error occurs; check cell type and add to the javaFX 
                 //gridPane accordingly
                 if (map[y][x].getType() == CellType.WALL) {
-                    String newAssetPath = AssetBuilder.getWallType(x, y);
-                    mapImg.add(map[y][x].render(newAssetPath), x, y, 1, 1);
+                    //Get the wall asset Image from the AssetBuilder class
+                    String newAssetPath = assetUtil.getWallType(x, y);
+                    //Add the cell image to the GridPane
+                    mapGrid.add(map[y][x].render(newAssetPath), x, y, 1, 1);
                 } else {
-                    mapImg.add(map[y][x].render(), x, y, 1, 1));
+                    //Add the cell image to the GridPane
+                    mapGrid.add(map[y][x].render(), x, y, 1, 1);
                 }                
                 
             }
         }
         
-        return mapImg;
+        return mapGrid;
+        
+        //Have an x and y value for the GridPane on which the map is rendered and
+        //move the map instead of the player to maintain centred focus
 
-        /*
-        
-        Change to render whole map and then obscure hidden-from-view parts
-        Saves having to re-render each map (and wall) each move
-         
-        using JavaFX 'TilePane' Canvas canvas = new Canvas(800, 800);
-        
-        Have an x and y value for the canvas on which the map is rendered and
-        move the map instead of the player to maintain centred focus
-        
-         */
-        //assetUtil.getWallType(x,y);
     }
 
     public void moveMap(Direction dir) {

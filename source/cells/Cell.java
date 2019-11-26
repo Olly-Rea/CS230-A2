@@ -1,6 +1,7 @@
 package cells;
 
 import javafx.scene.image.Image;
+import utils.Vector;
 
 public class Cell {
 
@@ -9,21 +10,27 @@ public class Cell {
 
 	//The type of cell (i.e ground, wall)
 	private CellType type;
-
-	public final int x;
-	public final int y;
-        public String assetPath = "../../assets/visuals/cells/";
-        Image assetImg;
+        
+        //The Vector for the Cell
+        Vector cellVector;
+        
+        //The asset path for all cells
+        private String assetPath = "../../assets/visuals/cells/";
+        
+        //The JavaFX image that the asset image will be stored as
+        private Image assetImg;
 
 	/**
-	 * Instantiates a new cell.
+	 * Cell Constructor; Instantiates a new cell.
 	 *
 	 * @param type the type of cell being instantiated
+     * @param x
+     * @param y
 	 */
 	public Cell (CellType type, int x, int y) {
 		this.type = type;
-		this.x = x;
-		this.y = y;
+                cellVector = new Vector(x, y);
+                //Assign asset Image dependent on cell type
                 switch (this.type) {
                         case WALL:
                             assetPath += "wall_1" ;
@@ -32,22 +39,22 @@ public class Cell {
                             assetPath += "Floor_Dark";
                             break;
                         case FIRE:
-                            //assetPath += " " ;
+                            assetPath += "Fire" ;
                             break;
                         case WATER:
-                            //assetPath += " " ;
+                            assetPath += "Water" ;
                             break;
                         case TELEPORTER:
                             //assetPath += " " ;
                             break;
                         case DOOR:
-                            //assetPath += " " ;
+                            assetPath += "Boulder" ;
                             break;
                         case GOAL:
-                            //assetPath += " " ;
+                            assetPath += "Goal" ;
                             break;
                         default:
-                            //assetPath += " " ;
+                            assetPath += "Floor_Dark" ;
                             break;
                     }
                 //Add the filetype to the end of the path
@@ -60,9 +67,9 @@ public class Cell {
 	 * Method to return the asset image as a JavaFX 'Image' for the cell
 	 */
 	public Image render() {
-            return assetImg;
-            
+            return assetImg;            
 	}
+        //Overloaded method to overwrite assetPath (used purely for wall cells atm)
 	public Image render(String assetPath) {
             assetImg = new Image(assetPath, true);
             return assetImg;
@@ -74,6 +81,10 @@ public class Cell {
 	 * @return the type of cell in question
 	 */
 	public CellType getType() {
-            return null;
+            return type;
 	}
+        
+        public Vector getVector() {
+            return cellVector;
+        }
 }
