@@ -3,6 +3,7 @@ package entities;
 import controllers.MapController;
 import controllers.PlayerController;
 import utils.Vector;
+import entities.Entity;
 
 /**
  * An Enemy is a player-hostile entity that moves according to an algorithm
