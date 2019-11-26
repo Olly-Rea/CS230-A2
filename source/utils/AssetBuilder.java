@@ -44,18 +44,20 @@ public class AssetBuilder {
             WALL_MAP.put(254, "wall_46"); WALL_MAP.put(255, "wall_47");
 
         }
-    
+
     /**
      * Possible method to aid in implementation of 'lighting' effects
-     * @return 
+     *
+     * @return the path to the correct ground texture
      */
     public String groundCheck() {
         return "";
     }
-    
+
     /**
      * Possible Method to connect water textures
-     * @return 
+     *
+     * @return the path to the correct water texture
      */
     public String waterCheck() {
         return "";
@@ -69,40 +71,65 @@ public class AssetBuilder {
      * @param y The y value of the wall cell
      * @return the path to the correct wall texture
      */
-    public String getwallType(int x, int y) {
+    public String getWallType(int x, int y) {
 
         //Create the base of the path string
-        String basePath = "../../assets/cells/";
-               
+        String basePath = "../../assets/visuals/cells/";
         //Array reference value
         int wallRef = 0;
-        //Power value
-        int n = 0;
 
-        //Loop through the surrounding cells
-        for (int i = 1; i > -1; i--) {
-            for (int j = -1; j < 1; j++) {
-                //Check to ignore the center tile (the wall)
-                if (i == 2 && j == 1) {
-                    j++;
-                } else {
-                    //Add to the bitmask value if focused tile is a wall
-                    if (map[x + i][y + j].getType() == CellType.WALL) {
-                        wallRef += 1 << n;
-                    }
-                }
-                //Increment the power
-                n++;
-            }
+        //Top row
+        boolean NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
+        boolean North = map[y - 1][x].getType() == CellType.WALL;
+        boolean NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+        //Middle row
+        boolean West = map[y][x - 1].getType() == CellType.WALL;
+        boolean East = map[y][x + 1].getType() == CellType.WALL;
+        //Bottom row
+        boolean SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
+        boolean South = map[y + 1][x].getType() == CellType.WALL;
+        boolean SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+
+        //Top row
+        if (NorthWest && North && West) {
+            wallRef += 1;
+        }
+        if (North) {
+            wallRef += 1 << 1;
+        }
+        if (NorthEast && North && East) {
+            wallRef += 1 << 2;
         }
 
-        //If corner tiles have no surrounding tiles, ignore them
-        
-        //Also check for edge of map else indexOutOfBounds exception occurs
+        //Middle Row
+        if (West) {
+            wallRef += 1 << 3;
+        }
+        if (East) {
+            wallRef += 1 << 4;
+        }
 
-     
-        
+        //Bottom Row
+        if (SouthWest && South && West) {
+            wallRef += 1 << 5;
+        }
+        if (South) {
+            wallRef += 1 << 6;
+        }
+        if (SouthEast && South && East) {
+            wallRef += 1 << 7;
+        }
+
+        //Also check for edge of map else indexOutOfBounds exception occurs
+        //  - Check for y = 0 and x = 0 
         return basePath + WALL_MAP.get(wallRef) + ".jpg";
     }
+
+    /*
+    Need to apply bitmasking algorithm again in methods to 
+        - check floor cells for lighting effects 
+        - check for water tiles
     
+    Try and make the bitmasking method generic for all cell types
+     */
 }

@@ -1,43 +1,67 @@
 package cells;
 
-import com.sun.prism.paint.Color;
-
 public class Cell {
 
-	/** The size of the cell*/
-	public int size;
+    //The type of cell (i.e ground, wall)
+    private CellType type;
+    private String assetPath;
 
-	/** The colour of the cell. */
-	private Color colour;
+    /**
+     * Cell constructor; Instantiates a new cell.
+     *
+     * @param type the type of cell being instantiated
+     */
+    public Cell(CellType type) {
 
-	/** The type of cell (i.e ground, wall). */
-	private CellType type;
+    }
 
-	/**
-	 * Instantiates a new cell.
-	 *
-	 * @param type the type of cell being instantiated
-	 */
-	public Cell (CellType type) {
+    //Using a javaFX gridPane means we don't need an x or y value for the render method
+    
+    /**
+     * Method(s) to render the cell
+     */
+    public void render() {
+        //Funky JavaFX stuff - best to return a JavaFX object
+        switch (type) {
+            case WALL:
+                //
+                break;
+            case GROUND:
+                //
+                break;
+            case FIRE:
+                //
+                break;
+            case WATER:
+                //
+                break;
+            case TELEPORTER:
+                //
+                break;
+            case DOOR:
+                //
+                break;
+            case GOAL:
+                //
+                break;
+            default:
+                //
+                break;
+        }
 
-	}
+    }
+    //Second render method for special cases
+    public void render(String assetPath) {
+        this.assetPath = assetPath;
+        //Funky JavaFX stuff
+    }
 
-	/**
-	 * Renders the cell
-	 *
-	 * @param x the x coordinate where the cell is being placed
-	 * @param y the y coordinate where the cell is being placed
-	 */
-	public void render(int x, int y) {
-
-	}
-
-	/**
-	 * Gets the type of cell.
-	 *
-	 * @return the type of cell in question
-	 */
-	public CellType getType() {
-            return null;
-	}
+    /**
+     * Gets the type of cell.
+     *
+     * @return the type of cell in question
+     */
+    public CellType getType() {
+        return null;
+    }
 }

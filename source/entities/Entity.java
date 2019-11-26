@@ -1,5 +1,7 @@
 package entities;
 
+import utils.Vector;
+
 /**
  * @author James Hogg
  * @version 1.0 An Entity is a non-cell sometimes non-static object within the
@@ -11,15 +13,19 @@ public class Entity {
     /**
      * Holds the current position of the entity on the Map
      */
-    protected Vector Pos;
+    protected Vector pos;
 
+    public Entity() {
+        
+    }
+    
     /**
-     * Gets the current positon of the entity from the Map
+     * Gets the current position of the entity from the Map
      *
      * @return gives position as type Vector
      */
     public Vector getPos() {
-        return null;
+        return pos;
     }
 
     /**

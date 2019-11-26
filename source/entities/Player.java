@@ -1,5 +1,7 @@
 package entities;
 
+import utils.Vector;
+
 /**
 * Player.java
 * @version 1.0.0
@@ -43,7 +45,7 @@ public class Player extends Entity {
   * @return The player's vector
   */
   public Vector getPos (){
-    return Vector;
+    return super.pos;
   }
 
   /**
