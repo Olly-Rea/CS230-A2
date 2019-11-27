@@ -220,4 +220,21 @@ public class MapController {
         return maxLength;
     }
 
+    public static Cell makeCell(int x, int y, char c) {
+        switch (c) {
+            case '#' : return new Cell(CellType.WALL, x, y);
+            case ' ' : return new Cell(CellType.GROUND, x, y);
+            case 'T' : return new Teleporter(x, y);
+            case 'W' : return new Cell(CellType.WATER, x, y);
+            case 'F' : return new Cell(CellType.FIRE, x, y);
+            case 'G' : return new Cell(CellType.GOAL, x, y);
+            // case 'R' : return new Door(DoorType.RED, x, y); // TODO: Door implementation change
+            // case 'G' : return new Door(DoorType.GREEN, x, y); // TODO: Door implementation change
+            // case 'B' : return new Door(DoorType.BLUE, x, y); // TODO: Door implementation change
+            // case 'Y' : return new Door(DoorType.YELLOW, x, y); // TODO: Door implementation change
+            // case 'D' : return new Door(DoorType.TOKEN, x, y); // TODO: Door implementation change
+            default : return new Cell(CellType.GROUND, x, y);
+        }
+    }
+
 }
