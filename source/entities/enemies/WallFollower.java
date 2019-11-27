@@ -1,8 +1,8 @@
 package entities.enemies;
 
+//Local imports
 import cells.Cell;
 import cells.CellType;
-//Local imports
 import controllers.MapController;
 import utils.Direction;
 import utils.Rotation;
@@ -12,8 +12,9 @@ import entities.Enemy;
 import javafx.scene.image.Image;
 
 /**
- * A class describing a WallFollower Enemy which follows a wall anticlockwise or clockwise.
- * 
+ * A class describing a WallFollower Enemy which follows a wall anticlockwise or
+ * clockwise.
+ *
  * @author ???, Scott Barr
  */
 public class WallFollower extends Enemy {
@@ -32,7 +33,7 @@ public class WallFollower extends Enemy {
      *
      * @param pos the initial position of the enemy
      * @param dir the initial facing direction of the enemy
-     * @param type the type of enemy, anticlockwise or clockwise 
+     * @param type the type of enemy, anticlockwise or clockwise
      */
     public WallFollower(Vector pos, Direction dir, Rotation type) {
         super(pos);
@@ -52,14 +53,16 @@ public class WallFollower extends Enemy {
             turn(type.reverse());
         }
 
-        if (!checkWall(map)) turn(type);
+        if (!checkWall(map)) {
+            turn(type);
+        }
 
         this.pos.add(dir);
     }
 
     /**
      * Checks the wall based off the type of WallFollower and it's position
-     * 
+     *
      * @param map MapController used to find the cell in the direction needed
      * @return True if there is a wall, false if there is not a wall.
      */
@@ -71,12 +74,16 @@ public class WallFollower extends Enemy {
 
     /**
      * Turns the facing direction in the direction specified.
-     * 
+     *
      * @param rot the direction to turn
      */
     private void turn(Rotation rot) {
-        if (rot == Rotation.ACW) { dir = dir.acw(); }
-        if (rot == Rotation.CW) { dir = dir.cw(); }
+        if (rot == Rotation.ACW) {
+            dir = dir.acw();
+        }
+        if (rot == Rotation.CW) {
+            dir = dir.cw();
+        }
     }
 
     /**

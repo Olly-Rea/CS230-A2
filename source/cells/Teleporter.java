@@ -1,55 +1,59 @@
 package cells;
 
+//Local Imports
 import utils.Vector;
 
 /**
-* Teleporter.java
-* @version 1.0.0
-* @author Daniel Clenaghan
-*/
+ * Teleporter.java
+ *
+ * @version 1.0.0
+ * @author Daniel Clenaghan
+ */
 
 /**
  * The class for the cell type Teleporter. It will store a Vector for both
  * itself and a linked Teleporter
  */
-
 public class Teleporter extends Cell {
 
-	private Teleporter linkedTele; // Vector location of linked teleporter
+    private Vector position; // Vector location of this teleporter
+    private Vector linkedTele; // Vector location of linked teleporter
 
-	/**
-	 * Create a cell of type teleporter with a given position in the map
-	 */
-	public Teleporter(Vector position, int x, int y) {
-		super(CellType.TELEPORTER, x, y);
-	}
+    /**
+     * Create a cell of type Teleporter with a given position in the map
+     *
+     * @param position
+     * @param teleporter
+     */
+    public Teleporter(Vector position, cellType teleporter) {
+        super.cellType = TELEPORTER;
 
-	/**
-	 * Method to link two teleporters together
-	 * 
-	 * @param t1 The teleporter 1 to be linked with t2
-	 * @param t2 The teleporter 2 to be linked with t1
-	 */
-	public static void link(Teleporter t1, Teleporter t2) {
-		t1.linkedTele = t2;
-		t2.linkedTele = t1;
-	}
+    }
 
-	/**
-	 * Method to link two teleporters together
-	 * 
-	 * @param tele The teleporter to be linked
-	 */
-	public void linkTele(Vector tele) {
+    /**
+     * Method to link two Teleporters together
+     *
+     * @param tele The Teleporter to be linked
+     */
+    public void linkTele(Vector tele) {
 
-	}
+    }
 
-	/**
-	 * Method to get the linked teleporter's location
-	 * 
-	 * @return linkedTele The vector of the linked teleporter
-	 */
-	public Teleporter getLinked() {
-		return linkedTele;
-	}
+    /**
+     * Method to get the Teleporter's location
+     *
+     * @return position this Teleporter's location
+     */
+    public Vector getPos() {
+        return position;
+    }
+
+    /**
+     * Method to get the linked Teleporter's location
+     *
+     * @return linkedTele The vector of the linked Teleporter
+     */
+    public Vector getLinkedPos() {
+        return linkedTele;
+    }
 }

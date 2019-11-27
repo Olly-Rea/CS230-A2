@@ -1,25 +1,29 @@
 package controllers;
+
 /**
-* @author Scott Barr, James Hogg
-* @version 1.1
-*/
+ * @author Scott Barr, James Hogg
+ * @version 1.1
+ */
 import java.util.ArrayList;
 import entities.*;
+import utils.*;
 
 public class EntityController {
+
     private Entity[][] entityGrid;
     private ArrayList<Enemy> enemies;
     private ArrayList<String> items = new ArrayList<String>() {
-      {
-        add("r");
-        add("g");
-        add("b");
-        add("y");
-        add("w");
-        add("f");
-        add("*");
-      }
-    }
+        {
+            add("r");
+            add("g");
+            add("b");
+            add("y");
+            add("w");
+            add("f");
+            add("*");
+        }
+    };
+
     /**
      * Sets entityGrid and enemies
      *
@@ -31,29 +35,35 @@ public class EntityController {
     }
 
     /**
-     * Checks if the player is standing on a item. Add the item if an item collision
-     * has occurred.
+     * Checks if the player is standing on a item. Add the item if an item
+     * collision has occurred.
      *
      * @param player The Player object for position reference.
      */
     public void checkItem(Player player) {
-      private Vector playerPos = player.getPos();
-      for (int i; i < items.size(); i++) {
-        if entityGrid[playerPos.x][playerPos.y] == items.get(i) {
-          player.addItem(items.get(i));
-        }
-      }
+    private Vector playerPos = player.getPos();
+    for (int i;
 
+    i< items.size ();
+    i
+
+    
+        ++) {
+        if entityGrid[playerPos.x][playerPos.y] == items.get(i)    {
+            player.addItem(items.get(i));
+        }
     }
 
-    /**
-     * Checks whether a player has collided with an enemy.
-     *
-     * @param player The player object where the position will be checked in the
-     *               entityGrid.
-     * @return True if the player has collided with an enemy. False otherwise.
-     */
-    public boolean enemyCollision(Player player) {
+}
+
+/**
+ * Checks whether a player has collided with an enemy.
+ *
+ * @param player The player object where the position will be checked in the
+ * entityGrid.
+ * @return True if the player has collided with an enemy. False otherwise.
+ */
+public boolean enemyCollision(Player player) {
       private Vector playerPos = player.getPos();
       for (int i; i < enemies.size(); i++) {
         if entityGrid[playerPos.x][playerPos.y] == (enemies.get(i)).getPos() {

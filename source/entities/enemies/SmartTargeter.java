@@ -13,12 +13,12 @@ import javafx.scene.image.Image;
 
 /**
  * SmartTargeter class which always takes the path which leads to the Player.
- * 
+ *
  * @author Scott Barr
  */
 public class SmartTargeter extends Enemy {
-    
-	private static final Image SPRITE = new Image("...");
+
+    private static final Image SPRITE = new Image("...");
 
     private Direction dir;
     private Player player;
@@ -29,7 +29,7 @@ public class SmartTargeter extends Enemy {
     }
 
     /**
-     * 
+     *
      */
     public void render() {
     }
@@ -37,10 +37,10 @@ public class SmartTargeter extends Enemy {
     /**
      * Creates a distance grid which flood fills from the players position until
      * every possible connecting cell is filled.
-     * 
+     *
      * @param map The map containing the cells
-     * @return A 2d Array of integers the same size as the map filled with distances
-     *         from the Players position.
+     * @return A 2d Array of integers the same size as the map filled with
+     * distances from the Players position.
      */
     private Integer[][] makeDistGrid(MapController map) {
         // Initialise Variables
@@ -83,7 +83,7 @@ public class SmartTargeter extends Enemy {
                 Cell next = map.getCell(new Vector(pos.getX(), pos.getY()), d); // get the next cell in that direction
                 if (next.getType() == CellType.GROUND) { // Confirm it's a ground cell
                     Integer dist = distGrid[pos.getY() + d.Y][pos.getX() + d.X]; // check the distance at that cell in
-                                                                                 // distGrid
+                    // distGrid
                     // If minDist is null and dist isn't null then set minDist to be dist
                     // and set facing direction of the enemy to be the direction d
                     if (minDist == null && dist != null) {
