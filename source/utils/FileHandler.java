@@ -50,6 +50,22 @@ public class FileHandler {
     }
 
     /**
+     * Checks if the reader is at the end of file.
+     * 
+     * @return false if reader has reached the end of the file.
+     */
+    public boolean hasNext() {
+        try {
+            reader.mark(1);
+            int test = reader.read();
+            reader.reset();
+            return test > 0 ? true : false;
+        } catch (IOException e) {
+            return false; // TODO: Handle
+        }
+    }
+
+    /**
      * Method to save a file to a certain path and specific lines to write.
      * 
      * @param path Path to the file being created/written to
@@ -70,5 +86,4 @@ public class FileHandler {
             return false;
         }
     }
-
 }
