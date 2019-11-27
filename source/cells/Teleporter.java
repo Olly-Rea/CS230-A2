@@ -20,7 +20,7 @@ public class Teleporter extends Cell {
 	/**
 	 * Create a cell of type teleporter with a given position in the map
 	 */
-	public Teleporter(Vector position, int x, int y) {
+	public Teleporter(int x, int y) {
 		super(CellType.TELEPORTER, x, y);
 	}
 
