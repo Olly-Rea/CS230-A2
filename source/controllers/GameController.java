@@ -38,7 +38,7 @@ public class GameController {
     }
 
     /**
-     * Creates a 2d Entity Map and Cell Map and stores the 
+     * Creates a 2d Entity Map and Cell Map and stores them in the mapController and entityController
      *
      * @param fh The Handler reading the Map/LoadFile
      * @return A 2d array of cells to construct the MapController with
@@ -60,9 +60,24 @@ public class GameController {
                 entityMap[y][x] = EntityController.makeEntity(x, y, c);
             }
         }
+        sc.close();
 
         mapController = new MapController(map, mapWidth, mapHeight);
         entityController = new EntityController(entityMap);
+    }
+
+    private void handleSpecific(String line) {
+        Scanner sc = new Scanner(line);
+        sc.useDelimiter(" ");
+        String keyword = sc.next();
+
+        switch (keyword) {
+        case "PLAYER":
+            playerController = new PlayerController(EntityController.makePlayer(sc));
+            break;
+        case "ENEMY":
+            entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
+        }
     }
 
     /**
@@ -73,6 +88,11 @@ public class GameController {
     public void loadGame(String path) {
         FileHandler fh = new FileHandler(path);
         makeControllers(fh);
+
+        // Specific Details
+        while (fh.hasNext()) {
+            handleSpecific(fh.nextLine());
+        }
     }
 
     /**
