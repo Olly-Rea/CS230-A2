@@ -7,21 +7,21 @@ import java.io.File;
 
 public class Leaderboard {
 	int levelNumber;
-	Profile[3] best;
-	
+	Profile best;
+
 	public void Leaderboard() {
-		
+
 	}
-	
+
 	public void setLevelNumber (int levelNumber) {
 		this.levelNumber = levelNumber;
 	}
-	
+
 	public int getLevelNumber () {
 		return levelNumber;
 	}
-	
+
 	public int loadTimes (File file) {
-		
+		return 0;
 	}
 }
