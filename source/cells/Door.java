@@ -1,9 +1,7 @@
 package cells;
 
 import entities.Player;
-import javafx.scene.paint.Color;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Door.
  *
