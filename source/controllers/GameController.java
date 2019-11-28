@@ -1,8 +1,6 @@
 package controllers;
 
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.transform.Scale;
@@ -77,7 +75,13 @@ public class GameController {
             break;
         case "ENEMY":
             entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
+            break;
+        case "TELEPORTER" : 
+            mapController.linkTeleporters(sc);
+            break;
         }
+
+        sc.close();
     }
 
     /**
