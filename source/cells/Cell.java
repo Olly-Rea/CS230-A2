@@ -1,90 +1,49 @@
-package cells;
-
-import javafx.scene.image.Image;
-import utils.Vector;
+import com.sun.prism.paint.Color;
 
 public class Cell {
-
-	//The size of the cell
-	public static final int SIZE = 10000000;
-
-	//The type of cell (i.e ground, wall)
+	
+	/** The size of the cell*/
+	public int size;
+	
+	/** The colour of the cell. */
+	private Color colour;
+	
+	/** The type of cell (i.e ground, wall). */
 	private CellType type;
-        
-        //The Vector for the Cell
-        Vector cellVector;
-        
-        //The asset path for all cells
-        private String assetPath = "../../assets/visuals/cells/";
-        
-        //The JavaFX image that the asset image will be stored as
-        private Image assetImg;
-
+	
+	
+	private ColouredDoorType doorType;
+	
 	/**
-	 * Cell Constructor; Instantiates a new cell.
+	 * Instantiates a new cell.
 	 *
 	 * @param type the type of cell being instantiated
-     * @param x
-     * @param y
 	 */
-	public Cell (CellType type, int x, int y) {
+	public Cell (CellType type) {
 		this.type = type;
-                cellVector = new Vector(x, y);
-                //Assign asset Image dependent on cell type
-                switch (this.type) {
-                        case WALL:
-                            assetPath += "wall_1" ;
-                            break;
-                        case GROUND:
-                            assetPath += "Floor_Dark";
-                            break;
-                        case FIRE:
-                            assetPath += "Fire" ;
-                            break;
-                        case WATER:
-                            assetPath += "Water" ;
-                            break;
-                        case TELEPORTER:
-                            //assetPath += " " ;
-                            break;
-                        case DOOR:
-                            assetPath += "Boulder" ;
-                            break;
-                        case GOAL:
-                            assetPath += "Goal" ;
-                            break;
-                        default:
-                            assetPath += "Floor_Dark" ;
-                            break;
-                    }
-                //Add the filetype to the end of the path
-                assetPath += ".jpg";
-                //Create the asset Image for the render method
-                assetImg = new Image(assetPath, true);
 	}
+	
+	public Cell(ColouredDoorType type) {
+		this.doorType = type;
+	}
+	
 
 	/**
-	 * Method to return the asset image as a JavaFX 'Image' for the cell
+	 * Renders the cell
+	 *
+	 * @param x the x coordinate where the cell is being placed
+	 * @param y the y coordinate where the cell is being placed
 	 */
-	public Image render() {
-            return assetImg;            
+	public void render(int x, int y) {
+		
 	}
-        //Overloaded method to overwrite assetPath (used purely for wall cells atm)
-	public Image render(String assetPath) {
-            assetImg = new Image(assetPath, true);
-            return assetImg;
-	}
-        
+	
 	/**
 	 * Gets the type of cell.
 	 *
 	 * @return the type of cell in question
 	 */
 	public CellType getType() {
-            return type;
+		return type;
 	}
-        
-        public Vector getVector() {
-            return cellVector;
-        }
 }
