@@ -3,6 +3,7 @@ package controllers;
 import javafx.scene.input.KeyEvent;
 import java.util.Scanner;
 import cells.Cell;
+import entities.Entity;
 import misc.Profile;
 import utils.FileHandler;
 
@@ -39,23 +40,26 @@ public class GameController {
      * @param fh The Handler reading the Map/LoadFile
      * @return A 2d array of cells to construct the MapController with
      */
-    private Cell[][] createCells(FileHandler fh) {
+    private void makeControllers(FileHandler fh) {
         String init = fh.nextLine();
         Scanner sc = new Scanner(init);
         int mapWidth = sc.nextInt();
         int mapHeight = sc.nextInt();
 
         Cell[][] map = new Cell[mapHeight][mapWidth];
+        Entity[][] entityMap = new Entity[mapHeight][mapWidth];
 
         for (int y = 0; y < mapHeight; y++) {
             String row = fh.nextLine();
             for (int x = 0; x < mapWidth; x++) {
                 char c = row.charAt(x);
                 map[y][x] = MapController.makeCell(x,y,c);
+
+                
             }
         }
         
-        return map;
+        mapController = new MapController(map, mapWidth, mapHeight);
     }
 
     /**
@@ -64,7 +68,12 @@ public class GameController {
      */
     public void loadGame(String path) {
         FileHandler fh = new FileHandler(path);
-        Cell[][] map = createCells(fh);
+        makeControllers(fh);
+
+        // Go through Extra details
+        while (fh.hasNext()) {
+
+        }
         
         // First load map into map controller
         // Load player 

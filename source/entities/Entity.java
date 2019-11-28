@@ -20,8 +20,8 @@ public abstract class Entity {
      *
      * @param pos The position at which the entity will be created
      */
-    public Entity(Vector pos) { 
-        this.pos = pos;
+    public Entity(int x, int y) { 
+        this.pos = new Vector(x, y);
     }
 
     /**
