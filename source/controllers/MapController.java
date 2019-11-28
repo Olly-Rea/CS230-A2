@@ -5,6 +5,8 @@ import cells.*;
 import utils.*;
 //Java imports
 import java.util.ArrayList;
+import java.util.Scanner;
+
 //JavaFX imports
 import javafx.scene.layout.GridPane;
 
@@ -216,6 +218,16 @@ public class MapController {
                 y = 0;
         }
 
+    }
+
+    public void linkTeleporters(Scanner sc) {
+        int x1 = sc.nextInt();
+        int y1 = sc.nextInt();
+        int x2 = sc.nextInt();
+        int y2 = sc.nextInt();
+        Teleporter t1 = (Teleporter) map[y1][x1];
+        Teleporter t2 = (Teleporter) map[y2][x2];
+        Teleporter.link(t1,t2);
     }
 
     /**
