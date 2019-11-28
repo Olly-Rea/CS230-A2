@@ -26,23 +26,19 @@ public class PlayerController {
 	 * @author Danny
 	 */
 	public void move(Direction dir, MapController mc) {
-		Vector current = getPlayerPos();
-		// Find cell to be tested
-		Vector desired = null;
-		if (dir == Direction.UP) {
-			desired = new Vector(current.getX(), current.getY() + 1);
-		} else if (dir == Direction.DOWN) {
-			desired = new Vector(current.getX(), current.getY() - 1);
-		} else if (dir == Direction.LEFT) {
-			desired = new Vector(current.getX() - 1, current.getY());
-		} else if (dir == Direction.RIGHT) {
-			desired = new Vector(current.getX() + 1, current.getY());
+		Cell target = mc.getNextCell(player.getPos(), dir);
+		if (target.getType() == CellType.DOOR) {
+			if (((Door)target).isOpenable(player)) {
+				mc.openDoor(player.getPos().getX(), player.getPos().getY());
+			}
 		}
-		Cell desiredCell = mc.getCell(desired.getX(), desired.getY());
-		// If move is valid, update map
-		if (validMove(desiredCell)) {
-			player.setPos(desired);
-			// mc.moveMap(dir);
+
+		if (validMove(target)) {
+			Vector pos = player.getPos();
+			if (target.getType() == CellType.TELEPORTER) {
+				pos = ((Teleporter)target).getLinked().getPos();
+			} 
+			player.setPos(new Vector(pos.getX() + dir.X, pos.getY() + dir.Y));
 		}
 	}
 
@@ -56,31 +52,11 @@ public class PlayerController {
 	 */
 	private boolean validMove(Cell targetCell) {
 		CellType moveType = targetCell.getType();
-		Boolean valid = null;
-		if (moveType == (CellType.GROUND) || moveType == (CellType.FIRE) || moveType == (CellType.WATER)) {
-			valid = true;
-		} else if (moveType == (CellType.TELEPORTER)) {
-			// valid = false but calls map and player to update location separately?
-			// player.setPos(Cell.getLinkedPos());
-		} else if (moveType == (CellType.DOOR)) {
-			Door targetDoor = ((Door) targetCell);
-			if (targetDoor.getDoorType() == DoorType.RED) {
-				Item redKey = new Item(ItemType.REDKEY, 0, 0);
-				valid = player.useItem(redKey);
-			} else if (targetDoor.getDoorType() == DoorType.BLUE) {
-				Item blueKey = new Item(ItemType.BLUEKEY, 0, 0);
-				valid = player.useItem(blueKey);
-			} else if (targetDoor.getDoorType() == DoorType.YELLOW) {
-				Item yellowKey = new Item(ItemType.YELLOWKEY, 0, 0);
-				valid = player.useItem(yellowKey);
-			} else if (targetDoor.getDoorType() == DoorType.GREEN) {
-				Item greenKey = new Item(ItemType.GREENKEY, 0, 0);
-				valid = player.useItem(greenKey);
-			} else if (targetDoor.getDoorType() == DoorType.TOKEN) {
-				valid = player.useTokens(((Door) targetCell).getTokens());
-			}
+		switch (moveType) {
+			case WALL : return false;
+			case DOOR : return false;
+			default : return true;
 		}
-		return valid;
 	}
 
 	/**

@@ -42,7 +42,7 @@ public class Player extends Entity {
 	 * @param inventory
 	 */
 	public Player(int[] inventory) {
-		super(inventory[0], inventory[1]));
+		super(inventory[0], inventory[1]);
 		if (inventory[2] == 1) {
 			this.hasFireBoots = true;
 		} else {
