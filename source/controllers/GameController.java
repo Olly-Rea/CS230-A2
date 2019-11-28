@@ -121,7 +121,7 @@ public class GameController {
      */
     public void gameStep(KeyEvent ke) {
 
-
+      // Move player
       switch (ke.getCode()) {
         case RIGHT:
           playerController.move(Direction.RIGHT, mapController);
@@ -141,6 +141,10 @@ public class GameController {
         default:
           // Do nothing
           break;
+
+      // Move enemy
+        entityController.moveEnemies(map);
+
 
           // Check if player is dead
 
