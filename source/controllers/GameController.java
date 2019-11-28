@@ -54,12 +54,12 @@ public class GameController {
             for (int x = 0; x < mapWidth; x++) {
                 char c = row.charAt(x);
                 map[y][x] = MapController.makeCell(x,y,c);
-
-                
+                entityMap[y][x] = EntityController.makeEntity(x, y, c);                
             }
         }
         
         mapController = new MapController(map, mapWidth, mapHeight);
+        entityController = new EntityController(entityMap, null);
     }
 
     /**
