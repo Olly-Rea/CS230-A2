@@ -91,12 +91,12 @@ public class AssetBuilder {
     public String getWallType(int x, int y) {
 
         //Create the base of the path string
-        String basePath = "../../assets/visuals/cells/walls/";
+        String basePath = "./assets/visuals/cells/walls/";
         //Array reference value
         int wallRef = 0;
 
         //Check for edge of map to prevent indexOutOfBounds exception
-        if ((x > 1 && x < map[y].length) || (y > 1 && y < map.length)) {
+        if ((x >= 1 && x < map[y].length-1) && (y >= 1 && y < map.length-1)) {
 
             //Top row
             boolean NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
@@ -142,7 +142,7 @@ public class AssetBuilder {
 
         } else {
             //Set the map edges as map asset 1
-            wallRef = 1;
+            wallRef = 0;
         }
 
         return basePath + WALL_MAP.get(wallRef) + ".jpg";

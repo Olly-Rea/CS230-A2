@@ -2,6 +2,11 @@ package cells;
 
 //Local imports
 import utils.Vector;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 //JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,7 +18,7 @@ public class Cell {
     //The Vector for the Cell
     protected final Vector cellPos;
     //The asset path for all cells
-    private String assetPath = "../../assets/visuals/cells/";
+    private String assetPath = "./assets/visuals/cells/";
     //The JavaFX image that the asset image will be stored as
     private Image assetImg;
 
@@ -30,7 +35,7 @@ public class Cell {
         //Assign asset Image dependent on cell type
         switch (this.type) {
             case WALL:
-                assetPath += "wall_1";
+                assetPath += "walls/wall_1";
                 break;
             case GROUND:
                 assetPath += "Floor_Dark";
@@ -57,7 +62,11 @@ public class Cell {
         //Add the filetype to the end of the path
         assetPath += ".jpg";
         //Create the asset Image for the render method
-        assetImg = new Image(assetPath, true);
+        try {
+            assetImg = new Image(new FileInputStream(assetPath));
+        } catch (FileNotFoundException e) {
+
+        }
     }
 
     /**
@@ -73,9 +82,13 @@ public class Cell {
 
     //Overloaded method to overwrite assetPath (used purely for wall cells atm)
     public ImageView render(String assetPath) {
-        assetImg = new Image(assetPath, true);
-        ImageView imageNode = new ImageView();
-        imageNode.setImage(assetImg);
+        try {
+            assetImg = new Image(new FileInputStream(assetPath));
+        } catch (FileNotFoundException e) {
+            return null;
+        }
+
+        ImageView imageNode = new ImageView(assetImg);
         return imageNode;
     }
 

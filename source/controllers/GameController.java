@@ -1,6 +1,12 @@
 package controllers;
 
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.transform.Scale;
+
 import java.util.Scanner;
 import cells.Cell;
 import entities.Entity;
@@ -28,7 +34,7 @@ public class GameController {
      *
      */
     public GameController() {
-        loadGame("./source/map.txt");
+        loadGame("./savefiles/Test_File.txt");
     }
 
     /**
@@ -67,15 +73,6 @@ public class GameController {
     public void loadGame(String path) {
         FileHandler fh = new FileHandler(path);
         makeControllers(fh);
-
-        // Go through Extra details
-        while (fh.hasNext()) {
-
-        }
-
-        // First load map into map controller
-        // Load player
-        // Load Additional
     }
 
     /**
@@ -147,5 +144,12 @@ public class GameController {
      */
     private void nextLevel() {
 
+    }
+
+    public void render(Group root) {
+        GridPane image = mapController.renderMap();
+        image.getTransforms().add(new Scale(0.3, 0.3, 0, 0));
+
+        root.getChildren().add(image);
     }
 }

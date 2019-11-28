@@ -166,12 +166,12 @@ public class MapController {
      *
      * @return
      */
-    public GridPane renderMap(PlayerController playerLocation) {
+    public GridPane renderMap() {
 
         // Vector PlayerPos = playerLocation.getPlayerPos();
         // Loop through the map
         for (int y = 0; y < map.length; y++) {
-            for (int x = 0; x < map[x].length; x++) {
+            for (int x = 0; x < map[y].length; x++) {
                 // Check that there is a cell at this section of the map array
                 if (map[y][x].getType() == null) {
                     System.out.println("Mapfile error at: (" + x + ", " + y + ")");
@@ -237,7 +237,7 @@ public class MapController {
                 return new Cell(CellType.WATER, x, y);
             case 'F':
                 return new Cell(CellType.FIRE, x, y);
-            case 'G':
+            case '!':
                 return new Cell(CellType.GOAL, x, y);
             // case 'R' : return new Door(DoorType.RED, x, y); // TODO: Door implementation change
             // case 'G' : return new Door(DoorType.GREEN, x, y); // TODO: Door implementation change
