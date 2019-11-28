@@ -4,22 +4,22 @@ import entities.*;
 import cells.*;
 import utils.*;
 
-/**ss
+/**
  * Class to handle player movement and rendering
- *s
+ *
  * @author Scott, Danny
  */
 public class PlayerController {
 
-    public static enum MOVES {
-        UP, RIGHT, DOWN, LEFT
-    }
+	public static enum MOVES {
+		UP, RIGHT, DOWN, LEFT
+	}
 
-    private Player player;
+	private Player player;
 
-  public Player getPlayer(){
-    return player;
-  }
+	public Player getPlayer() {
+		return player;
+	}
 
 	/**
 	 * Takes a direction and determines if the player can move into the desired cell
@@ -31,7 +31,8 @@ public class PlayerController {
 	 */
 	public void move(MOVES dir, MapController mc) {
 		Vector current = getPlayerPos();
-		Vector desired;
+		// Find cell to be tested
+		Vector desired = null;
 		if (dir == MOVES.UP) {
 			desired = new Vector(current.getX(), current.getY() + 1);
 		} else if (dir == MOVES.DOWN) {
@@ -42,9 +43,10 @@ public class PlayerController {
 			desired = new Vector(current.getX() + 1, current.getY());
 		}
 		Cell desiredCell = mc.getCell(desired.getX(), desired.getY());
+		// If move is valid, update map
 		if (validMove(desiredCell)) {
 			player.setPos(desired);
-      mc.moveMap(dir);
+			// mc.moveMap(dir);
 		}
 	}
 
@@ -57,81 +59,81 @@ public class PlayerController {
 	 * @author Danny
 	 */
 	private boolean validMove(Cell targetCell) {
-		CellType move = targetCell.getType();
+		CellType moveType = targetCell.getType();
 		Boolean valid = null;
-		if (move == (CellType.GROUND) || move == (CellType.FIRE) || move == (CellType.WATER)) {
+		if (moveType == (CellType.GROUND) || moveType == (CellType.FIRE) || moveType == (CellType.WATER)) {
 			valid = true;
-    } else if (move == (CellType.TELEPORTER)) {
-			// valid = true;
+		} else if (moveType == (CellType.TELEPORTER)) {
+			// valid = false but calls map and player to update location separately?
 			// player.setPos(Cell.getLinkedPos());
-		} else if (move == (CellType.Door)) {
-      if (move.ReplaceThis() == RED){
-			   Item redKey = new Item(ItemType.REDKEY);
-			      valid = player.useItem(redKey);
-      } else if (move.ReplaceThis() == BLUE){
-        Item blueKey = new Item(ItemType.BLUEKEY);
-  			   valid = player.useItem(blueKey);
-      } else if (move.ReplaceThis() == YELLOW){
-        Item blueKey = new Item(ItemType.BLUEKEY);
-  			valid = player.useItem(blueKey);
-      } else if (move.ReplaceThis() == GREEN){
-        Item greenKey = new Item(ItemType.GREENKEY);
-  			valid = player.useItem(greenKey);
-      } else if (move.ReplaceThis() == TOKEN){
-        valid = player.useTokens(move.GETTOKENNUMBER());
-      }
+		} else if (moveType == (CellType.DOOR)) {
+			Door targetDoor = ((Door) targetCell);
+			if (targetDoor.getDoorType() == DoorType.RED) {
+				Item redKey = new Item(ItemType.REDKEY, 0, 0);
+				valid = player.useItem(redKey);
+			} else if (targetDoor.getDoorType() == DoorType.BLUE) {
+				Item blueKey = new Item(ItemType.BLUEKEY, 0, 0);
+				valid = player.useItem(blueKey);
+			} else if (targetDoor.getDoorType() == DoorType.YELLOW) {
+				Item yellowKey = new Item(ItemType.YELLOWKEY, 0, 0);
+				valid = player.useItem(yellowKey);
+			} else if (targetDoor.getDoorType() == DoorType.GREEN) {
+				Item greenKey = new Item(ItemType.GREENKEY, 0, 0);
+				valid = player.useItem(greenKey);
+			} else if (targetDoor.getDoorType() == DoorType.TOKEN) {
+				valid = player.useTokens(((Door) targetCell).getTokens());
+			}
+		}
 		return valid;
 	}
- }
 
+	/**
+	 * Check if the cell requires a shoe type and if the player posseses it
+	 *
+	 * @param cell the cell being checked against the player, if a certain item is
+	 *             required for that cell type
+	 * @return a boolean value, if true, the player is on a block which kills the
+	 *         player, otherwise player is still alive
+	 * @author Danny
+	 */
+	public boolean checkStatus(Cell cell) {
+		Boolean isDead = false;
+		if (cell.getType() == CellType.FIRE) {
+			if (player.hasFireBoots() == false) {
+				isDead = true;
+			}
+		} else if (cell.getType() == CellType.WATER) {
+			if (player.hasFlippers() == false) {
+				isDead = true;
+			}
+		}
+		return isDead;
+	}
 
-    /**
-     * Check if the cell requires a shoe type and if the player posseses it
-     *
-     * @param cell the cell being checked against the player, if a certain item
-     * is required for that cell type
-     * @return a boolean value, if true, the player is on a block which kills
-     * the player, otherwise player is still alive
-     * @author Danny
-     */
-    public boolean checkStatus(Cell cell) {
-        Boolean isDead = false;
-        if (cell.getType() == CellType.FIRE) {
-            if (player.hasFireBoots() == false) {
-                isDead = true;
-            }
-        } else if (cell.getType() == CellType.WATER) {
-            if (player.hasFlippers() == false) {
-                isDead = true;
-            }
-        }
-        return isDead;
-    }
+	/**
+	 * @return Returns the vector of the players current position
+	 * @author Danny
+	 */
+	public Vector getPlayerPos() {
+		return player.getPos();
+	}
 
-    /**
-     * @return Returns the vector of the players current position
-     * @author Danny
-     */
-    public Vector getPlayerPos() {
-        return player.getPos();
-    }
+	/**
+	 * Renders the player
+	 *
+	 * @author xxxxx
+	 */
+	public void render() {
+	}
 
-    /**
-     * Renders the player
-     *
-     * @author xxxxx
-     */
-    public void render() {
-    }
-
-    /**
-     * Method to get a int array {X,Y,fireShoes, flippers,tokens, red,
-     * green,blue,yellow}
-     *
-     * @return an array of ints representing the players position and inventory
-     * @author Danny
-     */
-    public int[] export() {
-        return player.export();
-    }
+	/**
+	 * Method to get a int array {X,Y,fireShoes, flippers,tokens, red,
+	 * green,blue,yellow}
+	 *
+	 * @return an array of ints representing the players position and inventory
+	 * @author Danny
+	 */
+	public int[] export() {
+		return player.export();
+	}
 }

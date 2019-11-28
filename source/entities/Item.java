@@ -12,7 +12,7 @@ public class Item extends Entity{
 		super(x,y);
 		this.type = type;
 	}
-
+	
 	/**
 	 * Gets the type of item in question.
 	 *
