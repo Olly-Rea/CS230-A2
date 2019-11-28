@@ -5,7 +5,7 @@ public abstract class Door extends Cell {
 		super(type);
 		// TODO Auto-generated constructor stub
 		thi
-		
+
 	}
-	
+
 }
