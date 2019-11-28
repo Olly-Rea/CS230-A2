@@ -23,6 +23,9 @@ public abstract class Entity {
     public Entity(int x, int y) {
         this.pos = new Vector(x, y);
     }
+    public Entity(Vector pos) {
+        this.pos = pos);
+    }
 
     /**
      * Gets the current position of the entity from the Map

@@ -17,7 +17,7 @@ public abstract class Enemy extends Entity {
      * Constructs an enemy
      */
     public Enemy(Vector pos) {
-        super(pos.getX(), pos.getY());
+        super(pos);
     }
 
     /**
