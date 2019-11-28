@@ -141,7 +141,7 @@ public class EntityController {
     public static Player makePlayer(Scanner line) {
         int x = line.nextInt();
         int y = line.nextInt();
-        return new Player(x, y);
+        return new Player(new Vector(x, y));
     }
 
     /**
