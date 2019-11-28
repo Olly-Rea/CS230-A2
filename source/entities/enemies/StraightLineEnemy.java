@@ -31,7 +31,7 @@ public class StraightLineEnemy extends Enemy {
 	 * @param map the map
 	 */
 	public void algorithm(MapController map) {
-		Cell next = map.getCell(pos, dir);
+		Cell next = map.getNextCell(pos, dir);
 		if (next.getType() == CellType.WALL) {
 			dir = dir.cw().cw();
 		}

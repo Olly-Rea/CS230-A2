@@ -214,8 +214,11 @@ public class Player extends Entity {
 				yellowKeys };
 		return playerSave;
 	}
-	
+
+	/**
+	 * Method to render the player to the screen.
+	 */
 	public void render() {
-		
+
 	}
 }
