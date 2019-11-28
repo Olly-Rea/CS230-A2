@@ -90,60 +90,196 @@ public class AssetBuilder {
      */
     public String getWallType(int x, int y) {
 
-        //Create the base of the path string
+        // Create the base of the path string
         String basePath = "./assets/visuals/cells/walls/";
-        //Array reference value
+        // Array reference value
         int wallRef = 0;
 
-        //Check for edge of map to prevent indexOutOfBounds exception
-        if ((x >= 1 && x < map[y].length-1) && (y >= 1 && y < map.length-1)) {
+        // Top row booleans
+        boolean NorthWest = false;
+        boolean North = false;
+        boolean NorthEast = false;
+        // Middle row booleans
+        boolean West = false;
+        boolean East = false;
+        // Bottom row booleans
+        boolean SouthWest = false;
+        boolean South = false;
+        boolean SouthEast = false;
+        
+        // Check ALL 4 corners of the map
+        
+        // Top-Left corner
+        if (y == 0 && x == 0) {
+            
+            //Edge-case top row is always true
+            NorthWest = true;
+            North = true;
+            NorthEast = true;
+            //Calc middle row
+            West = true;
+            East = map[y][x + 1].getType() == CellType.WALL;
+            //Calc bottom row
+            SouthWest = true;
+            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+        
+        // Top-Right corner
+        } else if (y == 0 && x == map[y].length - 1) {
+            
+            //Edge-case top row is always true
+            NorthWest = true;
+            North = true;
+            NorthEast = true;
+            //Calc middle row
+            West = map[y][x - 1].getType() == CellType.WALL;
+            East = true;
+            //Calc bottom row
+            SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
+            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthEast = true;
 
-            //Top row
-            boolean NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
-            boolean North = map[y - 1][x].getType() == CellType.WALL;
-            boolean NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
-            //Middle row
-            boolean West = map[y][x - 1].getType() == CellType.WALL;
-            boolean East = map[y][x + 1].getType() == CellType.WALL;
-            //Bottom row
-            boolean SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
-            boolean South = map[y + 1][x].getType() == CellType.WALL;
-            boolean SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+        //Bottom-Left corner
+        } else if (y == map.length - 1 && x == 0) {
 
-            //Top row
-            if (NorthWest && North && West) {
-                wallRef += 1;
-            }
-            if (North) {
-                wallRef += 1 << 1;
-            }
-            if (NorthEast && North && East) {
-                wallRef += 1 << 2;
-            }
+            //Edge-case top row is always true
+            NorthWest = true;
+            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+            //Calc middle row
+            West = true;
+            East = map[y][x + 1].getType() == CellType.WALL;
+            //Calc bottom row
+            SouthWest = true;
+            South = true;
+            SouthEast = true;
 
-            //Middle Row
-            if (West) {
-                wallRef += 1 << 3;
-            }
-            if (East) {
-                wallRef += 1 << 4;
-            }
+        //Bottom-Right corner
+        } else if (y == map.length - 1 && x == map[y].length - 1) {
 
-            //Bottom Row
-            if (SouthWest && South && West) {
-                wallRef += 1 << 5;
-            }
-            if (South) {
-                wallRef += 1 << 6;
-            }
-            if (SouthEast && South && East) {
-                wallRef += 1 << 7;
-            }
+            //Edge-case top row is always true
+            NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
+            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthEast = true;
+            //Calc middle row
+            West = map[y][x - 1].getType() == CellType.WALL;
+            East = true;
+            //Calc bottom row
+            SouthWest = true;
+            South = true;
+            SouthEast = true;
+            
+        // Check for 'y = 0' corner of map
+        } else if (y == 0 && (x >= 1 && x < map[y].length - 1)) {
+
+            //Edge-case top row is always true
+            NorthWest = true;
+            North = true;
+            NorthEast = true;
+            //Calc middle row
+            West = map[y][x - 1].getType() == CellType.WALL;
+            East = map[y][x + 1].getType() == CellType.WALL;
+            //Calc bottom row
+            SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
+            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+
+        // Check for 'y = max length' edge of map
+        } else if (y == map.length - 1 && (x >= 1 && x < map[y].length - 1)) {
+            
+            //Calc top row
+            NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
+            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+            //Calc middle row
+            West = map[y][x - 1].getType() == CellType.WALL;
+            East = map[y][x + 1].getType() == CellType.WALL;     
+            //Edge-case bottom row is always true
+            SouthWest = true;
+            South = true;
+            SouthEast = true;
+        
+        // Check for 'x = 0' edge of map to prevent indexOutOfBounds exception
+        } else if (x == 0 && (y >= 1 && y < map.length - 1)) {
+
+            //Calc top row (Edge-case West is always true)
+            NorthWest = true;
+            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+            //Calc middle row (Edge-case West is always true)
+            West = true;
+            East = map[y][x + 1].getType() == CellType.WALL;
+            //Calc bottom row (Edge-case West is always true)
+            SouthWest = true;
+            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+            
+        // Check for 'x = max length' edge of map to prevent indexOutOfBounds exception
+        } else if (x == map[y].length - 1 && (y >= 1 && y < map.length - 1)) {
+            
+            //Calc top row (Edge-case East is always true)
+            NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
+            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthEast = true;
+            //Calc middle row (Edge-case East is always true)
+            West = map[y][x - 1].getType() == CellType.WALL;
+            East = true;
+            //Calc bottom row (Edge-case East is always true)
+            SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
+            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthEast = true;
+
+        // Otherwise, perform all checks to get the correct wall asset
+        } else if ((x >= 1 && x < map[y].length - 1) && (y >= 1 && y < map.length - 1)) {
+
+            //Calc top row
+            NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
+            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+            //Calc middle row
+            West = map[y][x - 1].getType() == CellType.WALL;
+            East = map[y][x + 1].getType() == CellType.WALL;
+            //Calc bottom row
+            SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
+            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
 
         } else {
-            //Set the map edges as map asset 1
+            //If something somehow goes wrong, set the wall cell as wall_1
             wallRef = 0;
         }
+        
+        
+        //Top row
+        if (NorthWest && North && West) {
+            wallRef += 1;
+        }
+        if (North) {
+            wallRef += 1 << 1;
+        }
+        if (NorthEast && North && East) {
+            wallRef += 1 << 2;
+        }
+
+        //Middle Row
+        if (West) {
+            wallRef += 1 << 3;
+        }
+        if (East) {
+            wallRef += 1 << 4;
+        }
+
+        //Bottom Row
+        if (SouthWest && South && West) {
+            wallRef += 1 << 5;
+        }
+        if (South) {
+            wallRef += 1 << 6;
+        }
+        if (SouthEast && South && East) {
+            wallRef += 1 << 7;
+        }
+        
 
         return basePath + WALL_MAP.get(wallRef) + ".jpg";
     }

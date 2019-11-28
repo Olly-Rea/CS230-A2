@@ -171,9 +171,19 @@ public class GameController {
     }
 
     public void render(Group root) {
+        
+        // Group ("layer") 1
+        
+        // Render map layer First
         GridPane image = mapController.renderMap();
-        image.getTransforms().add(new Scale(0.3, 0.3, 0, 0));
-
+        image.getTransforms().add(new Scale(0.35, 0.35, 0, 0));
         root.getChildren().add(image);
+        // Render Entity layer Second (on top of Map)
+        
+        
+        // Group ("layer") 2
+        
+        // Render Player in center of screen last
+        
     }
 }
