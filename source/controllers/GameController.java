@@ -38,7 +38,7 @@ public class GameController {
     }
 
     /**
-     * Creates a 2d array of cells from the FileHandler
+     * Creates a 2d Entity Map and Cell Map and stores the 
      *
      * @param fh The Handler reading the Map/LoadFile
      * @return A 2d array of cells to construct the MapController with
@@ -62,7 +62,7 @@ public class GameController {
         }
 
         mapController = new MapController(map, mapWidth, mapHeight);
-        entityController = new EntityController(entityMap, null);
+        entityController = new EntityController(entityMap);
     }
 
     /**

@@ -20,7 +20,7 @@ public class EntityController {
      * @param entityGrid 2d Array of Enemy and Item Entity SubClasses.
      * @param enemies
      */
-    public EntityController(Entity[][] entityGrid, ArrayList<Enemy> enemies) {
+    public EntityController(Entity[][] entityGrid) {
 
     }
 
