@@ -48,6 +48,10 @@ public class EntityController {
 
     }
 
+    public void addEnemy(Enemy enemy) {
+        enemies.add(enemy);
+    }
+
     /**
      * Checks whether a player has collided with an enemy.
      *
