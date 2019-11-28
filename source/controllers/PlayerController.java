@@ -84,39 +84,6 @@ public class PlayerController {
 	}
  }
 
-    /**
-     * Private method to determine if a move is valid based on player inventory
-     *
-     * @param cell the cell in the direction the player wants to move
-     * @return a boolean value true if the move is valid, i.e not walikng into a
-     * wall, false if the move is invalid and not possible
-     * @author Danny
-     */
-    private boolean validMove(Cell targetCell) {
-        CellType move = targetCell.getType();
-        Boolean valid = null;
-        if (move == (CellType.GROUND) || move == (CellType.FIRE) || move == (CellType.WATER)) {
-            valid = true;
-        } else if (move == (CellType.RED)) {
-            Item redKey = new Item(ItemType.REDKEY);
-            valid = player.useItem(redKey);
-        } else if (move == (CellType.BLUE)) {
-            Item blueKey = new Item(ItemType.BLUEKEY);
-            valid = player.useItem(blueKey);
-        } else if (move == (CellType.YELLOW)) {
-            Item yellowKey = new Item(ItemType.YELLOWKEY);
-            valid = player.useItem(yellowKey);
-        } else if (move == (CellType.GREEN)) {
-            Item greenKey = new Item(ItemType.GREENKEY);
-            valid = player.useItem(greenKey);
-        } else if (move == (CellType.TOKEN)) {
-            // valid = player.useTokens(); // Need method to check tokens required
-        } else if (move == (CellType.TELEPORTER)) {
-            valid = true;
-            // player.setPos(Cell.getLinkedPos());
-        }
-        return valid;
-    }
 
     /**
      * Check if the cell requires a shoe type and if the player posseses it
