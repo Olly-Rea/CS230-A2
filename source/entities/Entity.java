@@ -5,7 +5,7 @@ import utils.Vector;
 /**
  * @author James Hogg
  * @version 1.0 An Entity is a non-cell sometimes non-static object within the
- * environment
+ *          environment
  *
  */
 public abstract class Entity {
