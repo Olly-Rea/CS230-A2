@@ -75,8 +75,7 @@ public class Cell {
      * @return the ImageView node for the MapController GridPane
      */
     public ImageView render() {
-        ImageView imageNode = new ImageView();
-        imageNode.setImage(assetImg);
+        ImageView imageNode = new ImageView(assetImg);
         return imageNode;
     }
 
