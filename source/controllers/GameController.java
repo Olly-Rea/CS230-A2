@@ -144,12 +144,12 @@ public class GameController {
 
           // Check if player is dead
 
-        if (playerController.checkStatus(mapController) ||
-        entityController.enemyCollision(playerController.getPlayer())){
-          // Restart game
-        }
+        // if (playerController.checkStatus(mapController) ||
+        // entityController.enemyCollision(playerController.getPlayer())){
+        //   // Restart game
+        // }
 
-        event.consume;
+        // event.consume;
 
       }
     }
