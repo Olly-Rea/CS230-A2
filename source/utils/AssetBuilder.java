@@ -26,15 +26,15 @@ public class AssetBuilder {
         map = mapRef;
 
         //Add ALL the indexes and respective filenames to WALL_MAP
-        WALL_MAP.put(0, "wall_1"); WALL_MAP.put(2, "wall_2"); WALL_MAP.put(8, "wall_3");
-        WALL_MAP.put(10, "wall_4"); WALL_MAP.put(11, "wall_5"); WALL_MAP.put(16, "wall_6");
-        WALL_MAP.put(18, "wall_7"); WALL_MAP.put(22, "wall_8"); WALL_MAP.put(24, "wall_9");
-        WALL_MAP.put(26, "wall_10"); WALL_MAP.put(27, "wall_11"); WALL_MAP.put(30, "wall_12");
-        WALL_MAP.put(31, "wall_13"); WALL_MAP.put(64, "wall_14"); WALL_MAP.put(66, "wall_15");
-        WALL_MAP.put(72, "wall_16"); WALL_MAP.put(74, "wall_17"); WALL_MAP.put(75, "wall_18");
-        WALL_MAP.put(80, "wall_19"); WALL_MAP.put(82, "wall_20"); WALL_MAP.put(86, "wall_21");
-        WALL_MAP.put(88, "wall_22"); WALL_MAP.put(90, "wall_23"); WALL_MAP.put(91, "wall_24");
-        WALL_MAP.put(94, "wall_25"); WALL_MAP.put(95, "wall_26"); WALL_MAP.put(104, "wall_27");
+        WALL_MAP.put(0, "wall_1");    WALL_MAP.put(2, "wall_2");    WALL_MAP.put(8, "wall_3");
+        WALL_MAP.put(10, "wall_4");   WALL_MAP.put(11, "wall_5");   WALL_MAP.put(16, "wall_6");
+        WALL_MAP.put(18, "wall_7");   WALL_MAP.put(22, "wall_8");   WALL_MAP.put(24, "wall_9");
+        WALL_MAP.put(26, "wall_10");  WALL_MAP.put(27, "wall_11");  WALL_MAP.put(30, "wall_12");
+        WALL_MAP.put(31, "wall_13");  WALL_MAP.put(64, "wall_14");  WALL_MAP.put(66, "wall_15");
+        WALL_MAP.put(72, "wall_16");  WALL_MAP.put(74, "wall_17");  WALL_MAP.put(75, "wall_18");
+        WALL_MAP.put(80, "wall_19");  WALL_MAP.put(82, "wall_20");  WALL_MAP.put(86, "wall_21");
+        WALL_MAP.put(88, "wall_22");  WALL_MAP.put(90, "wall_23");  WALL_MAP.put(91, "wall_24");
+        WALL_MAP.put(94, "wall_25");  WALL_MAP.put(95, "wall_26");  WALL_MAP.put(104, "wall_27");
         WALL_MAP.put(106, "wall_28"); WALL_MAP.put(107, "wall_29"); WALL_MAP.put(120, "wall_30");
         WALL_MAP.put(122, "wall_31"); WALL_MAP.put(123, "wall_32"); WALL_MAP.put(126, "wall_33");
         WALL_MAP.put(127, "wall_34"); WALL_MAP.put(208, "wall_35"); WALL_MAP.put(210, "wall_36");
@@ -44,15 +44,15 @@ public class AssetBuilder {
         WALL_MAP.put(254, "wall_46"); WALL_MAP.put(255, "wall_47");
 
         //Add ALL the indexes and respective filenames to WATER_MAP
-        WATER_MAP.put(0, "water_1"); WATER_MAP.put(2, "water_2"); WATER_MAP.put(8, "water_3");
-        WATER_MAP.put(10, "water_4"); WATER_MAP.put(11, "water_5"); WATER_MAP.put(16, "water_6");
-        WATER_MAP.put(18, "water_7"); WATER_MAP.put(22, "water_8"); WATER_MAP.put(24, "water_9");
-        WATER_MAP.put(26, "water_10"); WATER_MAP.put(27, "water_11"); WATER_MAP.put(30, "water_12");
-        WATER_MAP.put(31, "water_13"); WATER_MAP.put(64, "water_14"); WATER_MAP.put(66, "water_15");
-        WATER_MAP.put(72, "water_16"); WATER_MAP.put(74, "water_17"); WATER_MAP.put(75, "water_18");
-        WATER_MAP.put(80, "water_19"); WATER_MAP.put(82, "water_20"); WATER_MAP.put(86, "water_21");
-        WATER_MAP.put(88, "water_22"); WATER_MAP.put(90, "water_23"); WATER_MAP.put(91, "water_24");
-        WATER_MAP.put(94, "water_25"); WATER_MAP.put(95, "water_26"); WATER_MAP.put(104, "water_27");
+        WATER_MAP.put(0, "water_1");    WATER_MAP.put(2, "water_2");    WATER_MAP.put(8, "water_3");
+        WATER_MAP.put(10, "water_4");   WATER_MAP.put(11, "water_5");   WATER_MAP.put(16, "water_6");
+        WATER_MAP.put(18, "water_7");   WATER_MAP.put(22, "water_8");   WATER_MAP.put(24, "water_9");
+        WATER_MAP.put(26, "water_10");  WATER_MAP.put(27, "water_11");  WATER_MAP.put(30, "water_12");
+        WATER_MAP.put(31, "water_13");  WATER_MAP.put(64, "water_14");  WATER_MAP.put(66, "water_15");
+        WATER_MAP.put(72, "water_16");  WATER_MAP.put(74, "water_17");  WATER_MAP.put(75, "water_18");
+        WATER_MAP.put(80, "water_19");  WATER_MAP.put(82, "water_20");  WATER_MAP.put(86, "water_21");
+        WATER_MAP.put(88, "water_22");  WATER_MAP.put(90, "water_23");  WATER_MAP.put(91, "water_24");
+        WATER_MAP.put(94, "water_25");  WATER_MAP.put(95, "water_26");  WATER_MAP.put(104, "water_27");
         WATER_MAP.put(106, "water_28"); WATER_MAP.put(107, "water_29"); WATER_MAP.put(120, "water_30");
         WATER_MAP.put(122, "water_31"); WATER_MAP.put(123, "water_32"); WATER_MAP.put(126, "water_33");
         WATER_MAP.put(127, "water_34"); WATER_MAP.put(208, "water_35"); WATER_MAP.put(210, "water_36");
@@ -90,60 +90,196 @@ public class AssetBuilder {
      */
     public String getWallType(int x, int y) {
 
-        //Create the base of the path string
-        String basePath = "../../assets/visuals/cells/walls/";
-        //Array reference value
+        // Create the base of the path string
+        String basePath = "./assets/visuals/cells/walls/";
+        // Array reference value
         int wallRef = 0;
 
-        //Check for edge of map to prevent indexOutOfBounds exception
-        if ((x > 1 && x < map[y].length) || (y > 1 && y < map.length)) {
+        // Top row booleans
+        boolean NorthWest = false;
+        boolean North = false;
+        boolean NorthEast = false;
+        // Middle row booleans
+        boolean West = false;
+        boolean East = false;
+        // Bottom row booleans
+        boolean SouthWest = false;
+        boolean South = false;
+        boolean SouthEast = false;
+        
+        // Check ALL 4 corners of the map
+        
+        // Top-Left corner
+        if (y == 0 && x == 0) {
+            
+            //Edge-case top row is always true
+            NorthWest = true;
+            North = true;
+            NorthEast = true;
+            //Calc middle row
+            West = true;
+            East = map[y][x + 1].getType() == CellType.WALL;
+            //Calc bottom row
+            SouthWest = true;
+            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+        
+        // Top-Right corner
+        } else if (y == 0 && x == map[y].length - 1) {
+            
+            //Edge-case top row is always true
+            NorthWest = true;
+            North = true;
+            NorthEast = true;
+            //Calc middle row
+            West = map[y][x - 1].getType() == CellType.WALL;
+            East = true;
+            //Calc bottom row
+            SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
+            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthEast = true;
 
-            //Top row
-            boolean NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
-            boolean North = map[y - 1][x].getType() == CellType.WALL;
-            boolean NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
-            //Middle row
-            boolean West = map[y][x - 1].getType() == CellType.WALL;
-            boolean East = map[y][x + 1].getType() == CellType.WALL;
-            //Bottom row
-            boolean SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
-            boolean South = map[y + 1][x].getType() == CellType.WALL;
-            boolean SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+        //Bottom-Left corner
+        } else if (y == map.length - 1 && x == 0) {
 
-            //Top row
-            if (NorthWest && North && West) {
-                wallRef += 1;
-            }
-            if (North) {
-                wallRef += 1 << 1;
-            }
-            if (NorthEast && North && East) {
-                wallRef += 1 << 2;
-            }
+            //Edge-case top row is always true
+            NorthWest = true;
+            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+            //Calc middle row
+            West = true;
+            East = map[y][x + 1].getType() == CellType.WALL;
+            //Calc bottom row
+            SouthWest = true;
+            South = true;
+            SouthEast = true;
 
-            //Middle Row
-            if (West) {
-                wallRef += 1 << 3;
-            }
-            if (East) {
-                wallRef += 1 << 4;
-            }
+        //Bottom-Right corner
+        } else if (y == map.length - 1 && x == map[y].length - 1) {
 
-            //Bottom Row
-            if (SouthWest && South && West) {
-                wallRef += 1 << 5;
-            }
-            if (South) {
-                wallRef += 1 << 6;
-            }
-            if (SouthEast && South && East) {
-                wallRef += 1 << 7;
-            }
+            //Edge-case top row is always true
+            NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
+            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthEast = true;
+            //Calc middle row
+            West = map[y][x - 1].getType() == CellType.WALL;
+            East = true;
+            //Calc bottom row
+            SouthWest = true;
+            South = true;
+            SouthEast = true;
+            
+        // Check for 'y = 0' corner of map
+        } else if (y == 0 && (x >= 1 && x < map[y].length - 1)) {
+
+            //Edge-case top row is always true
+            NorthWest = true;
+            North = true;
+            NorthEast = true;
+            //Calc middle row
+            West = map[y][x - 1].getType() == CellType.WALL;
+            East = map[y][x + 1].getType() == CellType.WALL;
+            //Calc bottom row
+            SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
+            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+
+        // Check for 'y = max length' edge of map
+        } else if (y == map.length - 1 && (x >= 1 && x < map[y].length - 1)) {
+            
+            //Calc top row
+            NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
+            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+            //Calc middle row
+            West = map[y][x - 1].getType() == CellType.WALL;
+            East = map[y][x + 1].getType() == CellType.WALL;     
+            //Edge-case bottom row is always true
+            SouthWest = true;
+            South = true;
+            SouthEast = true;
+        
+        // Check for 'x = 0' edge of map to prevent indexOutOfBounds exception
+        } else if (x == 0 && (y >= 1 && y < map.length - 1)) {
+
+            //Calc top row (Edge-case West is always true)
+            NorthWest = true;
+            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+            //Calc middle row (Edge-case West is always true)
+            West = true;
+            East = map[y][x + 1].getType() == CellType.WALL;
+            //Calc bottom row (Edge-case West is always true)
+            SouthWest = true;
+            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+            
+        // Check for 'x = max length' edge of map to prevent indexOutOfBounds exception
+        } else if (x == map[y].length - 1 && (y >= 1 && y < map.length - 1)) {
+            
+            //Calc top row (Edge-case East is always true)
+            NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
+            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthEast = true;
+            //Calc middle row (Edge-case East is always true)
+            West = map[y][x - 1].getType() == CellType.WALL;
+            East = true;
+            //Calc bottom row (Edge-case East is always true)
+            SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
+            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthEast = true;
+
+        // Otherwise, perform all checks to get the correct wall asset
+        } else if ((x >= 1 && x < map[y].length - 1) && (y >= 1 && y < map.length - 1)) {
+
+            //Calc top row
+            NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
+            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+            //Calc middle row
+            West = map[y][x - 1].getType() == CellType.WALL;
+            East = map[y][x + 1].getType() == CellType.WALL;
+            //Calc bottom row
+            SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
+            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
 
         } else {
-            //Set the map edges as map asset 1
-            wallRef = 1;
+            //If something somehow goes wrong, set the wall cell as wall_1
+            wallRef = 0;
         }
+        
+        
+        //Top row
+        if (NorthWest && North && West) {
+            wallRef += 1;
+        }
+        if (North) {
+            wallRef += 1 << 1;
+        }
+        if (NorthEast && North && East) {
+            wallRef += 1 << 2;
+        }
+
+        //Middle Row
+        if (West) {
+            wallRef += 1 << 3;
+        }
+        if (East) {
+            wallRef += 1 << 4;
+        }
+
+        //Bottom Row
+        if (SouthWest && South && West) {
+            wallRef += 1 << 5;
+        }
+        if (South) {
+            wallRef += 1 << 6;
+        }
+        if (SouthEast && South && East) {
+            wallRef += 1 << 7;
+        }
+        
 
         return basePath + WALL_MAP.get(wallRef) + ".jpg";
     }

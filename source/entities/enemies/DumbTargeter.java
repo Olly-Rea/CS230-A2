@@ -8,14 +8,27 @@ import entities.Enemy;
 import entities.Player;
 import utils.Direction;
 import utils.Vector;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 //Java imports
 import java.util.ArrayList;
 //JavaFX imports
 import javafx.scene.image.Image;
 
-public abstract class DumbTargeter extends Enemy {
+public class DumbTargeter extends Enemy {
 
-    private static final Image SPRITE = new Image("...");
+    private static final String ASSET_PATH = "./assets/visuals/entities/dumbfollower.png";
+    private static Image image;
+
+    static {
+        try {
+            image = new Image(new FileInputStream(ASSET_PATH));
+        } catch (FileNotFoundException e) {
+            image = null;
+            System.err.println("DumbTargeter image path not found");
+        }
+    }
 
     /**
      * The player.
@@ -58,14 +71,14 @@ public abstract class DumbTargeter extends Enemy {
             potential.add(dir = Direction.UP);
         }
 
-		// For any potential directions check whether that direction is a valid move
-		for (int i = 0; i < potential.size(); i++) {
-			Direction d = potential.get(i);
-			Cell next = map.getNextCell(pos, d);
-			if (next.getType() == CellType.GROUND) {
-				dir = d;
-			}
-		}
+        // For any potential directions check whether that direction is a valid move
+        for (int i = 0; i < potential.size(); i++) {
+            Direction d = potential.get(i);
+            Cell next = map.getNextCell(pos, d);
+            if (next.getType() == CellType.GROUND) {
+                dir = d;
+            }
+        }
 
         pos.add(dir);
     }

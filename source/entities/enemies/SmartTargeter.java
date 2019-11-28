@@ -1,5 +1,7 @@
 package entities.enemies;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
 import cells.Cell;
@@ -18,7 +20,17 @@ import javafx.scene.image.Image;
  */
 public class SmartTargeter extends Enemy {
 
-    private static final Image SPRITE = new Image("...");
+    private static final String ASSET_PATH = "./assets/visuals/entities/smartfollower.png";
+    private static Image image;
+
+    static {
+        try {
+            image = new Image(new FileInputStream(ASSET_PATH));
+        } catch (FileNotFoundException e) {
+            image = null;
+            System.err.println("SmartTargeter image path not found");
+        }
+    }
 
     private Direction dir;
     private Player player;

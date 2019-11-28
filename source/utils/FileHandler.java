@@ -51,7 +51,7 @@ public class FileHandler {
 
     /**
      * Checks if the reader is at the end of file.
-     * 
+     *
      * @return false if reader has reached the end of the file.
      */
     public boolean hasNext() {
@@ -67,7 +67,7 @@ public class FileHandler {
 
     /**
      * Method to save a file to a certain path and specific lines to write.
-     * 
+     *
      * @param path Path to the file being created/written to
      * @param lines the lines of text to be written i nthe file
      * @return True if the file was saved correctly, false otherwise
@@ -78,7 +78,7 @@ public class FileHandler {
         try {
             writer = new BufferedWriter(new FileWriter(file));
             for (int i = 0; i < lines.length; i++) {
-                writer.write(lines[i] + (i!=lines.length-1?"\n":""));
+                writer.write(lines[i] + (i != lines.length - 1 ? "\n" : ""));
             }
             writer.close();
             return true;

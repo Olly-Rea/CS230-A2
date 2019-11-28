@@ -16,8 +16,7 @@ public enum Direction {
         }
 
     },
-
-    RIGHT(1,0) {
+    RIGHT(1, 0) {
         @Override
         public Direction cw() {
             return DOWN;
@@ -27,7 +26,6 @@ public enum Direction {
             return UP;
         }
     },
-
     DOWN(0, 1) {
         @Override
         public Direction cw() {
@@ -38,7 +36,6 @@ public enum Direction {
             return RIGHT;
         }
     },
-
     LEFT(-1, 0) {
         @Override
         public Direction cw() {

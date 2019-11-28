@@ -5,6 +5,8 @@ import cells.*;
 import utils.*;
 //Java imports
 import java.util.ArrayList;
+import java.util.Scanner;
+
 //JavaFX imports
 import javafx.scene.layout.GridPane;
 
@@ -14,7 +16,6 @@ import javafx.scene.layout.GridPane;
  * @version 1.0.0
  * @author Olly Rea
  */
-
 /**
  * MapController is a class to manage the map and all methods related to it. It
  * consists of a 2D array of cells and contains the methods required to alter
@@ -35,8 +36,8 @@ public class MapController {
      * MapController constructor; Instantiates a new MapController
      *
      * @param cellArray The 2D array of cells that make up the MapController
-     * @param width     The width of the 2d array
-     * @param height    the height of the 2d array
+     * @param width The width of the 2d array
+     * @param height the height of the 2d array
      */
     public MapController(Cell[][] cellArray, int width, int height) {
         map = cellArray;
@@ -57,8 +58,8 @@ public class MapController {
     }
 
     /**
-     * Retruns cell at location of a vector
-     * 
+     * Returns cell at location of a vector
+     *
      * @param pos
      * @return
      */
@@ -67,8 +68,9 @@ public class MapController {
     }
 
     /**
-     * Returns the next cell in a certain direction from the cell at a certain position.
-     * 
+     * Returns the next cell in a certain direction from the cell at a certain
+     * position.
+     *
      * @param pos position vector of the cell
      * @param dir direction of the next cell
      * @return
@@ -161,18 +163,17 @@ public class MapController {
     /**
      * Method to render the map to the screen centred on the player's location
      *
-     * @param playerLocation The player controller is used to access the player's
-     *                       current location
+     * @param playerLocation The player controller is used to access the
+     * player's current location
      *
      * @return
      */
-    public GridPane renderMap(PlayerController playerLocation) {
+    public GridPane renderMap() {
 
         // Vector PlayerPos = playerLocation.getPlayerPos();
-
         // Loop through the map
         for (int y = 0; y < map.length; y++) {
-            for (int x = 0; x < map[x].length; x++) {
+            for (int x = 0; x < map[y].length; x++) {
                 // Check that there is a cell at this section of the map array
                 if (map[y][x].getType() == null) {
                     System.out.println("Mapfile error at: (" + x + ", " + y + ")");
@@ -195,7 +196,6 @@ public class MapController {
 
         // Have an x and y value for the GridPane on which the map is rendered and
         // move the map instead of the player to maintain centred focus
-
     }
 
     public void moveMap(Direction dir) {
@@ -218,43 +218,20 @@ public class MapController {
                 y = 0;
         }
 
+    }
 
+    public void linkTeleporters(Scanner sc) {
+        int x1 = sc.nextInt();
+        int y1 = sc.nextInt();
+        int x2 = sc.nextInt();
+        int y2 = sc.nextInt();
+        Teleporter t1 = (Teleporter) map[y1][x1];
+        Teleporter t2 = (Teleporter) map[y2][x2];
+        Teleporter.link(t1,t2);
     }
 
     /**
-     * getMapHeight is a method to return the height of the 2D map array
      *
-     * @return
-     */
-    public final int getMapHeight() {
-        // Return the height of the map array
-        return map.length;
-    }
-
-    /**
-     * getMapWidth is a method to return the max width of the 2D map array
-     *
-     * @return
-     */
-    public final int getMapWidth() {
-
-        int maxLength = 0;
-
-        for (int y = 0; y < map.length; y++) {
-            int xLength = 0;
-            for (int x = 0; x < map[x].length; x++) {
-                xLength++;
-            }
-            if (maxLength < xLength) {
-                maxLength = xLength;
-            }
-        }
-
-        return maxLength;
-    }
-
-    /**
-     * 
      * @param x x coordinate of the cell
      * @param y y coordinate of the cell
      * @param c character in the text file to be translated into a Cell object
@@ -262,18 +239,25 @@ public class MapController {
      */
     public static Cell makeCell(int x, int y, char c) {
         switch (c) {
-            case '#' : return new Cell(CellType.WALL, x, y);
-            case ' ' : return new Cell(CellType.GROUND, x, y);
-            case 'T' : return new Teleporter(x, y);
-            case 'W' : return new Cell(CellType.WATER, x, y);
-            case 'F' : return new Cell(CellType.FIRE, x, y);
-            case 'G' : return new Cell(CellType.GOAL, x, y);
+            case '#':
+                return new Cell(CellType.WALL, x, y);
+            case ' ':
+                return new Cell(CellType.GROUND, x, y);
+            case 'T':
+                return new Teleporter(x, y);
+            case 'W':
+                return new Cell(CellType.WATER, x, y);
+            case 'F':
+                return new Cell(CellType.FIRE, x, y);
+            case '!':
+                return new Cell(CellType.GOAL, x, y);
             // case 'R' : return new Door(DoorType.RED, x, y); // TODO: Door implementation change
             // case 'G' : return new Door(DoorType.GREEN, x, y); // TODO: Door implementation change
             // case 'B' : return new Door(DoorType.BLUE, x, y); // TODO: Door implementation change
             // case 'Y' : return new Door(DoorType.YELLOW, x, y); // TODO: Door implementation change
             // case 'D' : return new Door(DoorType.TOKEN, x, y); // TODO: Door implementation change
-            default : return new Cell(CellType.GROUND, x, y);
+            default:
+                return new Cell(CellType.GROUND, x, y);
         }
     }
 
@@ -288,6 +272,4 @@ public class MapController {
      the screen).
      
      */
-
-
 }
