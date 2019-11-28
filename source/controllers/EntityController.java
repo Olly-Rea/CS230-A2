@@ -49,6 +49,8 @@ public class EntityController {
 
     public void addEnemy(Enemy enemy) {
         enemies.add(enemy);
+        Vector ePos = enemy.getPos();
+        entityGrid[ePos.getY()][ePos.getX()] = enemy;
     }
 
     /**
