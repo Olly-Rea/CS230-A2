@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 public class Door extends Cell {
 
     //The door type
-    private final DoorType DOOR_TYPE;
+    public final DoorType doorType;
 
     //The token amount
     private int tokens = 0;
@@ -25,15 +25,16 @@ public class Door extends Cell {
      * @param x
      * @param y
      */
-    public Door(CellType cellType, int x, int y, DoorType doorType) {
-        this.CellType = DOOR;
-        this.DOOR_TYPE = doorType;
+    public Door(int x, int y, DoorType doorType) {
+        super(CellType.DOOR, x ,y);
+        this.doorType = doorType;
+        // this.CellType = DOOR;
     }
 
-    public Door(CellType type, int x, int y, int tokens) {
-        DOOR_TYPE = TOKEN;
-        this.tokens = tokens;
-    }
+    // public Door(CellType type, int x, int y, int tokens) {
+    //     // DOOR_TYPE = TOKEN;
+    //     // this.tokens = tokens;
+    // }
 
     /**
      * Sets the number of tokens.
@@ -59,7 +60,7 @@ public class Door extends Cell {
      * @return the door type
      */
     public DoorType getDoorType() {
-        return DOOR_TYPE;
+        return doorType;
     }
 
 }
