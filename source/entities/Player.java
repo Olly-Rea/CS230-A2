@@ -117,6 +117,22 @@ public class Player extends Entity {
 	public int getTokens() {
 		return tokens;
 	}
+	
+	/**
+	* Method to collect fireshoes
+	*
+	*/
+	public boolean collectFireShoes(){
+		hasFireBoots = true;
+	}
+
+	/**
+	* Method to collect flippers
+	*
+	*/
+	public boolean collectFlippers(){
+		hasFlippers = true;
+	}
 
 	/**
 	 * Method to find if the player has collected fire boots
@@ -151,24 +167,17 @@ public class Player extends Entity {
 		}
 	}
 
+
 	/**
 	 * Method to check for and to use an item in the player's inventory
 	 *
 	 * @param item The item the game would like to use
 	 * @return true if the item is present, false otherwise
 	 */
-	public boolean useItem(Item item) {
+	public boolean useKey(Item item) {
 		ItemType use = item.getType();
 		boolean itemPresent = false;
 		switch (use) {
-		case FIREBOOTS:
-			if (hasFireBoots == true) {
-				itemPresent = true;
-			}
-		case FLIPPERS:
-			if (hasFlippers == true) {
-				itemPresent = true;
-			}
 		case REDKEY:
 			if (redKeys > 0) {
 				redKeys--;

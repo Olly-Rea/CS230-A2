@@ -14,12 +14,12 @@ public class PlayerController {
 	private Player player;
 
 	/**
-     * @param player the player object to be controlled
-     * @author Danny
-     */
-    public PlayerController(Player player) {
-        this.player = player;
-    }
+	 * @param player the player object to be controlled
+	 * @author Danny
+	 */
+	public PlayerController(Player player) {
+		this.player = player;
+	}
 
 	/**
 	 * Takes a direction and determines if the player can move into the desired cell
@@ -32,7 +32,7 @@ public class PlayerController {
 	public void move(Direction dir, MapController mc) {
 		Cell target = mc.getNextCell(player.getPos(), dir);
 		if (target.getType() == CellType.DOOR) {
-			if (((Door)target).isOpenable(player)) {
+			if (((Door) target).isOpenable(player)) {
 				mc.openDoor(player.getPos().getX(), player.getPos().getY());
 			}
 		}
@@ -40,8 +40,8 @@ public class PlayerController {
 		if (validMove(target)) {
 			Vector pos = player.getPos();
 			if (target.getType() == CellType.TELEPORTER) {
-				pos = ((Teleporter)target).getLinked().getPos();
-			} 
+				pos = ((Teleporter) target).getLinked().getPos();
+			}
 			player.setPos(new Vector(pos.getX() + dir.X, pos.getY() + dir.Y));
 		}
 	}
@@ -57,9 +57,12 @@ public class PlayerController {
 	private boolean validMove(Cell targetCell) {
 		CellType moveType = targetCell.getType();
 		switch (moveType) {
-			case WALL : return false;
-			case DOOR : return false;
-			default : return true;
+		case WALL:
+			return false;
+		case DOOR:
+			return false;
+		default:
+			return true;
 		}
 	}
 
@@ -72,18 +75,14 @@ public class PlayerController {
 	 *         player, otherwise player is still alive
 	 * @author Danny
 	 */
-	public boolean checkStatus(Cell cell) {
-		Boolean isDead = false;
-		if (cell.getType() == CellType.FIRE) {
-			if (player.hasFireBoots() == false) {
-				isDead = true;
-			}
-		} else if (cell.getType() == CellType.WATER) {
-			if (player.hasFlippers() == false) {
-				isDead = true;
-			}
+	public boolean checkStatus(MapController map) {
+		Cell current = map.getCell(getPlayerPos());
+		if (current.getType() == CellType.FIRE && (player.hasFireBoots() == false)) {
+			return true;
+		} else if (current.getType() == CellType.WATER && (player.hasFlippers() == false)) {
+			return true;
 		}
-		return isDead;
+		return false;
 	}
 
 	/**
@@ -94,22 +93,22 @@ public class PlayerController {
 		return player.getPos();
 	}
 
-    /**
-     * Returns the object of the player
-     * 
-     * @return the player object
-     */
-    public Player getPlayer() {
-        return player;
-    }
+	/**
+	 * Returns the object of the player
+	 *
+	 * @return the player object
+	 */
+	public Player getPlayer() {
+		return player;
+	}
 
-    /**
-     * Renders the player
-     *
-     * @author xxxxx
-     */
-    public void render() {
-    }
+	/**
+	 * Renders the player
+	 *
+	 * @author xxxxx
+	 */
+	public void render() {
+	}
 
 	/**
 	 * Method to get a int array {X,Y,fireShoes, flippers,tokens, red,
