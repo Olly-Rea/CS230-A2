@@ -1,28 +1,22 @@
+package cells;
+
+import entities.Player;
 
 public class TokenDoor extends Door {
 	
-	public int tokens = 0;
+	private final int tokens;
 	
-	public TokenDoor(CellType type) {
-		
-	}
-	
-	/**
-	 * Sets the number of tokens.
-	 *
-	 * @param tokens the new number of tokens
-	 */
-	public void setTokens(int tokens) {
+	public TokenDoor(int x, int y, int tokens) {
+		super(x, y);
 		this.tokens = tokens;
 	}
 	
-	
-	/**
-	 * Gets the tokens.
-	 *
-	 * @return the tokens
-	 */
-	public int getTokens() {
-		return tokens;
+	public boolean isOpenable(Player p) {
+		int pTokens = p.getTokens();
+		if (pTokens >= tokens) {
+			p.useTokens(tokens);
+			return true;
+		} 
+		return false;
 	}
 }
