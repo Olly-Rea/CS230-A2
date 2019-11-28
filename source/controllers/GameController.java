@@ -51,11 +51,12 @@ public class GameController {
             for (int x = 0; x < mapWidth; x++) {
                 char c = row.charAt(x);
                 map[y][x] = MapController.makeCell(x, y, c);
-
+                entityMap[y][x] = EntityController.makeEntity(x, y, c);
             }
         }
 
         mapController = new MapController(map, mapWidth, mapHeight);
+        entityController = new EntityController(entityMap, null);
     }
 
     /**
@@ -73,7 +74,7 @@ public class GameController {
         }
 
         // First load map into map controller
-        // Load player 
+        // Load player
         // Load Additional
     }
 
@@ -97,8 +98,7 @@ public class GameController {
     }
 
     /**
-     * Adds a profile to the file at {@code PROFILE_PATH} of the name
-     * {@code name}.
+     * Adds a profile to the file at {@code PROFILE_PATH} of the name {@code name}.
      *
      * @param name name to be added to the profile list.
      */
