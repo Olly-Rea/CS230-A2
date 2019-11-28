@@ -32,31 +32,53 @@ public class GameController {
 	}
 
 	/**
-	 * Creates a 2d array of cells from the FileHandler
-	 *
-	 * @param fh The Handler reading the Map/LoadFile
-	 * @return A 2d array of cells to construct the MapController with
-	 */
-	private void makeControllers(FileHandler fh) {
-		String init = fh.nextLine();
-		Scanner sc = new Scanner(init);
-		int mapWidth = sc.nextInt();
-		int mapHeight = sc.nextInt();
+     * Creates a 2d Entity Map and Cell Map and stores them in the mapController and entityController
+     *
+     * @param fh The Handler reading the Map/LoadFile
+     * @return A 2d array of cells to construct the MapController with
+     */
+    private void makeControllers(FileHandler fh) {
+        String init = fh.nextLine();
+        Scanner sc = new Scanner(init);
+        int mapWidth = sc.nextInt();
+        int mapHeight = sc.nextInt();
 
-		Cell[][] map = new Cell[mapHeight][mapWidth];
-		Entity[][] entityMap = new Entity[mapHeight][mapWidth];
+        Cell[][] map = new Cell[mapHeight][mapWidth];
+        Entity[][] entityMap = new Entity[mapHeight][mapWidth];
 
-		for (int y = 0; y < mapHeight; y++) {
-			String row = fh.nextLine();
-			for (int x = 0; x < mapWidth; x++) {
-				char c = row.charAt(x);
-				map[y][x] = MapController.makeCell(x, y, c);
+        for (int y = 0; y < mapHeight; y++) {
+            String row = fh.nextLine();
+            for (int x = 0; x < mapWidth; x++) {
+                char c = row.charAt(x);
+                map[y][x] = MapController.makeCell(x, y, c);
+                entityMap[y][x] = EntityController.makeEntity(x, y, c);
+            }
+        }
+        sc.close();
 
-			}
-		}
+        mapController = new MapController(map, mapWidth, mapHeight);
+        entityController = new EntityController(entityMap);
+    }
 
-		mapController = new MapController(map, mapWidth, mapHeight);
-	}
+    private void handleSpecific(String line) {
+        Scanner sc = new Scanner(line);
+        sc.useDelimiter(" ");
+        String keyword = sc.next();
+
+        switch (keyword) {
+        case "PLAYER":
+            playerController = new PlayerController(EntityController.makePlayer(sc));
+            break;
+        case "ENEMY":
+            entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
+            break;
+        case "TELEPORTER" : 
+            mapController.linkTeleporters(sc);
+            break;
+        }
+
+        sc.close();
+    }
 
 	/**
 	 * Loads a path to a map file and to generate objects for use in the game.
