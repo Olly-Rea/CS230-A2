@@ -1,9 +1,9 @@
 package controllers;
 
 /**
-* @author Scott Barr, James Hogg
-* @version 1.1
-*/
+ * @author Scott Barr, James Hogg
+ * @version 1.1
+ */
 import java.util.ArrayList;
 import entities.*;
 import utils.Vector;
@@ -111,7 +111,7 @@ public class EntityController {
     //         exportArrayIndex++;
     //       }
     //     }
-	//   } return exportArray;
+	//   } return exportArray;s
 		return null;
     }
 

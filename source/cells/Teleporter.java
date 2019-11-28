@@ -1,18 +1,19 @@
 package cells;
 
+//Local Imports
 import utils.Vector;
 
 /**
-* Teleporter.java
-* @version 1.0.0
-* @author Daniel Clenaghan
-*/
+ * Teleporter.java
+ *
+ * @version 1.0.0
+ * @author Daniel Clenaghan
+ */
 
 /**
  * The class for the cell type Teleporter. It will store a Vector for both
  * itself and a linked Teleporter
  */
-
 public class Teleporter extends Cell {
 
 	private Teleporter linkedTele; // Vector location of linked teleporter

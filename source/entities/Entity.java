@@ -1,6 +1,7 @@
 package entities;
 
 import utils.Vector;
+
 /**
  * @author James Hogg
  * @version 1.0 An Entity is a non-cell sometimes non-static object within the
@@ -15,16 +16,16 @@ public abstract class Entity {
     protected Vector pos;
 
     /**
-     * Constructs an entity at a postion taken from the Map
+     * Constructs an entity at a position taken from the Map
      *
-     * @param pos The positon at which the entity will be created
+     * @param pos The position at which the entity will be created
      */
     public Entity(Vector pos) { 
         this.pos = pos;
     }
 
     /**
-     * Gets the current positon of the entity from the Map
+     * Gets the current position of the entity from the Map
      *
      * @return gives position as type Vector
      */
@@ -36,7 +37,5 @@ public abstract class Entity {
      * Renders the entity on the screen
      */
     public abstract void render();
-
-
 
 }
