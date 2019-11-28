@@ -64,8 +64,8 @@ public class EntityController {
      * @param i the item being added
      */
     public void addItem(Item i) {
-        Vector pos = i.getPos();
         if (i != null) {
+            Vector pos = i.getPos();
             items.add(i);
             entityGrid[pos.getY()][pos.getX()] = i;
         }
