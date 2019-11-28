@@ -15,10 +15,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 //JavaFX imports
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class DumbTargeter extends Enemy {
 
-    private static final String ASSET_PATH = "./assets/visuals/entities/dumbfollower.png";
+    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/dumbTargeter.png";
     private static Image image;
 
     static {
@@ -86,8 +87,9 @@ public class DumbTargeter extends Enemy {
     /**
      * Renders the Enemy to the screen
      */
-    public void render() {
-
+    public ImageView render() {
+        ImageView imageNode = new ImageView(image);
+        return imageNode;
     }
 
 }

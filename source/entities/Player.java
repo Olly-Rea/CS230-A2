@@ -1,5 +1,9 @@
 package entities;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import utils.Vector;
 
 /**
@@ -18,6 +22,9 @@ public class Player extends Entity {
     private int blueKeys;
     private int yellowKeys;
 
+    private String assetPath = "./assets/visuals/entities/player.png";;
+    private Image playerAsset;
+    
     /**
      * Creates a Player object
      *
@@ -33,6 +40,14 @@ public class Player extends Entity {
         this.greenKeys = 0;
         this.blueKeys = 0;
         this.yellowKeys = 0;
+        
+        try {
+            playerAsset = new Image(new FileInputStream(assetPath));
+        } catch (FileNotFoundException e) {
+            playerAsset = null;
+            System.err.println("Player asset path not found!");
+        }  
+        
     }
 
     /**
@@ -218,7 +233,8 @@ public class Player extends Entity {
     /**
      * Method to render the player to the screen.
      */
-    public void render() {
-
+    public ImageView render() {
+        ImageView imageNode = new ImageView(playerAsset);
+        return imageNode;
     }
 }
