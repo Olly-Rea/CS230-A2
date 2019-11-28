@@ -1,15 +1,16 @@
 package controllers;
 
+//JavaFX imports
 import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.transform.Scale;
-
+//Local imports
 import java.util.Scanner;
 import cells.Cell;
 import entities.Entity;
 import misc.Profile;
-import utils.FileHandler;
+import utils.*;
 
 /**
  *
@@ -36,7 +37,8 @@ public class GameController {
     }
 
     /**
-     * Creates a 2d Entity Map and Cell Map and stores them in the mapController and entityController
+     * Creates a 2d Entity Map and Cell Map and stores them in the mapController
+     * and entityController
      *
      * @param fh The Handler reading the Map/LoadFile
      * @return A 2d array of cells to construct the MapController with
@@ -70,15 +72,15 @@ public class GameController {
         String keyword = sc.next();
 
         switch (keyword) {
-        case "PLAYER":
-            playerController = new PlayerController(EntityController.makePlayer(sc));
-            break;
-        case "ENEMY":
-            entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
-            break;
-        case "TELEPORTER" : 
-            mapController.linkTeleporters(sc);
-            break;
+            case "PLAYER":
+                playerController = new PlayerController(EntityController.makePlayer(sc));
+                break;
+            case "ENEMY":
+                entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
+                break;
+            case "TELEPORTER":
+                mapController.linkTeleporters(sc);
+                break;
         }
 
         sc.close();
@@ -119,7 +121,8 @@ public class GameController {
     }
 
     /**
-     * Adds a profile to the file at {@code PROFILE_PATH} of the name {@code name}.
+     * Adds a profile to the file at {@code PROFILE_PATH} of the name
+     * {@code name}.
      *
      * @param name name to be added to the profile list.
      */
@@ -138,52 +141,74 @@ public class GameController {
 
     /**
      * Progresses the game 1 step and handles the key pressed.
-     *
      * @param ke Key Event that was pressed by the user.
      */
     public void gameStep(KeyEvent ke) {
 
+
+      switch (ke.getCode()) {
+        case RIGHT:
+          playerController.move(Direction.RIGHT, mapController);
+          break;
+        case LEFT:
+          playerController.move(Direction.LEFT, mapController);
+          break;
+        case UP:
+          playerController.move(Direction.UP, mapController);
+          break;
+        case DOWN:
+          playerController.move(Direction.DOWN, mapController);
+          break;
+        case ESCAPE:
+          // Bring up menu?
+          break;
+        default:
+          // Do nothing
+          break;
+
+          // Check if player is dead
+
+        // if (playerController.checkStatus(mapController) ||
+        // entityController.enemyCollision(playerController.getPlayer())){
+        //   // Restart game
+        // }
+
+        // event.consume;
+
+      }
     }
 
-    /**
-     * Shows a leaderboard for a specific map in {@code LEADERBOARD_DIR}.
-     *
-     * @param path The file path inside {@code LEADERBOARD_DIR} for the map.
-     */
-    public void showLeaderboard(String path) {
+	/**
+	 * Shows a leaderboard for a specific map in {@code LEADERBOARD_DIR}.
+	 *
+	 * @param path The file path inside {@code LEADERBOARD_DIR} for the map.
+	 */
+	public void showLeaderboard(String path) {
 
-    }
+	}
 
-    /**
-     * adds a time to the map time file in {@code LEADERBOARD_DIR}.
-     *
-     * @param path THe file path for the map.
-     */
-    public void addMapTime(String path) {
+	/**
+	 * adds a time to the map time file in {@code LEADERBOARD_DIR}.
+	 *
+	 * @param path THe file path for the map.
+	 */
+	public void addMapTime(String path) {
 
-    }
-
-    /**
-     * Loads the next map file.
-     */
-    private void nextLevel() {
-
-    }
+	}
 
     public void render(Group root) {
-        
+
         // Group ("layer") 1
-        
         // Render map layer First
-        GridPane image = mapController.renderMap();
-        image.getTransforms().add(new Scale(0.35, 0.35, 0, 0));
-        root.getChildren().add(image);
+        GridPane mapLayer = mapController.renderMap();
+        mapLayer.getTransforms().add(new Scale(0.35, 0.35, 0, 0));
+        root.getChildren().add(mapLayer);
         // Render Entity layer Second (on top of Map)
-        
-        
+        GridPane entityLayer = entityController.renderEntities();
+        entityLayer.getTransforms().add(new Scale(0.35, 0.35, 0, 0));
+        root.getChildren().add(entityLayer);
+
         // Group ("layer") 2
-        
         // Render Player in center of screen last
-        
     }
 }

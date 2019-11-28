@@ -1,11 +1,12 @@
 package entities;
 
+import javafx.scene.image.ImageView;
 import utils.Vector;
 
 /**
  * @author James Hogg
  * @version 1.0 An Entity is a non-cell sometimes non-static object within the
- * environment
+ *          environment
  *
  */
 public abstract class Entity {
@@ -46,6 +47,6 @@ public abstract class Entity {
     /**
      * Renders the entity on the screen
      */
-    public abstract void render();
+    public abstract ImageView render();
 
 }

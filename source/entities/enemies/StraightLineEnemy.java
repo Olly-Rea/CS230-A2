@@ -10,10 +10,11 @@ import entities.Enemy;
 import utils.Direction;
 import utils.Vector;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class StraightLineEnemy extends Enemy {
 
-    private static final String ASSET_PATH = "./assets/visuals/entities/wallfollower.png";
+    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/straightLine.png";
     private static Image image;
 
     static {
@@ -53,11 +54,12 @@ public class StraightLineEnemy extends Enemy {
 
         this.pos.add(dir);
     }
-
+    
     /**
-     * Renders the enemy
+     * Renders the Enemy to the screen
      */
-    public void render() {
-
+    public ImageView render() {
+        ImageView imageNode = new ImageView(image);
+        return imageNode;
     }
 }

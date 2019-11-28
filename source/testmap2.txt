@@ -1,0 +1,29 @@
+20 20
+#################### 
+#    g   #T        #
+########G#         #
+#r       #         #
+#        #         #
+#        #         #
+#        # ####### #
+#        #         #
+#        #         #
+#       T######### #
+#        #         #
+#        #####R#####
+#T       #         #
+####B######        #
+#y        #        #
+####Y############# #
+#         #        #
+!         #        #
+#         #b      T#
+####################
+PLAYER 1 1
+ENEMY 14 5 WF [RIGHT, UP, LEFT, DOWN]
+ENEMY 10 12 SL [RIGHT, LEFT]
+ENEMY 1 18 SL [UP DOWN]
+ENEMY 10 10 DT
+ENEMY 11 18 ST
+TELEPORTER 8 9 10 1
+TELEPORTER 18 18 1 12 
