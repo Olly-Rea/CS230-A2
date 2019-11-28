@@ -1,5 +1,8 @@
 package entities.enemies;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import cells.Cell;
 import cells.CellType;
 import controllers.MapController;
@@ -10,7 +13,17 @@ import javafx.scene.image.Image;
 
 public class StraightLineEnemy extends Enemy {
 
-    private static final Image SPRITE = new Image("...");
+    private static final String ASSET_PATH = "./assets/visuals/entities/wallfollower.png";
+    private static Image image;
+
+    static {
+        try {
+            image = new Image(new FileInputStream(ASSET_PATH));
+        } catch (FileNotFoundException e) {
+            image = null;
+            System.err.println("StraightLineEnemy image path not found");
+        }
+    }
 
     private Direction dir;
 
@@ -18,6 +31,7 @@ public class StraightLineEnemy extends Enemy {
      * Straight line.
      *
      * @param vector the position of th straight line enemy
+     * @param dir The direction the enemy is facing initially
      */
     public StraightLineEnemy(Vector pos, Direction dir) {
         super(pos);

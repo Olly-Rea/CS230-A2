@@ -8,6 +8,9 @@ import entities.Enemy;
 import entities.Player;
 import utils.Direction;
 import utils.Vector;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 //Java imports
 import java.util.ArrayList;
 //JavaFX imports
@@ -15,7 +18,17 @@ import javafx.scene.image.Image;
 
 public class DumbTargeter extends Enemy {
 
-    private static final Image SPRITE = new Image("...");
+    private static final String ASSET_PATH = "./assets/visuals/entities/dumbfollower.png";
+    private static Image image;
+
+    static {
+        try {
+            image = new Image(new FileInputStream(ASSET_PATH));
+        } catch (FileNotFoundException e) {
+            image = null;
+            System.err.println("DumbTargeter image path not found");
+        }
+    }
 
     /**
      * The player.
