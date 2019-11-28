@@ -19,7 +19,7 @@ import utils.Vector;
 public class EntityController {
 
     private Entity[][] entityGrid;
-    private ArrayList<Enemy> enemies;
+    private ArrayList<Enemy> enemies = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
 
     /**
