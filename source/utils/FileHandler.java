@@ -2,8 +2,11 @@ package utils;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 
 /**
  * Takes a text file and reads it. If it's null it throws an exception and
@@ -23,7 +26,6 @@ public class FileHandler {
      * @param path The local path of that file.
      */
     public FileHandler(String path) {
-
         try {
             FileReader fReader = new FileReader(path);
             reader = new BufferedReader(fReader);
@@ -47,4 +49,41 @@ public class FileHandler {
         }
     }
 
+    /**
+     * Checks if the reader is at the end of file.
+     *
+     * @return false if reader has reached the end of the file.
+     */
+    public boolean hasNext() {
+        try {
+            reader.mark(1);
+            int test = reader.read();
+            reader.reset();
+            return test > 0 ? true : false;
+        } catch (IOException e) {
+            return false; // TODO: Handle
+        }
+    }
+
+    /**
+     * Method to save a file to a certain path and specific lines to write.
+     *
+     * @param path Path to the file being created/written to
+     * @param lines the lines of text to be written i nthe file
+     * @return True if the file was saved correctly, false otherwise
+     */
+    public static boolean saveFile(String path, String[] lines) {
+        BufferedWriter writer = null;
+        File file = new File(path);
+        try {
+            writer = new BufferedWriter(new FileWriter(file));
+            for (int i = 0; i < lines.length; i++) {
+                writer.write(lines[i] + (i != lines.length - 1 ? "\n" : ""));
+            }
+            writer.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
 }
