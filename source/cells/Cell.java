@@ -62,7 +62,7 @@ public class Cell {
 
     /**
      * Methods to return the asset image as a JavaFX 'Image' for the cell
-     * 
+     *
      * @return the ImageView node for the MapController GridPane
      */
     public ImageView render() {
@@ -70,6 +70,7 @@ public class Cell {
         imageNode.setImage(assetImg);
         return imageNode;
     }
+
     //Overloaded method to overwrite assetPath (used purely for wall cells atm)
     public ImageView render(String assetPath) {
         assetImg = new Image(assetPath, true);
@@ -88,10 +89,10 @@ public class Cell {
     }
 
     /**
-      * Method to return the vector position of the Cell
-      *
-      * @return the cells position within the map
-      */
+     * Method to return the vector position of the Cell
+     *
+     * @return the cells position within the map
+     */
     public Vector getPos() {
         return cellPos;
     }

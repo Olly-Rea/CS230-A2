@@ -7,9 +7,9 @@ import entities.ItemType;
 import entities.Player;
 import utils.Vector;
 
-/**ss
- * Class to handle player movement and rendering
- *s
+/**
+ * ss Class to handle player movement and rendering s
+ *
  * @author Scott, Danny
  */
 public class PlayerController {

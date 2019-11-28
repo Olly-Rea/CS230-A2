@@ -7,9 +7,8 @@ import entities.Entity;
 import misc.Profile;
 import utils.FileHandler;
 
-
 /**
- * 
+ *
  */
 public class GameController {
 
@@ -17,8 +16,6 @@ public class GameController {
     private static final String MAP_DIR = "...";
     private static final String SAVE_DIR = "...";
     private static final String LEADERBOARD_DIR = "...";
-
-    
 
     private MapController mapController;
     private PlayerController playerController;
@@ -28,7 +25,7 @@ public class GameController {
     private String currentMap;
 
     /**
-     * 
+     *
      */
     public GameController() {
         loadGame("./source/map.txt");
@@ -36,7 +33,7 @@ public class GameController {
 
     /**
      * Creates a 2d array of cells from the FileHandler
-     * 
+     *
      * @param fh The Handler reading the Map/LoadFile
      * @return A 2d array of cells to construct the MapController with
      */
@@ -53,17 +50,18 @@ public class GameController {
             String row = fh.nextLine();
             for (int x = 0; x < mapWidth; x++) {
                 char c = row.charAt(x);
-                map[y][x] = MapController.makeCell(x,y,c);
-                entityMap[y][x] = EntityController.makeEntity(x, y, c);                
+                map[y][x] = MapController.makeCell(x, y, c);
+                entityMap[y][x] = EntityController.makeEntity(x, y, c);
             }
         }
-        
+
         mapController = new MapController(map, mapWidth, mapHeight);
         entityController = new EntityController(entityMap, null);
     }
 
     /**
      * Loads a path to a map file and to generate objects for use in the game.
+     *
      * @param path Path to the map file.
      */
     public void loadGame(String path) {
@@ -74,15 +72,14 @@ public class GameController {
         while (fh.hasNext()) {
 
         }
-        
-        // First load map into map controller
-        // Load player 
 
+        // First load map into map controller
+        // Load player
         // Load Additional
     }
 
     /**
-     * 
+     *
      * @param path
      */
     public void saveGame(String path) {
@@ -93,6 +90,7 @@ public class GameController {
 
     /**
      * Returns a list of profiles from the file at {@code PROFILE_PATH}.
+     *
      * @return array of profiles retrieved from {@code PROFILE_PATH}.
      */
     public Profile[] loadProfiles() {
@@ -101,14 +99,16 @@ public class GameController {
 
     /**
      * Adds a profile to the file at {@code PROFILE_PATH} of the name {@code name}.
+     *
      * @param name name to be added to the profile list.
      */
     public void addProfile(String name) {
-        
+
     }
 
     /**
      * Deletes the specific profile from the file at {@code PROFILE_PATH}.
+     *
      * @param profile The profile to be deleted.
      */
     public void deleteProfile(Profile profile) {
@@ -117,6 +117,7 @@ public class GameController {
 
     /**
      * Progresses the game 1 step and handles the key pressed.
+     *
      * @param ke Key Event that was pressed by the user.
      */
     public void gameStep(KeyEvent ke) {
@@ -125,6 +126,7 @@ public class GameController {
 
     /**
      * Shows a leaderboard for a specific map in {@code LEADERBOARD_DIR}.
+     *
      * @param path The file path inside {@code LEADERBOARD_DIR} for the map.
      */
     public void showLeaderboard(String path) {
@@ -133,6 +135,7 @@ public class GameController {
 
     /**
      * adds a time to the map time file in {@code LEADERBOARD_DIR}.
+     *
      * @param path THe file path for the map.
      */
     public void addMapTime(String path) {
