@@ -9,7 +9,7 @@ import utils.Vector;
  *
  */
 public abstract class Entity {
-    
+
     /**
      * Holds the current position of the entity on the Map
      */
@@ -20,7 +20,7 @@ public abstract class Entity {
      *
      * @param pos The position at which the entity will be created
      */
-    public Entity(int x, int y) { 
+    public Entity(int x, int y) {
         this.pos = new Vector(x, y);
     }
 

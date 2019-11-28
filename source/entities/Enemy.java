@@ -3,23 +3,21 @@ package entities;
 import controllers.MapController;
 import controllers.PlayerController;
 import utils.Vector;
-import entities.Entity;
 
 /**
  * An Enemy is a player-hostile entity that moves according to an algorithm
  * based on the environment
- * 
+ *
  * @author James Hogg, Scott Barr
  * @version 1.0
  */
-
 public abstract class Enemy extends Entity {
 
     /**
      * Constructs an enemy
      */
     public Enemy(Vector pos) {
-        super(pos);
+        super(pos.getX(), pos.getY());
     }
 
     /**

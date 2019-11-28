@@ -23,7 +23,6 @@ public class RequestHandler {
     //         System.out.println(message);
     //     }
     // }
-    
     /**
      * Sends a get request to the url with specific query parameters.
      *

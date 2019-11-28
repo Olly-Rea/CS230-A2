@@ -26,15 +26,15 @@ public class AssetBuilder {
         map = mapRef;
 
         //Add ALL the indexes and respective filenames to WALL_MAP
-        WALL_MAP.put(0, "wall_1"); WALL_MAP.put(2, "wall_2"); WALL_MAP.put(8, "wall_3");
-        WALL_MAP.put(10, "wall_4"); WALL_MAP.put(11, "wall_5"); WALL_MAP.put(16, "wall_6");
-        WALL_MAP.put(18, "wall_7"); WALL_MAP.put(22, "wall_8"); WALL_MAP.put(24, "wall_9");
-        WALL_MAP.put(26, "wall_10"); WALL_MAP.put(27, "wall_11"); WALL_MAP.put(30, "wall_12");
-        WALL_MAP.put(31, "wall_13"); WALL_MAP.put(64, "wall_14"); WALL_MAP.put(66, "wall_15");
-        WALL_MAP.put(72, "wall_16"); WALL_MAP.put(74, "wall_17"); WALL_MAP.put(75, "wall_18");
-        WALL_MAP.put(80, "wall_19"); WALL_MAP.put(82, "wall_20"); WALL_MAP.put(86, "wall_21");
-        WALL_MAP.put(88, "wall_22"); WALL_MAP.put(90, "wall_23"); WALL_MAP.put(91, "wall_24");
-        WALL_MAP.put(94, "wall_25"); WALL_MAP.put(95, "wall_26"); WALL_MAP.put(104, "wall_27");
+        WALL_MAP.put(0, "wall_1");    WALL_MAP.put(2, "wall_2");    WALL_MAP.put(8, "wall_3");
+        WALL_MAP.put(10, "wall_4");   WALL_MAP.put(11, "wall_5");   WALL_MAP.put(16, "wall_6");
+        WALL_MAP.put(18, "wall_7");   WALL_MAP.put(22, "wall_8");   WALL_MAP.put(24, "wall_9");
+        WALL_MAP.put(26, "wall_10");  WALL_MAP.put(27, "wall_11");  WALL_MAP.put(30, "wall_12");
+        WALL_MAP.put(31, "wall_13");  WALL_MAP.put(64, "wall_14");  WALL_MAP.put(66, "wall_15");
+        WALL_MAP.put(72, "wall_16");  WALL_MAP.put(74, "wall_17");  WALL_MAP.put(75, "wall_18");
+        WALL_MAP.put(80, "wall_19");  WALL_MAP.put(82, "wall_20");  WALL_MAP.put(86, "wall_21");
+        WALL_MAP.put(88, "wall_22");  WALL_MAP.put(90, "wall_23");  WALL_MAP.put(91, "wall_24");
+        WALL_MAP.put(94, "wall_25");  WALL_MAP.put(95, "wall_26");  WALL_MAP.put(104, "wall_27");
         WALL_MAP.put(106, "wall_28"); WALL_MAP.put(107, "wall_29"); WALL_MAP.put(120, "wall_30");
         WALL_MAP.put(122, "wall_31"); WALL_MAP.put(123, "wall_32"); WALL_MAP.put(126, "wall_33");
         WALL_MAP.put(127, "wall_34"); WALL_MAP.put(208, "wall_35"); WALL_MAP.put(210, "wall_36");
@@ -44,15 +44,15 @@ public class AssetBuilder {
         WALL_MAP.put(254, "wall_46"); WALL_MAP.put(255, "wall_47");
 
         //Add ALL the indexes and respective filenames to WATER_MAP
-        WATER_MAP.put(0, "water_1"); WATER_MAP.put(2, "water_2"); WATER_MAP.put(8, "water_3");
-        WATER_MAP.put(10, "water_4"); WATER_MAP.put(11, "water_5"); WATER_MAP.put(16, "water_6");
-        WATER_MAP.put(18, "water_7"); WATER_MAP.put(22, "water_8"); WATER_MAP.put(24, "water_9");
-        WATER_MAP.put(26, "water_10"); WATER_MAP.put(27, "water_11"); WATER_MAP.put(30, "water_12");
-        WATER_MAP.put(31, "water_13"); WATER_MAP.put(64, "water_14"); WATER_MAP.put(66, "water_15");
-        WATER_MAP.put(72, "water_16"); WATER_MAP.put(74, "water_17"); WATER_MAP.put(75, "water_18");
-        WATER_MAP.put(80, "water_19"); WATER_MAP.put(82, "water_20"); WATER_MAP.put(86, "water_21");
-        WATER_MAP.put(88, "water_22"); WATER_MAP.put(90, "water_23"); WATER_MAP.put(91, "water_24");
-        WATER_MAP.put(94, "water_25"); WATER_MAP.put(95, "water_26"); WATER_MAP.put(104, "water_27");
+        WATER_MAP.put(0, "water_1");    WATER_MAP.put(2, "water_2");    WATER_MAP.put(8, "water_3");
+        WATER_MAP.put(10, "water_4");   WATER_MAP.put(11, "water_5");   WATER_MAP.put(16, "water_6");
+        WATER_MAP.put(18, "water_7");   WATER_MAP.put(22, "water_8");   WATER_MAP.put(24, "water_9");
+        WATER_MAP.put(26, "water_10");  WATER_MAP.put(27, "water_11");  WATER_MAP.put(30, "water_12");
+        WATER_MAP.put(31, "water_13");  WATER_MAP.put(64, "water_14");  WATER_MAP.put(66, "water_15");
+        WATER_MAP.put(72, "water_16");  WATER_MAP.put(74, "water_17");  WATER_MAP.put(75, "water_18");
+        WATER_MAP.put(80, "water_19");  WATER_MAP.put(82, "water_20");  WATER_MAP.put(86, "water_21");
+        WATER_MAP.put(88, "water_22");  WATER_MAP.put(90, "water_23");  WATER_MAP.put(91, "water_24");
+        WATER_MAP.put(94, "water_25");  WATER_MAP.put(95, "water_26");  WATER_MAP.put(104, "water_27");
         WATER_MAP.put(106, "water_28"); WATER_MAP.put(107, "water_29"); WATER_MAP.put(120, "water_30");
         WATER_MAP.put(122, "water_31"); WATER_MAP.put(123, "water_32"); WATER_MAP.put(126, "water_33");
         WATER_MAP.put(127, "water_34"); WATER_MAP.put(208, "water_35"); WATER_MAP.put(210, "water_36");
