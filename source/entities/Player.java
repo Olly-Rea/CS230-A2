@@ -214,4 +214,8 @@ public class Player extends Entity {
 				yellowKeys };
 		return playerSave;
 	}
+	
+	public void render() {
+		
+	}
 }

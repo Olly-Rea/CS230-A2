@@ -1,11 +1,8 @@
 package controllers;
 
-import entities.Cell;
-import entities.CellType;
-import entities.Item;
-import entities.ItemType;
-import entities.Player;
-import utils.Vector;
+import entities.*;
+import cells.*;
+import utils.*;
 
 /**
  * Class to handle player movement and rendering
@@ -26,6 +23,10 @@ public class PlayerController {
 	public PlayerController(Player player) {
 		this.player = player;
 	}
+
+  public Player getPlayer(){
+    return player;
+  }
 
 	/**
 	 * Takes a direction and determines if the player can move into the desired cell
@@ -50,7 +51,7 @@ public class PlayerController {
 		Cell desiredCell = mc.getCell(desired.getX(), desired.getY());
 		if (validMove(desiredCell)) {
 			player.setPos(desired);
-      // mc.render? Set new location to render around
+      mc.moveMap(dir);
 		}
 	}
 
@@ -67,26 +68,28 @@ public class PlayerController {
 		Boolean valid = null;
 		if (move == (CellType.GROUND) || move == (CellType.FIRE) || move == (CellType.WATER)) {
 			valid = true;
-		} else if (move == (CellType.RED)) {
-			Item redKey = new Item(ItemType.REDKEY);
-			valid = player.useItem(redKey);
-		} else if (move == (CellType.BLUE)) {
-			Item blueKey = new Item(ItemType.BLUEKEY);
-			valid = player.useItem(blueKey);
-		} else if (move == (CellType.YELLOW)) {
-			Item yellowKey = new Item(ItemType.YELLOWKEY);
-			valid = player.useItem(yellowKey);
-		} else if (move == (CellType.GREEN)) {
-			Item greenKey = new Item(ItemType.GREENKEY);
-			valid = player.useItem(greenKey);
-		} else if (move == (CellType.TOKEN)) {
-			// valid = player.useTokens(); // Need method to check tokens required
-		} else if (move == (CellType.TELEPORTER)) {
-			valid = true;
+    } else if (move == (CellType.TELEPORTER)) {
+			// valid = true;
 			// player.setPos(Cell.getLinkedPos());
-		}
+		} else if (move == (CellType.Door)) {
+      if (move.ReplaceThis() == RED){
+			   Item redKey = new Item(ItemType.REDKEY);
+			      valid = player.useItem(redKey);
+      } else if (move.ReplaceThis() == BLUE){
+        Item blueKey = new Item(ItemType.BLUEKEY);
+  			   valid = player.useItem(blueKey);
+      } else if (move.ReplaceThis() == YELLOW){
+        Item blueKey = new Item(ItemType.BLUEKEY);
+  			valid = player.useItem(blueKey);
+      } else if (move.ReplaceThis() == GREEN){
+        Item greenKey = new Item(ItemType.GREENKEY);
+  			valid = player.useItem(greenKey);
+      } else if (move.ReplaceThis() == TOKEN){
+        valid = player.useTokens(move.GETTOKENNUMBER());
+      }
 		return valid;
 	}
+ }
 
 	/**
 	 * Check if the cell requires a shoe type and if the player posseses it
@@ -124,8 +127,8 @@ public class PlayerController {
 	 *
 	 * @author xxxxx
 	 */
-	public void render() {
-	}
+	//public void render() {
+	//}
 
 	/**
 	 * Method to get a int array {X,Y,fireShoes, flippers,tokens, red,
