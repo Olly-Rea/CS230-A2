@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class AssetBuilder {
 
-    //Create hashMaps containing the wall and water graphics filenames, indexed 
+    //Create hashMaps containing the wall and water graphics filenames, indexed
     //according to the 8-bit tile bitmasking algorithm
     final HashMap<Integer, String> WALL_MAP = new HashMap<>();
     final HashMap<Integer, String> WATER_MAP = new HashMap<>();
@@ -42,7 +42,7 @@ public class AssetBuilder {
         WALL_MAP.put(219, "wall_40"); WALL_MAP.put(222, "wall_41"); WALL_MAP.put(223, "wall_42");
         WALL_MAP.put(248, "wall_43"); WALL_MAP.put(250, "wall_44"); WALL_MAP.put(251, "wall_45");
         WALL_MAP.put(254, "wall_46"); WALL_MAP.put(255, "wall_47");
-        
+
         //Add ALL the indexes and respective filenames to WATER_MAP
         WATER_MAP.put(0, "water_1"); WATER_MAP.put(2, "water_2"); WATER_MAP.put(8, "water_3");
         WATER_MAP.put(10, "water_4"); WATER_MAP.put(11, "water_5"); WATER_MAP.put(16, "water_6");
@@ -97,7 +97,7 @@ public class AssetBuilder {
 
         //Check for edge of map to prevent indexOutOfBounds exception
         if ((x > 1 && x < map[y].length) || (y > 1 && y < map.length)) {
-            
+
             //Top row
             boolean NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
             boolean North = map[y - 1][x].getType() == CellType.WALL;
@@ -139,7 +139,7 @@ public class AssetBuilder {
             if (SouthEast && South && East) {
                 wallRef += 1 << 7;
             }
-            
+
         } else {
             //Set the map edges as map asset 1
             wallRef = 1;
@@ -152,10 +152,15 @@ public class AssetBuilder {
     /*
 
     Will also need to apply bitmasking algorithm in methods to
-        - check floor cells for lighting effects
-        - check for water tiles
 
-    Try and make the bitmasking method generic for all cell types
+        - check floor cells for lighting effects
+            - Give cells an "isLightSource" boolean value; perform bitmasking
+              check based on that
+
+        - check for water tiles
+            - Will need identical setup to walls
+
+    Try and make the bitmasking method generic for all use-cases
 
      */
 }

@@ -224,15 +224,15 @@ public class MapController {
     }
 
     /*
-    
-    There will be two layers; 
-    - the Player 'layer', and 
-    - the world layer, 
-    
-    Entities move within the world layer, and then the world layer is moved 
-    around the player 'layer', while the player 'layer' stays still (central to 
+
+    There will be two layers;
+    - the Player 'layer', and
+    - the world layer,
+
+    Entities move within the world layer, and then the world layer is moved
+    around the player 'layer', while the player 'layer' stays still (central to
     the screen).
-    
+
     */
-    
+
 }
