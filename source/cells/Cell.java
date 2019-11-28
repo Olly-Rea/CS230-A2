@@ -87,6 +87,11 @@ public class Cell {
         return type;
     }
 
+    /**
+      * Method to return the vector position of the Cell
+      *
+      * @return the cells position within the map
+      */
     public Vector getPos() {
         return cellPos;
     }
