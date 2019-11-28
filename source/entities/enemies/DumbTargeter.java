@@ -13,7 +13,7 @@ import java.util.ArrayList;
 //JavaFX imports
 import javafx.scene.image.Image;
 
-public abstract class DumbTargeter extends Enemy {
+public class DumbTargeter extends Enemy {
 
     private static final Image SPRITE = new Image("...");
 
