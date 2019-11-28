@@ -11,10 +11,6 @@ import utils.*;
  */
 public class PlayerController {
 
-	public static enum MOVES {
-		UP, RIGHT, DOWN, LEFT
-	}
-
 	private Player player;
 
 	public Player getPlayer() {
@@ -29,17 +25,17 @@ public class PlayerController {
 	 * @param mc  the map controller to find the Cell in the dir
 	 * @author Danny
 	 */
-	public void move(MOVES dir, MapController mc) {
+	public void move(Direction dir, MapController mc) {
 		Vector current = getPlayerPos();
 		// Find cell to be tested
 		Vector desired = null;
-		if (dir == MOVES.UP) {
+		if (dir == Direction.UP) {
 			desired = new Vector(current.getX(), current.getY() + 1);
-		} else if (dir == MOVES.DOWN) {
+		} else if (dir == Direction.DOWN) {
 			desired = new Vector(current.getX(), current.getY() - 1);
-		} else if (dir == MOVES.LEFT) {
+		} else if (dir == Direction.LEFT) {
 			desired = new Vector(current.getX() - 1, current.getY());
-		} else if (dir == MOVES.RIGHT) {
+		} else if (dir == Direction.RIGHT) {
 			desired = new Vector(current.getX() + 1, current.getY());
 		}
 		Cell desiredCell = mc.getCell(desired.getX(), desired.getY());
