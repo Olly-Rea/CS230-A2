@@ -22,7 +22,7 @@ public class Main extends Application {
     }
 
     public void start(Stage window) throws IOException {
-        window.setTitle("Test");
+        window.setTitle("Game");
 
         Group root = new Group();
         Scene scene = new Scene(root);
