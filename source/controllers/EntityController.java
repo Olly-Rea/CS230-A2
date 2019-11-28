@@ -38,19 +38,18 @@ public class EntityController {
      * @param player The Player object for position reference.
      */
     public void checkItem(Player player) {
-        // Vector playerPos = player.getPos();
-        // for (int i; i < items.size(); i++) {
-        // if entityGrid[playerPos.x][playerPos.y] == items.get(i) {
-        // player.addItem(items.get(i));
-        // }
-        // }
-
+        Vector playerPos = player.getPos();
+        if (entityGrid[playerPos.getX()][playerPos.getY()] != null){
+          Entity newItem = entityGrid[playerPos.getX()][playerPos.getY()];
+          player.addItem((Item) newItem);
+        }
     }
 
+    /**
+    * Adds and enemy to the entity grid
+    */
     public void addEnemy(Enemy enemy) {
         enemies.add(enemy);
-        Vector ePos = enemy.getPos();
-        entityGrid[ePos.getY()][ePos.getX()] = enemy;
     }
 
     /**
@@ -60,16 +59,13 @@ public class EntityController {
      * entityGrid.
      * @return True if the player has collided with an enemy. False otherwise.
      */
-    public boolean enemyCollision(Player player) {
-        // private Vector playerPos = player.getPos();
-        // for (int i; i < enemies.size(); i++) {
-        // if entityGrid[playerPos.x][playerPos.y] == (enemies.get(i)).getPos() {
-        // return true;
-        // } else {
-        // return false;
-        // }
-        // }
-        return false;
+    public boolean enemyCollision(PlayerController player) {
+    	for (int i = 0; i < enemies.size(); i++) {
+    		if (enemies.get(i).playerCheck(player)) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
     /**
@@ -96,7 +92,7 @@ public class EntityController {
         // newEnemyPos = (enemies.get(i)).pathingAlgorithm(map);
         // entityGrid[newEnemyPos.x][newEnemyPos.y] == enemy.get(i);
         // entityGrid[enemyPos.x][enemyPos.y] == " ";
-        // }
+         }
     }
 
     /**
