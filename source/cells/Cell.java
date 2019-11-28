@@ -47,7 +47,7 @@ public class Cell {
                 assetPath += "Water";
                 break;
             case TELEPORTER:
-                //assetPath += " " ;
+                assetPath += "Teleporter" ;
                 break;
             case DOOR:
                 assetPath += "Boulder";

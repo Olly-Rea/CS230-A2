@@ -36,24 +36,24 @@ public class PlayerController {
      * @param mc the map controller to find the Cell in the dir
      * @author Danny
      */
-    public void move(MOVES dir, MapController mc) {
-        Vector current = getPlayerPos();
-        Vector desired;
-        if (dir == MOVES.UP) {
-            desired = new Vector(current.getX(), current.getY() + 1);
-        } else if (dir == MOVES.DOWN) {
-            desired = new Vector(current.getX(), current.getY() - 1);
-        } else if (dir == MOVES.LEFT) {
-            desired = new Vector(current.getX() - 1, current.getY());
-        } else if (dir == MOVES.RIGHT) {
-            desired = new Vector(current.getX() + 1, current.getY());
-        }
-        Cell desiredCell = mc.getCell(desired.getX(), desired.getY());
-        if (validMove(desiredCell)) {
-            player.setPos(desired);
-            // mc.render? Set new location to render around
-        }
-    }
+//    public void move(MOVES dir, MapController mc) {
+//        Vector current = getPlayerPos();
+//        Vector desired;
+//        if (dir == MOVES.UP) {
+//            desired = new Vector(current.getX(), current.getY() + 1);
+//        } else if (dir == MOVES.DOWN) {
+//            desired = new Vector(current.getX(), current.getY() - 1);
+//        } else if (dir == MOVES.LEFT) {
+//            desired = new Vector(current.getX() - 1, current.getY());
+//        } else if (dir == MOVES.RIGHT) {
+//            desired = new Vector(current.getX() + 1, current.getY());
+//        }
+//        Cell desiredCell = mc.getCell(desired.getX(), desired.getY());
+//        if (validMove(desiredCell)) {
+//            player.setPos(desired);
+//            // mc.render? Set new location to render around
+//        }
+//    }
 
     /**
      * Private method to determine if a move is valid based on player inventory
@@ -63,31 +63,31 @@ public class PlayerController {
      * wall, false if the move is invalid and not possible
      * @author Danny
      */
-    private boolean validMove(Cell targetCell) {
-        CellType move = targetCell.getType();
-        Boolean valid = null;
-        if (move == (CellType.GROUND) || move == (CellType.FIRE) || move == (CellType.WATER)) {
-            valid = true;
-        } else if (move == (CellType.RED)) {
-            Item redKey = new Item(ItemType.REDKEY);
-            valid = player.useItem(redKey);
-        } else if (move == (CellType.BLUE)) {
-            Item blueKey = new Item(ItemType.BLUEKEY);
-            valid = player.useItem(blueKey);
-        } else if (move == (CellType.YELLOW)) {
-            Item yellowKey = new Item(ItemType.YELLOWKEY);
-            valid = player.useItem(yellowKey);
-        } else if (move == (CellType.GREEN)) {
-            Item greenKey = new Item(ItemType.GREENKEY);
-            valid = player.useItem(greenKey);
-        } else if (move == (CellType.TOKEN)) {
-            // valid = player.useTokens(); // Need method to check tokens required
-        } else if (move == (CellType.TELEPORTER)) {
-            valid = true;
-            // player.setPos(Cell.getLinkedPos());
-        }
-        return valid;
-    }
+//    private boolean validMove(Cell targetCell) {
+//        CellType move = targetCell.getType();
+//        Boolean valid = null;
+//        if (move == (CellType.GROUND) || move == (CellType.FIRE) || move == (CellType.WATER)) {
+//            valid = true;
+//        } else if (move == (CellType.RED)) {
+//            Item redKey = new Item(ItemType.REDKEY);
+//            valid = player.useItem(redKey);
+//        } else if (move == (CellType.BLUE)) {
+//            Item blueKey = new Item(ItemType.BLUEKEY);
+//            valid = player.useItem(blueKey);
+//        } else if (move == (CellType.YELLOW)) {
+//            Item yellowKey = new Item(ItemType.YELLOWKEY);
+//            valid = player.useItem(yellowKey);
+//        } else if (move == (CellType.GREEN)) {
+//            Item greenKey = new Item(ItemType.GREENKEY);
+//            valid = player.useItem(greenKey);
+//        } else if (move == (CellType.TOKEN)) {
+//            // valid = player.useTokens(); // Need method to check tokens required
+//        } else if (move == (CellType.TELEPORTER)) {
+//            valid = true;
+//            // player.setPos(Cell.getLinkedPos());
+//        }
+//        return valid;
+//    }
 
     /**
      * Check if the cell requires a shoe type and if the player posseses it
