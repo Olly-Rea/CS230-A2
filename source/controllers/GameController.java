@@ -1,7 +1,9 @@
 package controllers;
 
+import java.util.Scanner;
+import cells.Cell;
 import javafx.scene.input.KeyEvent;
-import sun.java2d.cmm.Profile;
+import utils.FileHandler;
 
 /**
  * 
@@ -26,7 +28,32 @@ public class GameController {
      * 
      */
     public GameController() {
+        loadGame("./source/map.txt");
+    }
 
+    /**
+     * Creates a 2d array of cells from the FileHandler
+     * 
+     * @param fh The Handler reading the Map/LoadFile
+     * @return A 2d array of cells to construct the MapController with
+     */
+    private Cell[][] createCells(FileHandler fh) {
+        String init = fh.nextLine();
+        Scanner sc = new Scanner(init);
+        int mapWidth = sc.nextInt();
+        int mapHeight = sc.nextInt();
+
+        Cell[][] map = new Cell[mapHeight][mapWidth];
+
+        for (int y = 0; y < mapHeight; y++) {
+            String row = fh.nextLine();
+            for (int x = 0; x < mapWidth; x++) {
+                char c = row.charAt(x);
+                map[y][x] = MapController.makeCell(x,y,c);
+            }
+        }
+        
+        return map;
     }
 
     /**
@@ -34,7 +61,13 @@ public class GameController {
      * @param path Path to the map file.
      */
     public void loadGame(String path) {
+        FileHandler fh = new FileHandler(path);
+        Cell[][] map = createCells(fh);
+        
+        // First load map into map controller
+        // Load player 
 
+        // Load Additional
     }
 
     /**
@@ -42,7 +75,9 @@ public class GameController {
      * @param path
      */
     public void saveGame(String path) {
-
+        // Get MapController Export
+        // Get PlayerController Export
+        // Get EntityController Export
     }
 
     /**

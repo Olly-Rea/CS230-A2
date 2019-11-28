@@ -220,6 +220,13 @@ public class MapController {
         return maxLength;
     }
 
+    /**
+     * 
+     * @param x x coordinate of the cell
+     * @param y y coordinate of the cell
+     * @param c character in the text file to be translated into a Cell object
+     * @return
+     */
     public static Cell makeCell(int x, int y, char c) {
         switch (c) {
             case '#' : return new Cell(CellType.WALL, x, y);
