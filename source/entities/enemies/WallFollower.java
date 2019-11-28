@@ -1,5 +1,8 @@
 package entities.enemies;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 //Local imports
 import cells.Cell;
 import cells.CellType;
@@ -22,7 +25,17 @@ public class WallFollower extends Enemy {
     /**
      * Path to the WallFollower image
      */
-    private static final Image SPRITE = new Image("...");
+    private static final String ASSET_PATH = "./assets/visuals/entities/wallfollower.png";
+    private static Image image;
+
+    static {
+        try {
+            image = new Image(new FileInputStream(ASSET_PATH));
+        } catch (FileNotFoundException e) {
+            image = null;
+            System.err.println("WallFollower image path not found");
+        }
+    }
 
     private Direction dir;
     private Rotation type;
