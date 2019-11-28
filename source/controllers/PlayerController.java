@@ -86,6 +86,19 @@ public class PlayerController {
 	}
 
 	/**
+	 * Check if player is on a goal Cell
+	 *
+	 * @param map
+	 */
+	public boolean checkGoal(MapController map) {
+		Cell current = map.getCell(player.getPos());
+		if (current.getType() == CellType.GOAL) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * @return Returns the vector of the players current position
 	 * @author Danny
 	 */

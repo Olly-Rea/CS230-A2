@@ -166,17 +166,19 @@ public class GameController {
           // Do nothing
           break;
 
-      // Move enemy
-        entityController.moveEnemies(map);
+      // Move enemies
+        entityController.moveEnemies(mapContoller);
 
-
-          // Check if player is dead
-
+      // Check if player is dead
         // if (playerController.checkStatus(mapController) ||
         // entityController.enemyCollision(playerController.getPlayer())){
         //   // Restart game
         // }
-
+      // Check if game is won
+        if (playerController.checkGoal() == true){
+          // Win game
+        }
+        // wait for next input
         // event.consume;
 
       }
