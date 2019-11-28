@@ -1,3 +1,5 @@
+package misc;
+
 /**
  * Loads profile list and shows the top times of the level.
  * @author Alexandros

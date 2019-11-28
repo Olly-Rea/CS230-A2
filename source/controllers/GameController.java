@@ -1,9 +1,11 @@
 package controllers;
 
+import javafx.scene.input.KeyEvent;
 import java.util.Scanner;
 import cells.Cell;
-import javafx.scene.input.KeyEvent;
+import misc.Profile;
 import utils.FileHandler;
+
 
 /**
  * 
