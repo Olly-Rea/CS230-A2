@@ -32,8 +32,8 @@ public class EntityController {
     }
 
     /**
-     * Checks if the player is standing on a item. Add the item if an item
-     * collision has occurred.
+     * Checks if the player is standing on a item. Add the item if an item collision
+     * has occurred.
      *
      * @param player The Player object for position reference.
      */
@@ -47,6 +47,11 @@ public class EntityController {
 
     }
 
+    /**
+     * Adds an enemy to the entity and also to the enemies list
+     * 
+     * @param enemy the enemy being added
+     */
     public void addEnemy(Enemy enemy) {
         enemies.add(enemy);
         Vector ePos = enemy.getPos();
@@ -54,10 +59,23 @@ public class EntityController {
     }
 
     /**
+     * Adds an item to the entity grid and also to the items list
+     * 
+     * @param i the item being added
+     */
+    public void addItem(Item i) {
+        Vector pos = i.getPos();
+        if (i != null) {
+            items.add(i);
+            entityGrid[pos.getY()][pos.getX()] = i;
+        }
+    }
+
+    /**
      * Checks whether a player has collided with an enemy.
      *
      * @param player The player object where the position will be checked in the
-     * entityGrid.
+     *               entityGrid.
      * @return True if the player has collided with an enemy. False otherwise.
      */
     public boolean enemyCollision(Player player) {
@@ -79,14 +97,16 @@ public class EntityController {
      * @param y The vertical position of the item in the grid.
      */
     private void removeItem(int x, int y) {
+        Item i = (Item) entityGrid[y][x];
+        items.remove(i);
         entityGrid[y][x] = null;
     }
 
     /**
      * Iterates through each enemy and moves them to their next position.
      *
-     * @param map the map will be passed through to each enemy to assist their
-     * next move calculation.
+     * @param map the map will be passed through to each enemy to assist their next
+     *            move calculation.
      */
     public void moveEnemies(MapController map) {
         // private Vector enemyPos;
@@ -100,16 +120,16 @@ public class EntityController {
     }
 
     /**
-     * Renders the entities respective assets on a GridPane at their locations
-     * based on the entityGrid
+     * Renders the entities respective assets on a GridPane at their locations based
+     * on the entityGrid
      *
      * @return
      */
     public GridPane renderEntities() {
         // Create the entity GridPane
         GridPane entityGridPane = new GridPane();
-        //entityGridPane.setPrefWidth(200);
-        //entityGridPane.setPrefHeight(200);
+        // entityGridPane.setPrefWidth(200);
+        // entityGridPane.setPrefHeight(200);
 
         for (int y = 0; y < entityGrid.length; y++) {
             for (int x = 0; x < entityGrid[y].length; x++) {
@@ -165,33 +185,31 @@ public class EntityController {
     /**
      * Creates a new straight line enemy from a scanner and position
      *
-     * @param line the scanner of the rest of the line including specific
-     * details
-     * @param pos the position the enemy is created at
+     * @param line the scanner of the rest of the line including specific details
+     * @param pos  the position the enemy is created at
      * @return the instance of the StraightLineEnemy
      */
     private static StraightLineEnemy makeSL(Scanner line, Vector pos) {
         String faceDir = line.next();
         switch (faceDir) {
-            case "UP":
-                return new StraightLineEnemy(pos, Direction.UP);
-            case "RIGHT":
-                return new StraightLineEnemy(pos, Direction.RIGHT);
-            case "DOWN":
-                return new StraightLineEnemy(pos, Direction.DOWN);
-            case "LEFT":
-                return new StraightLineEnemy(pos, Direction.LEFT);
-            default:
-                return new StraightLineEnemy(pos, Direction.UP);
+        case "UP":
+            return new StraightLineEnemy(pos, Direction.UP);
+        case "RIGHT":
+            return new StraightLineEnemy(pos, Direction.RIGHT);
+        case "DOWN":
+            return new StraightLineEnemy(pos, Direction.DOWN);
+        case "LEFT":
+            return new StraightLineEnemy(pos, Direction.LEFT);
+        default:
+            return new StraightLineEnemy(pos, Direction.UP);
         }
     }
 
     /**
      * Creates a new straight line enemy from a scanner and position
      *
-     * @param line the scanner of the rest of the line including specific
-     * details
-     * @param pos the position the enemy is created at
+     * @param line the scanner of the rest of the line including specific details
+     * @param pos  the position the enemy is created at
      * @return the instance of the StraightLineEnemy
      */
     private static WallFollower makeWF(Scanner line, Vector pos) {
@@ -202,25 +220,25 @@ public class EntityController {
         String rotation = line.next();
 
         switch (faceDir) {
-            case "UP":
-                dir = Direction.UP;
-            case "RIGHT":
-                dir = Direction.RIGHT;
-            case "DOWN":
-                dir = Direction.DOWN;
-            case "LEFT":
-                dir = Direction.LEFT;
-            default:
-                dir = Direction.UP;
+        case "UP":
+            dir = Direction.UP;
+        case "RIGHT":
+            dir = Direction.RIGHT;
+        case "DOWN":
+            dir = Direction.DOWN;
+        case "LEFT":
+            dir = Direction.LEFT;
+        default:
+            dir = Direction.UP;
         }
 
         switch (rotation) {
-            case "CW":
-                rot = Rotation.CW;
-            case "ACW":
-                rot = Rotation.ACW;
-            default:
-                rot = Rotation.ACW;
+        case "CW":
+            rot = Rotation.CW;
+        case "ACW":
+            rot = Rotation.ACW;
+        default:
+            rot = Rotation.ACW;
         }
 
         return new WallFollower(pos, dir, rot);
@@ -236,16 +254,16 @@ public class EntityController {
         int y = line.nextInt();
         String type = line.next();
         switch (type) {
-            case "SL":
-                return makeSL(line, new Vector(x, y));
-            case "WF":
-                return makeWF(line, new Vector(x, y));
-            case "DT":
-                return new DumbTargeter(new Vector(x, y), p);
-            case "ST":
-                return new SmartTargeter(new Vector(x, y), p);
-            default:
-                return null;
+        case "SL":
+            return makeSL(line, new Vector(x, y));
+        case "WF":
+            return makeWF(line, new Vector(x, y));
+        case "DT":
+            return new DumbTargeter(new Vector(x, y), p);
+        case "ST":
+            return new SmartTargeter(new Vector(x, y), p);
+        default:
+            return null;
         }
     }
 
@@ -257,24 +275,24 @@ public class EntityController {
      * @param c the character in the map file
      * @return an instance of an item depending on the character given
      */
-    public static Entity makeEntity(int x, int y, char c) {
+    public static Item makeItem(int x, int y, char c) {
         switch (c) {
-            case 'r':
-                return new Item(ItemType.REDKEY, x, y);
-            case 'g':
-                return new Item(ItemType.GREENKEY, x, y);
-            case 'b':
-                return new Item(ItemType.BLUEKEY, x, y);
-            case 'y':
-                return new Item(ItemType.YELLOWKEY, x, y);
-            case 'f':
-                return new Item(ItemType.FIREBOOTS, x, y);
-            case 'w':
-                return new Item(ItemType.FLIPPERS, x, y);
-            case '*':
-                return new Item(ItemType.TOKEN, x, y);
-            default:
-                return null;
+        case 'r':
+            return new Item(ItemType.REDKEY, x, y);
+        case 'g':
+            return new Item(ItemType.GREENKEY, x, y);
+        case 'b':
+            return new Item(ItemType.BLUEKEY, x, y);
+        case 'y':
+            return new Item(ItemType.YELLOWKEY, x, y);
+        case 'f':
+            return new Item(ItemType.FIREBOOTS, x, y);
+        case 'w':
+            return new Item(ItemType.FLIPPERS, x, y);
+        case '*':
+            return new Item(ItemType.TOKEN, x, y);
+        default:
+            return null;
         }
     }
 

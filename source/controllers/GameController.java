@@ -9,6 +9,7 @@ import javafx.scene.transform.Scale;
 import java.util.Scanner;
 import cells.Cell;
 import entities.Entity;
+import entities.Item;
 import misc.Profile;
 import utils.*;
 
@@ -51,19 +52,20 @@ public class GameController {
 
         Cell[][] map = new Cell[mapHeight][mapWidth];
         Entity[][] entityMap = new Entity[mapHeight][mapWidth];
+        entityController = new EntityController(entityMap);
 
         for (int y = 0; y < mapHeight; y++) {
             String row = fh.nextLine();
             for (int x = 0; x < mapWidth; x++) {
                 char c = row.charAt(x);
                 map[y][x] = MapController.makeCell(x, y, c);
-                entityMap[y][x] = EntityController.makeEntity(x, y, c);
+                Item e = EntityController.makeItem(x, y, c);
+                entityController.addItem(e);
             }
         }
         sc.close();
 
         mapController = new MapController(map, mapWidth, mapHeight);
-        entityController = new EntityController(entityMap);
     }
 
     private void handleSpecific(String line) {
