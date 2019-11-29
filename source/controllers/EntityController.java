@@ -100,33 +100,6 @@ public class EntityController {
     }
 
     /**
-     * Renders the entities respective assets on a GridPane at their locations
-     * based on the entityGrid
-     *
-     * @return
-     */
-    public GridPane renderEntities() {
-        // Create the entity GridPane
-        GridPane entityGridPane = new GridPane();
-        //entityGridPane.setPrefWidth(200);
-        //entityGridPane.setPrefHeight(200);
-
-        for (int y = 0; y < entityGrid.length; y++) {
-            for (int x = 0; x < entityGrid[y].length; x++) {
-                if (entityGrid[y][x] != null) {
-                    entityGridPane.add(entityGrid[y][x].render(), x, y);
-                } else {
-                    Pane blankSpace = new Pane();
-                    blankSpace.setMinSize(200, 200);
-                    entityGridPane.add(blankSpace, x, y);
-                }
-            }
-        }
-
-        return entityGridPane;
-    }
-
-    /**
      * Returns an array of Strings of the state of the entities in the game.
      *
      * @return String array, 1 for each entity defining their details.
@@ -276,6 +249,33 @@ public class EntityController {
             default:
                 return null;
         }
+    }
+       
+    /**
+     * Renders the entities respective assets on a GridPane at their locations
+     * based on the entityGrid
+     *
+     * @return
+     */
+    public GridPane renderEntities() {
+        // Create the entity GridPane
+        GridPane entityGridPane = new GridPane();
+        
+        for (int y = 0; y < entityGrid.length; y++) {
+            for (int x = 0; x < entityGrid[y].length; x++) {
+                if (entityGrid[y][x] != null) {
+                    entityGridPane.add(entityGrid[y][x].render(), x, y);
+                } else {
+                    // Create and add a blank pane 
+                    //  - used to create correct spacing in the rendered GridPane
+                    Pane blankSpace = new Pane();
+                    blankSpace.setMinSize(200, 200);
+                    entityGridPane.add(blankSpace, x, y);
+                }
+            }
+        }
+
+        return entityGridPane;
     }
 
 }

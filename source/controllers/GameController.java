@@ -9,6 +9,10 @@ import javafx.scene.transform.Scale;
 import java.util.Scanner;
 import cells.Cell;
 import entities.Entity;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import misc.Profile;
 import utils.*;
 
@@ -33,7 +37,7 @@ public class GameController {
      *
      */
     public GameController() {
-        loadGame("./savefiles/Test_File.txt");
+        loadGame("./levelfiles/Test_File_DD.txt");
     }
 
     /**
@@ -145,7 +149,6 @@ public class GameController {
      */
     public void gameStep(KeyEvent ke) {
 
-
       switch (ke.getCode()) {
         case RIGHT:
           playerController.move(Direction.RIGHT, mapController);
@@ -196,19 +199,60 @@ public class GameController {
 
 	}
 
-    public void render(Group root) {
-
+    public void render(Group root, double scaleVal) {
+        
         // Group ("layer") 1
         // Render map layer First
         GridPane mapLayer = mapController.renderMap();
-        mapLayer.getTransforms().add(new Scale(0.35, 0.35, 0, 0));
+        mapLayer.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         root.getChildren().add(mapLayer);
         // Render Entity layer Second (on top of Map)
         GridPane entityLayer = entityController.renderEntities();
-        entityLayer.getTransforms().add(new Scale(0.35, 0.35, 0, 0));
+        entityLayer.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         root.getChildren().add(entityLayer);
-
+        
         // Group ("layer") 2
         // Render Player in center of screen last
+        GridPane playerLayer = playerController.renderPlayer();
+        playerLayer.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        root.getChildren().add(playerLayer);
+        
+        //Render the feather-edge effect around the outside of the screen        
+        Image assetImg;
+        try {
+            assetImg = new Image(new FileInputStream("./assets/visuals/Feather_Edge.png"));
+        } catch (FileNotFoundException e) {
+            assetImg = null;
+            System.err.println("Feather_Edge.png path not found");
+        } 
+        ImageView featherEdge = new ImageView(assetImg);
+        featherEdge.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        root.getChildren().add(featherEdge);
+
+       
+    }
+
+    private double renderX = 0;
+    private double renderY = 0;
+
+    public void renderMove(Group root, int x, int y, double scaleVal) {
+
+        renderX += x;
+        renderY += y;
+                
+        if (renderX <= 400) {
+            root.getChildren().get(0).setTranslateX(renderX * scaleVal);
+            root.getChildren().get(1).setTranslateX(renderX * scaleVal);
+        } else {
+            renderX = 400;
+        }
+        
+        if (renderY <= 400) {
+            root.getChildren().get(0).setTranslateY(renderY * scaleVal);
+            root.getChildren().get(1).setTranslateY(renderY * scaleVal);
+        } else {
+            renderY = 400;
+        }
+
     }
 }
