@@ -1,5 +1,9 @@
 package entities;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import utils.Vector;
 
 /**
@@ -8,7 +12,6 @@ import utils.Vector;
  *
  * @author Daniel Clenaghan
  */
-
 public class Player extends Entity {
 
 	private boolean hasFireBoots;
@@ -18,6 +21,9 @@ public class Player extends Entity {
 	private int greenKeys;
 	private int blueKeys;
 	private int yellowKeys;
+
+	private String assetPath = "./assets/visuals/entities/player.png";
+    private Image playerAsset;
 
 	/**
 	 * Creates a Player object
@@ -33,6 +39,13 @@ public class Player extends Entity {
 		this.greenKeys = 0;
 		this.blueKeys = 0;
 		this.yellowKeys = 0;
+
+		try {
+            playerAsset = new Image(new FileInputStream(assetPath));
+        } catch (FileNotFoundException e) {
+            playerAsset = null;
+            System.err.println("Player asset path not found!");
+        }  
 	}
 
 	/**
@@ -42,7 +55,7 @@ public class Player extends Entity {
 	 * @param inventory
 	 */
 	public Player(int[] inventory) {
-		super(new Vector(inventory[0], inventory[1]));
+		super(inventory[0], inventory[1]);
 		if (inventory[2] == 1) {
 			this.hasFireBoots = true;
 		} else {
@@ -120,6 +133,22 @@ public class Player extends Entity {
 	}
 
 	/**
+	 * Method to collect fireshoes
+	 *
+	 */
+	public void collectFireShoes() {
+		hasFireBoots = true;
+	}
+
+	/**
+	 * Method to collect flippers
+	 *
+	 */
+	public void collectFlippers() {
+		hasFlippers = true;
+	}
+
+	/**
 	 * Method to find if the player has collected fire boots
 	 *
 	 * @return true if the player has picked up fire boots, else false
@@ -158,40 +187,36 @@ public class Player extends Entity {
 	 * @param item The item the game would like to use
 	 * @return true if the item is present, false otherwise
 	 */
-	public boolean useItem(Item item) {
-		ItemType use = item.getType();
-		boolean itemPresent = false;
-		switch (use) {
-		case FIREBOOTS:
-			if (hasFireBoots == true) {
-				itemPresent = true;
-			}
-		case FLIPPERS:
-			if (hasFlippers == true) {
-				itemPresent = true;
-			}
+	public boolean useKey(ItemType item) {
+		switch (item) {
 		case REDKEY:
 			if (redKeys > 0) {
 				redKeys--;
-				itemPresent = true;
-			}
+				return true;
+			} else
+				return false;
 		case BLUEKEY:
 			if (blueKeys > 0) {
 				blueKeys--;
-				itemPresent = true;
-			}
+				return true;
+			} else
+				return false;
 		case GREENKEY:
 			if (greenKeys > 0) {
 				greenKeys--;
-				itemPresent = true;
-			}
+				return true;
+			} else
+				return false;
 		case YELLOWKEY:
 			if (yellowKeys > 0) {
 				yellowKeys--;
-				itemPresent = true;
-			}
+				return true;
+			} else
+				return false;
+		default:
+			return false;
 		}
-		return itemPresent;
+
 	}
 
 	/**
@@ -214,4 +239,12 @@ public class Player extends Entity {
 				yellowKeys };
 		return playerSave;
 	}
+
+	/**
+     * Method to render the player to the screen.
+     */
+    public ImageView render() {
+        ImageView imageNode = new ImageView(playerAsset);
+        return imageNode;
+    }
 }

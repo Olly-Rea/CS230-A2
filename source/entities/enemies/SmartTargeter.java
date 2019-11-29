@@ -1,5 +1,7 @@
 package entities.enemies;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
 import cells.Cell;
@@ -10,15 +12,26 @@ import entities.Player;
 import utils.Direction;
 import utils.Vector;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * SmartTargeter class which always takes the path which leads to the Player.
- * 
+ *
  * @author Scott Barr
  */
 public class SmartTargeter extends Enemy {
-    
-	private static final Image SPRITE = new Image("...");
+
+    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/smartTargeter.png";
+    private static Image image;
+
+    static {
+        try {
+            image = new Image(new FileInputStream(ASSET_PATH));
+        } catch (FileNotFoundException e) {
+            image = null;
+            System.err.println("SmartTargeter image path not found");
+        }
+    }
 
     private Direction dir;
     private Player player;
@@ -29,18 +42,20 @@ public class SmartTargeter extends Enemy {
     }
 
     /**
-     * 
+     * Renders the Enemy to the screen
      */
-    public void render() {
+    public ImageView render() {
+        ImageView imageNode = new ImageView(image);
+        return imageNode;
     }
 
     /**
      * Creates a distance grid which flood fills from the players position until
      * every possible connecting cell is filled.
-     * 
+     *
      * @param map The map containing the cells
-     * @return A 2d Array of integers the same size as the map filled with distances
-     *         from the Players position.
+     * @return A 2d Array of integers the same size as the map filled with
+     * distances from the Players position.
      */
     private Integer[][] makeDistGrid(MapController map) {
         // Initialise Variables
@@ -56,12 +71,16 @@ public class SmartTargeter extends Enemy {
         while (!queue.isEmpty()) {
             Cell q = queue.poll(); // q = the next cell in the queue
             for (Direction d : Direction.values()) { // For all directions (UP/RIGHT/DOWN/LEFT)
-                Cell next = map.getCell(new Vector(q.x, q.y), d); // get the next cell
+                int x = q.getPos().getX();
+                int y = q.getPos().getY();
+                Cell next = map.getNextCell(new Vector(x, y), d); // get the next cell
+
                 if (next.getType() == CellType.GROUND) { // if the cell is of type GROUND
-                    int dist = distGrid[q.y][q.x] + 1; // distance is incremented by 1
+                    int dist = distGrid[y][x] + 1; // distance is incremented by 1
                     // if distGrid at next position is empty then add it to the queue & set to dist
-                    if (distGrid[next.y][next.x] == null) {
-                        distGrid[next.y][next.x] = dist;
+                    Integer val = distGrid[next.getPos().getY()][next.getPos().getX()];
+                    if (val == null) {
+                        val = dist;
                         queue.add(next);
                     }
                 }
@@ -80,10 +99,10 @@ public class SmartTargeter extends Enemy {
         // If the distGrid at the enemies position is 0 then do not move
         if (distGrid[pos.getY()][pos.getX()] != 0) {
             for (Direction d : Direction.values()) { // for all Directions (UP, RIGHT, DOWN, LEFT)
-                Cell next = map.getCell(new Vector(pos.getX(), pos.getY()), d); // get the next cell in that direction
+                Cell next = map.getNextCell(new Vector(pos.getX(), pos.getY()), d); // get the next cell in that direction
                 if (next.getType() == CellType.GROUND) { // Confirm it's a ground cell
                     Integer dist = distGrid[pos.getY() + d.Y][pos.getX() + d.X]; // check the distance at that cell in
-                                                                                 // distGrid
+                    // distGrid
                     // If minDist is null and dist isn't null then set minDist to be dist
                     // and set facing direction of the enemy to be the direction d
                     if (minDist == null && dist != null) {
