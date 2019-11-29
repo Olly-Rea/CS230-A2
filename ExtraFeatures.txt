@@ -21,3 +21,5 @@ Torches in walls with 'lighting' effects (wall and floor check for wall-torch ti
 
 'Dynamic' Rendering for light sources
 	- Implement ground tile bitmasking for different light positions
+
+Player has a single-use bat to 'knock out' enemies should they become boxed-in by one

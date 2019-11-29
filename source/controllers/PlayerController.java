@@ -2,6 +2,8 @@ package controllers;
 
 import entities.*;
 import cells.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import utils.*;
 
 /**
@@ -120,7 +122,25 @@ public class PlayerController {
 	 *
 	 * @author xxxxx
 	 */
-	public void render() {
+	public GridPane renderPlayer() {
+            // Create the Player GridPane
+            GridPane playerGridPane = new GridPane();
+            
+            for (int x = 0; x < 7; x++) {
+                for (int y = 0; y < 7; y++) {
+                    if (x == 3 && y == 3) {
+                        playerGridPane.add(player.render(), x, y);
+                    } else {
+                        // Create and add a blank pane 
+                        //  - used to create correct spacing in the rendered GridPane
+                        Pane blankSpace = new Pane();
+                        blankSpace.setMinSize(200, 200);
+                        playerGridPane.add(blankSpace, x, y);
+                    }
+                }
+            }
+            
+            return playerGridPane;
 	}
 
 	/**
