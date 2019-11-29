@@ -18,24 +18,9 @@ import utils.Vector;
 public class EntityController {
 
     private Entity[][] entityGrid;
-<<<<<<< HEAD
-    private ArrayList<Enemy> enemies;
-    private final ArrayList<String> items = new ArrayList<String>() {
-      {
-        add("r");
-        add("g");
-        add("b");
-        add("y");
-        add("w");
-        add("f");
-        add("*");
-      }
-    };
-=======
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
 
->>>>>>> Master
     /**
      * Sets entityGrid and enemies
      *
@@ -93,11 +78,7 @@ public class EntityController {
      * @param y The vertical position of the item in the grid.
      */
     private void removeItem(int x, int y) {
-<<<<<<< HEAD
-      entityGrid[x][y] = new String(" ");
-=======
         entityGrid[y][x] = null;
->>>>>>> Master
     }
 
     /**
@@ -106,7 +87,6 @@ public class EntityController {
      * @param map the map will be passed through to each enemy to assist their
      * next move calculation.
      */
-<<<<<<< HEAD
     public moveEnemies(MapController map) {
       Vector enemyPos;
       Vector newEnemyPos;
@@ -116,17 +96,6 @@ public class EntityController {
         entityGrid[newEnemyPos.x][newEnemyPos.y] = new String(enemy.get(i));
         removeItem(enemyPos.x,enemyPos.y);
       }
-=======
-    public void moveEnemies(MapController map) {
-        // private Vector enemyPos;
-        // private Vector newEnemyPos;
-        // for (int i; i < enemies.size(); i++) {
-        // enemyPos = (enemies.get(i)).getPos();
-        // newEnemyPos = (enemies.get(i)).pathingAlgorithm(map);
-        // entityGrid[newEnemyPos.x][newEnemyPos.y] == enemy.get(i);
-        // entityGrid[enemyPos.x][enemyPos.y] == " ";
-        // }
->>>>>>> Master
     }
 
     /**
@@ -162,21 +131,6 @@ public class EntityController {
      * @return String array, 1 for each entity defining their details.
      */
     public String[] export() {
-<<<<<<< HEAD
-      String[] exportArray;
-      int numberOfColumns = entityGrid.length();
-      int numberOfRows;
-      int exportArrayIndex = 0;
-      String exportData;
-      for (int i = 0; i < numberOfColumns; i++) {
-        numberOfRows = entityGrid[i].length();
-        for (int j = 0; j < numberOfRows; j++) {
-          if (entityGrid[i][j] != " ") {
-            exportData = entityGrid[i][j] + " " + (entityGrid[i][j]).getPos();
-            exportArray[exportArrayIndex] = exportData;
-            exportArrayIndex++;
-          }
-=======
         // private String[] exportArray;
         // private int numberOfColumns = entityGrid.length();
         // private int numberOfRows;
@@ -298,7 +252,7 @@ public class EntityController {
      * Returns a new item based on the char in the map text file
      *
      * @param x the x position of the item
-     * @param y the y positio of the item
+     * @param y the y position of the item
      * @param c the character in the map file
      * @return an instance of an item depending on the character given
      */
@@ -320,7 +274,6 @@ public class EntityController {
                 return new Item(ItemType.TOKEN, x, y);
             default:
                 return null;
->>>>>>> Master
         }
     }
 
