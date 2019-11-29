@@ -13,6 +13,7 @@ import utils.Vector;
 import entities.Enemy;
 //JavaFX imports
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * A class describing a WallFollower Enemy which follows a wall anticlockwise or
@@ -25,7 +26,7 @@ public class WallFollower extends Enemy {
     /**
      * Path to the WallFollower image
      */
-    private static final String ASSET_PATH = "./assets/visuals/entities/wallfollower.png";
+    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/wallFollower.png";
     private static Image image;
 
     static {
@@ -98,12 +99,13 @@ public class WallFollower extends Enemy {
             dir = dir.cw();
         }
     }
-
+    
     /**
-     * Renders the enemy at the enemies position
+     * Renders the Enemy to the screen
      */
-    public void render() {
-
+    public ImageView render() {
+        ImageView imageNode = new ImageView(image);
+        return imageNode;
     }
 
 }

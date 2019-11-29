@@ -13,48 +13,99 @@ import javafx.scene.image.ImageView;
 
 public class Cell {
 
-	/** The size of the cell*/
-	public int size;
+    //The type of cell (i.e ground, wall)
+    private final CellType type;
+    //The Vector for the Cell
+    protected final Vector cellPos;
+    //The asset path for all cells
+    private String assetPath = "./assets/visuals/cells/";
+    //The JavaFX image that the asset image will be stored as
+    private Image assetImg;
 
-	/** The colour of the cell. */
-	private Color colour;
+    /**
+     * Cell Constructor; Instantiates a new cell.
+     *
+     * @param type the type of cell being instantiated
+     * @param x the x ordinate of the cell
+     * @param y the y ordinate of the cell
+     */
+    public Cell(CellType type, int x, int y) {
+        this.type = type;
+        cellPos = new Vector(x, y);
+        //Assign asset Image dependent on cell type
+        switch (this.type) {
+            case WALL:
+                assetPath += "walls/wall_1";
+                break;
+            case GROUND:
+                assetPath += "Floor_Dark";
+                break;
+            case FIRE:
+                assetPath += "Fire";
+                break;
+            case WATER:
+                assetPath += "Water";
+                break;
+            case TELEPORTER:
+                assetPath += "Teleporter" ;
+                break;
+            case DOOR:
+                assetPath += "Boulder";
+                break;
+            case GOAL:
+                assetPath += "Goal";
+                break;
+            default:
+                assetPath += "Floor_Dark";
+                break;
+        }
+        //Add the filetype to the end of the path
+        assetPath += ".jpg";
+        //Create the asset Image for the render method
+        try {
+            assetImg = new Image(new FileInputStream(assetPath));
+        } catch (FileNotFoundException e) {
 
-	/** The type of cell (i.e ground, wall). */
-	private CellType type;
+        }
+    }
 
+    /**
+     * Methods to return the asset image as a JavaFX 'Image' for the cell
+     *
+     * @return the ImageView node for the MapController GridPane
+     */
+    public ImageView render() {
+        ImageView imageNode = new ImageView(assetImg);
+        return imageNode;
+    }
 
-	private ColouredDoorType doorType;
+    //Overloaded method to overwrite assetPath (used purely for wall cells atm)
+    public ImageView render(String assetPath) {
+        try {
+            assetImg = new Image(new FileInputStream(assetPath));
+        } catch (FileNotFoundException e) {
+            return null;
+        }
 
-	/**
-	 * Instantiates a new cell.
-	 *
-	 * @param type the type of cell being instantiated
-	 */
-	public Cell (CellType type) {
-		this.type = type;
-	}
+        ImageView imageNode = new ImageView(assetImg);
+        return imageNode;
+    }
 
-	public Cell(ColouredDoorType type) {
-		this.doorType = type;
-	}
+    /**
+     * Method to return the type of cell.
+     *
+     * @return the type of cell in question
+     */
+    public CellType getType() {
+        return type;
+    }
 
-
-	/**
-	 * Renders the cell
-	 *
-	 * @param x the x coordinate where the cell is being placed
-	 * @param y the y coordinate where the cell is being placed
-	 */
-	public void render(int x, int y) {
-
-	}
-
-	/**
-	 * Gets the type of cell.
-	 *
-	 * @return the type of cell in question
-	 */
-	public CellType getType() {
-		return type;
-	}
+    /**
+     * Method to return the vector position of the Cell
+     *
+     * @return the cells position within the map
+     */
+    public Vector getPos() {
+        return cellPos;
+    }
 }

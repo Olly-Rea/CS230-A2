@@ -12,6 +12,7 @@ import entities.Player;
 import utils.Direction;
 import utils.Vector;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * SmartTargeter class which always takes the path which leads to the Player.
@@ -20,7 +21,7 @@ import javafx.scene.image.Image;
  */
 public class SmartTargeter extends Enemy {
 
-    private static final String ASSET_PATH = "./assets/visuals/entities/smartfollower.png";
+    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/smartTargeter.png";
     private static Image image;
 
     static {
@@ -41,9 +42,11 @@ public class SmartTargeter extends Enemy {
     }
 
     /**
-     *
+     * Renders the Enemy to the screen
      */
-    public void render() {
+    public ImageView render() {
+        ImageView imageNode = new ImageView(image);
+        return imageNode;
     }
 
     /**
