@@ -1,11 +1,8 @@
 package controllers;
 
-import entities.Cell;
-import entities.CellType;
-import entities.Item;
-import entities.ItemType;
-import entities.Player;
-import utils.Vector;
+import entities.*;
+import cells.*;
+import utils.*;
 
 /**
  * Class to handle player movement and rendering
@@ -13,9 +10,6 @@ import utils.Vector;
  * @author Scott, Danny
  */
 public class PlayerController {
-	public static enum MOVES {
-		UP, RIGHT, DOWN, LEFT
-	}
 
 	private Player player;
 
@@ -35,22 +29,20 @@ public class PlayerController {
 	 * @param mc  the map controller to find the Cell in the dir
 	 * @author Danny
 	 */
-	public void move(MOVES dir, MapController mc) {
-		Vector current = getPlayerPos();
-		Vector desired;
-		if (dir == MOVES.UP) {
-			desired = new Vector(current.getX(), current.getY() + 1);
-		} else if (dir == MOVES.DOWN) {
-			desired = new Vector(current.getX(), current.getY() - 1);
-		} else if (dir == MOVES.LEFT) {
-			desired = new Vector(current.getX() - 1, current.getY());
-		} else if (dir == MOVES.RIGHT) {
-			desired = new Vector(current.getX() + 1, current.getY());
+	public void move(Direction dir, MapController mc) {
+		Cell target = mc.getNextCell(player.getPos(), dir);
+		if (target.getType() == CellType.DOOR) {
+			if (((Door) target).isOpenable(player)) {
+				mc.openDoor(player.getPos().getX(), player.getPos().getY());
+			}
 		}
-		Cell desiredCell = mc.getCell(desired.getX(), desired.getY());
-		if (validMove(desiredCell)) {
-			player.setPos(desired);
-      // mc.render? Set new location to render around
+
+		if (validMove(target)) {
+			Vector pos = player.getPos();
+			if (target.getType() == CellType.TELEPORTER) {
+				pos = ((Teleporter) target).getLinked().getPos();
+			}
+			player.setPos(new Vector(pos.getX() + dir.X, pos.getY() + dir.Y));
 		}
 	}
 
@@ -63,29 +55,15 @@ public class PlayerController {
 	 * @author Danny
 	 */
 	private boolean validMove(Cell targetCell) {
-		CellType move = targetCell.getType();
-		Boolean valid = null;
-		if (move == (CellType.GROUND) || move == (CellType.FIRE) || move == (CellType.WATER)) {
-			valid = true;
-		} else if (move == (CellType.RED)) {
-			Item redKey = new Item(ItemType.REDKEY);
-			valid = player.useItem(redKey);
-		} else if (move == (CellType.BLUE)) {
-			Item blueKey = new Item(ItemType.BLUEKEY);
-			valid = player.useItem(blueKey);
-		} else if (move == (CellType.YELLOW)) {
-			Item yellowKey = new Item(ItemType.YELLOWKEY);
-			valid = player.useItem(yellowKey);
-		} else if (move == (CellType.GREEN)) {
-			Item greenKey = new Item(ItemType.GREENKEY);
-			valid = player.useItem(greenKey);
-		} else if (move == (CellType.TOKEN)) {
-			// valid = player.useTokens(); // Need method to check tokens required
-		} else if (move == (CellType.TELEPORTER)) {
-			valid = true;
-			// player.setPos(Cell.getLinkedPos());
+		CellType moveType = targetCell.getType();
+		switch (moveType) {
+		case WALL:
+			return false;
+		case DOOR:
+			return false;
+		default:
+			return true;
 		}
-		return valid;
 	}
 
 	/**
@@ -97,18 +75,14 @@ public class PlayerController {
 	 *         player, otherwise player is still alive
 	 * @author Danny
 	 */
-	public boolean checkStatus(Cell cell) {
-		Boolean isDead = false;
-		if (cell.getType() == CellType.FIRE) {
-			if (player.hasFireBoots() == false) {
-				isDead = true;
-			}
-		} else if (cell.getType() == CellType.WATER) {
-			if (player.hasFlippers() == false) {
-				isDead = true;
-			}
+	public boolean checkStatus(MapController map) {
+		Cell current = map.getCell(getPlayerPos());
+		if (current.getType() == CellType.FIRE && (player.hasFireBoots() == false)) {
+			return true;
+		} else if (current.getType() == CellType.WATER && (player.hasFlippers() == false)) {
+			return true;
 		}
-		return isDead;
+		return false;
 	}
 
 	/**
@@ -117,6 +91,15 @@ public class PlayerController {
 	 */
 	public Vector getPlayerPos() {
 		return player.getPos();
+	}
+
+	/**
+	 * Returns the object of the player
+	 *
+	 * @return the player object
+	 */
+	public Player getPlayer() {
+		return player;
 	}
 
 	/**

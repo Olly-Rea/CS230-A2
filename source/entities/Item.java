@@ -1,23 +1,70 @@
 package entities;
 
-public class Item {
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
-	private  ItemType type;
+public class Item extends Entity {
 
-	/**
-	 * Instantiates a new item.
-	 * @param type the item type
-	 */
-	public Item (ItemType type) {
-		this.type = type;
-	}
+    private ItemType type;
+    private Image assetImg;
 
-	/**
-	 * Gets the type of item in question.
-	 *
-	 * @return the item type
-	 */
-	public ItemType getType() {
-		return type;
-	}
+    /**
+     * Instantiates a new item.
+     *
+     * @param type the item type
+     */
+    public Item(ItemType type, int x, int y) {
+        super(x, y);
+        this.type = type;
+        String assetPath = "./assets/visuals/entities/";
+        
+        //Set the asset image file dependent on item type
+        switch (type) {
+            case TOKEN:
+                assetPath += "token";
+                break;
+            case FIREBOOTS:
+                assetPath += "fireboots";
+                break;
+            case FLIPPERS:
+                assetPath += "flippers";
+                break;
+            case REDKEY:
+                assetPath += "redkey";
+                break;
+            case BLUEKEY:
+                assetPath += "bluekey";
+                break;
+            case GREENKEY:
+                assetPath += "greenkey";
+                break;
+            case YELLOWKEY:
+                assetPath += "yellowkey";
+                break;
+        }
+        assetPath += ".png";
+        
+        try {
+            assetImg = new Image(new FileInputStream(assetPath));
+        } catch (FileNotFoundException e) {
+            assetImg = null;
+            System.err.println(type + " image path not found");
+        }        
+    }
+
+    /**
+     * Gets the type of item in question.
+     *
+     * @return the item type
+     */
+    public ItemType getType() {
+        return type;
+    }
+
+    public ImageView render() {
+        ImageView imageNode = new ImageView(assetImg);
+        return imageNode;
+    }
 }
