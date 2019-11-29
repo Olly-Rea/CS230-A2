@@ -35,9 +35,11 @@ public class EntityController {
      for (int i = 0; i < numberOfColumns; i++) {
        numberOfRows = entityGrid[i].length();
        for (int j = 0; j < numberOfRows; j++) {
-         if (entityGrid[i][j] != item.getType) {
+         for (int k = 0; k < items.size(); k++){
+          if (entityGrid[i][j] != items.get(k)) {
            enemies.add(entityGrid[i][j]);
          }
+        }
        }
       }
     }
