@@ -86,7 +86,7 @@ public class MapController {
      * @param y The y value of the desired door
      */
     public void openDoor(int x, int y) {
-        map[y][x] = new Cell(CellType.GROUND, x, y);
+        map[y][x] = new Ground(x, y);
         mapGrid.add(map[y][x].render(), x, y);
     }
 
@@ -161,6 +161,20 @@ public class MapController {
     }
 
     /**
+     * Goes through every cell and sets their image if needed
+     */
+    public void autotile() {
+        for (int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[y].length; x++) {
+                Cell cell = map[y][x];
+                if (cell instanceof Wall) {
+                    ((Wall)cell).setImage(assetUtil.getWallType(x, y));
+                }
+            }
+        }
+    }
+
+    /**
      * Method to render the map to the screen centred on the player's location
      *
      * @param playerLocation The player controller is used to access the
@@ -169,28 +183,34 @@ public class MapController {
      * @return
      */
     public GridPane renderMap() {
+        for (int y = 0; y < map.length; y++) {
+            for (int x = 0; x < map[y].length; x++) {
+                if (map[y][x].getType() == null) {
+                    System.err.println("Mapfile error at: (" + x + ", " + y + ")");
+                }
+                mapGrid.add(map[y][x].render(), x, y);
+            }
+        }
 
         // Vector PlayerPos = playerLocation.getPlayerPos();
         // Loop through the map
-        for (int y = 0; y < map.length; y++) {
-            for (int x = 0; x < map[y].length; x++) {
-                // Check that there is a cell at this section of the map array
-                if (map[y][x].getType() == null) {
-                    System.out.println("Mapfile error at: (" + x + ", " + y + ")");
-                }
-                // If no error occurs; check cell type and add to the javaFX
-                // gridPane accordingly
-                if (map[y][x].getType() == CellType.WALL) {
-                    // Get the wall asset Image from the AssetBuilder class
-                    String newAssetPath = assetUtil.getWallType(x, y);
-                    //Add the cell image to the GridPane
-                    mapGrid.add(map[y][x].render(newAssetPath), x, y);
-                } else {
-                    //Add the cell image to the GridPane
-                    mapGrid.add(map[y][x].render(), x, y);
-                }
-            }
-        }
+        // for (int y = 0; y < map.length; y++) {
+        //     for (int x = 0; x < map[y].length; x++) {
+        //         // Check that there is a cell at this section of the map array
+
+        //         // If no error occurs; check cell type and add to the javaFX
+        //         // gridPane accordingly
+        //         if (map[y][x].getType() == CellType.WALL) {
+        //             // Get the wall asset Image from the AssetBuilder class
+        //             String newAssetPath = assetUtil.getWallType(x, y);
+        //             //Add the cell image to the GridPane
+        //             mapGrid.add(map[y][x].render(newAssetPath), x, y);
+        //         } else {
+        //             //Add the cell image to the GridPane
+        //             mapGrid.add(map[y][x].render(), x, y);
+        //         }
+        //     }
+        // }
 
         return mapGrid;
 
@@ -252,18 +272,18 @@ public class MapController {
      */
     public static Cell makeCell(int x, int y, char c) {
         switch (c) {
-            case '#' : return new Cell(CellType.WALL, x, y);
-            case ' ' : return new Cell(CellType.GROUND, x, y);
+            case '#' : return new Wall(x, y);
+            case ' ' : return new Ground(x, y);
             case 'T' : return new Teleporter(x, y);
-            case 'W' : return new Cell(CellType.WATER, x, y);
-            case 'F' : return new Cell(CellType.FIRE, x, y);
-            case '!' : return new Cell(CellType.GOAL, x, y);
+            case 'W' : return new Water(x, y);
+            case 'F' : return new Fire(x, y);
+            case '!' : return new Goal(x, y);
             case 'R' : return new ColouredDoor(x, y, DoorColour.RED);
             case 'G' : return new ColouredDoor(x, y, DoorColour.GREEN);
             case 'B' : return new ColouredDoor(x, y, DoorColour.BLUE);
             case 'Y' : return new ColouredDoor(x, y, DoorColour.YELLOW); 
             case 'D' : return new TokenDoor(x, y); 
-            default  : return new Cell(CellType.GROUND, x, y);
+            default  : return new Ground(x, y);
         }
     }
 
