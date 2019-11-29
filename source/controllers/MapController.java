@@ -231,6 +231,19 @@ public class MapController {
     }
 
     /**
+     * Method to set the door token requirement
+     * 
+     * @param sc 
+     */
+    public void initDoor(Scanner sc) {
+        int x = sc.nextInt();
+        int y = sc.nextInt();
+        int tokens = sc.nextInt();
+        TokenDoor door = (TokenDoor)map[y][x];
+        door.setTokens(tokens);
+    }
+
+    /**
      *
      * @param x x coordinate of the cell
      * @param y y coordinate of the cell
@@ -239,25 +252,18 @@ public class MapController {
      */
     public static Cell makeCell(int x, int y, char c) {
         switch (c) {
-            case '#':
-                return new Cell(CellType.WALL, x, y);
-            case ' ':
-                return new Cell(CellType.GROUND, x, y);
-            case 'T':
-                return new Teleporter(x, y);
-            case 'W':
-                return new Cell(CellType.WATER, x, y);
-            case 'F':
-                return new Cell(CellType.FIRE, x, y);
-            case '!':
-                return new Cell(CellType.GOAL, x, y);
-            // case 'R' : return new Door(DoorType.RED, x, y); // TODO: Door implementation change
-            // case 'G' : return new Door(DoorType.GREEN, x, y); // TODO: Door implementation change
-            // case 'B' : return new Door(DoorType.BLUE, x, y); // TODO: Door implementation change
-            // case 'Y' : return new Door(DoorType.YELLOW, x, y); // TODO: Door implementation change
-            // case 'D' : return new Door(DoorType.TOKEN, x, y); // TODO: Door implementation change
-            default:
-                return new Cell(CellType.GROUND, x, y);
+            case '#' : return new Cell(CellType.WALL, x, y);
+            case ' ' : return new Cell(CellType.GROUND, x, y);
+            case 'T' : return new Teleporter(x, y);
+            case 'W' : return new Cell(CellType.WATER, x, y);
+            case 'F' : return new Cell(CellType.FIRE, x, y);
+            case '!' : return new Cell(CellType.GOAL, x, y);
+            case 'R' : return new ColouredDoor(x, y, DoorColour.RED);
+            case 'G' : return new ColouredDoor(x, y, DoorColour.GREEN);
+            case 'B' : return new ColouredDoor(x, y, DoorColour.BLUE);
+            case 'Y' : return new ColouredDoor(x, y, DoorColour.YELLOW); 
+            case 'D' : return new TokenDoor(x, y); 
+            default  : return new Cell(CellType.GROUND, x, y);
         }
     }
 
