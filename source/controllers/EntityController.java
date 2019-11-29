@@ -26,8 +26,20 @@ public class EntityController {
      * @param entityGrid 2d Array of Enemy and Item Entity SubClasses.
      * @param enemies
      */
+     //this constructor needs implementing correctly
     public EntityController(Entity[][] entityGrid, ArrayList<Enemy> enemies) {
-
+      Entity[][] entityGrid = new Entity[][] {{}};
+      ArrayList<Enemy> enemies = new Enemy[] {};
+      int numberOfColumns = entityGrid.length();
+      int numberOfRows;
+     for (int i = 0; i < numberOfColumns; i++) {
+       numberOfRows = entityGrid[i].length();
+       for (int j = 0; j < numberOfRows; j++) {
+         if (entityGrid[i][j] != item.getType) {
+           enemies.add(entityGrid[i][j]);
+         }
+       }
+      }
     }
 
     /**
