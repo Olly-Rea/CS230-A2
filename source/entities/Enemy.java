@@ -1,5 +1,6 @@
 package entities;
 
+import controllers.EntityController;
 import controllers.MapController;
 import controllers.PlayerController;
 import utils.Vector;
@@ -33,5 +34,5 @@ public abstract class Enemy extends Entity {
      * @param Map The current map state
      * @return Returns a vector containing the next position
      */
-    public abstract void algorithm(MapController map);
+    public abstract void algorithm(MapController map, EntityController ec);
 }

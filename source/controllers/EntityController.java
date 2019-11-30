@@ -47,6 +47,10 @@ public class EntityController {
 
     }
 
+    public boolean entityPresent(Vector pos, Direction dir) {
+        return entityGrid[pos.getY() + dir.Y][pos.getX() + dir.X] instanceof Entity;
+    }
+
     /**
      * Adds an enemy to the entity and also to the enemies list
      *

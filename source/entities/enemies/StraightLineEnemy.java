@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 
 import cells.Cell;
 import cells.CellType;
+import cells.Ground;
+import controllers.EntityController;
 import controllers.MapController;
 import entities.Enemy;
 import utils.Direction;
@@ -46,9 +48,10 @@ public class StraightLineEnemy extends Enemy {
      *
      * @param map the map
      */
-    public void algorithm(MapController map) {
+    public void algorithm(MapController map, EntityController ec) {
         Cell next = map.getNextCell(pos, dir);
-        if (next.getType() == CellType.WALL) {
+        boolean existsEntity = ec.entityPresent(pos, dir);
+        if (!(next instanceof Ground) || existsEntity) {
             dir = dir.cw().cw();
         }
 

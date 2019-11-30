@@ -1,9 +1,11 @@
 package entities.enemies;
 
+import controllers.EntityController;
 //Local imports
 import controllers.MapController;
 import cells.Cell;
 import cells.CellType;
+import cells.Ground;
 import entities.Enemy;
 import entities.Player;
 import utils.Direction;
@@ -53,7 +55,7 @@ public class DumbTargeter extends Enemy {
      *
      * @param map The MapController to obtain the details of the environment
      */
-    public void algorithm(MapController map) {
+    public void algorithm(MapController map, EntityController ec) {
         // Initialise variables
         Vector playerPos = player.getPos();
         ArrayList<Direction> potential = new ArrayList<>();
@@ -76,7 +78,8 @@ public class DumbTargeter extends Enemy {
         for (int i = 0; i < potential.size(); i++) {
             Direction d = potential.get(i);
             Cell next = map.getNextCell(pos, d);
-            if (next.getType() == CellType.GROUND) {
+            boolean existsEntity = ec.entityPresent(pos, dir);
+            if (next instanceof Ground && !existsEntity) {
                 dir = d;
             }
         }
