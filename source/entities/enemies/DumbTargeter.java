@@ -91,8 +91,7 @@ public class DumbTargeter extends Enemy {
      * Renders the Enemy to the screen
      */
     public ImageView render() {
-        ImageView imageNode = new ImageView(image);
-        return imageNode;
+        return new ImageView(image);
     }
 
 }

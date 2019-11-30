@@ -64,8 +64,10 @@ public class ColouredDoor extends Door {
 		return p.useKey(key);
 	}
 
-	public ImageView render() {
-        ImageView imageNode = new ImageView(image);
-        return imageNode;
+    /**
+     * Renders the Enemy to the screen
+     */
+    public ImageView render() {
+        return new ImageView(image);
     }
 }

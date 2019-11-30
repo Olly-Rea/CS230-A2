@@ -26,7 +26,7 @@ public class Item extends Entity {
                 assetPath += "token";
                 break;
             case FIREBOOTS:
-                assetPath += "fireboots";
+                assetPath += "fireboots"; 
                 break;
             case FLIPPERS:
                 assetPath += "flippers";
@@ -64,7 +64,6 @@ public class Item extends Entity {
     }
 
     public ImageView render() {
-        ImageView imageNode = new ImageView(assetImg);
-        return imageNode;
+        return new ImageView(assetImg);
     }
 }

@@ -24,8 +24,10 @@ public class Fire extends Cell {
         super(CellType.FIRE, x, y);
     }
 
+    /**
+     * Renders the Enemy to the screen
+     */
     public ImageView render() {
-        ImageView imageNode = new ImageView(image);
-        return imageNode;
+        return new ImageView(image);
     }
 }

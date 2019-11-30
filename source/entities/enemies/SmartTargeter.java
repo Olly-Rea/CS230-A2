@@ -44,14 +44,6 @@ public class SmartTargeter extends Enemy {
     }
 
     /**
-     * Renders the Enemy to the screen
-     */
-    public ImageView render() {
-        ImageView imageNode = new ImageView(image);
-        return imageNode;
-    }
-
-    /**
      * Creates a distance grid which flood fills from the players position until
      * every possible connecting cell is filled.
      *
@@ -124,5 +116,12 @@ public class SmartTargeter extends Enemy {
         if (dir != null) { // if dir is null then do not move.
             pos.add(dir); // otherwise add the dir to the positon.
         }
+    }
+
+    /**
+     * Renders the Enemy to the screen
+     */
+    public ImageView render() {
+        return new ImageView(image);
     }
 }
