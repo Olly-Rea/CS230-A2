@@ -19,35 +19,37 @@ public class Main extends Application {
         window.setResizable(false);
 
         double scaleVal = 0.6;
-        //1400 - 20 from the window size due to 'non-resizeable' window change
+        // 1400 - 20 from the window size due to 'non-resizeable' window change
         final double WINDOW_SIZE = 1380 * scaleVal;
-        
+
         Group root = new Group();
-        Scene scene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE, Color.rgb(30,16,0));
+        Scene scene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE, Color.rgb(30, 16, 0));
 
         GameController gc = new GameController();
-        
+
         gc.render(root, scaleVal);
-        
+
         scene.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.W || e.getCode() == KeyCode.UP) {
-                //System.out.println("W key was pressed");
-                gc.renderMove(root , 0, 200, scaleVal);
-            }
-            if (e.getCode() == KeyCode.A || e.getCode() == KeyCode.LEFT) {
-                //System.out.println("A key was pressed");
-                gc.renderMove(root , 200, 0, scaleVal);
-            }
-            if (e.getCode() == KeyCode.S || e.getCode() == KeyCode.DOWN) {
-                //System.out.println("S key was pressed");
-                gc.renderMove(root , 0, -200, scaleVal);
-            }
-            if (e.getCode() == KeyCode.D || e.getCode() == KeyCode.RIGHT) {
-                //System.out.println("D key was pressed");
-                gc.renderMove(root , -200, 0, scaleVal);
+            switch (e.getCode()) {
+            case W:
+            case UP:
+                gc.renderMove(root, 0, 200, scaleVal);
+                break;
+            case A:
+            case LEFT:
+                gc.renderMove(root, 200, 0, scaleVal);
+                break;
+            case D:
+            case RIGHT:
+                gc.renderMove(root, -200, 0, scaleVal);
+                break;
+            case S:
+            case DOWN:
+                gc.renderMove(root, 0, -200, scaleVal);
+                break;
             }
         });
-        
+
         window.setScene(scene);
         window.show();
     }
