@@ -123,6 +123,10 @@ public class EntityController {
         // }
     }
 
+    public Entity getEntity(int x, int y) {
+        return entityGrid[y][x];
+    }
+
     /**
      * Returns an array of Strings of the state of the entities in the game.
      *

@@ -54,6 +54,19 @@ public class Item extends Entity {
         }        
     }
 
+    public char getChar() {
+        switch (type) {
+            case REDKEY:return 'r';
+            case BLUEKEY:return 'b';
+            case GREENKEY:return 'g';
+            case YELLOWKEY:return'y';
+            case FLIPPERS:return'w';
+            case FIREBOOTS:return'f';
+            case TOKEN: return'*';
+            default : return ' ';
+        }
+    }
+
     /**
      * Gets the type of item in question.
      *

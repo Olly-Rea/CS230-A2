@@ -121,6 +121,9 @@ public class GameController {
      * @param path
      */
     public void saveGame(String path) {
+        String[] mapExport = mapController.exportMap(entityController);
+        String[] mapSpecific = mapController.exportSpecific();
+
         // Get MapController Export
         // Get PlayerController Export
         // Get EntityController Export

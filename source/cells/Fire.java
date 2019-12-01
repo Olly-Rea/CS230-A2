@@ -24,6 +24,11 @@ public class Fire extends Cell {
         super(CellType.FIRE, x, y);
     }
 
+
+    public char getChar() {
+        return 'F';
+    }
+
     /**
      * Renders the Enemy to the screen
      */

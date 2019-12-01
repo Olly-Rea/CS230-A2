@@ -47,6 +47,9 @@ public class Main extends Application {
             case DOWN:
                 gc.renderMove(root, 0, -200, scaleVal);
                 break;
+            case F5:
+                gc.saveGame("");
+                break;
             }
         });
 

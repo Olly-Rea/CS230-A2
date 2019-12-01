@@ -11,6 +11,7 @@ public class TokenDoor extends Door {
 
 	private static final String IMAGE_NAME = "Water";
     private static Image image;
+	private int tokens;
 
     static {
         try {
@@ -21,7 +22,6 @@ public class TokenDoor extends Door {
         }
     }
 
-	private int tokens;
 
 	/**
 	 * Constructs a token door at x, y
@@ -34,6 +34,7 @@ public class TokenDoor extends Door {
 	}
 
 
+	
 	/**
 	 * Sets the tokenDoor token requirement to tokens
 	 * 
@@ -41,6 +42,19 @@ public class TokenDoor extends Door {
 	 */
 	public void setTokens(int tokens) {
 		this.tokens = tokens;
+	}
+
+	/**
+	 * Returns the number of tokens needed to open the door.
+	 * 
+	 * @return tokens
+	 */
+	public int getTokens() {
+		return tokens;
+	}
+
+	public char getChar() {
+		return 'D';
 	}
 
 	/**
