@@ -30,22 +30,7 @@ public class Main extends Application {
         gc.render(root, scaleVal);
         
         scene.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.W || e.getCode() == KeyCode.UP) {
-                //System.out.println("W key was pressed");
-                gc.renderMove(root , 0, 200, scaleVal);
-            }
-            if (e.getCode() == KeyCode.A || e.getCode() == KeyCode.LEFT) {
-                //System.out.println("A key was pressed");
-                gc.renderMove(root , 200, 0, scaleVal);
-            }
-            if (e.getCode() == KeyCode.S || e.getCode() == KeyCode.DOWN) {
-                //System.out.println("S key was pressed");
-                gc.renderMove(root , 0, -200, scaleVal);
-            }
-            if (e.getCode() == KeyCode.D || e.getCode() == KeyCode.RIGHT) {
-                //System.out.println("D key was pressed");
-                gc.renderMove(root , -200, 0, scaleVal);
-            }
+            	gc.gameStep(e,root,scaleVal); 
         });
         
         window.setScene(scene);

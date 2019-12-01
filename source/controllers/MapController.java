@@ -86,8 +86,11 @@ public class MapController {
      * @param y The y value of the desired door
      */
     public void openDoor(int x, int y) {
-        map[y][x] = new Cell(CellType.GROUND, x, y);
+		System.out.println("Opening door");
+    	Cell newGround = new Cell(CellType.GROUND, x, y);
+        map[y][x] = newGround;
         mapGrid.add(map[y][x].render(), x, y);
+        renderMap();
     }
 
     /**
