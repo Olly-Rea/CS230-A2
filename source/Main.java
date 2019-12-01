@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 
 import controllers.GameController;
@@ -9,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -21,18 +23,18 @@ public class Main extends Application {
         double scaleVal = 0.6;
         //1400 - 20 from the window size due to 'non-resizeable' window change
         final double WINDOW_SIZE = 1380 * scaleVal;
-        
+
         Group root = new Group();
-        Scene scene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE, Color.rgb(30,16,0));
+        Scene scene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE, Color.rgb(30, 16, 0));
 
         GameController gc = new GameController();
-        
+
         gc.render(root, scaleVal);
-        
+
         scene.setOnKeyPressed(e -> {
-            	gc.gameStep(e,root,scaleVal); 
+            gc.gameStep(e, root, scaleVal);
         });
-        
+
         window.setScene(scene);
         window.show();
     }

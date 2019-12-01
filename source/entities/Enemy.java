@@ -26,7 +26,7 @@ public abstract class Enemy extends Entity {
     public boolean playerCheck(PlayerController playerCon) {
         return this.pos == playerCon.getPlayerPos() ? true : false;
     }
-
+    
     /**
      * Provides the next move based on the current map state
      *
