@@ -1,5 +1,6 @@
 package entities;
 
+import controllers.EntityController;
 import controllers.MapController;
 import controllers.PlayerController;
 import utils.Vector;
@@ -23,15 +24,15 @@ public abstract class Enemy extends Entity {
     /**
      * Checks to see if the enemy has collided with the player
      */
-    public boolean PlayerCheck(PlayerController playerCon) {
+    public boolean playerCheck(PlayerController playerCon) {
         return this.pos == playerCon.getPlayerPos() ? true : false;
     }
-
+    
     /**
      * Provides the next move based on the current map state
      *
      * @param Map The current map state
      * @return Returns a vector containing the next position
      */
-    public abstract void algorithm(MapController map);
+    public abstract void algorithm(MapController map, EntityController ec);
 }
