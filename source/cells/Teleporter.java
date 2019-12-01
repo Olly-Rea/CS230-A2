@@ -71,7 +71,7 @@ public class Teleporter extends Cell {
     }
 
     public char getChar() {
-        return 'F';
+        return 'T';
     }
 
     /**

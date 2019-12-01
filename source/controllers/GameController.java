@@ -7,6 +7,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.transform.Scale;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.util.ArrayList;
 //Local imports
 import java.util.Scanner;
 import cells.Cell;
@@ -127,7 +129,12 @@ public class GameController {
         String[] mapExport = mapController.exportMap(entityController);
         String[] mapSpecific = mapController.exportSpecific();
         String[] playerExport = playerController.export();
+        String[] entityExport = entityController.export();
         
+        FileHandler.writeFile(path, mapExport, false, false);
+        FileHandler.writeFile(path, playerExport, true, false);
+        FileHandler.writeFile(path, mapSpecific, true, false);
+        FileHandler.writeFile(path, entityExport, true, true);
 
         // Get MapController Export
         // Get PlayerController Export
