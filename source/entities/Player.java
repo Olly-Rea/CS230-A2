@@ -10,7 +10,7 @@ import utils.Vector;
  * The player class is responsible for storing and manipulating the player
  * inventory and its attributes
  *
- * @author Daniel Clenaghan
+ * @author Daniel Clenaghan, Scott Barr
  */
 public class Player extends Entity {
 
@@ -23,7 +23,7 @@ public class Player extends Entity {
 	private int yellowKeys;
 
 	private String assetPath = "./assets/visuals/entities/player.png";
-    private Image playerAsset;
+	private Image playerAsset;
 
 	/**
 	 * Creates a Player object
@@ -41,36 +41,26 @@ public class Player extends Entity {
 		this.yellowKeys = 0;
 
 		try {
-            playerAsset = new Image(new FileInputStream(assetPath));
-        } catch (FileNotFoundException e) {
-            playerAsset = null;
-            System.err.println("Player asset path not found!");
-        }  
+			playerAsset = new Image(new FileInputStream(assetPath));
+		} catch (FileNotFoundException e) {
+			playerAsset = null;
+			System.err.println("Player asset path not found!");
+		}
 	}
 
 	/**
-	 * Creates a player object from a int array
-	 * {X,Y,fireShoes,flippers,tokens,red,green,blue,yellow}
-	 *
-	 * @param inventory
+	 * Sets the players inventory
+	 * 
+	 * @param inventory array of integers corresponding to the inventory values
 	 */
-	public Player(int[] inventory) {
-		super(inventory[0], inventory[1]);
-		if (inventory[2] == 1) {
-			this.hasFireBoots = true;
-		} else {
-			this.hasFireBoots = false;
-		}
-		if (inventory[3] == 1) {
-			this.hasFlippers = true;
-		} else {
-			this.hasFlippers = false;
-		}
-		this.tokens = inventory[4];
-		this.redKeys = inventory[5];
-		this.greenKeys = inventory[6];
-		this.blueKeys = inventory[7];
-		this.yellowKeys = inventory[8];
+	public void setInventory(int[] inventory) {
+		hasFireBoots = inventory[0] == 1 ? true : false;
+		hasFlippers = inventory[1] == 1 ? true : false;
+		this.tokens = inventory[2];
+		this.redKeys = inventory[3];
+		this.greenKeys = inventory[4];
+		this.blueKeys = inventory[5];
+		this.yellowKeys = inventory[6];
 	}
 
 	/**
@@ -225,25 +215,18 @@ public class Player extends Entity {
 	 *
 	 * @return int array of player's inventory
 	 */
-	public int[] export() {
-		int fireShoes = 0;
-		int flippers = 0;
-		if (hasFireBoots() == true) {
-			fireShoes = 1;
-		}
-		if (hasFlippers() == true) {
-			flippers = 1;
-		}
-		int[] playerSave;
-		playerSave = new int[] { pos.getX(), pos.getY(), fireShoes, flippers, tokens, redKeys, greenKeys, blueKeys,
+	public int[] getInventory() {
+		int fireShoes = hasFireBoots ? 1 : 0;
+		int flippers = hasFlippers ? 1 : 0;
+		int[] playerSave = { fireShoes, flippers, tokens, redKeys, greenKeys, blueKeys,
 				yellowKeys };
 		return playerSave;
 	}
 
 	/**
-     * Method to render the player to the screen.
-     */
-    public ImageView render() {
-        return new ImageView(playerAsset);
-    }
+	 * Method to render the player to the screen.
+	 */
+	public ImageView render() {
+		return new ImageView(playerAsset);
+	}
 }

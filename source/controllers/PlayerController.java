@@ -1,6 +1,10 @@
 package controllers;
 
 import entities.*;
+
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
 import cells.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -66,6 +70,19 @@ public class PlayerController {
 		default:
 			return true;
 		}
+	}
+
+	public void createInventory(Scanner sc) {
+		int[] inventory = new int[7];
+		try {
+			for (int i = 0; i < 7; i++) {
+				inventory[i] = sc.nextInt();
+			}
+			player.setInventory(inventory);
+		} catch (NoSuchElementException e) {
+			System.err.println("Inventory declaration is invalid");
+		}
+
 	}
 
 	/**
@@ -137,7 +154,17 @@ public class PlayerController {
 	 * @return an array of ints representing the players position and inventory
 	 * @author Danny
 	 */
-	public int[] export() {
-		return player.export();
+	public String[] export() {
+		String[] export = new String[2];
+		
+		String inv = "";
+		for (int i : player.getInventory()) {
+			inv += i + " ";
+		}
+
+		export[0] = String.format("PLAYER %d %d", player.getPos().getX(), player.getPos().getY());
+		export[1] = String.format("INVENTORY " + inv);
+
+		return export;
 	}
 }

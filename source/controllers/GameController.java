@@ -96,6 +96,9 @@ public class GameController {
             case "DOOR":
                 mapController.initDoor(sc);
                 break;
+            case "INVENTORY" : 
+                playerController.createInventory(sc);
+                break;
         }
 
         sc.close();
@@ -123,6 +126,8 @@ public class GameController {
     public void saveGame(String path) {
         String[] mapExport = mapController.exportMap(entityController);
         String[] mapSpecific = mapController.exportSpecific();
+        String[] playerExport = playerController.export();
+        
 
         // Get MapController Export
         // Get PlayerController Export
