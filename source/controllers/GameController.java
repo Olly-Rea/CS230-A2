@@ -83,6 +83,7 @@ public class GameController {
         sc.close();
 
         mapController = new MapController(map, mapWidth, mapHeight);
+        mapController.autotile();
     }
 
     private void handleSpecific(String line) {

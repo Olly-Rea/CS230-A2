@@ -248,7 +248,6 @@ public class Player extends Entity {
      * Method to render the player to the screen.
      */
     public ImageView render() {
-        ImageView imageNode = new ImageView(playerAsset);
-        return imageNode;
+        return new ImageView(playerAsset);
     }
 }

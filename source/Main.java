@@ -21,7 +21,7 @@ public class Main extends Application {
         window.setResizable(false);
 
         double scaleVal = 0.6;
-        //1400 - 20 from the window size due to 'non-resizeable' window change
+        // 1400 - 20 from the window size due to 'non-resizeable' window change
         final double WINDOW_SIZE = 1380 * scaleVal;
 
         Group root = new Group();
