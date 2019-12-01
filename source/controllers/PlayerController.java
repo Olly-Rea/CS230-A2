@@ -39,7 +39,7 @@ public class PlayerController {
 		// System.out.print("Cell: " + target.getType());
 		if (target.getType() == CellType.DOOR) {
 			if (((Door) target).isOpenable(player)) {
-				mc.openDoor(player.getPos().getX(), player.getPos().getY());
+				mc.openDoor(target.getPos().getX(), target.getPos().getY());
 			}
 		}
 

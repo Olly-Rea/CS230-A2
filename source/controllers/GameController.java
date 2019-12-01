@@ -21,6 +21,7 @@ import entities.Item;
 import misc.Profile;
 import utils.*;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,7 +31,7 @@ import java.io.IOException;
  */
 public class GameController {
 
-	private static final String PROFILE_PATH = "...";
+	private static final String PROFILE_PATH = "./profile/profiles.txt";
 	private static final String MAP_DIR = "...";
 	private static final String SAVE_DIR = "...";
 	private static final String LEADERBOARD_DIR = "...";
@@ -54,11 +55,10 @@ public class GameController {
 	}
 
 	/**
-	 * Creates a 2d Entity Map and Cell Map and stores them in the mapController
-	 * and entityController
+	 * Creates a 2d Entity Map and Cell Map and stores them in the mapController and
+	 * entityController
 	 *
-	 * @param fh
-	 *            The Handler reading the Map/LoadFile
+	 * @param fh The Handler reading the Map/LoadFile
 	 * @return A 2d array of cells to construct the MapController with
 	 */
 	private void makeControllers(FileHandler fh) {
@@ -111,8 +111,7 @@ public class GameController {
 	/**
 	 * Loads a path to a map file and to generate objects for use in the game.
 	 *
-	 * @param path
-	 *            Path to the map file.
+	 * @param path Path to the map file.
 	 */
 	public void loadGame(String path) {
 		FileHandler fh = new FileHandler(path);
@@ -140,62 +139,95 @@ public class GameController {
 	 * @return array of profiles retrieved from {@code PROFILE_PATH}.
 	 */
 	public Profile[] loadProfiles() {
-		return null;
+		// Get total number of profiles
+		FileHandler counter = new FileHandler(PROFILE_PATH);
+		int arraySize = 0;
+		while (counter.hasNext()) {
+			arraySize++;
+			counter.nextLine();
+		}
+
+		Profile[] profileList = new Profile[arraySize];
+		FileHandler reader = new FileHandler(PROFILE_PATH);
+		int iterate = 0;
+		while (reader.hasNext()) {
+			String profileString = reader.nextLine();
+			if (profileString != "") {
+				String[] parts = profileString.split(",");
+				String name = parts[0];
+				String levelString = parts[1];
+				int levelNum = Integer.parseInt(levelString);
+				Profile newProfile = new Profile(name, levelNum);
+				profileList[iterate] = newProfile;
+				iterate++;
+			}
+		}
+		return profileList;
 	}
 
 	/**
-	 * Adds a profile to the file at {@code PROFILE_PATH} of the name
-	 * {@code name}.
+	 * Adds a profile to the file at {@code PROFILE_PATH} of the name {@code name}.
 	 *
-	 * @param name
-	 *            name to be added to the profile list.
+	 * @param name name to be added to the profile list.
 	 */
 	public void addProfile(String name) {
-
+		Profile newProfile = new Profile(name, 0, PROFILE_PATH);
 	}
 
 	/**
 	 * Deletes the specific profile from the file at {@code PROFILE_PATH}.
 	 *
-	 * @param profile
-	 *            The profile to be deleted.
+	 * @param profile The profile to be deleted.
 	 */
 	public void deleteProfile(Profile profile) {
-
+		String toDelete = profile.getName();
+		Profile[] oldList = loadProfiles();
+		String[] newList = new String[oldList.length - 1];
+		int j = 0;
+		for (int i = 0; i < oldList.length; i++) {
+			if (oldList[i].getName().equals(toDelete) == false) {
+				newList[j] = oldList[i].getName() + "," + oldList[i].getLevel();
+				j++;
+			}
+		}
+		FileHandler deleter = new FileHandler(PROFILE_PATH);
+		deleter.saveFile(PROFILE_PATH, newList);
 	}
 
 	/**
 	 * Progresses the game 1 step and handles the key pressed.
 	 *
-	 * @param ke
-	 *            Key Event that was pressed by the user.
+	 * @param ke Key Event that was pressed by the user.
 	 */
 	public void gameStep(KeyEvent e, Group root, Double scaleVal) {
-
-		if (e.getCode() == KeyCode.W || e.getCode() == KeyCode.UP) {
+		switch (e.getCode()) {
+		case W:
+		case UP:
 			if (playerController.move(Direction.UP, mapController)) {
 				renderMove(root, 0, 200, scaleVal);
 			}
-		}
-		if (e.getCode() == KeyCode.A || e.getCode() == KeyCode.LEFT) {
+			break;
+		case A:
+		case LEFT:
 			if (playerController.move(Direction.LEFT, mapController)) {
 				renderMove(root, 200, 0, scaleVal);
 			}
-
-		}
-		if (e.getCode() == KeyCode.S || e.getCode() == KeyCode.DOWN) {
+			break;
+		case S:
+		case DOWN:
 			if (playerController.move(Direction.DOWN, mapController)) {
 				renderMove(root, 0, -200, scaleVal);
 			}
-
-		}
-		if (e.getCode() == KeyCode.D || e.getCode() == KeyCode.RIGHT) {
+			break;
+		case D:
+		case RIGHT:
 			if (playerController.move(Direction.RIGHT, mapController)) {
 				renderMove(root, -200, 0, scaleVal);
 			}
-		}
-		if (e.getCode() == KeyCode.ESCAPE) {
+			break;
+		case ESCAPE:
 			// Bring up menu
+			break;
 		}
 
 		// Check entity grid
@@ -207,6 +239,7 @@ public class GameController {
 		// Check if player is dead
 		if (playerController.checkStatus(mapController)
 				|| entityController.enemyCollision(playerController.getPlayer())) {
+
 			System.out.println("YOU DIED");
 			// Restart game
 		}
@@ -221,8 +254,7 @@ public class GameController {
 	/**
 	 * Shows a leaderboard for a specific map in {@code LEADERBOARD_DIR}.
 	 *
-	 * @param path
-	 *            The file path inside {@code LEADERBOARD_DIR} for the map.
+	 * @param path The file path inside {@code LEADERBOARD_DIR} for the map.
 	 */
 	public void showLeaderboard(String path) {
 
@@ -231,8 +263,7 @@ public class GameController {
 	/**
 	 * adds a time to the map time file in {@code LEADERBOARD_DIR}.
 	 *
-	 * @param path
-	 *            THe file path for the map.
+	 * @param path THe file path for the map.
 	 */
 	public void addMapTime(String path) {
 
