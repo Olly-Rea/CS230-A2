@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 
 public class TokenDoor extends Door {
 
-	private static final String IMAGE_NAME = "Water";
+    private static final String IMAGE_NAME = "Boulder";
     private static Image image;
 
     static {
@@ -17,11 +17,11 @@ public class TokenDoor extends Door {
             image = new Image(new FileInputStream(ASSET_PATH + IMAGE_NAME + ".jpg"));
         } catch (FileNotFoundException e) {
             image = null;
-            System.err.println("Water image path not found");
+            System.err.println("Boulder image path not found");
         }
     }
 
-	private int tokens;
+    private int tokens;
 
     /**
      * Constructs a token door at x, y
@@ -42,32 +42,24 @@ public class TokenDoor extends Door {
         this.tokens = tokens;
     }
 
-	/**
-	 * Sets the tokenDoor token requirement to tokens
-	 *
-	 * @param tokens the token requirement
-	 */
-	public void setTokens(int tokens) {
-		this.tokens = tokens;
-	}
+    /**
+     * Method to test whether the door is openable by the player.
+     *
+     * @param p the player object to check for tokens
+     */
+    public boolean isOpenable(Player p) {
+        if (!(tokens > 0)) {
+            System.err.println("Door at " + getPos().getX() + ", " + getPos().getY() + " has an invalid token limit");
+        }
+        int pTokens = p.getTokens();
+        if (pTokens >= tokens) {
+            p.useTokens(tokens);
+            return true;
+        }
+        return false;
+    }
 
-	/**
-	 * Method to test whether the door is openable by the player.
-	 *
-	 * @param p the player object to check for tokens
-	 */
-	public boolean isOpenable(Player p) {
-		if (!(tokens > 0))
-			System.err.println("Door at " + getPos().getX() + ", " + getPos().getY() + " has an invalid token limit");
-		int pTokens = p.getTokens();
-		if (pTokens >= tokens) {
-			p.useTokens(tokens);
-			return true;
-		}
-		return false;
-	}
-
-	/**
+    /**
      * Renders the Enemy to the screen
      */
     public ImageView render() {
