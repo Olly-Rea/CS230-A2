@@ -90,7 +90,7 @@ public class Menu {
         
     }    
     
-    public VBox renderMenu() {
+    public VBox render() {
         return menuLayout;       
     }
     

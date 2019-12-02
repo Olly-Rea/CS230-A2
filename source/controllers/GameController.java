@@ -58,11 +58,14 @@ public class GameController {
      */
     public GameController(Group root) {
         this.root = root;
+        root.getChildren().add(gameGroup);
+        root.getChildren().add(menu.render());
         loadGame("./levelfiles/Test_File_DD.txt");
     }
 
     public void restart() {
         loadGame("./levelfiles/Test_File_DD.txt");
+        
         gameGroup.getChildren().clear();
         render();
     }
@@ -268,7 +271,7 @@ public class GameController {
                 || entityController.enemyCollision(playerController.getPlayer())) {
 
             System.out.println("YOU DIED");
-            // Restart game
+            restart();
         }
 
         // Check if game is won
@@ -337,8 +340,6 @@ public class GameController {
         //Add the two layers to the gameGroup layer
         gameGroup.getChildren().add(worldGroup);
         gameGroup.getChildren().add(playerGroup);
-        root.getChildren().add(gameGroup);
-        root.getChildren().add(menu.renderMenu());
         renderPlayer();
 
     }
