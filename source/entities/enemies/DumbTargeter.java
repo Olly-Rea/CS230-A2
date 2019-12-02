@@ -70,7 +70,7 @@ public class DumbTargeter extends Enemy {
             }
         }
         
-        if (!player.getPos().equals(pos)) {
+        if (!player.getPos().equals(pos) && dir != null) {
             pos.add(dir);
         }
     }
