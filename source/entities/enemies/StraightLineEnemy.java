@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import cells.Cell;
-import cells.CellType;
 import cells.Ground;
 import controllers.EntityController;
 import controllers.MapController;

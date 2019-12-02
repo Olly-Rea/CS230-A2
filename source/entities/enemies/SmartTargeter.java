@@ -67,14 +67,14 @@ public class SmartTargeter extends Enemy {
             for (Direction d : Direction.values()) { // For all directions (UP/RIGHT/DOWN/LEFT)
                 int x = q.getPos().getX();
                 int y = q.getPos().getY();
-                Cell next = map.getNextCell(new Vector(x, y), d); // get the next cell
-                boolean existsEntity = ec.entityPresent(pos, dir);
+                Cell next = map.getNextCell(q.getPos(), d); // get the next cell
+                boolean existsEntity = ec.entityPresent(pos, d);
                 if (next instanceof Ground && !existsEntity) { // if the cell is of type GROUND
                     int dist = distGrid[y][x] + 1; // distance is incremented by 1
                     // if distGrid at next position is empty then add it to the queue & set to dist
                     Integer val = distGrid[next.getPos().getY()][next.getPos().getX()];
                     if (val == null) {
-                        val = dist;
+                        distGrid[next.getPos().getY()][next.getPos().getX()] = dist;
                         queue.add(next);
                     }
                 }
@@ -94,7 +94,7 @@ public class SmartTargeter extends Enemy {
         if (distGrid[pos.getY()][pos.getX()] != 0) {
             for (Direction d : Direction.values()) { // for all Directions (UP, RIGHT, DOWN, LEFT)
                 Cell next = map.getNextCell(new Vector(pos.getX(), pos.getY()), d); // get the next cell in that direction
-                boolean existsEntity = ec.entityPresent(pos, dir);
+                boolean existsEntity = ec.entityPresent(pos, d);
                 if (next instanceof Ground && !existsEntity) { // Confirm it's a ground cell
                     Integer dist = distGrid[pos.getY() + d.Y][pos.getX() + d.X]; // check the distance at that cell in
                     // distGrid
