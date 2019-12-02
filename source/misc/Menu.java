@@ -25,9 +25,9 @@ import javafx.scene.transform.Scale;
  */
 public class Menu {
         
-    private VBox menuLayout = new VBox(80);
+    private VBox menuLayout = new VBox(60);
 
-    public Menu(GameController gc, Group root, double scaleVal) {
+    public Menu(GameController gc) {
         //Create the group to export and the VBox to store the menu buttons
         
         //Create the game menu title
@@ -44,11 +44,11 @@ public class Menu {
         ImageView exitGameButton = null;
         try {
             newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/newGameButton.png")));
-            newGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+            //newGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
             loadGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/loadGameButton.png")));
-            loadGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+            //loadGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
             exitGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/exitGameButton.png")));
-            exitGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));                    
+            //exitGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));                    
         } catch (FileNotFoundException e) {
             newGameButton = null;
             System.err.println("A button path wasn't found");
@@ -59,8 +59,7 @@ public class Menu {
         newGame.setGraphic(newGameButton);
         newGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                menuLayout.getChildren().clear();
-                gc.render(root, 1);
+                gc.restart();
             }
         });
         menuLayout.getChildren().add(newGame);
@@ -86,17 +85,20 @@ public class Menu {
                 Platform.exit();
             }
         });
-        menuLayout.getChildren().add(exitGame);
-                
-        //Add the menu buttons to the menuRoot group
-        root.getChildren().add(menuLayout);
-        root.getChildren().get(4).setLayoutX(380*scaleVal);
-        root.getChildren().get(4).setLayoutY(300*scaleVal);
+        menuLayout.getChildren().add(exitGame);    
         menuLayout.setVisible(false);
         
+    }    
+    
+    public VBox renderMenu() {
+        return menuLayout;       
     }
     
     public void toggle() {
         menuLayout.setVisible(!menuLayout.isVisible());
+    }
+    
+    public boolean isVisible() {
+        return menuLayout.isVisible();
     }
 }

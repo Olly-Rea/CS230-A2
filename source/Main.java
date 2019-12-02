@@ -32,24 +32,18 @@ public class Main extends Application {
         window.setTitle("Game");
         window.setResizable(false);
 
-        double scaleVal = 0.6;
-        // 1400 - 20 from the window size due to 'non-resizeable' window change
-        final double WINDOW_SIZE = 1380 * scaleVal;
-
-        GameController gc = new GameController();
-        
         Group root = new Group();
+        GameController gc = new GameController(root);
+        
+        // 1400 - 20 from the window size due to 'non-resizeable' window change
+        final double WINDOW_SIZE = 1380 * GameController.SCALE_VAL;
+        
         Scene scene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE, Color.rgb(30, 16, 0));      
 
-        gc.render(root, scaleVal);
-        Menu menu = new Menu(gc, root, scaleVal);
+        gc.render();
 
         scene.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.ESCAPE) {
-                menu.toggle();
-            } else {
-                gc.gameStep(e, root, scaleVal);
-            }
+            gc.gameStep(e);            
         });
 
         window.setScene(scene);
