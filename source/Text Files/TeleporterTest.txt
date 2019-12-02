@@ -1,0 +1,13 @@
+7 8
+#######
+#    T#
+#######
+#T   T#
+#######
+#T    !
+#     #
+#######
+PLAYER 1 1
+ENEMY 1 7 SL [LEFT, RIGHT]
+TELEPORTER 5 1 5 3
+TELEPORTER 1 3 1 5
