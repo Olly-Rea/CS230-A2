@@ -223,14 +223,19 @@ public class EntityController {
         switch (faceDir) {
             case "UP":
                 dir = Direction.UP;
-            case "RIGHT":
+                break;
+                case "RIGHT":
                 dir = Direction.RIGHT;
-            case "DOWN":
+                break;
+                case "DOWN":
                 dir = Direction.DOWN;
+                break;
             case "LEFT":
                 dir = Direction.LEFT;
+                break;
             default:
                 dir = Direction.UP;
+                break;
         }
 
         switch (rotation) {

@@ -60,11 +60,11 @@ public class GameController {
         this.root = root;
         root.getChildren().add(gameGroup);
         root.getChildren().add(menu.render());
-        loadGame("./levelfiles/Test_File_DD.txt");
+        loadGame("./levelfiles/test1.txt");
     }
 
     public void restart() {
-        loadGame("./levelfiles/Test_File_DD.txt");
+        loadGame("./levelfiles/test1.txt");
         
         gameGroup.getChildren().clear();
         render();

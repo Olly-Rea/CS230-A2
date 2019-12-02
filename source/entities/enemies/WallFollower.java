@@ -42,7 +42,6 @@ public class WallFollower extends Enemy {
 
     private Direction dir;
     private Rotation type;
-    private Vector pos;
 
     /**
      * Creates a new WallFollower enemy at position {@code pos}.
@@ -53,7 +52,7 @@ public class WallFollower extends Enemy {
      */
     public WallFollower(Vector pos, Direction dir, Rotation type) {
         super(pos);
-        this.pos = pos;
+        this.dir = dir;
         this.type = type;
     }
 
@@ -84,7 +83,7 @@ public class WallFollower extends Enemy {
      * @return True if there is a wall, false if there is not a wall.
      */
     private boolean checkWall(MapController map, EntityController ec) {
-        Direction checkDir = type == Rotation.ACW ? dir.acw() : dir.cw();
+        Direction checkDir = type == Rotation.ACW ? dir.cw() : dir.acw();
         Cell checkCell = map.getNextCell(pos, checkDir);
         boolean existsEntity = ec.entityPresent(pos, dir);
         return (checkCell instanceof Wall || existsEntity);
@@ -97,10 +96,10 @@ public class WallFollower extends Enemy {
      */
     private void turn(Rotation rot) {
         if (rot == Rotation.ACW) {
-            dir = dir.acw();
+            dir = dir.cw();
         }
         if (rot == Rotation.CW) {
-            dir = dir.cw();
+            dir = dir.acw();
         }
     }
     
