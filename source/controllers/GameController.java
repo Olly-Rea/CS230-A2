@@ -2,11 +2,17 @@ package controllers;
 
 //JavaFX imports
 import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
+import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.util.Arrays;
 //Local imports
 import java.util.Scanner;
 import cells.Cell;
@@ -15,15 +21,17 @@ import entities.Item;
 import misc.Profile;
 import utils.*;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  *
  */
 public class GameController {
 
-    private static final String PROFILE_PATH = "...";
+    private static final String PROFILE_PATH = "./profile/profiles.txt";
     private static final String MAP_DIR = "...";
     private static final String SAVE_DIR = "...";
     private static final String LEADERBOARD_DIR = "...";
@@ -35,7 +43,7 @@ public class GameController {
     private int startTime;
     private String currentMap;
     
-    //X and Y variables for render translate methods
+    // X and Y variables for render translate methods
     private double renderX = 0;
     private double renderY = 0;
 
@@ -75,6 +83,7 @@ public class GameController {
         sc.close();
 
         mapController = new MapController(map, mapWidth, mapHeight);
+        mapController.autotile();
     }
 
     private void handleSpecific(String line) {
@@ -131,7 +140,30 @@ public class GameController {
      * @return array of profiles retrieved from {@code PROFILE_PATH}.
      */
     public Profile[] loadProfiles() {
-        return null;
+        // Get total number of profiles
+        FileHandler counter = new FileHandler(PROFILE_PATH);
+        int arraySize = 0;
+        while (counter.hasNext()) {
+            arraySize++;
+            counter.nextLine();
+        }
+
+        Profile[] profileList = new Profile[arraySize];
+        FileHandler reader = new FileHandler(PROFILE_PATH);
+        int iterate = 0;
+        while (reader.hasNext()) {
+            String profileString = reader.nextLine();
+            if (profileString != "") {
+                String[] parts = profileString.split(",");
+                String name = parts[0];
+                String levelString = parts[1];
+                int levelNum = Integer.parseInt(levelString);
+                Profile newProfile = new Profile(name, levelNum);
+                profileList[iterate] = newProfile;
+                iterate++;
+            }
+        }
+        return profileList;
     }
 
     /**
@@ -141,7 +173,7 @@ public class GameController {
      * @param name name to be added to the profile list.
      */
     public void addProfile(String name) {
-
+        Profile newProfile = new Profile(name, 0, PROFILE_PATH);
     }
 
     /**
@@ -150,7 +182,18 @@ public class GameController {
      * @param profile The profile to be deleted.
      */
     public void deleteProfile(Profile profile) {
-
+        String toDelete = profile.getName();
+        Profile[] oldList = loadProfiles();
+        String[] newList = new String[oldList.length - 1];
+        int j = 0;
+        for (int i = 0; i < oldList.length; i++) {
+            if (oldList[i].getName().equals(toDelete) == false) {
+                newList[j] = oldList[i].getName() + "," + oldList[i].getLevel();
+                j++;
+            }
+        }
+        FileHandler deleter = new FileHandler(PROFILE_PATH);
+        deleter.saveFile(PROFILE_PATH, newList);
     }
 
     /**
@@ -158,34 +201,55 @@ public class GameController {
      *
      * @param ke Key Event that was pressed by the user.
      */
-    public void gameStep(KeyEvent ke) {
-
-        switch (ke.getCode()) {
-            case RIGHT:
-                playerController.move(Direction.RIGHT, mapController);
-                break;
-            case LEFT:
-                playerController.move(Direction.LEFT, mapController);
-                break;
+    public void gameStep(KeyEvent e, Group root, Double scaleVal) {
+        switch (e.getCode()) {
+            case W:
             case UP:
-                playerController.move(Direction.UP, mapController);
+                if (playerController.move(Direction.UP, mapController)) {
+                    renderMove(root, 0, 200, scaleVal);
+                }
                 break;
+            case A:
+            case LEFT:
+                if (playerController.move(Direction.LEFT, mapController)) {
+                    renderMove(root, 200, 0, scaleVal);
+                }
+                break;
+            case S:
             case DOWN:
-                playerController.move(Direction.DOWN, mapController);
+                if (playerController.move(Direction.DOWN, mapController)) {
+                    renderMove(root, 0, -200, scaleVal);
+                }
+                break;
+            case D:
+            case RIGHT:
+                if (playerController.move(Direction.RIGHT, mapController)) {
+                    renderMove(root, -200, 0, scaleVal);
+                }
                 break;
             case ESCAPE:
-                // Bring up menu?
+                // Bring up menu
                 break;
-            default:
-                // Do nothing
-                break;
+        }
 
-            // Check if player is dead
-            // if (playerController.checkStatus(mapController) ||
-            // entityController.enemyCollision(playerController.getPlayer())){
-            // // Restart game
-            // }
-            // event.consume;
+        // Check entity grid
+        entityController.checkItem(playerController.getPlayer());
+
+        // Update enemies
+        entityController.moveEnemies(mapController);
+
+        // Check if player is dead
+        if (playerController.checkStatus(mapController)
+                || entityController.enemyCollision(playerController.getPlayer())) {
+
+            System.out.println("YOU DIED");
+            // Restart game
+        }
+
+        // Check if game is won
+        if (playerController.checkGoal(mapController)) {
+            System.out.println("YOU WIN");
+            // Win game
         }
     }
 
@@ -225,7 +289,7 @@ public class GameController {
         playerLayer.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         root.getChildren().add(playerLayer);
 
-        //Render the feather-edge effect around the outside of the screen
+        // Render the feather-edge effect around the outside of the screen
         Image assetImg;
         try {
             assetImg = new Image(new FileInputStream("./assets/visuals/Feather_Edge.png"));
@@ -236,24 +300,43 @@ public class GameController {
         ImageView featherEdge = new ImageView(assetImg);
         featherEdge.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         root.getChildren().add(featherEdge);
-
+       
+        //Calculate the value the playerLayer offsets the player by
+        double playerOffset = 400*scaleVal;
+        //Offset the map to focus on the player start position
+        if (playerController.getPlayerPos().getX() > 1) {
+            renderX = ((playerController.getPlayerPos().getX()-1)*(-200*scaleVal)) + playerOffset;
+        } else {
+            renderX = (playerController.getPlayerPos().getX()) + playerOffset;
+        }
+        if (playerController.getPlayerPos().getY() > 1) {
+            renderY = ((playerController.getPlayerPos().getY()-1)*(-200*scaleVal)) + playerOffset;
+        } else {
+            renderY = (playerController.getPlayerPos().getY()) + playerOffset;
+        }
+        
+        root.getChildren().get(0).setLayoutX(renderX);
+        root.getChildren().get(1).setLayoutX(renderX);
+        root.getChildren().get(0).setLayoutY(renderY);
+        root.getChildren().get(1).setLayoutY(renderY);
+        
     }
 
     public void renderMove(Group root, int x, int y, double scaleVal) {
 
-        renderX += x;
-        renderY += y;
+        renderX += x*scaleVal;
+        renderY += y*scaleVal;
 
         if (renderX <= 400) {
-            root.getChildren().get(0).setTranslateX(renderX * scaleVal);
-            root.getChildren().get(1).setTranslateX(renderX * scaleVal);
+            root.getChildren().get(0).setLayoutX(renderX);
+            root.getChildren().get(1).setLayoutX(renderX);
         } else {
             renderX = 400;
         }
 
         if (renderY <= 400) {
-            root.getChildren().get(0).setTranslateY(renderY * scaleVal);
-            root.getChildren().get(1).setTranslateY(renderY * scaleVal);
+            root.getChildren().get(0).setLayoutY(renderY);
+            root.getChildren().get(1).setLayoutY(renderY);
         } else {
             renderY = 400;
         }

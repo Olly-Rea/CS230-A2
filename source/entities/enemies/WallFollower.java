@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 //Local imports
 import cells.Cell;
 import cells.CellType;
+import cells.Wall;
+import controllers.EntityController;
 import controllers.MapController;
 import utils.Direction;
 import utils.Rotation;
@@ -61,13 +63,14 @@ public class WallFollower extends Enemy {
      * @param map MapController used to figure out the surroundings of the
      * enemy.
      */
-    public void algorithm(MapController map) {
+    public void algorithm(MapController map, EntityController ec) {
         Cell next = map.getNextCell(pos, dir);
-        while (checkWall(map) && next.getType() == CellType.WALL) {
+        boolean existsEntity = ec.entityPresent(pos, dir);
+        while (checkWall(map, ec) && (next instanceof Wall || existsEntity)) {
             turn(type.reverse());
         }
 
-        if (!checkWall(map)) {
+        if (!checkWall(map, ec)) {
             turn(type);
         }
 
@@ -80,10 +83,11 @@ public class WallFollower extends Enemy {
      * @param map MapController used to find the cell in the direction needed
      * @return True if there is a wall, false if there is not a wall.
      */
-    private boolean checkWall(MapController map) {
+    private boolean checkWall(MapController map, EntityController ec) {
         Direction checkDir = type == Rotation.ACW ? dir.acw() : dir.cw();
         Cell checkCell = map.getNextCell(pos, checkDir);
-        return checkCell.getType() == CellType.WALL;
+        boolean existsEntity = ec.entityPresent(pos, dir);
+        return (checkCell instanceof Wall || existsEntity);
     }
 
     /**
@@ -104,8 +108,7 @@ public class WallFollower extends Enemy {
      * Renders the Enemy to the screen
      */
     public ImageView render() {
-        ImageView imageNode = new ImageView(image);
-        return imageNode;
+        return new ImageView(image);
     }
 
 }
