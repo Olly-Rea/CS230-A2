@@ -13,6 +13,7 @@ import utils.Vector;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 //Java imports
 import java.util.ArrayList;
 //JavaFX imports
@@ -56,10 +57,28 @@ public class DumbTargeter extends Enemy {
      * @param map The MapController to obtain the details of the environment
      */
     public void algorithm(MapController map, EntityController ec) {
+
+        ArrayList<Direction> potential = getDirection();
+        dir = null;
+        // For any potential directions check whether that direction is a valid move
+        for (int i = 0; i < potential.size(); i++) {
+            Direction d = potential.get(i);
+            Cell next = map.getNextCell(pos, d); 
+            boolean existsEntity = ec.entityPresent(pos, d);
+            if (next instanceof Ground && !existsEntity) {
+                dir = d;
+            }
+        }
+        
+        if (!player.getPos().equals(pos)) {
+            pos.add(dir);
+        }
+    }
+
+    private ArrayList<Direction> getDirection() {
         // Initialise variables
         Vector playerPos = player.getPos();
         ArrayList<Direction> potential = new ArrayList<>();
-
         // If players x position > enemy pos then RIGHT is potential
         if (playerPos.getX() > pos.getX()) {
             potential.add(Direction.RIGHT);
@@ -74,17 +93,8 @@ public class DumbTargeter extends Enemy {
             potential.add(dir = Direction.UP);
         }
 
-        // For any potential directions check whether that direction is a valid move
-        for (int i = 0; i < potential.size(); i++) {
-            Direction d = potential.get(i);
-            Cell next = map.getNextCell(pos, d);
-            boolean existsEntity = ec.entityPresent(pos, dir);
-            if (next instanceof Ground && !existsEntity) {
-                dir = d;
-            }
-        }
 
-        pos.add(dir);
+        return potential;
     }
 
     public String export() {

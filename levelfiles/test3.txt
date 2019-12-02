@@ -5,4 +5,4 @@
 #     #
 #######
 PLAYER 4 1
-ENEMY 1 1 ST
+ENEMY 1 1 DT 

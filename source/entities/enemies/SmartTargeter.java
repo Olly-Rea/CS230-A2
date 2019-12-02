@@ -91,7 +91,7 @@ public class SmartTargeter extends Enemy {
         dir = null;
 
         // If the distGrid at the enemies position is 0 then do not move
-        if (distGrid[pos.getY()][pos.getX()] != 0) {
+        if (!player.getPos().equals(pos)) {
             for (Direction d : Direction.values()) { // for all Directions (UP, RIGHT, DOWN, LEFT)
                 Cell next = map.getNextCell(new Vector(pos.getX(), pos.getY()), d); // get the next cell in that direction
                 boolean existsEntity = ec.entityPresent(pos, d);

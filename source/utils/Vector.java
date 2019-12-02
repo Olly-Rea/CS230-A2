@@ -45,4 +45,13 @@ public class Vector {
         this.x += d.X;
         this.y += d.Y;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof Vector) {
+            Vector v = (Vector)other;
+            return (v.x==x && v.y==y);
+        }
+        return false;
+    }
 }
