@@ -24,10 +24,10 @@ public abstract class Enemy extends Entity {
     /**
      * Checks to see if the enemy has collided with the player
      */
-    public boolean PlayerCheck(PlayerController playerCon) {
+    public boolean playerCheck(PlayerController playerCon) {
         return this.pos == playerCon.getPlayerPos() ? true : false;
     }
-
+    
     /**
      * Provides the next move based on the current map state
      *

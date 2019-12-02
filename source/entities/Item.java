@@ -32,16 +32,16 @@ public class Item extends Entity {
                 assetPath += "flippers";
                 break;
             case REDKEY:
-                assetPath += "redkey";
+                assetPath += "gems/red_key";
                 break;
             case BLUEKEY:
-                assetPath += "bluekey";
+                assetPath += "gems/blue_key";
                 break;
             case GREENKEY:
-                assetPath += "greenkey";
+                assetPath += "gems/green_key";
                 break;
             case YELLOWKEY:
-                assetPath += "yellowkey";
+                assetPath += "gems/purple_key";
                 break;
         }
         assetPath += ".png";

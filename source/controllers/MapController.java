@@ -90,6 +90,7 @@ public class MapController {
     public void openDoor(int x, int y) {
         map[y][x] = new Ground(x, y);
         mapGrid.add(map[y][x].render(), x, y);
+        renderMap();
     }
 
     /**
@@ -240,19 +241,19 @@ public class MapController {
         int y2 = sc.nextInt();
         Teleporter t1 = (Teleporter) map[y1][x1];
         Teleporter t2 = (Teleporter) map[y2][x2];
-        Teleporter.link(t1,t2);
+        Teleporter.link(t1, t2);
     }
 
     /**
      * Method to set the door token requirement
-     * 
-     * @param sc 
+     *
+     * @param sc
      */
     public void initDoor(Scanner sc) {
         int x = sc.nextInt();
         int y = sc.nextInt();
         int tokens = sc.nextInt();
-        TokenDoor door = (TokenDoor)map[y][x];
+        TokenDoor door = (TokenDoor) map[y][x];
         door.setTokens(tokens);
     }
 
@@ -274,21 +275,21 @@ public class MapController {
             case 'R' : return new ColouredDoor(x, y, DoorColour.RED);
             case 'G' : return new ColouredDoor(x, y, DoorColour.GREEN);
             case 'B' : return new ColouredDoor(x, y, DoorColour.BLUE);
-            case 'Y' : return new ColouredDoor(x, y, DoorColour.YELLOW); 
-            case 'D' : return new TokenDoor(x, y); 
+            case 'Y' : return new ColouredDoor(x, y, DoorColour.YELLOW);
+            case 'D' : return new TokenDoor(x, y);
             default  : return new Ground(x, y);
         }
     }
 
     /*
-     
-     There will be two layers; 
-     - the Player 'layer', and 
-     - the world layer, 
-     
-     Entities move within the world layer, and then the world layer is moved 
-     around the player 'layer', while the player 'layer' stays still (central to 
+
+     There will be two layers;
+     - the Player 'layer', and
+     - the world layer,
+
+     Entities move within the world layer, and then the world layer is moved
+     around the player 'layer', while the player 'layer' stays still (central to
      the screen).
-     
+
      */
 }

@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 
 public class TokenDoor extends Door {
 
-	private static final String IMAGE_NAME = "Water";
+    private static final String IMAGE_NAME = "Boulder";
     private static Image image;
 	private int tokens;
 
@@ -18,7 +18,7 @@ public class TokenDoor extends Door {
             image = new Image(new FileInputStream(ASSET_PATH + IMAGE_NAME + ".jpg"));
         } catch (FileNotFoundException e) {
             image = null;
-            System.err.println("Water image path not found");
+            System.err.println("Boulder image path not found");
         }
     }
 
@@ -32,7 +32,6 @@ public class TokenDoor extends Door {
 	public TokenDoor(int x, int y) {
 		super(x, y);
 	}
-
 
 	
 	/**
@@ -73,7 +72,7 @@ public class TokenDoor extends Door {
 		return false;
 	}
 
-	/**
+    /**
      * Renders the Enemy to the screen
      */
     public ImageView render() {
