@@ -24,6 +24,10 @@ public class Goal extends Cell {
         super(CellType.GOAL, x, y);
     }
 
+    public char getChar() {
+        return '!';
+    }
+
     /**
      * Renders the Enemy to the screen
      */

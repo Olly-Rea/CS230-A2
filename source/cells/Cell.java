@@ -51,4 +51,6 @@ public abstract class Cell {
     public Vector getPos() {
         return cellPos;
     }
+    
+    public abstract char getChar();
 }

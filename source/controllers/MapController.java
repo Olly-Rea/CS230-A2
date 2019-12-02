@@ -2,6 +2,8 @@ package controllers;
 
 //Local imports
 import cells.*;
+import entities.Entity;
+import entities.Item;
 import utils.*;
 //Java imports
 import java.util.ArrayList;
@@ -96,70 +98,61 @@ public class MapController {
      *
      * @return String[]
      */
-    public String[] export() {
+    public String[] exportMap(EntityController ec) {
 
         // Create the export String ArrayList
         ArrayList<String> mapExport = new ArrayList<>();
-        ArrayList<String> mapSpecifics = new ArrayList<>();
+        mapExport.add(width + " " + height);
 
-        // Loop through the 'map' Cell array, converting each cell to it's
-        // string counterpart
-        for (int y = 0; y < map.length; y++) {
-            for (int x = 0; x < map[x].length; x++) {
-                String mapLine = "";
-                //Switch-case to add respective characters to the mapLine string
-                //depending on the CellType at map[y][x]
-                if (map[y][x].getType() == null) {
-                    mapLine += " ";
-                } else {
-                    switch (map[y][x].getType()) {
-                        case WALL:
-                            mapLine += "#";
-                            break;
-                        case GROUND:
-                            mapLine += " ";
-                            break;
-                        case FIRE:
-                            mapLine += "F";
-                            break;
-                        case WATER:
-                            mapLine += "W";
-                            break;
-                        case TELEPORTER:
-                            mapLine += "T";
-                            //Find out the teleporter link
-                            mapSpecifics.add("TELEPORTEER " + "" + "" + "" + "");
-                            break;
-                        case DOOR:
-                            //Find out the door type
-                            mapLine += "D";
-                            //Add the door type and specifics
-                            mapSpecifics.add("DOOR " + "" + "" + "");
-                            break;
-                        case GOAL:
-                            mapLine += "!";
-                            break;
-                        default:
-                            mapLine += " ";
-                            break;
+        for (int y = 0; y < height; y++) {
+            String row = "";
+            for (int x = 0; x < width; x++) {
+                Cell cell = map[y][x];
+                if (cell instanceof Ground) {
+                    Entity e = ec.getEntity(x, y);
+                    if (e instanceof Item) {
+                        row += ((Item)e).getChar();
+                    } else {
+                        row += cell.getChar();
                     }
+                } else {
+                    row += cell.getChar();
                 }
-                mapExport.add(mapLine);
             }
-
-        }
-
-        //Split the map from the 'map specifics'
-        mapExport.add("");
-
-        //Add the 'map specifics' lines to the mapExport
-        for (int i = 0; i < mapSpecifics.size(); i++) {
-            mapExport.add(mapSpecifics.get(i));
+            mapExport.add(row);
         }
 
         // return the String array of the mapExport ArrayList
         return mapExport.toArray(new String[mapExport.size()]);
     }
+
+    public String[] exportSpecific() {
+        ArrayList<String> mapSpecifics = new ArrayList<>();
+        ArrayList<Teleporter> teleporters = new ArrayList<>();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Cell cell = map[y][x];
+                if (cell instanceof Teleporter) {
+                    Teleporter te1 = (Teleporter)cell;
+                    if (!teleporters.contains(te1.getLinked())) {
+                        Teleporter te2 = te1.getLinked();       
+                        Vector t1 = te1.getPos();
+                        Vector t2 = te2.getPos();       
+                        mapSpecifics.add(String.format("TELEPORTER %d %d %d %d", t1.getX(), t1.getY(), t2.getX(), t2.getY()));
+                        teleporters.add(te1);
+                    }
+                } else if (cell instanceof TokenDoor) {
+                    TokenDoor door = (TokenDoor)cell;
+                    mapSpecifics.add(String.format("DOOR %d %d %d", x, y, door.getTokens()));
+                }
+            }
+        }
+
+        // return the String array of the mapSpecifics ArrayList
+        return mapSpecifics.toArray(new String[mapSpecifics.size()]);
+    }
+
+
 
     /**
      * Goes through every cell and sets their image if needed
