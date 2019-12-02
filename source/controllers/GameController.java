@@ -42,7 +42,7 @@ public class GameController {
     private Profile currentProfile;
     private int startTime;
     private String currentMap;
-    
+
     // X and Y variables for render translate methods
     private double renderX = 0;
     private double renderY = 0;
@@ -104,7 +104,7 @@ public class GameController {
             case "DOOR":
                 mapController.initDoor(sc);
                 break;
-            case "INVENTORY" : 
+            case "INVENTORY" :
                 playerController.createInventory(sc);
                 break;
         }
@@ -136,15 +136,11 @@ public class GameController {
         String[] mapSpecific = mapController.exportSpecific();
         String[] playerExport = playerController.export();
         String[] entityExport = entityController.export();
-        
+
         FileHandler.writeFile(path, mapExport, false);
         FileHandler.writeFile(path, playerExport, true);
         FileHandler.writeFile(path, mapSpecific, true);
         FileHandler.writeFile(path, entityExport, true);
-
-        // Get MapController Export
-        // Get PlayerController Export
-        // Get EntityController Export
     }
 
     /**
@@ -235,12 +231,12 @@ public class GameController {
                 dir = Direction.RIGHT;
                 break;
             case ESCAPE:
-                // Bring up menu
+                
                 break;
         }
         //Make the move based on this direction
         playerController.move(dir, mapController);
-        renderPlayer(root, scaleVal);  
+        renderPlayer(root, scaleVal);
 
         // Check entity grid
         entityController.checkItem(playerController.getPlayer());
@@ -281,6 +277,13 @@ public class GameController {
 
     }
 
+    /**
+     * Initial render method to display the map and orient it to the player 
+     * start position
+     * 
+     * @param root
+     * @param scaleVal 
+     */
     public void render(Group root, double scaleVal) {
 
         // Group ("layer") 1
@@ -310,9 +313,9 @@ public class GameController {
         ImageView featherEdge = new ImageView(assetImg);
         featherEdge.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         root.getChildren().add(featherEdge);
-       
+
         renderPlayer(root, scaleVal);
-        
+
     }
 
     public void renderPlayer(Group root, double scaleVal) {
@@ -330,7 +333,7 @@ public class GameController {
         } else {
             renderY = (playerController.getPlayerPos().getY()) + playerOffset;
         }
-        
+
         root.getChildren().get(0).setLayoutX(renderX);
         root.getChildren().get(1).setLayoutX(renderX);
         root.getChildren().get(0).setLayoutY(renderY);
