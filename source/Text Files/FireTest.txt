@@ -7,6 +7,6 @@
 #FFFFFFFF#
 #FFFFFFFF#
 #FFFFFFFF#
-#FFFFFFFF#
-#####!####
+#!FFFFFFF#
+##########
 PLAYER 1 1
