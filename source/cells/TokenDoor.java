@@ -42,14 +42,6 @@ public class TokenDoor extends Door {
         this.tokens = tokens;
     }
 
-	/**
-	 * Sets the tokenDoor token requirement to tokens
-	 *
-	 * @param tokens the token requirement
-	 */
-	public void setTokens(int tokens) {
-		this.tokens = tokens;
-	}
 
 	/**
 	 * Method to test whether the door is openable by the player.
