@@ -87,6 +87,10 @@ public class DumbTargeter extends Enemy {
         pos.add(dir);
     }
 
+    public String export() {
+        return String.format("DT %d %d", pos.getX(), pos.getY());
+    }
+
     /**
      * Renders the Enemy to the screen
      */

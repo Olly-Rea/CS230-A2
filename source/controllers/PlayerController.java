@@ -1,6 +1,10 @@
 package controllers;
 
 import entities.*;
+
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
 import cells.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -65,25 +69,39 @@ public class PlayerController {
         return true;
     }
 
-    /**
-     * Check if the cell requires a shoe type and if the player posseses it
-     *
-     * @param cell the cell being checked against the player, if a certain item
-     * is required for that cell type
-     * @return a boolean value, if true, the player is on a block which kills
-     * the player, otherwise player is still alive
-     * @author Danny
-     */
-    public boolean checkStatus(MapController map) {
-        Cell current = map.getCell(getPlayerPos());
-        if (current.getType() == CellType.FIRE && (player.hasFireBoots() == false)) {
-            return true;
-        } else if (current.getType() == CellType.WATER && (player.hasFlippers() == false)) {
-            return true;
-        }
-        return false;
-    }
 
+	public void createInventory(Scanner sc) {
+		int[] inventory = new int[7];
+		try {
+			for (int i = 0; i < 7; i++) {
+				inventory[i] = sc.nextInt();
+			}
+			player.setInventory(inventory);
+		} catch (NoSuchElementException e) {
+			System.err.println("Inventory declaration is invalid");
+		}
+
+	}
+
+	/**
+	 * Check if the cell requires a shoe type and if the player posseses it
+	 *
+	 * @param cell the cell being checked against the player, if a certain item is
+	 *             required for that cell type
+	 * @return a boolean value, if true, the player is on a block which kills the
+	 *         player, otherwise player is still alive
+	 * @author Danny
+	 */
+	public boolean checkStatus(MapController map) {
+        Cell current = map.getCell(getPlayerPos());
+        
+		if (current instanceof Fire && !player.hasFireBoots()) {
+			return true;
+		} else if (current instanceof Water && !player.hasFlippers()) {
+			return true;
+		}
+		return false;
+	}
     /**
      * Check if player is on a goal cell
      *
@@ -140,14 +158,24 @@ public class PlayerController {
         return playerGridPane;
     }
 
-    /**
-     * Method to get a int array {X,Y,fireShoes, flippers,tokens, red,
-     * green,blue,yellow}
-     *
-     * @return an array of ints representing the players position and inventory
-     * @author Danny
-     */
-    public int[] export() {
-        return player.export();
-    }
+	/**
+	 * Method to get a int array {X,Y,fireShoes, flippers,tokens, red,
+	 * green,blue,yellow}
+	 *
+	 * @return an array of ints representing the players position and inventory
+	 * @author Danny
+	 */
+	public String[] export() {
+		String[] export = new String[2];
+		
+		String inv = "";
+		for (int i : player.getInventory()) {
+			inv += i + " ";
+		}
+
+		export[0] = String.format("PLAYER %d %d", player.getPos().getX(), player.getPos().getY());
+		export[1] = String.format("INVENTORY " + inv);
+
+		return export;
+	}
 }

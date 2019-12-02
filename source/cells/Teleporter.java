@@ -70,6 +70,10 @@ public class Teleporter extends Cell {
         return linkedTele;
     }
 
+    public char getChar() {
+        return 'T';
+    }
+
     /**
      * Renders the Enemy to the screen
      */

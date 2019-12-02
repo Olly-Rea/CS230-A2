@@ -58,6 +58,10 @@ public class StraightLineEnemy extends Enemy {
         this.pos.add(dir);
     }
     
+    public String export() {
+        return String.format("SL %d %d %s", pos.getX(), pos.getY(), dir);
+    }
+
     /**
      * Renders the Enemy to the screen
      */
