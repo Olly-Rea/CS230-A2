@@ -55,11 +55,23 @@ public class Main extends Application {
         //Create the game menu title
         Label outputLabel = new Label("THIS IS OUR GAME");
         menuLayout.getChildren().add(outputLabel);
+               
         
-        //Casting an image as a button should work to get menu graphics
+        //BUTTON LAYOUTS BELOW
+        
         
         //add the New Game button to the menu VBox
+        ImageView newGameButton;
+        try {
+            newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/newGameButton.png")));
+        } catch (FileNotFoundException e) {
+            newGameButton = null;
+            System.err.println("loadGameButton.png path not found");
+        }
+        newGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        //Create the button and assign the graphic
         Button newGame = new Button("New Game");
+        newGame.setGraphic(newGameButton);
         newGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 root.getChildren().clear();
@@ -68,17 +80,40 @@ public class Main extends Application {
         });
         menuLayout.getChildren().add(newGame);
         
+        
         //add the Load Game button to the menu VBox
+        ImageView loadGameButton;
+        try {
+            loadGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/loadGameButton.png")));
+        } catch (FileNotFoundException e) {
+            loadGameButton = null;
+            System.err.println("loadGameButton.png path not found");
+        }
+        loadGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        //Create the button and assign the graphic
         Button loadGame = new Button("Load Game");
+        loadGame.setGraphic(loadGameButton);
         loadGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                // LOAD GAME
+                String savefilePath = "./savefiles";
+                //Create load game scene
             }
         });
         menuLayout.getChildren().add(loadGame);
         
+        
         //add the Exit Game button to the menu VBox
+        ImageView exitGameButton;
+        try {
+            exitGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/exitGameButton.png")));
+        } catch (FileNotFoundException e) {
+            exitGameButton = null;
+            System.err.println("exitGameButton.png path not found");
+        }
+        exitGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        //Create the button and assign the graphic
         Button exitGame = new Button("Exit Game");
+        exitGame.setGraphic(exitGameButton);
         exitGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 window.close();
@@ -89,7 +124,7 @@ public class Main extends Application {
         //Add background graphics to the menu
         Image menuBackImg;
         try {
-            menuBackImg = new Image(new FileInputStream("./assets/visuals/MenuBackground.jpg"));
+            menuBackImg = new Image(new FileInputStream("./assets/visuals/menu/MenuBackground.jpg"));
         } catch (FileNotFoundException e) {
             menuBackImg = null;
             System.err.println("MenuBackground.jpg path not found");
@@ -111,10 +146,14 @@ public class Main extends Application {
         
         //Add the menu buttons to the menuRoot group
         root.getChildren().add(menuLayout);
-        root.getChildren().get(2).setLayoutX(620*scaleVal);
+        root.getChildren().get(2).setLayoutX(380*scaleVal);
         root.getChildren().get(2).setLayoutY(300*scaleVal);
         
         //Return the root
         return root;
+    }
+    
+    private void LoadGame() {
+        
     }
 }

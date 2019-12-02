@@ -202,35 +202,32 @@ public class GameController {
      * @param ke Key Event that was pressed by the user.
      */
     public void gameStep(KeyEvent e, Group root, Double scaleVal) {
+        // Get the firection to move in
+        Direction dir = null;
         switch (e.getCode()) {
             case W:
             case UP:
-                if (playerController.move(Direction.UP, mapController)) {
-                    renderMove(root, 0, 200, scaleVal);
-                }
+                dir = Direction.UP;
                 break;
             case A:
             case LEFT:
-                if (playerController.move(Direction.LEFT, mapController)) {
-                    renderMove(root, 200, 0, scaleVal);
-                }
+                dir = Direction.LEFT;
                 break;
             case S:
             case DOWN:
-                if (playerController.move(Direction.DOWN, mapController)) {
-                    renderMove(root, 0, -200, scaleVal);
-                }
+                dir = Direction.DOWN;
                 break;
             case D:
             case RIGHT:
-                if (playerController.move(Direction.RIGHT, mapController)) {
-                    renderMove(root, -200, 0, scaleVal);
-                }
+                dir = Direction.RIGHT;
                 break;
             case ESCAPE:
                 // Bring up menu
                 break;
         }
+        //Make the move based on this direction
+        playerController.move(dir, mapController);
+        renderPlayer(root, scaleVal);  
 
         // Check entity grid
         entityController.checkItem(playerController.getPlayer());
@@ -301,6 +298,12 @@ public class GameController {
         featherEdge.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         root.getChildren().add(featherEdge);
        
+        renderPlayer(root, scaleVal);
+        
+    }
+
+    public void renderPlayer(Group root, double scaleVal) {
+
         //Calculate the value the playerLayer offsets the player by
         double playerOffset = 400*scaleVal;
         //Offset the map to focus on the player start position
@@ -319,27 +322,6 @@ public class GameController {
         root.getChildren().get(1).setLayoutX(renderX);
         root.getChildren().get(0).setLayoutY(renderY);
         root.getChildren().get(1).setLayoutY(renderY);
-        
-    }
-
-    public void renderMove(Group root, int x, int y, double scaleVal) {
-
-        renderX += x*scaleVal;
-        renderY += y*scaleVal;
-
-        if (renderX <= 400) {
-            root.getChildren().get(0).setLayoutX(renderX);
-            root.getChildren().get(1).setLayoutX(renderX);
-        } else {
-            renderX = 400;
-        }
-
-        if (renderY <= 400) {
-            root.getChildren().get(0).setLayoutY(renderY);
-            root.getChildren().get(1).setLayoutY(renderY);
-        } else {
-            renderY = 400;
-        }
 
     }
 }
