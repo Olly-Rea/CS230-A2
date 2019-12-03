@@ -6,6 +6,8 @@ import java.util.LinkedList;
 
 import cells.Cell;
 import cells.CellType;
+import cells.Ground;
+import controllers.EntityController;
 import controllers.MapController;
 import entities.Enemy;
 import entities.Player;
@@ -42,14 +44,6 @@ public class SmartTargeter extends Enemy {
     }
 
     /**
-     * Renders the Enemy to the screen
-     */
-    public ImageView render() {
-        ImageView imageNode = new ImageView(image);
-        return imageNode;
-    }
-
-    /**
      * Creates a distance grid which flood fills from the players position until
      * every possible connecting cell is filled.
      *
@@ -57,7 +51,7 @@ public class SmartTargeter extends Enemy {
      * @return A 2d Array of integers the same size as the map filled with
      * distances from the Players position.
      */
-    private Integer[][] makeDistGrid(MapController map) {
+    private Integer[][] makeDistGrid(MapController map, EntityController ec) {
         // Initialise Variables
         LinkedList<Cell> queue = new LinkedList<>();
         Integer[][] distGrid = new Integer[map.height][map.width];
@@ -74,8 +68,8 @@ public class SmartTargeter extends Enemy {
                 int x = q.getPos().getX();
                 int y = q.getPos().getY();
                 Cell next = map.getNextCell(new Vector(x, y), d); // get the next cell
-
-                if (next.getType() == CellType.GROUND) { // if the cell is of type GROUND
+                boolean existsEntity = ec.entityPresent(pos, dir);
+                if (next instanceof Ground && !existsEntity) { // if the cell is of type GROUND
                     int dist = distGrid[y][x] + 1; // distance is incremented by 1
                     // if distGrid at next position is empty then add it to the queue & set to dist
                     Integer val = distGrid[next.getPos().getY()][next.getPos().getX()];
@@ -90,9 +84,9 @@ public class SmartTargeter extends Enemy {
         return distGrid;
     }
 
-    public void algorithm(MapController map) {
+    public void algorithm(MapController map, EntityController ec) {
         // Generate the distance grid and set minDist to null and dir to null
-        Integer[][] distGrid = makeDistGrid(map);
+        Integer[][] distGrid = makeDistGrid(map, ec);
         Integer minDist = null;
         dir = null;
 
@@ -100,7 +94,8 @@ public class SmartTargeter extends Enemy {
         if (distGrid[pos.getY()][pos.getX()] != 0) {
             for (Direction d : Direction.values()) { // for all Directions (UP, RIGHT, DOWN, LEFT)
                 Cell next = map.getNextCell(new Vector(pos.getX(), pos.getY()), d); // get the next cell in that direction
-                if (next.getType() == CellType.GROUND) { // Confirm it's a ground cell
+                boolean existsEntity = ec.entityPresent(pos, dir);
+                if (next instanceof Ground && !existsEntity) { // Confirm it's a ground cell
                     Integer dist = distGrid[pos.getY() + d.Y][pos.getX() + d.X]; // check the distance at that cell in
                     // distGrid
                     // If minDist is null and dist isn't null then set minDist to be dist
@@ -121,5 +116,16 @@ public class SmartTargeter extends Enemy {
         if (dir != null) { // if dir is null then do not move.
             pos.add(dir); // otherwise add the dir to the positon.
         }
+    }
+
+    public String export() {
+        return String.format("ST %d %d", pos.getX(), pos.getY());
+    }
+
+    /**
+     * Renders the Enemy to the screen
+     */
+    public ImageView render() {
+        return new ImageView(image);
     }
 }

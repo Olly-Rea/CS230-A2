@@ -20,31 +20,44 @@ public class EntityController {
     private Entity[][] entityGrid;
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
-
+    GridPane entityGridPane = new GridPane();
+    
     /**
      * Sets entityGrid and enemies
      *
      * @param entityGrid 2d Array of Enemy and Item Entity SubClasses.
-     * @param enemies
      */
     public EntityController(Entity[][] entityGrid) {
         this.entityGrid = entityGrid;
     }
 
+    public Entity[][] getGrid() {
+        return entityGrid;
+    }
+
     /**
-     * Checks if the player is standing on a item. Add the item if an item collision
-     * has occurred.
+     * Checks if the player is standing on a item. Add the item if an item
+     * collision has occurred.
      *
      * @param player The Player object for position reference.
      */
     public void checkItem(Player player) {
-        // Vector playerPos = player.getPos();
-        // for (int i; i < items.size(); i++) {
-        // if entityGrid[playerPos.x][playerPos.y] == items.get(i) {
-        // player.addItem(items.get(i));
-        // }
-        // }
+        Vector playerPos = player.getPos();
+        // System.out.println(", Item: " +
+        // entityGrid[playerPos.getY()][playerPos.getX()]);
+        if (entityGrid[playerPos.getY()][playerPos.getX()] != null) {
+            Entity NewEntity = entityGrid[playerPos.getY()][playerPos.getX()];
+            if (NewEntity instanceof Item) {
+                Entity newItem = entityGrid[playerPos.getY()][playerPos.getX()];
+                System.out.println("Found: " + ((Item) newItem).getType());
+                player.addItem((Item) newItem);
+                removeItem(playerPos.getY(), playerPos.getX());
+            }
+        }
+    }
 
+    public boolean entityPresent(Vector pos, Direction dir) {
+        return entityGrid[pos.getY() + dir.Y][pos.getX() + dir.X] instanceof Entity;
     }
 
     /**
@@ -75,18 +88,16 @@ public class EntityController {
      * Checks whether a player has collided with an enemy.
      *
      * @param player The player object where the position will be checked in the
-     *               entityGrid.
+     * entityGrid.
      * @return True if the player has collided with an enemy. False otherwise.
      */
     public boolean enemyCollision(Player player) {
-        // private Vector playerPos = player.getPos();
-        // for (int i; i < enemies.size(); i++) {
-        // if entityGrid[playerPos.x][playerPos.y] == (enemies.get(i)).getPos() {
-        // return true;
-        // } else {
-        // return false;
-        // }
-        // }
+        for (int i = 0; i < enemies.size(); i++) {
+            if ((player.getPos().getX() == enemies.get(i).getPos().getX())
+                    && (player.getPos().getY() == enemies.get(i).getPos().getY())) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -96,27 +107,37 @@ public class EntityController {
      * @param x The horizontal position of the item in the grid.
      * @param y The vertical position of the item in the grid.
      */
-    private void removeItem(int x, int y) {
-        Item i = (Item) entityGrid[y][x];
-        items.remove(i);
+    private void removeItem(int y, int x) {
         entityGrid[y][x] = null;
+        renderEntities();
     }
 
     /**
      * Iterates through each enemy and moves them to their next position.
      *
-     * @param map the map will be passed through to each enemy to assist their next
-     *            move calculation.
+     * @param map the map will be passed through to each enemy to assist their
+     * next move calculation.
      */
     public void moveEnemies(MapController map) {
-        // private Vector enemyPos;
-        // private Vector newEnemyPos;
-        // for (int i; i < enemies.size(); i++) {
-        // enemyPos = (enemies.get(i)).getPos();
-        // newEnemyPos = (enemies.get(i)).pathingAlgorithm(map);
-        // entityGrid[newEnemyPos.x][newEnemyPos.y] == enemy.get(i);
-        // entityGrid[enemyPos.x][enemyPos.y] == " ";
-        // }
+        for (int i = 0; i < enemies.size(); i++) {
+            // Get the enemy to move
+            Enemy moveEnemy = enemies.get(i);
+            // Get this enemies original position
+            int x;
+            int y;
+            x = moveEnemy.getPos().getX();
+            y = moveEnemy.getPos().getY();
+            entityGrid[y][x] = null;
+            moveEnemy.algorithm(map, this);
+            x = moveEnemy.getPos().getX();
+            y = moveEnemy.getPos().getY();
+            entityGrid[y][x] = moveEnemy;
+            renderEntities();
+        }
+    }
+
+    public Entity getEntity(int x, int y) {
+        return entityGrid[y][x];
     }
 
     /**
@@ -125,6 +146,12 @@ public class EntityController {
      * @return String array, 1 for each entity defining their details.
      */
     public String[] export() {
+        String[] export = new String[enemies.size()];
+        for (int i = 0; i < export.length; i++) {
+            export[i] = enemies.get(i).export();
+        }
+        return export;
+
         // private String[] exportArray;
         // private int numberOfColumns = entityGrid.length();
         // private int numberOfRows;
@@ -140,7 +167,6 @@ public class EntityController {
         // }
         // }
         // } return exportArray;s
-        return null;
     }
 
     /**
@@ -158,31 +184,33 @@ public class EntityController {
     /**
      * Creates a new straight line enemy from a scanner and position
      *
-     * @param line the scanner of the rest of the line including specific details
-     * @param pos  the position the enemy is created at
+     * @param line the scanner of the rest of the line including specific
+     * details
+     * @param pos the position the enemy is created at
      * @return the instance of the StraightLineEnemy
      */
     private static StraightLineEnemy makeSL(Scanner line, Vector pos) {
         String faceDir = line.next();
         switch (faceDir) {
-        case "UP":
-            return new StraightLineEnemy(pos, Direction.UP);
-        case "RIGHT":
-            return new StraightLineEnemy(pos, Direction.RIGHT);
-        case "DOWN":
-            return new StraightLineEnemy(pos, Direction.DOWN);
-        case "LEFT":
-            return new StraightLineEnemy(pos, Direction.LEFT);
-        default:
-            return new StraightLineEnemy(pos, Direction.UP);
+            case "UP":
+                return new StraightLineEnemy(pos, Direction.UP);
+            case "RIGHT":
+                return new StraightLineEnemy(pos, Direction.RIGHT);
+            case "DOWN":
+                return new StraightLineEnemy(pos, Direction.DOWN);
+            case "LEFT":
+                return new StraightLineEnemy(pos, Direction.LEFT);
+            default:
+                return new StraightLineEnemy(pos, Direction.UP);
         }
     }
 
     /**
      * Creates a new straight line enemy from a scanner and position
      *
-     * @param line the scanner of the rest of the line including specific details
-     * @param pos  the position the enemy is created at
+     * @param line the scanner of the rest of the line including specific
+     * details
+     * @param pos the position the enemy is created at
      * @return the instance of the StraightLineEnemy
      */
     private static WallFollower makeWF(Scanner line, Vector pos) {
@@ -193,25 +221,25 @@ public class EntityController {
         String rotation = line.next();
 
         switch (faceDir) {
-        case "UP":
-            dir = Direction.UP;
-        case "RIGHT":
-            dir = Direction.RIGHT;
-        case "DOWN":
-            dir = Direction.DOWN;
-        case "LEFT":
-            dir = Direction.LEFT;
-        default:
-            dir = Direction.UP;
+            case "UP":
+                dir = Direction.UP;
+            case "RIGHT":
+                dir = Direction.RIGHT;
+            case "DOWN":
+                dir = Direction.DOWN;
+            case "LEFT":
+                dir = Direction.LEFT;
+            default:
+                dir = Direction.UP;
         }
 
         switch (rotation) {
-        case "CW":
-            rot = Rotation.CW;
-        case "ACW":
-            rot = Rotation.ACW;
-        default:
-            rot = Rotation.ACW;
+            case "CW":
+                rot = Rotation.CW;
+            case "ACW":
+                rot = Rotation.ACW;
+            default:
+                rot = Rotation.ACW;
         }
 
         return new WallFollower(pos, dir, rot);
@@ -227,16 +255,16 @@ public class EntityController {
         int y = line.nextInt();
         String type = line.next();
         switch (type) {
-        case "SL":
-            return makeSL(line, new Vector(x, y));
-        case "WF":
-            return makeWF(line, new Vector(x, y));
-        case "DT":
-            return new DumbTargeter(new Vector(x, y), p);
-        case "ST":
-            return new SmartTargeter(new Vector(x, y), p);
-        default:
-            return null;
+            case "SL":
+                return makeSL(line, new Vector(x, y));
+            case "WF":
+                return makeWF(line, new Vector(x, y));
+            case "DT":
+                return new DumbTargeter(new Vector(x, y), p);
+            case "ST":
+                return new SmartTargeter(new Vector(x, y), p);
+            default:
+                return null;
         }
     }
 
@@ -250,22 +278,22 @@ public class EntityController {
      */
     public static Item makeItem(int x, int y, char c) {
         switch (c) {
-        case 'r':
-            return new Item(ItemType.REDKEY, x, y);
-        case 'g':
-            return new Item(ItemType.GREENKEY, x, y);
-        case 'b':
-            return new Item(ItemType.BLUEKEY, x, y);
-        case 'y':
-            return new Item(ItemType.YELLOWKEY, x, y);
-        case 'f':
-            return new Item(ItemType.FIREBOOTS, x, y);
-        case 'w':
-            return new Item(ItemType.FLIPPERS, x, y);
-        case '*':
-            return new Item(ItemType.TOKEN, x, y);
-        default:
-            return null;
+            case 'r':
+                return new Item(ItemType.REDKEY, x, y);
+            case 'g':
+                return new Item(ItemType.GREENKEY, x, y);
+            case 'b':
+                return new Item(ItemType.BLUEKEY, x, y);
+            case 'y':
+                return new Item(ItemType.YELLOWKEY, x, y);
+            case 'f':
+                return new Item(ItemType.FIREBOOTS, x, y);
+            case 'w':
+                return new Item(ItemType.FLIPPERS, x, y);
+            case '*':
+                return new Item(ItemType.TOKEN, x, y);
+            default:
+                return null;
         }
     }
 
@@ -276,16 +304,15 @@ public class EntityController {
      * @return
      */
     public GridPane renderEntities() {
-        // Create the entity GridPane
-        GridPane entityGridPane = new GridPane();
-
+        // Clear the entity GridPane for fresh render
+        entityGridPane.getChildren().clear();
         for (int y = 0; y < entityGrid.length; y++) {
             for (int x = 0; x < entityGrid[y].length; x++) {
                 if (entityGrid[y][x] != null) {
                     entityGridPane.add(entityGrid[y][x].render(), x, y);
                 } else {
                     // Create and add a blank pane
-                    //  - used to create correct spacing in the rendered GridPane
+                    // - used to create correct spacing in the rendered GridPane
                     Pane blankSpace = new Pane();
                     blankSpace.setMinSize(200, 200);
                     entityGridPane.add(blankSpace, x, y);

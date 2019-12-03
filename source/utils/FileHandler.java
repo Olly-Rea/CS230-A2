@@ -69,21 +69,21 @@ public class FileHandler {
      * Method to save a file to a certain path and specific lines to write.
      *
      * @param path Path to the file being created/written to
-     * @param lines the lines of text to be written i nthe file
+     * @param lines the lines of text to be written in the file
      * @return True if the file was saved correctly, false otherwise
      */
-    public static boolean saveFile(String path, String[] lines) {
+    public static void writeFile(String path, String[] lines, boolean append) {
         BufferedWriter writer = null;
         File file = new File(path);
         try {
-            writer = new BufferedWriter(new FileWriter(file));
+            writer = new BufferedWriter(new FileWriter(file, append));
             for (int i = 0; i < lines.length; i++) {
-                writer.write(lines[i] + (i != lines.length - 1 ? "\n" : ""));
+                // writer.write(lines[i]);
+                writer.write(lines[i] + "\n");
             }
             writer.close();
-            return true;
         } catch (IOException e) {
-            return false;
+            System.err.println(e.getMessage());
         }
     }
 }
