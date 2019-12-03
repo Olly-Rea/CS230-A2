@@ -19,6 +19,7 @@ import cells.Cell;
 import entities.Entity;
 import entities.Item;
 import misc.Profile;
+import misc.Menu;
 import utils.*;
 
 import java.io.File;
@@ -35,25 +36,40 @@ public class GameController {
     private static final String MAP_DIR = "...";
     private static final String SAVE_DIR = "...";
     private static final String LEADERBOARD_DIR = "...";
+    public static final double SCALE_VAL = 0.6;
 
     private MapController mapController;
     private PlayerController playerController;
     private EntityController entityController;
+    private Menu menu = new Menu(this);
     private Profile currentProfile;
     private int startTime;
     private String currentMap;
-    
+
     // X and Y variables for render translate methods
     private double renderX = 0;
     private double renderY = 0;
+    
+    private Group root;
+    private Group gameGroup = new Group();
 
     /**
      *
      */
-    public GameController() {
+    public GameController(Group root) {
+        this.root = root;
+        root.getChildren().add(gameGroup);
+        root.getChildren().add(menu.render());
         loadGame("./levelfiles/Test_File_DD.txt");
     }
 
+    public void restart() {
+        loadGame("./levelfiles/Test_File_DD.txt");
+        
+        gameGroup.getChildren().clear();
+        render();
+    }
+    
     /**
      * Creates a 2d Entity Map and Cell Map and stores them in the mapController
      * and entityController
@@ -104,7 +120,7 @@ public class GameController {
             case "DOOR":
                 mapController.initDoor(sc);
                 break;
-            case "INVENTORY" : 
+            case "INVENTORY" :
                 playerController.createInventory(sc);
                 break;
         }
@@ -136,15 +152,11 @@ public class GameController {
         String[] mapSpecific = mapController.exportSpecific();
         String[] playerExport = playerController.export();
         String[] entityExport = entityController.export();
-        
+
         FileHandler.writeFile(path, mapExport, false);
         FileHandler.writeFile(path, playerExport, true);
         FileHandler.writeFile(path, mapSpecific, true);
         FileHandler.writeFile(path, entityExport, true);
-
-        // Get MapController Export
-        // Get PlayerController Export
-        // Get EntityController Export
     }
 
     /**
@@ -214,36 +226,39 @@ public class GameController {
      *
      * @param ke Key Event that was pressed by the user.
      */
-    public void gameStep(KeyEvent e, Group root, Double scaleVal) {
+    public void gameStep(KeyEvent e) {
+        // Get the firection to move in
+        Direction dir = null;
         switch (e.getCode()) {
             case W:
             case UP:
-                if (playerController.move(Direction.UP, mapController)) {
-                    renderMove(root, 0, 200, scaleVal);
-                }
+                dir = Direction.UP;
                 break;
             case A:
             case LEFT:
-                if (playerController.move(Direction.LEFT, mapController)) {
-                    renderMove(root, 200, 0, scaleVal);
-                }
+                dir = Direction.LEFT;
                 break;
             case S:
             case DOWN:
-                if (playerController.move(Direction.DOWN, mapController)) {
-                    renderMove(root, 0, -200, scaleVal);
-                }
+                dir = Direction.DOWN;
                 break;
             case D:
             case RIGHT:
-                if (playerController.move(Direction.RIGHT, mapController)) {
-                    renderMove(root, -200, 0, scaleVal);
-                }
+                dir = Direction.RIGHT;
                 break;
             case ESCAPE:
-                // Bring up menu
-                break;
+                menu.toggle();
+                return;
+            default:
+                return;
         }
+        if (menu.isVisible()) {
+            return;
+        }
+
+        //Make the move based on this direction
+        playerController.move(dir, mapController);
+        renderPlayer();
 
         // Check entity grid
         entityController.checkItem(playerController.getPlayer());
@@ -256,7 +271,7 @@ public class GameController {
                 || entityController.enemyCollision(playerController.getPlayer())) {
 
             System.out.println("YOU DIED");
-            // Restart game
+            restart();
         }
 
         // Check if game is won
@@ -284,24 +299,31 @@ public class GameController {
 
     }
 
-    public void render(Group root, double scaleVal) {
+    /**
+     * Initial render method to display the map and orient it to the player 
+     * start position
+     * 
+     */
+    public void render() {
 
-        // Group ("layer") 1
+        // Group 1 ("world layer")
+        Group worldGroup = new Group();
         // Render map layer First
         GridPane mapLayer = mapController.renderMap();
-        mapLayer.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-        root.getChildren().add(mapLayer);
+        mapLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
+        worldGroup.getChildren().add(mapLayer);
         // Render Entity layer Second (on top of Map)
         GridPane entityLayer = entityController.renderEntities();
-        entityLayer.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-        root.getChildren().add(entityLayer);
+        entityLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
+        worldGroup.getChildren().add(entityLayer);
 
-        // Group ("layer") 2
+        
+        // Group 2 ("player layer")
+        Group playerGroup = new Group();
         // Render Player in center of screen last
         GridPane playerLayer = playerController.renderPlayer();
-        playerLayer.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-        root.getChildren().add(playerLayer);
-
+        playerLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
+        playerGroup.getChildren().add(playerLayer);
         // Render the feather-edge effect around the outside of the screen
         Image assetImg;
         try {
@@ -311,48 +333,35 @@ public class GameController {
             System.err.println("Feather_Edge.png path not found");
         }
         ImageView featherEdge = new ImageView(assetImg);
-        featherEdge.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-        root.getChildren().add(featherEdge);
-       
+        featherEdge.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
+        playerGroup.getChildren().add(featherEdge);
+
+        
+        //Add the two layers to the gameGroup layer
+        gameGroup.getChildren().add(worldGroup);
+        gameGroup.getChildren().add(playerGroup);
+        renderPlayer();
+
+    }
+
+    public void renderPlayer() {
+
         //Calculate the value the playerLayer offsets the player by
-        double playerOffset = 400*scaleVal;
+        double playerOffset = 400*SCALE_VAL;
         //Offset the map to focus on the player start position
         if (playerController.getPlayerPos().getX() > 1) {
-            renderX = ((playerController.getPlayerPos().getX()-1)*(-200*scaleVal)) + playerOffset;
+            renderX = ((playerController.getPlayerPos().getX()-1)*(-200*SCALE_VAL)) + playerOffset;
         } else {
             renderX = (playerController.getPlayerPos().getX()) + playerOffset;
         }
         if (playerController.getPlayerPos().getY() > 1) {
-            renderY = ((playerController.getPlayerPos().getY()-1)*(-200*scaleVal)) + playerOffset;
+            renderY = ((playerController.getPlayerPos().getY()-1)*(-200*SCALE_VAL)) + playerOffset;
         } else {
             renderY = (playerController.getPlayerPos().getY()) + playerOffset;
         }
-        
-        root.getChildren().get(0).setLayoutX(renderX);
-        root.getChildren().get(1).setLayoutX(renderX);
-        root.getChildren().get(0).setLayoutY(renderY);
-        root.getChildren().get(1).setLayoutY(renderY);
-        
-    }
 
-    public void renderMove(Group root, int x, int y, double scaleVal) {
-
-        renderX += x*scaleVal;
-        renderY += y*scaleVal;
-
-        if (renderX <= 400) {
-            root.getChildren().get(0).setLayoutX(renderX);
-            root.getChildren().get(1).setLayoutX(renderX);
-        } else {
-            renderX = 400;
-        }
-
-        if (renderY <= 400) {
-            root.getChildren().get(0).setLayoutY(renderY);
-            root.getChildren().get(1).setLayoutY(renderY);
-        } else {
-            renderY = 400;
-        }
+        ((Group)root.getChildren().get(0)).getChildren().get(0).setLayoutX(renderX);
+        ((Group)root.getChildren().get(0)).getChildren().get(0).setLayoutY(renderY);
 
     }
 }
