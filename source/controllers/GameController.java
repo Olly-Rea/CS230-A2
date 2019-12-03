@@ -291,7 +291,10 @@ public class GameController {
      * @param path THe file path for the map.
      */
     public void addMapTime(String path) {
-
+      int saveTime = currentTimeMillis() - startTime;
+      String timeAsString = Integer.toString(saveTime);
+      String[] output = {timeAsString};
+      FileHandler.writeFile(path, output, false);
     }
 
     public void render(Group root, double scaleVal) {
