@@ -13,6 +13,7 @@ import utils.Direction;
 import utils.Rotation;
 import utils.Vector;
 import entities.Enemy;
+import entities.Player;
 //JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -50,8 +51,8 @@ public class WallFollower extends Enemy {
      * @param dir the initial facing direction of the enemy
      * @param type the type of enemy, anticlockwise or clockwise
      */
-    public WallFollower(Vector pos, Direction dir, Rotation type) {
-        super(pos);
+    public WallFollower(Vector pos, Player player, Direction dir, Rotation type) {
+        super(pos, player);
         this.dir = dir;
         this.type = type;
     }
@@ -63,9 +64,7 @@ public class WallFollower extends Enemy {
      * enemy.
      */
     public void algorithm(MapController map, EntityController ec) {
-        Cell next = map.getNextCell(pos, dir);
-        boolean existsEntity = ec.entityPresent(pos, dir);
-        while (checkWall(map, ec) && (next instanceof Wall || existsEntity)) {
+        while (checkWall(map, ec) && (map.getNextCell(pos, dir) instanceof Wall ||  ec.entityPresent(pos, dir))) {
             turn(type.reverse());
         }
 
@@ -73,7 +72,9 @@ public class WallFollower extends Enemy {
             turn(type);
         }
 
-        this.pos.add(dir);
+        if (!pos.equals(player.getPos())) {
+            this.pos.add(dir);
+        }
     }
 
     /**
@@ -83,9 +84,9 @@ public class WallFollower extends Enemy {
      * @return True if there is a wall, false if there is not a wall.
      */
     private boolean checkWall(MapController map, EntityController ec) {
-        Direction checkDir = type == Rotation.ACW ? dir.cw() : dir.acw();
+        Direction checkDir = type == Rotation.ACW ? dir.acw() : dir.cw();
         Cell checkCell = map.getNextCell(pos, checkDir);
-        boolean existsEntity = ec.entityPresent(pos, dir);
+        boolean existsEntity = ec.entityPresent(pos, checkDir);
         return (checkCell instanceof Wall || existsEntity);
     }
 
@@ -96,10 +97,10 @@ public class WallFollower extends Enemy {
      */
     private void turn(Rotation rot) {
         if (rot == Rotation.ACW) {
-            dir = dir.cw();
+            dir = dir.acw();
         }
         if (rot == Rotation.CW) {
-            dir = dir.acw();
+            dir = dir.cw();
         }
     }
     

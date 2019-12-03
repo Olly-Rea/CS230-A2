@@ -37,7 +37,6 @@ public class DumbTargeter extends Enemy {
     /**
      * The player.
      */
-    private Player player;
     private Direction dir;
 
     /**
@@ -46,8 +45,7 @@ public class DumbTargeter extends Enemy {
      * @param vector the position of targeting enemy
      */
     public DumbTargeter(Vector vector, Player p) {
-        super(vector);
-        this.player = p;
+        super(vector, p);
     }
 
     /**
