@@ -40,9 +40,10 @@ public class GameController {
     private PlayerController playerController;
     private EntityController entityController;
     private Profile currentProfile;
-    private int startTime;
+    private int startTime = currentTimeMillis();
+    private int endTime;
     private String currentMap;
-    
+
     // X and Y variables for render translate methods
     private double renderX = 0;
     private double renderY = 0;
@@ -104,7 +105,7 @@ public class GameController {
             case "DOOR":
                 mapController.initDoor(sc);
                 break;
-            case "INVENTORY" : 
+            case "INVENTORY" :
                 playerController.createInventory(sc);
                 break;
         }
@@ -136,7 +137,7 @@ public class GameController {
         String[] mapSpecific = mapController.exportSpecific();
         String[] playerExport = playerController.export();
         String[] entityExport = entityController.export();
-        
+
         FileHandler.writeFile(path, mapExport, false);
         FileHandler.writeFile(path, playerExport, true);
         FileHandler.writeFile(path, mapSpecific, true);
@@ -208,6 +209,13 @@ public class GameController {
         FileHandler deleter = new FileHandler(PROFILE_PATH);
         deleter.writeFile(PROFILE_PATH, newList, false);
     }
+    /**
+    * Converts current system time to Integer
+    *
+    */
+    public static int currentTimeMillis() {
+      return (int) (System.currentTimeMillis());
+    }
 
     /**
      * Progresses the game 1 step and handles the key pressed.
@@ -262,6 +270,8 @@ public class GameController {
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
+            endTime = currentTimeMillis() - startTime;
+            System.out.println("You took ", endTime*1000, " seconds!");
             // Win game
         }
     }
@@ -313,7 +323,7 @@ public class GameController {
         ImageView featherEdge = new ImageView(assetImg);
         featherEdge.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         root.getChildren().add(featherEdge);
-       
+
         //Calculate the value the playerLayer offsets the player by
         double playerOffset = 400*scaleVal;
         //Offset the map to focus on the player start position
@@ -327,12 +337,12 @@ public class GameController {
         } else {
             renderY = (playerController.getPlayerPos().getY()) + playerOffset;
         }
-        
+
         root.getChildren().get(0).setLayoutX(renderX);
         root.getChildren().get(1).setLayoutX(renderX);
         root.getChildren().get(0).setLayoutY(renderY);
         root.getChildren().get(1).setLayoutY(renderY);
-        
+
     }
 
     public void renderMove(Group root, int x, int y, double scaleVal) {
