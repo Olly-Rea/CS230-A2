@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 //Local imports
 import java.util.Scanner;
 import cells.Cell;
@@ -104,6 +104,9 @@ public class GameController {
             case "DOOR":
                 mapController.initDoor(sc);
                 break;
+            case "INVENTORY" : 
+                playerController.createInventory(sc);
+                break;
         }
 
         sc.close();
@@ -129,6 +132,16 @@ public class GameController {
      * @param path
      */
     public void saveGame(String path) {
+        String[] mapExport = mapController.exportMap(entityController);
+        String[] mapSpecific = mapController.exportSpecific();
+        String[] playerExport = playerController.export();
+        String[] entityExport = entityController.export();
+        
+        FileHandler.writeFile(path, mapExport, false);
+        FileHandler.writeFile(path, playerExport, true);
+        FileHandler.writeFile(path, mapSpecific, true);
+        FileHandler.writeFile(path, entityExport, true);
+
         // Get MapController Export
         // Get PlayerController Export
         // Get EntityController Export
@@ -193,7 +206,7 @@ public class GameController {
             }
         }
         FileHandler deleter = new FileHandler(PROFILE_PATH);
-        deleter.saveFile(PROFILE_PATH, newList);
+        deleter.writeFile(PROFILE_PATH, newList, false);
     }
 
     /**

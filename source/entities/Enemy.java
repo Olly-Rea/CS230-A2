@@ -35,4 +35,6 @@ public abstract class Enemy extends Entity {
      * @return Returns a vector containing the next position
      */
     public abstract void algorithm(MapController map, EntityController ec);
+
+    public abstract String export();
 }

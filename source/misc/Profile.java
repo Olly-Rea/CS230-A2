@@ -53,7 +53,7 @@ public class Profile {
 			
 		}
     	profileList[(profileList.length -1)] = profileInfo;
-    	writer.saveFile(path, profileList);
+    	writer.writeFile(path, profileList, true);
     	
     }
 }

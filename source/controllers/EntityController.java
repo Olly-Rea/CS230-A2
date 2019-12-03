@@ -159,7 +159,7 @@ public class EntityController {
             x = moveEnemy.getPos().getX();
             y = moveEnemy.getPos().getY();
             entityGrid[y][x] = null;
-            moveEnemy.algorithm(map);
+            moveEnemy.algorithm(map, this);
             x = moveEnemy.getPos().getX();
             y = moveEnemy.getPos().getY();
             entityGrid[y][x] = moveEnemy;
@@ -168,12 +168,22 @@ public class EntityController {
 >>>>>>> Master
     }
 
+    public Entity getEntity(int x, int y) {
+        return entityGrid[y][x];
+    }
+
     /**
      * Returns an array of Strings of the state of the entities in the game.
      *
      * @return String array, 1 for each entity defining their details.
      */
     public String[] export() {
+        String[] export = new String[enemies.size()];
+        for (int i = 0; i < export.length; i++) {
+            export[i] = enemies.get(i).export();
+        }
+        return export;
+
         // private String[] exportArray;
         // private int numberOfColumns = entityGrid.length();
         // private int numberOfRows;
@@ -189,7 +199,6 @@ public class EntityController {
         // }
         // }
         // } return exportArray;s
-        return null;
     }
 
     /**
