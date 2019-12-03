@@ -4,11 +4,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import cells.Cell;
-import cells.CellType;
 import cells.Ground;
 import controllers.EntityController;
 import controllers.MapController;
 import entities.Enemy;
+import entities.Player;
 import utils.Direction;
 import utils.Vector;
 import javafx.scene.image.Image;
@@ -36,8 +36,8 @@ public class StraightLineEnemy extends Enemy {
      * @param vector the position of th straight line enemy
      * @param dir The direction the enemy is facing initially
      */
-    public StraightLineEnemy(Vector pos, Direction dir) {
-        super(pos);
+    public StraightLineEnemy(Vector pos, Player player, Direction dir) {
+        super(pos, player);
         this.dir = dir;
     }
 
@@ -55,7 +55,9 @@ public class StraightLineEnemy extends Enemy {
             dir = dir.cw().cw();
         }
 
-        this.pos.add(dir);
+        if (!pos.equals(player.getPos())) {
+            this.pos.add(dir);
+        }
     }
     
     public String export() {
