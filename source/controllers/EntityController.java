@@ -21,7 +21,7 @@ public class EntityController {
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     GridPane entityGridPane = new GridPane();
-    
+
     /**
      * Sets entityGrid and enemies
      *
@@ -42,14 +42,6 @@ public class EntityController {
      * @param player The Player object for position reference.
      */
     public void checkItem(Player player) {
-<<<<<<< HEAD
-      Vector playerPos = player.getPos();
-      for (int i = 0; i < items.size(); i++) {
-        if (entityGrid[playerPos.x][playerPos.y] == items.get(i)) {
-          player.addItem(items.get(i));
-        }
-      }
-=======
         Vector playerPos = player.getPos();
         // System.out.println(", Item: " +
         // entityGrid[playerPos.getY()][playerPos.getX()]);
@@ -63,7 +55,6 @@ public class EntityController {
             }
         }
     }
->>>>>>> Master
 
     public boolean entityPresent(Vector pos, Direction dir) {
         return entityGrid[pos.getY() + dir.Y][pos.getX() + dir.X] instanceof Entity;
@@ -101,16 +92,6 @@ public class EntityController {
      * @return True if the player has collided with an enemy. False otherwise.
      */
     public boolean enemyCollision(Player player) {
-<<<<<<< HEAD
-      Vector playerPos = player.getPos();
-      for (int i = 0; i < enemies.size(); i++) {
-        if (entityGrid[playerPos.x][playerPos.y] == (enemies.get(i)).getPos()) {
-          return true;
-        } else {
-          return false;
-        }
-      } return false;
-=======
         for (int i = 0; i < enemies.size(); i++) {
             if ((player.getPos().getX() == enemies.get(i).getPos().getX())
                     && (player.getPos().getY() == enemies.get(i).getPos().getY())) {
@@ -118,7 +99,6 @@ public class EntityController {
             }
         }
         return false;
->>>>>>> Master
     }
 
     /**
@@ -138,17 +118,6 @@ public class EntityController {
      * @param map the map will be passed through to each enemy to assist their
      * next move calculation.
      */
-<<<<<<< HEAD
-    public moveEnemies(MapController map) {
-      Vector enemyPos;
-      Vector newEnemyPos;
-      for (int i = 0; i < enemies.size(); i++) {
-        enemyPos = (enemies.get(i)).getPos();
-        newEnemyPos = (enemies.get(i)).pathingAlgorithm(map);
-        entityGrid[newEnemyPos.x][newEnemyPos.y] = new String(enemy.get(i));
-        removeItem(enemyPos.x,enemyPos.y);
-      }
-=======
     public void moveEnemies(MapController map) {
         for (int i = 0; i < enemies.size(); i++) {
             // Get the enemy to move
@@ -159,17 +128,12 @@ public class EntityController {
             x = moveEnemy.getPos().getX();
             y = moveEnemy.getPos().getY();
             entityGrid[y][x] = null;
-            moveEnemy.algorithm(map, this);
+            moveEnemy.algorithm(map);
             x = moveEnemy.getPos().getX();
             y = moveEnemy.getPos().getY();
             entityGrid[y][x] = moveEnemy;
             renderEntities();
         }
->>>>>>> Master
-    }
-
-    public Entity getEntity(int x, int y) {
-        return entityGrid[y][x];
     }
 
     /**
@@ -178,12 +142,6 @@ public class EntityController {
      * @return String array, 1 for each entity defining their details.
      */
     public String[] export() {
-        String[] export = new String[enemies.size()];
-        for (int i = 0; i < export.length; i++) {
-            export[i] = enemies.get(i).export();
-        }
-        return export;
-
         // private String[] exportArray;
         // private int numberOfColumns = entityGrid.length();
         // private int numberOfRows;
@@ -199,6 +157,7 @@ public class EntityController {
         // }
         // }
         // } return exportArray;s
+        return null;
     }
 
     /**
