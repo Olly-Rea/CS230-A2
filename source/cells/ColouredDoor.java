@@ -3,8 +3,6 @@ package cells;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import org.omg.CORBA.AnySeqHelper;
-
 import entities.ItemType;
 import entities.Player;
 import javafx.scene.image.Image;
@@ -12,7 +10,7 @@ import javafx.scene.image.ImageView;
 
 public class ColouredDoor extends Door {
 
-	private final DoorColour colour;
+	public final DoorColour colour;
 	private Image image;
 
 	public ColouredDoor(int x, int y, DoorColour colour) {
@@ -62,6 +60,16 @@ public class ColouredDoor extends Door {
 			break;
 		}
 		return p.useKey(key);
+	}
+
+	public char getChar() {
+		switch (colour) {
+			case RED : return 'R';
+			case GREEN : return 'G';
+			case YELLOW : return 'Y';
+			case BLUE : return 'B';
+			default : return 'D';
+		}
 	}
 
     /**

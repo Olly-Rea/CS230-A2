@@ -24,6 +24,10 @@ public class Water extends Cell {
         super(CellType.WATER, x, y);
     }
 
+    public char getChar() {
+        return 'W';
+    }
+
     /**
      * Renders the Enemy to the screen
      */

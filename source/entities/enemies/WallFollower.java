@@ -104,6 +104,10 @@ public class WallFollower extends Enemy {
         }
     }
     
+    public String export() {
+        return String.format("WF %d %d %s %s", pos.getX(), pos.getY(), dir, type);
+    }
+
     /**
      * Renders the Enemy to the screen
      */

@@ -24,6 +24,10 @@ public class Ground extends Cell {
         super(CellType.GROUND, x, y);
     }
 
+    public char getChar() {
+        return ' ';
+    }
+
     /**
      * Renders the Enemy to the screen
      */

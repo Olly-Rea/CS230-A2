@@ -24,6 +24,10 @@ public class Wall extends Cell {
         }
     }
 
+    public char getChar() {
+        return '#';
+    }
+
     /**
      * Renders the Enemy to the screen
      */
