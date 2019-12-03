@@ -7,13 +7,16 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Local imports
 import entities.*;
 import entities.enemies.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import utils.Direction;
 import utils.Rotation;
 import utils.Vector;
+
+//JavaFX imports
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class EntityController {
 

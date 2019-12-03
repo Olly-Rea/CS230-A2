@@ -1,25 +1,15 @@
 //Local imports
 import controllers.GameController;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 //Java imports
 import java.io.IOException;
+
 //JavaFX imports
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import misc.Menu;
 
 public class Main extends Application {
 
@@ -48,11 +38,5 @@ public class Main extends Application {
 
         window.setScene(scene);
         window.show();
-    }
-    
-   
-    
-    private void LoadGame() {
-        
-    }
+    }  
 }

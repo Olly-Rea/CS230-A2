@@ -2,17 +2,12 @@ package controllers;
 
 //JavaFX imports
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
-import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.util.ArrayList;
 //Local imports
 import java.util.Scanner;
 import cells.Cell;
@@ -22,13 +17,13 @@ import misc.Profile;
 import misc.Menu;
 import utils.*;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 /**
  *
+ * GameController class 
+ * 
  */
 public class GameController {
 
@@ -54,7 +49,7 @@ public class GameController {
     private Group gameGroup = new Group();
 
     /**
-     *
+     * Constructor for the GameController class
      */
     public GameController(Group root) {
         this.root = root;
@@ -144,7 +139,8 @@ public class GameController {
     }
 
     /**
-     *
+     * Method to return a new savefile
+     * 
      * @param path
      */
     public void saveGame(String path) {
@@ -269,7 +265,6 @@ public class GameController {
         // Check if player is dead
         if (playerController.checkStatus(mapController)
                 || entityController.enemyCollision(playerController.getPlayer())) {
-
             System.out.println("YOU DIED");
             restart();
         }
