@@ -271,7 +271,7 @@ public class GameController {
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
             endTime = currentTimeMillis() - startTime;
-            System.out.println("You took ", endTime/1000, " seconds!");
+            System.out.println("You took " + endTime/1000 + " seconds!");
             // Win game
         }
     }
