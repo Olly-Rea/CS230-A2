@@ -166,15 +166,15 @@ public class MapController {
                 if (cell instanceof Wall) {
                     ((Wall) cell).setImage(assetUtil.getWallType(x, y));
                 }
+                if (cell instanceof Water) {
+                    ((Water) cell).setImage(assetUtil.getWaterType(x, y));
+                }
             }
         }
     }
 
     /**
      * Method to render the map to the screen centred on the player's location
-     *
-     * @param playerLocation The player controller is used to access the
-     * player's current location
      *
      * @return
      */
@@ -190,6 +190,11 @@ public class MapController {
         return mapGrid;
     }
 
+    /**
+     * Method to link two Teleporters together
+     * 
+     * @param sc 
+     */
     public void linkTeleporters(Scanner sc) {
         int x1 = sc.nextInt();
         int y1 = sc.nextInt();
@@ -214,7 +219,8 @@ public class MapController {
     }
 
     /**
-     *
+     * Method to create Cells based on the input character from a read map file
+     * 
      * @param x x coordinate of the cell
      * @param y y coordinate of the cell
      * @param c character in the text file to be translated into a Cell object
@@ -248,16 +254,4 @@ public class MapController {
                 return new Ground(x, y);
         }
     }
-
-    /*
-
-     There will be two layers;
-     - the Player 'layer', and
-     - the world layer,
-
-     Entities move within the world layer, and then the world layer is moved
-     around the player 'layer', while the player 'layer' stays still (central to
-     the screen).
-
-     */
 }

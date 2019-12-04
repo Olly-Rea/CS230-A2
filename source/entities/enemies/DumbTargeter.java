@@ -22,7 +22,7 @@ import javafx.scene.image.ImageView;
 
 public class DumbTargeter extends Enemy {
 
-    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/dumbTargeter.png";
+    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/Dumb/dumbTargeter.png";
     private static Image image;
 
     static {
