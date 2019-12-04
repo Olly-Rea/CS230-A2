@@ -91,6 +91,8 @@ public class MapController {
      */
     public void openDoor(int x, int y) {
         map[y][x] = new Ground(x, y);
+        Ground deadBoulder = (Ground) map[y][x];
+        deadBoulder.addDebris();
         mapGrid.add(map[y][x].render(), x, y);
         renderMap();
     }

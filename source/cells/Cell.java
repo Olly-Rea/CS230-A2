@@ -13,7 +13,7 @@ public abstract class Cell {
     //The Vector for the Cell
     protected final Vector cellPos;
     //The asset path for all cells
-    protected static String ASSET_PATH = "./assets/visuals/cells/";
+    protected static final String ASSET_PATH = "./assets/visuals/cells/";
 
     /**
      * Cell Constructor; Instantiates a new cell.

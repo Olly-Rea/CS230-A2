@@ -59,6 +59,13 @@ public class EntityController {
         }
     }
 
+    /**
+     * Method for enemies to check if an item exists in their path
+     * 
+     * @param pos the position of the enemy
+     * @param dir the direction the enemy is travelling in
+     * @return if an item is present in the next 
+     */
     public boolean entityPresent(Vector pos, Direction dir) {
         return entityGrid[pos.getY() + dir.Y][pos.getX() + dir.X] instanceof Entity;
     }
@@ -139,6 +146,13 @@ public class EntityController {
         }
     }
 
+    /**
+     * Method to return the Entity at the coordinates x and y
+     * 
+     * @param x the x ordinate to look at
+     * @param y the y ordinate to look at
+     * @return the Entity at (x,y) - [y,x] in the array
+     */
     public Entity getEntity(int x, int y) {
         return entityGrid[y][x];
     }
@@ -154,22 +168,6 @@ public class EntityController {
             export[i] = enemies.get(i).export();
         }
         return export;
-
-        // private String[] exportArray;
-        // private int numberOfColumns = entityGrid.length();
-        // private int numberOfRows;
-        // private int exportArrayIndex = 0;
-        // private String exportData;
-        // for (int i; i < numberOfColumns; i++) {
-        // numberOfRows = entityGrid[i].length();
-        // for (int j; j < numberOfRows; j++) {
-        // if entityGrid[i][j] != " " {
-        // exportData = entityGrid[i][j] + " " + (entityGrid[i][j]).getPos();
-        // exportArray[exportArrayIndex] = exportData;
-        // exportArrayIndex++;
-        // }
-        // }
-        // } return exportArray;s
     }
 
     /**

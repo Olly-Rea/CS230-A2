@@ -36,7 +36,7 @@ public class ColouredDoor extends Door {
 		}
 
 		try {
-			image = new Image(new FileInputStream(ASSET_PATH + "/Boulders/" + imageName + ".jpg"));
+			image = new Image(new FileInputStream(ASSET_PATH + "Boulders/" + imageName + ".jpg"));
 		} catch (FileNotFoundException e) {
 			image = null; 
 			System.err.println(colour + " ColouredDoor image path not found");

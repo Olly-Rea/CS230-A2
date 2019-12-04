@@ -19,6 +19,7 @@ import utils.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * GameController.java
@@ -259,9 +260,12 @@ public class GameController {
         playerController.getPlayer().updatePlayerAsset(dir);
         playerController.renderPlayer();
         renderPlayer();
+        
 
         // Check entity grid
         entityController.checkItem(playerController.getPlayer());
+        playerController.renderPlayer();
+        renderPlayer();     
 
         // Update enemies
         entityController.moveEnemies(mapController);
@@ -301,7 +305,6 @@ public class GameController {
     /**
      * Initial render method to display the map and orient it to the player
      * start position
-     *
      */
     public void render() {
 
@@ -320,8 +323,9 @@ public class GameController {
         Group playerGroup = new Group();
         // Render Player in center of screen last
         GridPane playerLayer = playerController.renderPlayer();
-        playerLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
+        playerLayer.getTransforms().add(new Scale(SCALE_VAL+0.2, SCALE_VAL+0.2, 0, 0));
         playerGroup.getChildren().add(playerLayer);
+        playerGroup.getChildren().get(0).setLayoutX(-200*SCALE_VAL+0.2);
         // Render the feather-edge effect around the outside of the screen
         Image assetImg;
         try {
@@ -338,13 +342,11 @@ public class GameController {
         gameGroup.getChildren().add(worldGroup);
         gameGroup.getChildren().add(playerGroup);
         renderPlayer();
-
     }
 
     public void renderPlayer() {
-
         //Calculate the value the playerLayer offsets the player by
-        double playerOffset = 400 * SCALE_VAL;
+        double playerOffset = (400*1.2) * SCALE_VAL+0.2;
         //Offset the map to focus on the player start position
         if (playerController.getPlayerPos().getX() > 1) {
             renderX = ((playerController.getPlayerPos().getX() - 1) * (-200 * SCALE_VAL)) + playerOffset;
@@ -356,9 +358,8 @@ public class GameController {
         } else {
             renderY = (playerController.getPlayerPos().getY()) + playerOffset;
         }
-
-        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutX(renderX);
-        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutY(renderY);
-
+        //render the map and entity layer beehind the player - adjusted for current scaling values
+        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutX(renderX-30);
+        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutY(renderY+10);
     }
 }

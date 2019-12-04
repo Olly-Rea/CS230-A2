@@ -71,6 +71,11 @@ public class Player extends Entity {
      */
     public void addItem(Item item) {
         ItemType add = item.getType();
+        
+        //Display the graphic of the item being added
+        updatePlayerAsset(add);
+        
+        //Add the item to the player inventory
         switch (add) {
             case TOKEN:
                 tokens++;
@@ -81,7 +86,7 @@ public class Player extends Entity {
             case FLIPPERS:
                 hasFlippers = true;
                 break;
-            case REDKEY:
+            case REDKEY:                
                 redKeys++;
                 break;
             case BLUEKEY:
@@ -246,28 +251,72 @@ public class Player extends Entity {
         String currAsset = assetPath;
         switch (dir) {
             case UP:
-                currAsset += "Player_Back.png";
+                currAsset += "Player_Back";
                 break;
             case DOWN:
-                currAsset += "Player_Front.png";
+                currAsset += "Player_Front";
                 break;
             case LEFT:
-                currAsset += "Player_Left.png";
+                currAsset += "Player_Left";
                 break;
             case RIGHT:
-                currAsset += "Player_Right.png";
+                currAsset += "Player_Right";
                 break;
             default:
-                currAsset += "Player_Front.png";
+                currAsset += "Player_Front";
                 break;
         }
         //get the new image file for the player
         try {
-            playerAsset = new Image(new FileInputStream(currAsset));
+            playerAsset = new Image(new FileInputStream(currAsset + ".png"));
         } catch (FileNotFoundException e) {
             playerAsset = null;
             System.err.println("Player asset path not found!");
         }
         return new ImageView(playerAsset);
     }
+    
+    /**
+     * Overloaded method to update the player asset based on if an item has been found
+     * 
+     * @param item the item to display
+     * @return an ImageView of the new player asset
+     */    
+    public ImageView updatePlayerAsset(ItemType item) {
+        String currAsset = assetPath + "PlayerItems/";
+        switch (item) {
+            case FIREBOOTS:
+                currAsset += "Player_Fireboots";
+                break;
+            case FLIPPERS:
+                currAsset += "Player_Flippers";
+                break;
+            case REDKEY:
+                currAsset += "Player_Redkey";
+                break;
+            case BLUEKEY:
+                currAsset += "Player_Bluekey";
+                break;
+            case GREENKEY:
+                currAsset += "Player_Greenkey";
+                break;
+            case YELLOWKEY:
+                currAsset += "Player_Purplekey";
+                break;
+            default:
+                break;
+        }
+        
+        if(item != ItemType.TOKEN) {
+            //get the new image file for the player
+            try {
+                playerAsset = new Image(new FileInputStream(currAsset + ".png"));
+            } catch (FileNotFoundException e) {
+                playerAsset = null;
+                System.err.println("Player_item asset path not found!");
+            }
+        }        
+        return new ImageView(playerAsset);
+    }
+          
 }
