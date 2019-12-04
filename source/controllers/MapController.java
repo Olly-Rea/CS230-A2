@@ -125,11 +125,15 @@ public class MapController {
             }
             mapExport.add(row);
         }
-
         // return the String array of the mapExport ArrayList
         return mapExport.toArray(new String[mapExport.size()]);
     }
 
+    /** 
+     * Method to export the specifics of certain map cells
+     * 
+     * @return a string array of the map's specifics
+     */
     public String[] exportSpecific() {
         ArrayList<String> mapSpecifics = new ArrayList<>();
         ArrayList<Teleporter> teleporters = new ArrayList<>();

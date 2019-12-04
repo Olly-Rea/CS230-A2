@@ -29,12 +29,11 @@ public class WallFollower extends Enemy {
     /**
      * Path to the WallFollower image
      */
-    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/wallFollower.png";
     private static Image image;
 
     static {
         try {
-            image = new Image(new FileInputStream(ASSET_PATH));
+            image = new Image(new FileInputStream(ASSET_PATH + "Wall/wallFollower.png"));
         } catch (FileNotFoundException e) {
             image = null;
             System.err.println("WallFollower image path not found");

@@ -37,18 +37,18 @@ public class Menu {
                
         
         //BUTTON LAYOUTS BELOW
-        
+        String buttonAssetPath = "./assets/visuals/menu/Buttons/";
         
         //add the New Game button to the menu VBox
         ImageView newGameButton = null;
         ImageView loadGameButton = null;
         ImageView exitGameButton = null;
         try {
-            newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/newGameButton.png")));
+            newGameButton = new ImageView(new Image(new FileInputStream(buttonAssetPath + "newGameButton.png")));
             //newGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-            loadGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/loadGameButton.png")));
+            loadGameButton = new ImageView(new Image(new FileInputStream(buttonAssetPath + "loadGameButton.png")));
             //loadGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-            exitGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/exitGameButton.png")));
+            exitGameButton = new ImageView(new Image(new FileInputStream(buttonAssetPath + "exitGameButton.png")));
             //exitGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));                    
         } catch (FileNotFoundException e) {
             newGameButton = null;

@@ -16,12 +16,11 @@ import javafx.scene.image.ImageView;
 
 public class StraightLineEnemy extends Enemy {
 
-    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/straightLine.png";
     private static Image image;
 
     static {
         try {
-            image = new Image(new FileInputStream(ASSET_PATH));
+            image = new Image(new FileInputStream(ASSET_PATH + "straightLine.png"));
         } catch (FileNotFoundException e) {
             image = null;
             System.err.println("StraightLineEnemy image path not found");

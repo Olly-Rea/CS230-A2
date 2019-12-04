@@ -80,7 +80,7 @@ public class AssetBuilder {
      */
     public String getWallType(int x, int y) {
         // Create the base of the path string
-        String basePath = "./assets/visuals/cells/walls/";
+        String basePath = "./assets/visuals/cells/Walls/";
         // Return a string with the wall type from the array reference value
         return basePath + WALL_MAP.get(bitMaskingAlgorithm(x, y, CellType.WALL)) + ".jpg";
     }
@@ -94,7 +94,7 @@ public class AssetBuilder {
      */    
     public String getWaterType(int x, int y) {
         // Create the base of the path string
-        String basePath = "./assets/visuals/cells/water/";     
+        String basePath = "./assets/visuals/cells/Water/";     
         // Return a string with the water type from the array reference value
         return basePath + WATER_MAP.get(bitMaskingAlgorithm(x, y, CellType.WATER)) + ".jpg";
     }
