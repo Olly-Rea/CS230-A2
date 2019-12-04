@@ -26,6 +26,7 @@ public class LevelMenu extends Menu {
     private static String MAP_DIR = "./levelfiles/";
     private ListView<String> mapChoices;
     private String selected = null;
+    public static final String[] levels = {"test1.txt", "test2.txt", "test3.txt", "test4.txt"};
 
 
     public LevelMenu(GameController gc) {
