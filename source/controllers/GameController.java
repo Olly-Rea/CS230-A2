@@ -18,6 +18,7 @@ import java.util.Scanner;
 import cells.Cell;
 import entities.Entity;
 import entities.Item;
+import misc.Leaderboard;
 import misc.Profile;
 import utils.*;
 
@@ -34,7 +35,7 @@ public class GameController {
     private static final String PROFILE_PATH = "./profile/profiles.txt";
     private static final String MAP_DIR = "...";
     private static final String SAVE_DIR = "...";
-    private static final String LEADERBOARD_DIR = "...";
+    private static final String LEADERBOARD_DIR = "./leaderboards/";
 
     private MapController mapController;
     private PlayerController playerController;
@@ -271,8 +272,26 @@ public class GameController {
      *
      * @param path The file path inside {@code LEADERBOARD_DIR} for the map.
      */
-    public void showLeaderboard(String path) {
-
+    public void showLeaderboard(String level) {
+    	String fullPath = LEADERBOARD_DIR + level + "_lb";
+    	Leaderboard lb = new Leaderboard(fullPath);
+    	String[] lbArray = lb.displayBoard();
+    	
+    	for (int i = 0; i < 3; i++) {
+    		System.out.println(lbArray[i]);
+    	}
+    	// GUI STUFF
+    }
+    
+    /**
+     * Checks if a time is within the top three for a level and adds it if true
+     * @param time The time taken by the player
+     * @param level The name of the level
+     */
+    public void addTime(int time, String level) {
+    	String fullPath = LEADERBOARD_DIR + level + "_lb";
+    	Leaderboard lb = new Leaderboard(fullPath);
+    	lb.addTime(currentProfile, time);
     }
 
     /**
