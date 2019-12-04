@@ -21,9 +21,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
+ * GameController.java
  *
- * GameController class 
- * 
+ * @version 1.0.0
+ * @author Olly Rea, Scott Barr
  */
 public class GameController {
 
@@ -44,7 +45,7 @@ public class GameController {
     // X and Y variables for render translate methods
     private double renderX = 0;
     private double renderY = 0;
-    
+
     private Group root;
     private Group gameGroup = new Group();
 
@@ -55,16 +56,16 @@ public class GameController {
         this.root = root;
         root.getChildren().add(gameGroup);
         root.getChildren().add(menu.render());
-        loadGame("./levelfiles/test4.txt");
+        loadGame("./levelfiles/Test_File_DD.txt");
     }
 
     public void restart() {
-        loadGame("./levelfiles/test4.txt");
-        
+        loadGame("./levelfiles/Test_File_DD.txt");
+
         gameGroup.getChildren().clear();
         render();
     }
-    
+
     /**
      * Creates a 2d Entity Map and Cell Map and stores them in the mapController
      * and entityController
@@ -115,7 +116,7 @@ public class GameController {
             case "DOOR":
                 mapController.initDoor(sc);
                 break;
-            case "INVENTORY" :
+            case "INVENTORY":
                 playerController.createInventory(sc);
                 break;
         }
@@ -140,7 +141,7 @@ public class GameController {
 
     /**
      * Method to return a new savefile
-     * 
+     *
      * @param path
      */
     public void saveGame(String path) {
@@ -220,7 +221,7 @@ public class GameController {
     /**
      * Progresses the game 1 step and handles the key pressed.
      *
-     * @param ke Key Event that was pressed by the user.
+     * @param e Key Event that was pressed by the user.
      */
     public void gameStep(KeyEvent e) {
         // Get the firection to move in
@@ -254,6 +255,9 @@ public class GameController {
 
         //Make the move based on this direction
         playerController.move(dir, mapController);
+        //Update the player asset so that the player is facing the last direction moved
+        playerController.getPlayer().updatePlayerAsset(dir);
+        playerController.renderPlayer();
         renderPlayer();
 
         // Check entity grid
@@ -295,9 +299,9 @@ public class GameController {
     }
 
     /**
-     * Initial render method to display the map and orient it to the player 
+     * Initial render method to display the map and orient it to the player
      * start position
-     * 
+     *
      */
     public void render() {
 
@@ -312,7 +316,6 @@ public class GameController {
         entityLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
         worldGroup.getChildren().add(entityLayer);
 
-        
         // Group 2 ("player layer")
         Group playerGroup = new Group();
         // Render Player in center of screen last
@@ -331,7 +334,6 @@ public class GameController {
         featherEdge.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
         playerGroup.getChildren().add(featherEdge);
 
-        
         //Add the two layers to the gameGroup layer
         gameGroup.getChildren().add(worldGroup);
         gameGroup.getChildren().add(playerGroup);
@@ -342,21 +344,21 @@ public class GameController {
     public void renderPlayer() {
 
         //Calculate the value the playerLayer offsets the player by
-        double playerOffset = 400*SCALE_VAL;
+        double playerOffset = 400 * SCALE_VAL;
         //Offset the map to focus on the player start position
         if (playerController.getPlayerPos().getX() > 1) {
-            renderX = ((playerController.getPlayerPos().getX()-1)*(-200*SCALE_VAL)) + playerOffset;
+            renderX = ((playerController.getPlayerPos().getX() - 1) * (-200 * SCALE_VAL)) + playerOffset;
         } else {
             renderX = (playerController.getPlayerPos().getX()) + playerOffset;
         }
         if (playerController.getPlayerPos().getY() > 1) {
-            renderY = ((playerController.getPlayerPos().getY()-1)*(-200*SCALE_VAL)) + playerOffset;
+            renderY = ((playerController.getPlayerPos().getY() - 1) * (-200 * SCALE_VAL)) + playerOffset;
         } else {
             renderY = (playerController.getPlayerPos().getY()) + playerOffset;
         }
 
-        ((Group)root.getChildren().get(0)).getChildren().get(0).setLayoutX(renderX);
-        ((Group)root.getChildren().get(0)).getChildren().get(0).setLayoutY(renderY);
+        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutX(renderX);
+        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutY(renderY);
 
     }
 }

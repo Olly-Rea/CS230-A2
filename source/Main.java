@@ -11,6 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**
+ * Main.java
+ *
+ * @version 1.0.0
+ * @author Olly Rea, Scott Barr
+ */
 public class Main extends Application {
 
     public static void main(String[] args) {

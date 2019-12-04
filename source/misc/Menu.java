@@ -22,7 +22,7 @@ import javafx.scene.layout.VBox;
 
 /**
  *
- * @author Olive
+ * @author Olly Rea
  */
 public class Menu {
         

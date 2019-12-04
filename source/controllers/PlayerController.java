@@ -19,6 +19,9 @@ public class PlayerController {
 
     private Player player;
 
+    // Create the Player GridPane
+    GridPane playerGridPane = new GridPane();
+    
     /**
      * @param player the player object to be controlled
      * @author Danny
@@ -138,9 +141,8 @@ public class PlayerController {
      * @author xxxxx
      */
     public GridPane renderPlayer() {
-        // Create the Player GridPane
-        GridPane playerGridPane = new GridPane();
-
+        playerGridPane.getChildren().clear();
+        
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
                 if (x == 3 && y == 3) {

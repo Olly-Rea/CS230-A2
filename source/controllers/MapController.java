@@ -5,6 +5,7 @@ import cells.*;
 import entities.Entity;
 import entities.Item;
 import utils.*;
+
 //Java imports
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -16,8 +17,9 @@ import javafx.scene.layout.GridPane;
  * MapController.java
  *
  * @version 1.0.0
- * @author Olly Rea
+ * @author Olly Rea, Scott Barr
  */
+
 /**
  * MapController is a class to manage the map and all methods related to it. It
  * consists of a 2D array of cells and contains the methods required to alter
@@ -111,7 +113,7 @@ public class MapController {
                 if (cell instanceof Ground) {
                     Entity e = ec.getEntity(x, y);
                     if (e instanceof Item) {
-                        row += ((Item)e).getChar();
+                        row += ((Item) e).getChar();
                     } else {
                         row += cell.getChar();
                     }
@@ -133,16 +135,16 @@ public class MapController {
             for (int x = 0; x < width; x++) {
                 Cell cell = map[y][x];
                 if (cell instanceof Teleporter) {
-                    Teleporter te1 = (Teleporter)cell;
+                    Teleporter te1 = (Teleporter) cell;
                     if (!teleporters.contains(te1.getLinked())) {
-                        Teleporter te2 = te1.getLinked();       
+                        Teleporter te2 = te1.getLinked();
                         Vector t1 = te1.getPos();
-                        Vector t2 = te2.getPos();       
+                        Vector t2 = te2.getPos();
                         mapSpecifics.add(String.format("TELEPORTER %d %d %d %d", t1.getX(), t1.getY(), t2.getX(), t2.getY()));
                         teleporters.add(te1);
                     }
                 } else if (cell instanceof TokenDoor) {
-                    TokenDoor door = (TokenDoor)cell;
+                    TokenDoor door = (TokenDoor) cell;
                     mapSpecifics.add(String.format("DOOR %d %d %d", x, y, door.getTokens()));
                 }
             }
@@ -152,8 +154,6 @@ public class MapController {
         return mapSpecifics.toArray(new String[mapSpecifics.size()]);
     }
 
-
-
     /**
      * Goes through every cell and sets their image if needed
      */
@@ -162,7 +162,7 @@ public class MapController {
             for (int x = 0; x < map[y].length; x++) {
                 Cell cell = map[y][x];
                 if (cell instanceof Wall) {
-                    ((Wall)cell).setImage(assetUtil.getWallType(x, y));
+                    ((Wall) cell).setImage(assetUtil.getWallType(x, y));
                 }
             }
         }
@@ -185,53 +185,7 @@ public class MapController {
                 mapGrid.add(map[y][x].render(), x, y);
             }
         }
-
-        // Vector PlayerPos = playerLocation.getPlayerPos();
-        // Loop through the map
-        // for (int y = 0; y < map.length; y++) {
-        //     for (int x = 0; x < map[y].length; x++) {
-        //         // Check that there is a cell at this section of the map array
-
-        //         // If no error occurs; check cell type and add to the javaFX
-        //         // gridPane accordingly
-        //         if (map[y][x].getType() == CellType.WALL) {
-        //             // Get the wall asset Image from the AssetBuilder class
-        //             String newAssetPath = assetUtil.getWallType(x, y);
-        //             //Add the cell image to the GridPane
-        //             mapGrid.add(map[y][x].render(newAssetPath), x, y);
-        //         } else {
-        //             //Add the cell image to the GridPane
-        //             mapGrid.add(map[y][x].render(), x, y);
-        //         }
-        //     }
-        // }
-
         return mapGrid;
-
-        // Have an x and y value for the GridPane on which the map is rendered and
-        // move the map instead of the player to maintain centred focus
-    }
-
-    public void moveMap(Direction dir) {
-
-        int x = 0;
-        int y = 0;
-
-        switch (dir) {
-            case UP:
-                x = 0;
-                y = 0;
-            case DOWN:
-                x = 0;
-                y = 0;
-            case LEFT:
-                x = 0;
-                y = 0;
-            case RIGHT:
-                x = 0;
-                y = 0;
-        }
-
     }
 
     public void linkTeleporters(Scanner sc) {
@@ -266,18 +220,30 @@ public class MapController {
      */
     public static Cell makeCell(int x, int y, char c) {
         switch (c) {
-            case '#' : return new Wall(x, y);
-            case ' ' : return new Ground(x, y);
-            case 'T' : return new Teleporter(x, y);
-            case 'W' : return new Water(x, y);
-            case 'F' : return new Fire(x, y);
-            case '!' : return new Goal(x, y);
-            case 'R' : return new ColouredDoor(x, y, DoorColour.RED);
-            case 'G' : return new ColouredDoor(x, y, DoorColour.GREEN);
-            case 'B' : return new ColouredDoor(x, y, DoorColour.BLUE);
-            case 'Y' : return new ColouredDoor(x, y, DoorColour.YELLOW);
-            case 'D' : return new TokenDoor(x, y);
-            default  : return new Ground(x, y);
+            case '#':
+                return new Wall(x, y);
+            case ' ':
+                return new Ground(x, y);
+            case 'T':
+                return new Teleporter(x, y);
+            case 'W':
+                return new Water(x, y);
+            case 'F':
+                return new Fire(x, y);
+            case '!':
+                return new Goal(x, y);
+            case 'R':
+                return new ColouredDoor(x, y, DoorColour.RED);
+            case 'G':
+                return new ColouredDoor(x, y, DoorColour.GREEN);
+            case 'B':
+                return new ColouredDoor(x, y, DoorColour.BLUE);
+            case 'Y':
+                return new ColouredDoor(x, y, DoorColour.YELLOW);
+            case 'D':
+                return new TokenDoor(x, y);
+            default:
+                return new Ground(x, y);
         }
     }
 
