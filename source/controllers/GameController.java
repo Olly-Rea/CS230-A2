@@ -19,6 +19,8 @@ import cells.Cell;
 import entities.Entity;
 import entities.Item;
 import misc.Profile;
+import misc.GameMenu;
+import misc.LevelMenu;
 import misc.Menu;
 import utils.*;
 
@@ -41,7 +43,8 @@ public class GameController {
     private MapController mapController;
     private PlayerController playerController;
     private EntityController entityController;
-    private Menu menu = new Menu(this);
+    private GameMenu gameMenu = new GameMenu(this);
+    private LevelMenu levelMenu = new LevelMenu(this);
     private Profile currentProfile;
     private int startTime;
     private String currentMap;
@@ -59,14 +62,13 @@ public class GameController {
     public GameController(Group root) {
         this.root = root;
         root.getChildren().add(gameGroup);
-        root.getChildren().add(menu.render());
-        loadGame("./levelfiles/test4.txt");
+        root.getChildren().add(gameMenu.render());
+        root.getChildren().add(levelMenu.render());
+        loadGame("./levelfiles/test2.txt");
     }
 
     public void restart() {
-        loadGame("./levelfiles/test4.txt");
-        
-        gameGroup.getChildren().clear();
+        loadGame(currentMap);
         render();
     }
     
@@ -141,6 +143,8 @@ public class GameController {
         while (fh.hasNext()) {
             handleSpecific(fh.nextLine());
         }
+
+        currentMap = path;
     }
 
     /**
@@ -247,12 +251,15 @@ public class GameController {
                 dir = Direction.RIGHT;
                 break;
             case ESCAPE:
-                menu.toggle();
+                gameMenu.toggle();
+                return;
+            case F1:
+                levelMenu.toggle();
                 return;
             default:
                 return;
         }
-        if (menu.isVisible()) {
+        if (gameMenu.isVisible()) {
             return;
         }
 
@@ -305,6 +312,7 @@ public class GameController {
      * 
      */
     public void render() {
+        gameGroup.getChildren().clear();
 
         // Group 1 ("world layer")
         Group worldGroup = new Group();
