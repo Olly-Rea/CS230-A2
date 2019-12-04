@@ -35,7 +35,7 @@ public class PlayerController {
      * @param mc the map controller to find the Cell in the dir
      * @author Danny
      */
-    public boolean move(Direction dir, MapController mc) {
+    public void move(Direction dir, MapController mc) {
         Cell target = mc.getNextCell(player.getPos(), dir);
         // System.out.print("Cell: " + target.getType());
         if (target.getType() == CellType.DOOR) {
@@ -48,13 +48,9 @@ public class PlayerController {
             Vector pos = player.getPos();
             if (target.getType() == CellType.TELEPORTER) {
                 pos = ((Teleporter) target).getLinked().getPos();
-                player.setPos(pos);
-                return true;
             }
             player.setPos(new Vector(pos.getX() + dir.X, pos.getY() + dir.Y));
-            return true;
         }
-        return false;
     }
 
     /**

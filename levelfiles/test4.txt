@@ -1,0 +1,8 @@
+6 5
+######
+#   w#
+#    #
+#    #
+######
+PLAYER 3 2
+ENEMY 1 1 WF DOWN CW
