@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -85,5 +86,16 @@ public class FileHandler {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public static File[] getFiles(String dir) {
+        ArrayList<String> files = new ArrayList<>();
+        File folder = new File(dir);   
+        return folder.listFiles();
+    }
+
+    public static String getFileName(File f) {
+        String[] file = f.getName().split("\\.");
+        return file[0];
     }
 }
