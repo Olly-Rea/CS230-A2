@@ -26,22 +26,22 @@ public class Item extends Entity {
                 assetPath += "token";
                 break;
             case FIREBOOTS:
-                assetPath += "fireboots";
+                assetPath += "fireboots"; 
                 break;
             case FLIPPERS:
                 assetPath += "flippers";
                 break;
             case REDKEY:
-                assetPath += "redkey";
+                assetPath += "gems/red_key";
                 break;
             case BLUEKEY:
-                assetPath += "bluekey";
+                assetPath += "gems/blue_key";
                 break;
             case GREENKEY:
-                assetPath += "greenkey";
+                assetPath += "gems/green_key";
                 break;
             case YELLOWKEY:
-                assetPath += "yellowkey";
+                assetPath += "gems/purple_key";
                 break;
         }
         assetPath += ".png";
@@ -54,6 +54,19 @@ public class Item extends Entity {
         }        
     }
 
+    public char getChar() {
+        switch (type) {
+            case REDKEY:return 'r';
+            case BLUEKEY:return 'b';
+            case GREENKEY:return 'g';
+            case YELLOWKEY:return'y';
+            case FLIPPERS:return'w';
+            case FIREBOOTS:return'f';
+            case TOKEN: return'*';
+            default : return ' ';
+        }
+    }
+
     /**
      * Gets the type of item in question.
      *
@@ -64,7 +77,6 @@ public class Item extends Entity {
     }
 
     public ImageView render() {
-        ImageView imageNode = new ImageView(assetImg);
-        return imageNode;
+        return new ImageView(assetImg);
     }
 }

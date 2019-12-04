@@ -3,24 +3,17 @@ package cells;
 //Local imports
 import utils.Vector;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 //JavaFX imports
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Cell {
+public abstract class Cell {
 
     //The type of cell (i.e ground, wall)
     private final CellType type;
     //The Vector for the Cell
     protected final Vector cellPos;
     //The asset path for all cells
-    private String assetPath = "./assets/visuals/cells/";
-    //The JavaFX image that the asset image will be stored as
-    private Image assetImg;
+    protected static String ASSET_PATH = "./assets/visuals/cells/";
 
     /**
      * Cell Constructor; Instantiates a new cell.
@@ -32,41 +25,6 @@ public class Cell {
     public Cell(CellType type, int x, int y) {
         this.type = type;
         cellPos = new Vector(x, y);
-        //Assign asset Image dependent on cell type
-        switch (this.type) {
-            case WALL:
-                assetPath += "walls/wall_1";
-                break;
-            case GROUND:
-                assetPath += "Floor_Dark";
-                break;
-            case FIRE:
-                assetPath += "Fire";
-                break;
-            case WATER:
-                assetPath += "Water";
-                break;
-            case TELEPORTER:
-                assetPath += "Teleporter" ;
-                break;
-            case DOOR:
-                assetPath += "Boulder";
-                break;
-            case GOAL:
-                assetPath += "Goal";
-                break;
-            default:
-                assetPath += "Floor_Dark";
-                break;
-        }
-        //Add the filetype to the end of the path
-        assetPath += ".jpg";
-        //Create the asset Image for the render method
-        try {
-            assetImg = new Image(new FileInputStream(assetPath));
-        } catch (FileNotFoundException e) {
-
-        }
     }
 
     /**
@@ -74,22 +32,7 @@ public class Cell {
      *
      * @return the ImageView node for the MapController GridPane
      */
-    public ImageView render() {
-        ImageView imageNode = new ImageView(assetImg);
-        return imageNode;
-    }
-
-    //Overloaded method to overwrite assetPath (used purely for wall cells atm)
-    public ImageView render(String assetPath) {
-        try {
-            assetImg = new Image(new FileInputStream(assetPath));
-        } catch (FileNotFoundException e) {
-            return null;
-        }
-
-        ImageView imageNode = new ImageView(assetImg);
-        return imageNode;
-    }
+    public abstract ImageView render();
 
     /**
      * Method to return the type of cell.
@@ -108,4 +51,6 @@ public class Cell {
     public Vector getPos() {
         return cellPos;
     }
+    
+    public abstract char getChar();
 }
