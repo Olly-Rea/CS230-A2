@@ -12,6 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -49,7 +50,6 @@ public class SelectProfileMenu extends Menu {
         useProfile.setDisable(true);
         useProfile.setOnAction((ActionEvent e) -> {
             gc.setProfile(selection);
-            this.toggle();
         });
 
         makeSelection();

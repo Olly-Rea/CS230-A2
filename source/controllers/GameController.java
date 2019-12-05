@@ -37,7 +37,7 @@ public class GameController {
 
     private static final String PROFILE_PATH = "./profile/profiles.txt";
     private static final String MAP_DIR = "...";
-    private static final String SAVE_DIR = "...";
+    private static final String SAVE_DIR = "./savefiles/";
     private static final String LEADERBOARD_DIR = "...";
     public static final double SCALE_VAL = 0.6;
 
@@ -67,11 +67,15 @@ public class GameController {
         root.getChildren().add(gameMenu.render());
         root.getChildren().add(levelMenu.render());
         root.getChildren().add(selectProfileMenu.render());
-        loadGame("./levelfiles/test2.txt");
+
+        selectProfileMenu.toggle();
+        // levelMenu.toggle();
+        // levelMenu.loadMenu(3);
     }
 
     public void restart() {
         loadGame(currentMap);
+        levelMenu.toggle();
         render();
     }
     
@@ -148,26 +152,33 @@ public class GameController {
         }
 
         currentMap = path;
+        levelMenu.toggle();
     }
 
     /**
      *
      * @param path
      */
-    public void saveGame(String path) {
+    public void saveGame() {
         String[] mapExport = mapController.exportMap(entityController);
         String[] mapSpecific = mapController.exportSpecific();
         String[] playerExport = playerController.export();
         String[] entityExport = entityController.export();
 
-        FileHandler.writeFile(path, mapExport, false);
-        FileHandler.writeFile(path, playerExport, true);
-        FileHandler.writeFile(path, mapSpecific, true);
-        FileHandler.writeFile(path, entityExport, true);
+        String dir = SAVE_DIR + currentProfile.getName();
+
+        FileHandler.writeFile(dir, mapExport, false);
+        FileHandler.writeFile(dir, playerExport, true);
+        FileHandler.writeFile(dir, mapSpecific, true);
+        FileHandler.writeFile(dir, entityExport, true);
     }
 
     public void setProfile(Profile p) {
         this.currentProfile = p;
+        selectProfileMenu.toggle();
+        // levelMenu.loadLevels(p.getLevel());
+        levelMenu.loadSaves(p);
+        levelMenu.toggle();
     }
 
     // /**
@@ -280,44 +291,45 @@ public class GameController {
      * 
      */
     public void render() {
-        gameGroup.getChildren().clear();
+        if (currentMap != null) {
+            gameGroup.getChildren().clear();
 
-        // Group 1 ("world layer")
-        Group worldGroup = new Group();
-        // Render map layer First
-        GridPane mapLayer = mapController.renderMap();
-        mapLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
-        worldGroup.getChildren().add(mapLayer);
-        // Render Entity layer Second (on top of Map)
-        GridPane entityLayer = entityController.renderEntities();
-        entityLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
-        worldGroup.getChildren().add(entityLayer);
+            // Group 1 ("world layer")
+            Group worldGroup = new Group();
+            // Render map layer First
+            GridPane mapLayer = mapController.renderMap();
+            mapLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
+            worldGroup.getChildren().add(mapLayer);
+            // Render Entity layer Second (on top of Map)
+            GridPane entityLayer = entityController.renderEntities();
+            entityLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
+            worldGroup.getChildren().add(entityLayer);
 
-        
-        // Group 2 ("player layer")
-        Group playerGroup = new Group();
-        // Render Player in center of screen last
-        GridPane playerLayer = playerController.renderPlayer();
-        playerLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
-        playerGroup.getChildren().add(playerLayer);
-        // Render the feather-edge effect around the outside of the screen
-        Image assetImg;
-        try {
-            assetImg = new Image(new FileInputStream("./assets/visuals/Feather_Edge.png"));
-        } catch (FileNotFoundException e) {
-            assetImg = null;
-            System.err.println("Feather_Edge.png path not found");
+            
+            // Group 2 ("player layer")
+            Group playerGroup = new Group();
+            // Render Player in center of screen last
+            GridPane playerLayer = playerController.renderPlayer();
+            playerLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
+            playerGroup.getChildren().add(playerLayer);
+            // Render the feather-edge effect around the outside of the screen
+            Image assetImg;
+            try {
+                assetImg = new Image(new FileInputStream("./assets/visuals/Feather_Edge.png"));
+            } catch (FileNotFoundException e) {
+                assetImg = null;
+                System.err.println("Feather_Edge.png path not found");
+            }
+            ImageView featherEdge = new ImageView(assetImg);
+            featherEdge.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
+            playerGroup.getChildren().add(featherEdge);
+
+            
+            //Add the two layers to the gameGroup layer
+            gameGroup.getChildren().add(worldGroup);
+            gameGroup.getChildren().add(playerGroup);
+            renderPlayer();
         }
-        ImageView featherEdge = new ImageView(assetImg);
-        featherEdge.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
-        playerGroup.getChildren().add(featherEdge);
-
-        
-        //Add the two layers to the gameGroup layer
-        gameGroup.getChildren().add(worldGroup);
-        gameGroup.getChildren().add(playerGroup);
-        renderPlayer();
-
     }
 
     public void renderPlayer() {

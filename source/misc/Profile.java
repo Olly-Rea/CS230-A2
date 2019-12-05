@@ -49,6 +49,6 @@ public class Profile {
 		Scanner sc = new Scanner(line);
 		sc.useDelimiter(":");
 		String name = sc.next();
-		return sc.hasNext() ? new Profile(name, sc.nextInt()) : new Profile(name, 0);
+		return sc.hasNext() ? new Profile(name, sc.nextInt()) : new Profile(name, 1);
 	}
 }
