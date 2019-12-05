@@ -19,6 +19,7 @@ import cells.Cell;
 import entities.Entity;
 import entities.Item;
 import misc.Leaderboard;
+import misc.LeaderboardMenu;
 import misc.Profile;
 import misc.SelectProfileMenu;
 import misc.GameMenu;
@@ -48,6 +49,7 @@ public class GameController {
     private GameMenu gameMenu = new GameMenu(this);
     private LevelMenu levelMenu = new LevelMenu(this);
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
+    private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
     private Profile currentProfile;
     private int startTime;
     private String currentMap;
@@ -65,10 +67,11 @@ public class GameController {
     public GameController(Group root) {
         this.root = root;
         root.getChildren().add(gameGroup);
+        root.getChildren().add(leaderboardMenu.render());
         root.getChildren().add(gameMenu.render());
         root.getChildren().add(levelMenu.render());
         root.getChildren().add(selectProfileMenu.render());
-        loadGame("./levelfiles/test2.txt");
+        loadGame("./levelfiles/test1.txt");
     }
 
     public void restart() {
@@ -246,13 +249,12 @@ public class GameController {
         if (playerController.checkStatus(mapController)
                 || entityController.enemyCollision(playerController.getPlayer())) {
 
-            System.out.println("YOU DIED");
             restart();
         }
 
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
-            System.out.println("YOU WIN");
+            leaderboardMenu.toggle();
             // Win game
         }
     }

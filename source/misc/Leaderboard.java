@@ -11,9 +11,10 @@ import utils.FileHandler;
 
 public class Leaderboard {
 
-	int[] topScores;
-	String[] topNames;
-	String path;
+	public static final String LEADERBOARD_DIR = "./leaderboards/";
+	private int[] topScores;
+	private String[] topNames;
+	private String path;
 
 	public Leaderboard(String path) {
 		// Populate leaderboard with info from file

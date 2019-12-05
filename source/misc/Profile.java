@@ -22,10 +22,6 @@ public class Profile {
     	this.highest = highestLevel;
     }
 
-    // public Profile(String name, int highestLevel) {
-    // 	this.name = name;
-    // 	this.highest = highestLevel;
-    // }
     
     public String getName() {
     	return name;
