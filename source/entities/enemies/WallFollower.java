@@ -2,6 +2,8 @@ package entities.enemies;
 
 //Local imports
 import cells.Cell;
+import cells.CellType;
+import cells.Ground;
 import cells.Wall;
 import controllers.EntityController;
 import controllers.MapController;
@@ -64,7 +66,7 @@ public class WallFollower extends Enemy {
      * enemy.
      */
     public void algorithm(MapController map, EntityController ec) {
-        while (checkWall(map, ec) && (map.getNextCell(pos, dir) instanceof Wall ||  ec.entityPresent(pos, dir))) {
+        while (checkWall(map, ec) && (!(map.getNextCell(pos, dir) instanceof Ground) ||  ec.entityPresent(pos, dir))) {
             turn(type.reverse());
         }
 
@@ -87,7 +89,7 @@ public class WallFollower extends Enemy {
         Direction checkDir = type == Rotation.ACW ? dir.acw() : dir.cw();
         Cell checkCell = map.getNextCell(pos, checkDir);
         boolean existsEntity = ec.entityPresent(pos, checkDir);
-        return (checkCell instanceof Wall || existsEntity);
+        return (!(checkCell instanceof Ground) || existsEntity);
     }
 
     /**
@@ -103,7 +105,7 @@ public class WallFollower extends Enemy {
             dir = dir.cw();
         }
     }
-    
+
     public String export() {
         return String.format("WF %d %d %s %s", pos.getX(), pos.getY(), dir, type);
     }

@@ -14,6 +14,9 @@ import cells.Cell;
 import entities.Entity;
 import entities.Item;
 import misc.Profile;
+import misc.SelectProfileMenu;
+import misc.GameMenu;
+import misc.LevelMenu;
 import misc.Menu;
 import utils.*;
 
@@ -37,7 +40,9 @@ public class GameController {
     private MapController mapController;
     private PlayerController playerController;
     private EntityController entityController;
-    private Menu menu = new Menu(this);
+    private GameMenu gameMenu = new GameMenu(this);
+    private LevelMenu levelMenu = new LevelMenu(this);
+    private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private Profile currentProfile;
     private int startTime;
     private String currentMap;
@@ -55,14 +60,14 @@ public class GameController {
     public GameController(Group root) {
         this.root = root;
         root.getChildren().add(gameGroup);
-        root.getChildren().add(menu.render());
-        loadGame("./levelfiles/Test_File_DD.txt");
+        root.getChildren().add(gameMenu.render());
+        root.getChildren().add(levelMenu.render());
+        root.getChildren().add(selectProfileMenu.render());
+        loadGame("./levelfiles/test2.txt");
     }
 
     public void restart() {
-        loadGame("./levelfiles/Test_File_DD.txt");
-
-        gameGroup.getChildren().clear();
+        loadGame(currentMap);
         render();
     }
 
@@ -137,6 +142,8 @@ public class GameController {
         while (fh.hasNext()) {
             handleSpecific(fh.nextLine());
         }
+
+        currentMap = path;
     }
 
     /**
@@ -156,67 +163,29 @@ public class GameController {
         FileHandler.writeFile(path, entityExport, true);
     }
 
-    /**
-     * Returns a list of profiles from the file at {@code PROFILE_PATH}.
-     *
-     * @return array of profiles retrieved from {@code PROFILE_PATH}.
-     */
-    public Profile[] loadProfiles() {
-        // Get total number of profiles
-        FileHandler counter = new FileHandler(PROFILE_PATH);
-        int arraySize = 0;
-        while (counter.hasNext()) {
-            arraySize++;
-            counter.nextLine();
-        }
-
-        Profile[] profileList = new Profile[arraySize];
-        FileHandler reader = new FileHandler(PROFILE_PATH);
-        int iterate = 0;
-        while (reader.hasNext()) {
-            String profileString = reader.nextLine();
-            if (profileString != "") {
-                String[] parts = profileString.split(",");
-                String name = parts[0];
-                String levelString = parts[1];
-                int levelNum = Integer.parseInt(levelString);
-                Profile newProfile = new Profile(name, levelNum);
-                profileList[iterate] = newProfile;
-                iterate++;
-            }
-        }
-        return profileList;
+    public void setProfile(Profile p) {
+        this.currentProfile = p;
     }
 
-    /**
-     * Adds a profile to the file at {@code PROFILE_PATH} of the name
-     * {@code name}.
-     *
-     * @param name name to be added to the profile list.
-     */
-    public void addProfile(String name) {
-        Profile newProfile = new Profile(name, 0, PROFILE_PATH);
-    }
-
-    /**
-     * Deletes the specific profile from the file at {@code PROFILE_PATH}.
-     *
-     * @param profile The profile to be deleted.
-     */
-    public void deleteProfile(Profile profile) {
-        String toDelete = profile.getName();
-        Profile[] oldList = loadProfiles();
-        String[] newList = new String[oldList.length - 1];
-        int j = 0;
-        for (int i = 0; i < oldList.length; i++) {
-            if (oldList[i].getName().equals(toDelete) == false) {
-                newList[j] = oldList[i].getName() + "," + oldList[i].getLevel();
-                j++;
-            }
-        }
-        FileHandler deleter = new FileHandler(PROFILE_PATH);
-        deleter.writeFile(PROFILE_PATH, newList, false);
-    }
+    // /**
+    //  * Deletes the specific profile from the file at {@code PROFILE_PATH}.
+    //  *
+    //  * @param profile The profile to be deleted.
+    //  */
+    // public void deleteProfile(Profile profile) {
+    //     String toDelete = profile.getName();
+    //     Profile[] oldList = loadProfiles();
+    //     String[] newList = new String[oldList.length - 1];
+    //     int j = 0;
+    //     for (int i = 0; i < oldList.length; i++) {
+    //         if (oldList[i].getName().equals(toDelete) == false) {
+    //             newList[j] = oldList[i].getName() + "," + oldList[i].getLevel();
+    //             j++;
+    //         }
+    //     }
+    //     FileHandler deleter = new FileHandler(PROFILE_PATH);
+    //     deleter.writeFile(PROFILE_PATH, newList, false);
+    // }
 
     /**
      * Progresses the game 1 step and handles the key pressed.
@@ -244,12 +213,18 @@ public class GameController {
                 dir = Direction.RIGHT;
                 break;
             case ESCAPE:
-                menu.toggle();
+                gameMenu.toggle();
+                return;
+            case F1:
+                levelMenu.toggle();
+                return;
+            case F2:
+                selectProfileMenu.toggle();
                 return;
             default:
                 return;
         }
-        if (menu.isVisible()) {
+        if (gameMenu.isVisible()) {
             return;
         }
 
@@ -259,12 +234,12 @@ public class GameController {
         playerController.getPlayer().updatePlayerAsset(dir);
         playerController.renderPlayer();
         renderPlayer();
-        
+
 
         // Check entity grid
         entityController.checkItem(playerController.getPlayer());
         playerController.renderPlayer();
-        renderPlayer();     
+        renderPlayer();
 
         // Update enemies
         entityController.moveEnemies(mapController);
@@ -306,6 +281,7 @@ public class GameController {
      * start position
      */
     public void render() {
+        gameGroup.getChildren().clear();
 
         // Group 1 ("world layer")
         Group worldGroup = new Group();
