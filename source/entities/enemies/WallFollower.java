@@ -36,7 +36,7 @@ public class WallFollower extends Enemy {
 
     static {
         try {
-            image = new Image(new FileInputStream(ASSET_PATH + "Wall/wallFollower.png"));
+            image = new Image(new FileInputStream(ASSET_PATH + "Wall/Scorpion_Right.png"));
         } catch (FileNotFoundException e) {
             image = null;
             System.err.println("WallFollower image path not found");

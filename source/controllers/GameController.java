@@ -63,7 +63,7 @@ public class GameController {
         root.getChildren().add(gameMenu.render());
         root.getChildren().add(levelMenu.render());
         root.getChildren().add(selectProfileMenu.render());
-        loadGame("./levelfiles/test2.txt");
+        loadGame("./levelfiles/test1.txt");
     }
 
     public void restart() {
