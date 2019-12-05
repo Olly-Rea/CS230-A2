@@ -20,6 +20,10 @@ public class Goal extends Cell {
         }
     }
 
+    public boolean isLightSource() {
+        return false;
+    }
+    
     public Goal(int x, int y) {
         super(CellType.GOAL, x, y);
     }

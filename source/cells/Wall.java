@@ -14,6 +14,10 @@ public class Wall extends Cell {
         super(CellType.WALL, x, y);
     }
 
+    public boolean isLightSource() {
+        return false;
+    }
+    
     public void setImage(String path) {
         // String path = ASSET_PATH + "walls/" + imageName;
         try {

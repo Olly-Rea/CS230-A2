@@ -66,10 +66,47 @@ public class AssetBuilder {
     /**
      * Possible method to aid in implementation of 'lighting' effects
      *
+     * @param x
+     * @param y
      * @return the path to the correct ground texture
      */
-    public String groundCheck() {
-        return "";
+    public String groundCheck(int x, int y) {
+
+        // Top row booleans
+        boolean NorthWest = map[y - 1][x - 1].isLightSource();
+        boolean North = map[y - 1][x].isLightSource();
+        boolean NorthEast = map[y - 1][x + 1].isLightSource();
+        // Middle row booleans
+        boolean West = map[y][x - 1].isLightSource();
+        boolean East = map[y][x + 1].isLightSource();
+        // Bottom row booleans
+        boolean SouthWest = map[y + 1][x - 1].isLightSource();
+        boolean South = map[y + 1][x].isLightSource();
+        boolean SouthEast = map[y + 1][x + 1].isLightSource();
+        
+        String assetPath = "./assets/visuals/cells/Ground/";
+        
+        if (NorthWest) {
+            assetPath += "Light/Ground_Light1";
+        } else if (North) {
+            assetPath += "Light/Ground_Light2";
+        } else if (NorthEast) {
+            assetPath += "Light/Ground_Light3";
+        } else if (West) {
+            assetPath += "Light/Ground_Light4";
+        } else if (East) {
+            assetPath += "Light/Ground_Light5";
+        } else if (SouthWest) {
+            assetPath += "Light/Ground_Light6";
+        } else if (South) {
+            assetPath += "Light/Ground_Light7";
+        } else if (SouthEast) {
+            assetPath += "Light/Ground_Light8";
+        } else {
+            assetPath += "Ground_Dark";
+        }
+        
+        return assetPath + ".jpg";
     }
 
     /**

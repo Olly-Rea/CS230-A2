@@ -24,6 +24,9 @@ public class Fire extends Cell {
         super(CellType.FIRE, x, y);
     }
 
+    public boolean isLightSource() {
+        return true;
+    }
 
     public char getChar() {
         return 'F';
