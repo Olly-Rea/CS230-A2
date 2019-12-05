@@ -163,7 +163,6 @@ public class GameController {
         String[] playerExport = playerController.export();
         String[] entityExport = entityController.export();
 
-        new File(SAVE_DIR + currentProfile.getName() + "/").mkdir();
         String path = SAVE_DIR + currentProfile.getName() + "/" + saveName + ".txt";
 
         FileHandler.writeFile(path, mapExport,    false);

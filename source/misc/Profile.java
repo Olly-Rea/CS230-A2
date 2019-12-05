@@ -13,6 +13,7 @@ import utils.FileHandler;
 public class Profile {
 
 	public static final String PROFILE_PATH = "./savefiles/profiles.txt";
+    private static final String SAVE_DIR = "./savefiles/";
 
     private String name;
     private int highest;
@@ -22,11 +23,6 @@ public class Profile {
     	this.highest = highestLevel;
     }
 
-    // public Profile(String name, int highestLevel) {
-    // 	this.name = name;
-    // 	this.highest = highestLevel;
-    // }
-    
     public String getName() {
     	return name;
     }
@@ -42,6 +38,7 @@ public class Profile {
 
     public void saveProfile() {
 		String[] profile = {name+":"+highest};
+        new File(SAVE_DIR + name + "/").mkdir();
 		FileHandler.writeFile(PROFILE_PATH, profile, true);
 	}
 	
