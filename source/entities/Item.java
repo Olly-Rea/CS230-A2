@@ -1,10 +1,17 @@
 package entities;
 
+//Java imports
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+//JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * 
+ * @author
+ */
 public class Item extends Entity {
 
     private ItemType type;
@@ -32,16 +39,16 @@ public class Item extends Entity {
                 assetPath += "flippers";
                 break;
             case REDKEY:
-                assetPath += "gems/red_key";
+                assetPath += "Gems/red_key";
                 break;
             case BLUEKEY:
-                assetPath += "gems/blue_key";
+                assetPath += "Gems/blue_key";
                 break;
             case GREENKEY:
-                assetPath += "gems/green_key";
+                assetPath += "Gems/green_key";
                 break;
             case YELLOWKEY:
-                assetPath += "gems/purple_key";
+                assetPath += "Gems/purple_key";
                 break;
         }
         assetPath += ".png";

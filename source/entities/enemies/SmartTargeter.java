@@ -23,12 +23,11 @@ import javafx.scene.image.ImageView;
  */
 public class SmartTargeter extends Enemy {
 
-    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/smartTargeter.png";
     private static Image image;
 
     static {
         try {
-            image = new Image(new FileInputStream(ASSET_PATH));
+            image = new Image(new FileInputStream(ASSET_PATH + "Smart/smartFollower.png"));
         } catch (FileNotFoundException e) {
             image = null;
             System.err.println("SmartTargeter image path not found");
