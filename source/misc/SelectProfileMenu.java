@@ -5,20 +5,17 @@
  */
 package misc;
 
-import java.io.File;
 
 import controllers.GameController;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import utils.FileHandler;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import misc.Profile;
 
@@ -28,7 +25,6 @@ import misc.Profile;
  */
 public class SelectProfileMenu extends Menu {
 
-    private static final String ArrayList = null;
     private CreateProfileMenu createProfileMenu;
     private ListView<Profile> selectionList;
     private Profile selection = null;

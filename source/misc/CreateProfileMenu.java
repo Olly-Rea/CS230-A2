@@ -5,22 +5,13 @@
  */
 package misc;
 
-import java.io.File;
 
 import controllers.GameController;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import utils.FileHandler;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import misc.Profile;
 

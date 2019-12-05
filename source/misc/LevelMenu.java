@@ -8,7 +8,6 @@ package misc;
 import controllers.GameController;
 
 import java.io.File;
-import javafx.collections.ObservableList;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -54,7 +53,6 @@ public class LevelMenu extends Menu {
 
     private ListView<String> setupMapChoice(String[] files) {
         ListView<String> maps = new ListView<>();
-        ObservableList<String> items = FXCollections.observableArrayList(files);
         maps.setItems(FXCollections.observableArrayList(files));
         maps.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         maps.getSelectionModel().selectedItemProperty().addListener(
