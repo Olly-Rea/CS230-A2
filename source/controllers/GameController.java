@@ -17,10 +17,8 @@ import misc.Profile;
 import misc.SelectProfileMenu;
 import misc.GameMenu;
 import misc.LevelMenu;
-import misc.Menu;
 import utils.*;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -173,7 +171,6 @@ public class GameController {
         this.currentProfile = p;
         selectProfileMenu.toggle();
         levelMenu.loadLevels(p.getLevel());
-        // levelMenu.loadSaves(p);
         levelMenu.toggle();
     }
 
@@ -181,26 +178,6 @@ public class GameController {
         levelMenu.loadSaves(currentProfile);
         levelMenu.toggle();
     }
-
-    // /**
-    //  * Deletes the specific profile from the file at {@code PROFILE_PATH}.
-    //  *
-    //  * @param profile The profile to be deleted.
-    //  */
-    // public void deleteProfile(Profile profile) {
-    //     String toDelete = profile.getName();
-    //     Profile[] oldList = loadProfiles();
-    //     String[] newList = new String[oldList.length - 1];
-    //     int j = 0;
-    //     for (int i = 0; i < oldList.length; i++) {
-    //         if (oldList[i].getName().equals(toDelete) == false) {
-    //             newList[j] = oldList[i].getName() + "," + oldList[i].getLevel();
-    //             j++;
-    //         }
-    //     }
-    //     FileHandler deleter = new FileHandler(PROFILE_PATH);
-    //     deleter.writeFile(PROFILE_PATH, newList, false);
-    // }
 
     /**
      * Progresses the game 1 step and handles the key pressed.

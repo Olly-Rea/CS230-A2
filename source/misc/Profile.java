@@ -41,6 +41,10 @@ public class Profile {
         new File(SAVE_DIR + name + "/").mkdir();
 		FileHandler.writeFile(PROFILE_PATH, profile, true);
 	}
+
+	public void deleteProfile() {
+		
+	}
 	
 	public static Profile fromLine(String line) {
 		Scanner sc = new Scanner(line);
