@@ -1,11 +1,7 @@
 package entities.enemies;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 //Local imports
 import cells.Cell;
-import cells.CellType;
 import cells.Wall;
 import controllers.EntityController;
 import controllers.MapController;
@@ -14,6 +10,11 @@ import utils.Rotation;
 import utils.Vector;
 import entities.Enemy;
 import entities.Player;
+
+//Java imports
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 //JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

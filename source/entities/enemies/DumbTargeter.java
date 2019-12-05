@@ -1,25 +1,29 @@
 package entities.enemies;
 
-import controllers.EntityController;
 //Local imports
 import controllers.MapController;
+import controllers.EntityController;
 import cells.Cell;
-import cells.CellType;
 import cells.Ground;
 import entities.Enemy;
 import entities.Player;
 import utils.Direction;
 import utils.Vector;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 //Java imports
 import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 //JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Subclass of the Enemy class; DumbTargeter
+ * 
+ * @author Scott Barr
+ */
 public class DumbTargeter extends Enemy {
 
     private static Image image;
@@ -72,6 +76,11 @@ public class DumbTargeter extends Enemy {
         }
     }
 
+    /**
+     * Method to get the current direction of the DumbTargeter
+     * 
+     * @return an ArrayList of potential directions the DumbTargeter could head
+     */
     private ArrayList<Direction> getDirection() {
         // Initialise variables
         Vector playerPos = player.getPos();
@@ -94,6 +103,12 @@ public class DumbTargeter extends Enemy {
         return potential;
     }
 
+    /**
+     * Method to export the specifics of this DumbTargeter to a String
+     * 
+     * @return a String containing the specifics of this enemy, as required by 
+     *         the map file format 
+     */
     public String export() {
         return String.format("DT %d %d", pos.getX(), pos.getY());
     }

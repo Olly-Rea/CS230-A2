@@ -1,8 +1,6 @@
 package entities.enemies;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
+//Local imports
 import cells.Cell;
 import cells.Ground;
 import controllers.EntityController;
@@ -11,9 +9,19 @@ import entities.Enemy;
 import entities.Player;
 import utils.Direction;
 import utils.Vector;
+
+//Java imports
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+//JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * 
+ * @author Scott Barr
+ */
 public class StraightLineEnemy extends Enemy {
 
     private static Image image;

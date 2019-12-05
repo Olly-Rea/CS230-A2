@@ -1,10 +1,17 @@
 package entities;
 
+//Java imports
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+//JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * 
+ * @author
+ */
 public class Item extends Entity {
 
     private ItemType type;
