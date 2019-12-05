@@ -1,0 +1,12 @@
+10 10
+##########
+#       w#
+#        #
+#        #
+#WWWWWWWW#
+#WWWWWWWW#
+#WWWWWWWW#
+#WWWWWWWW#
+#!WWWWWWW#
+##########
+PLAYER 1 1
