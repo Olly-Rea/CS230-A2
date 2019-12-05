@@ -176,8 +176,13 @@ public class GameController {
     public void setProfile(Profile p) {
         this.currentProfile = p;
         selectProfileMenu.toggle();
-        // levelMenu.loadLevels(p.getLevel());
-        levelMenu.loadSaves(p);
+        levelMenu.loadLevels(p.getLevel());
+        // levelMenu.loadSaves(p);
+        levelMenu.toggle();
+    }
+
+    public void loadSaves() {
+        levelMenu.loadSaves(currentProfile);
         levelMenu.toggle();
     }
 

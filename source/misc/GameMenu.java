@@ -64,7 +64,8 @@ public class GameMenu extends Menu {
         loadGame.setGraphic(loadGameButton);
         loadGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                String savefilePath = "./savefiles";
+                gc.loadSaves();
+                toggle();
                 //Create load game scene
             }
         });
