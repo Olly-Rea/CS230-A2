@@ -110,7 +110,7 @@ public class DumbTargeter extends Enemy {
      *         the map file format 
      */
     public String export() {
-        return String.format("DT %d %d", pos.getX(), pos.getY());
+        return String.format("%d %d DT", pos.getX(), pos.getY());
     }
 
     /**

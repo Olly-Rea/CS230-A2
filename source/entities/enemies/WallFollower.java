@@ -107,7 +107,7 @@ public class WallFollower extends Enemy {
     }
 
     public String export() {
-        return String.format("WF %d %d %s %s", pos.getX(), pos.getY(), dir, type);
+        return String.format("%d %d WF %s %s", pos.getX(), pos.getY(), dir, type);
     }
 
     /**
