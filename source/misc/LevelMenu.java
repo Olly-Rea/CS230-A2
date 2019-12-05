@@ -40,6 +40,10 @@ public class LevelMenu extends Menu {
         // go button
         Button goButton = new Button("Go");
         goButton.setOnAction((ActionEvent e)->{
+            if (selected == null) {
+                this.toggle();
+                return;
+            };
             gc.loadGame(path + selected + ".txt");
             gc.render();
         });
@@ -63,6 +67,7 @@ public class LevelMenu extends Menu {
 
     public void loadSaves(Profile p) {
         String[] maps = getSaves(p);
+        selected = null;
         path = SAVE_DIR + p.getName() + "/";
         mapChoices = setupMapChoice(maps);
 
@@ -72,6 +77,7 @@ public class LevelMenu extends Menu {
 
     public void loadLevels(int level) {
         String[] maps = getMaps(level);
+        selected = null;
         path = MAP_DIR;
         mapChoices = setupMapChoice(maps);
 
