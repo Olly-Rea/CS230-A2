@@ -75,7 +75,9 @@ public class FileHandler {
      */
     public static void writeFile(String path, String[] lines, boolean append) {
         BufferedWriter writer = null;
+        
         File file = new File(path);
+
         try {
             writer = new BufferedWriter(new FileWriter(file, append));
             for (int i = 0; i < lines.length; i++) {

@@ -1,9 +1,0 @@
-7 5
-#######
-#     #
-#     #
-#     #
-#######
-PLAYER 3 2
-INVENTORY 0 0 0 0 0 0 0 
-WF 1 1 DOWN ACW

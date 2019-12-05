@@ -42,7 +42,6 @@ public class CreateProfileMenu extends Menu {
             Profile p = Profile.fromLine(input.getText());
             p.saveProfile();
             gc.setProfile(p);
-            parent.toggle();
         });
 
         HBox newProfile = new HBox(30);
