@@ -6,9 +6,14 @@ package misc;
  * @author Alexandros
  */
 import java.io.File;
+import java.util.Scanner;
+
 import utils.FileHandler;
 
 public class Profile {
+
+	public static final String PROFILE_PATH = "./savefiles/profiles.txt";
+    private static final String SAVE_DIR = "./savefiles/";
 
     private String name;
     private int highest;
@@ -18,12 +23,6 @@ public class Profile {
     	this.highest = highestLevel;
     }
 
-    public Profile(String name, int highestLevel,String path) {
-    	this.name = name;
-    	this.highest = highestLevel;
-    	saveProfile(path);
-    }
-    
     public String getName() {
     	return name;
     }
@@ -31,29 +30,26 @@ public class Profile {
     public int getLevel() {
     	return highest;
     }
-    
+	
+	@Override
+	public String toString() {
+		return String.format("%s - Highest Level : %d", name, highest);
+	}
 
-    private void saveProfile(String path) {
-    	// Gets the total number of Profiles stored
-    	FileHandler counter = new FileHandler(path);
-		int arraySize = 0;
-		while (counter.hasNext()) {
-			arraySize++;
-			counter.nextLine();
-		}
+    public void saveProfile() {
+		String[] profile = {name+":"+highest};
+        new File(SAVE_DIR + name + "/").mkdir();
+		FileHandler.writeFile(PROFILE_PATH, profile, true);
+	}
+
+	public void deleteProfile() {
 		
-		FileHandler writer = new FileHandler(path);
-		String[] profileList = new String[arraySize + 1];
-		String profileInfo = name;
-		for (int i = 0; i < profileList.length; i++) {
-			profileList[i] = writer.nextLine();
-			if (profileList[i] == "") {
-				profileList[i] = profileInfo;
-			}
-			
-		}
-    	profileList[(profileList.length -1)] = profileInfo;
-    	writer.writeFile(path, profileList, true);
-    	
-    }
+	}
+	
+	public static Profile fromLine(String line) {
+		Scanner sc = new Scanner(line);
+		sc.useDelimiter(":");
+		String name = sc.next();
+		return sc.hasNext() ? new Profile(name, sc.nextInt()) : new Profile(name, 1);
+	}
 }
