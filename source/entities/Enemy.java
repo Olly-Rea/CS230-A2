@@ -15,6 +15,7 @@ import utils.Vector;
 public abstract class Enemy extends Entity {
 
     protected Player player;
+    protected static final String ASSET_PATH = "./assets/visuals/entities/Enemies/";
 
     /**
      * Constructs an enemy
