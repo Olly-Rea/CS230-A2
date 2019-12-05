@@ -1,11 +1,7 @@
 package entities.enemies;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.LinkedList;
-
+//Local imports
 import cells.Cell;
-import cells.CellType;
 import cells.Ground;
 import controllers.EntityController;
 import controllers.MapController;
@@ -13,6 +9,13 @@ import entities.Enemy;
 import entities.Player;
 import utils.Direction;
 import utils.Vector;
+
+//Java imports
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.LinkedList;
+
+//JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -27,7 +30,7 @@ public class SmartTargeter extends Enemy {
 
     static {
         try {
-            image = new Image(new FileInputStream(ASSET_PATH + "Smart/smartFollower.png"));
+            image = new Image(new FileInputStream(ASSET_PATH + "Smart/smartTargeter.png"));
         } catch (FileNotFoundException e) {
             image = null;
             System.err.println("SmartTargeter image path not found");

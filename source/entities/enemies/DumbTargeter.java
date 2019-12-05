@@ -30,7 +30,7 @@ public class DumbTargeter extends Enemy {
 
     static {
         try {
-            image = new Image(new FileInputStream(ASSET_PATH + "Dumb/Mummy_Back.png"));
+            image = new Image(new FileInputStream(ASSET_PATH + "Dumb/Mummy_Up.png"));
         } catch (FileNotFoundException e) {
             image = null;
             System.err.println("DumbTargeter image path not found");

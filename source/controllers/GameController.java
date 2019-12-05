@@ -66,8 +66,6 @@ public class GameController {
         root.getChildren().add(selectProfileMenu.render());
 
         selectProfileMenu.toggle();
-        // levelMenu.toggle();
-        // levelMenu.loadMenu(3);
     }
 
     public void restart() {

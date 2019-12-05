@@ -21,6 +21,8 @@ public class Item extends Entity {
      * Instantiates a new item.
      *
      * @param type the item type
+     * @param x
+     * @param y
      */
     public Item(ItemType type, int x, int y) {
         super(x, y);
