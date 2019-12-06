@@ -53,7 +53,7 @@ public class LeaderboardMenu extends Menu {
 
 		Button nextLevel = new Button("Proceed to next level");
 		nextLevel.setOnAction((ActionEvent e) -> {
-            gc.nextLevel();
+            //gc.nextLevel();
 			// Close + start next level
 		});
 
