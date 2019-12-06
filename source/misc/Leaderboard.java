@@ -17,6 +17,7 @@ public class Leaderboard {
 	private int[] topScores;
 	private String[] topNames;
 	private String path;
+	private int maxValue = 2147483647;
 
 	/**
 	 * Create and populate a leaderboard with info from a file
@@ -31,7 +32,7 @@ public class Leaderboard {
 		for (int i = 0; i < 3; i++) {
 			if (!(reader.hasNext())) {
 				topNames[i] = "-----";
-				topScores[i] = 9999;
+				topScores[i] = maxValue;
 			} else {
 				String line = reader.nextLine();
 				String[] nameScore = line.split(" : ");
@@ -88,7 +89,7 @@ public class Leaderboard {
 	public ArrayList<String> displayBoard() {
 		ArrayList<String> lb = new ArrayList<String>();
 		for (int i = 0; i < 3; i++) {
-			if (topScores[i] == 9999) {
+			if (topScores[i] == maxValue) {
 				lb.add(topNames[i] + " : " + "_");
 			} else {
 				lb.add(topNames[i] + " : " + topScores[i]);
