@@ -23,7 +23,7 @@ import utils.FileHandler;
  */
 public class LevelMenu extends Menu {
 
-    public static final String[] levels = {"test1", "test2", "test3", "test4"};
+    public static final String[] levels = {"Level_1", "Level_2", "test1", "test2", "test3", "test4", "test5", "Test_Map_A2"};
     private static String MAP_DIR = "./levelfiles/";
     private static String SAVE_DIR = "./savefiles/";
 
@@ -49,6 +49,8 @@ public class LevelMenu extends Menu {
 
         menuLayout.getChildren().add(goButton);
         menuLayout.getChildren().add(selection);
+        
+        scaleMenu();
     }
 
     private ListView<String> setupMapChoice(String[] files) {

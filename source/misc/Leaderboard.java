@@ -12,10 +12,6 @@ public class Leaderboard {
     int levelNumber;
     Profile best;
 
-    public void Leaderboard() {
-
-    }
-
     public void setLevelNumber(int levelNumber) {
         this.levelNumber = levelNumber;
     }

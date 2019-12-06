@@ -44,8 +44,8 @@ public class GameController {
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private Profile currentProfile;
     private int startTime;
-    private int currentMap;
-
+    private String currentMap;
+    private int currentMapNum = 0;
     // X and Y variables for render translate methods
     private double renderX = 0;
     private double renderY = 0;
@@ -179,6 +179,8 @@ public class GameController {
         levelMenu.toggle();
     }
 
+    public void
+
     /**
      * Progresses the game 1 step and handles the key pressed.
      *
@@ -246,7 +248,7 @@ public class GameController {
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
-            currentMap += 1;
+            currentMapNum += 1;
             // Win game
         }
     }

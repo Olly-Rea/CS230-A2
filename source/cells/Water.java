@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 
 public class Water extends Cell {
 
-    private static final String IMAGE_NAME = "Water";
     private Image image;
 
     public void setImage(String path) {
@@ -25,6 +24,10 @@ public class Water extends Cell {
         super(CellType.WATER, x, y);
     }
 
+    public boolean isLightSource() {
+        return false;
+    }
+    
     public char getChar() {
         return 'W';
     }

@@ -11,25 +11,24 @@ import java.io.FileNotFoundException;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.transform.Scale;
 
 /**
- *
- * @author Olive
+ * 
+ * @author Scott Barr
  */
 public class GameMenu extends Menu {
 
     public GameMenu(GameController gc) {
-        super();        
-        //Create the group to export and the VBox to store the menu buttons
-        //Create the game menu title
-        Label outputLabel = new Label("THIS IS OUR GAME");
-        menuLayout.getChildren().add(outputLabel);
-        
+        super();
+        menuLayout.getStylesheets().add("File:./assets/styles/button.css");
+
         //BUTTON LAYOUTS BELOW
         
         //add the New Game button to the menu VBox
@@ -39,34 +38,48 @@ public class GameMenu extends Menu {
         ImageView exitGameButton = null;
 
         try {
-            newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/exitGameButton.png")));
-            saveGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/saveGameButton.png")));
-            //newGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-            loadGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/loadGameButton.png")));
-            //loadGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-            exitGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/exitGameButton.png")));
-            //exitGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));                    
+            newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/newGameButton.png")));
         } catch (FileNotFoundException e) {
-            newGameButton = null;
-            System.err.println("A button path wasn't found");
+            System.err.println("new game button path wasn't found");
+        }
+        try {
+            saveGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/saveGameButton.png")));
+        } catch (FileNotFoundException e) {
+            System.err.println("save game button path wasn't found");
+        }
+        try {
+            loadGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/loadGameButton.png")));
+        } catch (FileNotFoundException e) {
+            System.err.println("load game button path wasn't found");
+        }
+        try {
+            exitGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/exitGameButton.png")));
+        } catch (FileNotFoundException e) {
+            System.err.println("exit game button path wasn't found");
         }
         
         //Create the newGame button, assign the graphic, and add to VBox
-        Button newGame = new Button("New Game");
+        Button newGame = new Button();
         newGame.setGraphic(newGameButton);
+        newGame.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        newGame.setStyle("-fx-border-style: none; -fx-background-color:rgba(0,0,0,0)");
         newGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+                newGame.setStyle("-fx-scale: 0.8");
                 gc.restart();
+                toggle();
             }
         });
         menuLayout.getChildren().add(newGame);
         
-        
         //Create the loadGame button, assign the graphic, and add to VBox
-        Button loadGame = new Button("Load Game");
+        Button loadGame = new Button();
         loadGame.setGraphic(loadGameButton);
+        loadGame.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        loadGame.setStyle("-fx-border-style: none; -fx-background-color:rgba(0,0,0,0)");
         loadGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+                loadGame.setStyle("-fx-scale: 0.8");
                 gc.loadSaves();
                 toggle();
                 //Create load game scene
@@ -74,12 +87,13 @@ public class GameMenu extends Menu {
         });
         menuLayout.getChildren().add(loadGame);
 
-                //Create the loadGame button, assign the graphic, and add to VBox
+        //Create the loadGame button, assign the graphic, and add to VBox
         Button saveGame = new Button();
         saveGame.setGraphic(saveGameButton);
-        saveGame.setStyle("-fx-border-style: none; -fx-background:none");
+        saveGame.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         saveGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+                saveGame.setStyle("-fx-scale: 0.8");
                 TextInputDialog dialog = new TextInputDialog("Enter the filename");
                 String result = "";
                 while (result.length() == 0) {
@@ -92,15 +106,20 @@ public class GameMenu extends Menu {
         });
         menuLayout.getChildren().add(saveGame);
         
-        
         //Create the exitGame button, assign the graphic, and add to VBox
-        Button exitGame = new Button("Exit Game");
+        Button exitGame = new Button();
         exitGame.setGraphic(exitGameButton);
+        exitGame.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        exitGame.setStyle("-fx-border-style: none; -fx-background-color:rgba(0,0,0,0)");
         exitGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+                exitGame.setStyle("-fx-scale: 0.8");
                 Platform.exit();
             }
         });
-        menuLayout.getChildren().add(exitGame);    
+        menuLayout.getChildren().add(exitGame);
+        
+        scaleMenu();
+        
     }    
 }

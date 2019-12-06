@@ -8,16 +8,22 @@ import javafx.scene.image.ImageView;
 
 public class Ground extends Cell {
 
-    private static final String IMAGE_NAME = "Floor_Dark";
     private Image image;
 
     public Ground(int x, int y) {
         super(CellType.GROUND, x, y);
+    }
+    
+    public boolean isLightSource() {
+        return false;
+    }
+    
+    public void setImage(String path) {
         try {
-            image = new Image(new FileInputStream(ASSET_PATH + IMAGE_NAME + ".jpg"));
+            image = new Image(new FileInputStream(path));
         } catch (FileNotFoundException e) {
             image = null;
-            System.err.println("Ground image path not found");
+            System.err.println("Ground image path not found at '" + path + "'");
         }
     }
     
