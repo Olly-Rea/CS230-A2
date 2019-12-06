@@ -68,7 +68,7 @@ public class StraightLineEnemy extends Enemy {
     }
     
     public String export() {
-        return String.format("SL %d %d %s", pos.getX(), pos.getY(), dir);
+        return String.format("%d %d SL %s", pos.getX(), pos.getY(), dir);
     }
 
     /**

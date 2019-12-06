@@ -119,7 +119,7 @@ public class SmartTargeter extends Enemy {
     }
 
     public String export() {
-        return String.format("ST %d %d", pos.getX(), pos.getY());
+        return String.format("%d %d ST", pos.getX(), pos.getY());
     }
 
     /**

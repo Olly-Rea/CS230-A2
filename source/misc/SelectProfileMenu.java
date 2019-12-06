@@ -5,7 +5,6 @@
  */
 package misc;
 
-import java.io.File;
 
 import controllers.GameController;
 import javafx.beans.value.ObservableValue;
@@ -17,7 +16,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import utils.FileHandler;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import misc.Profile;
 
@@ -27,7 +25,6 @@ import misc.Profile;
  */
 public class SelectProfileMenu extends Menu {
 
-    private static final String ArrayList = null;
     private CreateProfileMenu createProfileMenu;
     private ListView<Profile> selectionList;
     private Profile selection = null;
@@ -49,7 +46,6 @@ public class SelectProfileMenu extends Menu {
         useProfile.setDisable(true);
         useProfile.setOnAction((ActionEvent e) -> {
             gc.setProfile(selection);
-            this.toggle();
         });
 
         makeSelection();
@@ -61,9 +57,9 @@ public class SelectProfileMenu extends Menu {
             }
         );
 
-        menuLayout.getChildren().add(newProfile);
         menuLayout.getChildren().add(selectionList);
         menuLayout.getChildren().add(useProfile);
+        menuLayout.getChildren().add(newProfile);
         menuLayout.getChildren().add(createProfileMenu.render());
     }
 

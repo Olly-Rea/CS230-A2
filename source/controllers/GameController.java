@@ -17,7 +17,6 @@ import misc.Profile;
 import misc.SelectProfileMenu;
 import misc.GameMenu;
 import misc.LevelMenu;
-import misc.Menu;
 import utils.*;
 
 import java.io.FileInputStream;
@@ -33,7 +32,7 @@ public class GameController {
 
     private static final String PROFILE_PATH = "./profile/profiles.txt";
     private static final String MAP_DIR = "...";
-    private static final String SAVE_DIR = "...";
+    private static final String SAVE_DIR = "./savefiles/";
     private static final String LEADERBOARD_DIR = "...";
     public static final double SCALE_VAL = 0.6;
 
@@ -63,11 +62,13 @@ public class GameController {
         root.getChildren().add(gameMenu.render());
         root.getChildren().add(levelMenu.render());
         root.getChildren().add(selectProfileMenu.render());
-        loadGame("./levelfiles/test1.txt");
+
+        selectProfileMenu.toggle();
     }
 
     public void restart() {
         loadGame(currentMap);
+        levelMenu.toggle();
         render();
     }
 
@@ -144,6 +145,7 @@ public class GameController {
         }
 
         currentMap = path;
+        levelMenu.toggle();
     }
 
     /**
@@ -151,41 +153,31 @@ public class GameController {
      *
      * @param path
      */
-    public void saveGame(String path) {
+    public void saveGame(String saveName) {
         String[] mapExport = mapController.exportMap(entityController);
         String[] mapSpecific = mapController.exportSpecific();
         String[] playerExport = playerController.export();
         String[] entityExport = entityController.export();
 
-        FileHandler.writeFile(path, mapExport, false);
+        String path = SAVE_DIR + currentProfile.getName() + "/" + saveName + ".txt";
+
+        FileHandler.writeFile(path, mapExport,    false);
         FileHandler.writeFile(path, playerExport, true);
-        FileHandler.writeFile(path, mapSpecific, true);
+        FileHandler.writeFile(path, mapSpecific,  true);
         FileHandler.writeFile(path, entityExport, true);
     }
 
     public void setProfile(Profile p) {
         this.currentProfile = p;
+        selectProfileMenu.toggle();
+        levelMenu.loadLevels(p.getLevel());
+        levelMenu.toggle();
     }
 
-    // /**
-    //  * Deletes the specific profile from the file at {@code PROFILE_PATH}.
-    //  *
-    //  * @param profile The profile to be deleted.
-    //  */
-    // public void deleteProfile(Profile profile) {
-    //     String toDelete = profile.getName();
-    //     Profile[] oldList = loadProfiles();
-    //     String[] newList = new String[oldList.length - 1];
-    //     int j = 0;
-    //     for (int i = 0; i < oldList.length; i++) {
-    //         if (oldList[i].getName().equals(toDelete) == false) {
-    //             newList[j] = oldList[i].getName() + "," + oldList[i].getLevel();
-    //             j++;
-    //         }
-    //     }
-    //     FileHandler deleter = new FileHandler(PROFILE_PATH);
-    //     deleter.writeFile(PROFILE_PATH, newList, false);
-    // }
+    public void loadSaves() {
+        levelMenu.loadSaves(currentProfile);
+        levelMenu.toggle();
+    }
 
     /**
      * Progresses the game 1 step and handles the key pressed.
@@ -281,42 +273,44 @@ public class GameController {
      * start position
      */
     public void render() {
-        gameGroup.getChildren().clear();
+        if (currentMap != null) {
+            gameGroup.getChildren().clear();
 
-        // Group 1 ("world layer")
-        Group worldGroup = new Group();
-        // Render map layer First
-        GridPane mapLayer = mapController.renderMap();
-        mapLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
-        worldGroup.getChildren().add(mapLayer);
-        // Render Entity layer Second (on top of Map)
-        GridPane entityLayer = entityController.renderEntities();
-        entityLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
-        worldGroup.getChildren().add(entityLayer);
+            // Group 1 ("world layer")
+            Group worldGroup = new Group();
+            // Render map layer First
+            GridPane mapLayer = mapController.renderMap();
+            mapLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
+            worldGroup.getChildren().add(mapLayer);
+            // Render Entity layer Second (on top of Map)
+            GridPane entityLayer = entityController.renderEntities();
+            entityLayer.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
+            worldGroup.getChildren().add(entityLayer);
 
-        // Group 2 ("player layer")
-        Group playerGroup = new Group();
-        // Render Player in center of screen last
-        GridPane playerLayer = playerController.renderPlayer();
-        playerLayer.getTransforms().add(new Scale(SCALE_VAL+0.2, SCALE_VAL+0.2, 0, 0));
-        playerGroup.getChildren().add(playerLayer);
-        playerGroup.getChildren().get(0).setLayoutX(-200*SCALE_VAL+0.2);
-        // Render the feather-edge effect around the outside of the screen
-        Image assetImg;
-        try {
-            assetImg = new Image(new FileInputStream("./assets/visuals/Feather_Edge.png"));
-        } catch (FileNotFoundException e) {
-            assetImg = null;
-            System.err.println("Feather_Edge.png path not found");
+            // Group 2 ("player layer")
+            Group playerGroup = new Group();
+            // Render Player in center of screen last
+            GridPane playerLayer = playerController.renderPlayer();
+            playerLayer.getTransforms().add(new Scale(SCALE_VAL+0.2, SCALE_VAL+0.2, 0, 0));
+            playerGroup.getChildren().add(playerLayer);
+            playerGroup.getChildren().get(0).setLayoutX(-200*SCALE_VAL+0.2);
+            // Render the feather-edge effect around the outside of the screen
+            Image assetImg;
+            try {
+                assetImg = new Image(new FileInputStream("./assets/visuals/Feather_Edge.png"));
+            } catch (FileNotFoundException e) {
+                assetImg = null;
+                System.err.println("Feather_Edge.png path not found");
+            }
+            ImageView featherEdge = new ImageView(assetImg);
+            featherEdge.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
+            playerGroup.getChildren().add(featherEdge);
+
+            //Add the two layers to the gameGroup layer
+            gameGroup.getChildren().add(worldGroup);
+            gameGroup.getChildren().add(playerGroup);
+            renderPlayer();
         }
-        ImageView featherEdge = new ImageView(assetImg);
-        featherEdge.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
-        playerGroup.getChildren().add(featherEdge);
-
-        //Add the two layers to the gameGroup layer
-        gameGroup.getChildren().add(worldGroup);
-        gameGroup.getChildren().add(playerGroup);
-        renderPlayer();
     }
 
     public void renderPlayer() {

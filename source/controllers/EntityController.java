@@ -165,7 +165,7 @@ public class EntityController {
     public String[] export() {
         String[] export = new String[enemies.size()];
         for (int i = 0; i < export.length; i++) {
-            export[i] = enemies.get(i).export();
+            export[i] = "ENEMY " + enemies.get(i).export();
         }
         return export;
     }
