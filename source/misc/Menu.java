@@ -6,6 +6,7 @@
 package misc;
 
 //Local imports
+import controllers.GameController;
 import javafx.scene.layout.VBox;
 
 /**
@@ -14,6 +15,7 @@ import javafx.scene.layout.VBox;
  */
 public abstract class Menu {
     
+    double scaleVal = GameController.SCALE_VAL;
     protected VBox menuLayout = new VBox(10);
 
     public Menu() {
