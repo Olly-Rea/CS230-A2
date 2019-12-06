@@ -42,7 +42,6 @@ public class GameController {
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private Profile currentProfile;
     private int startTime;
-    private int endTime;
     private int loadTime;
     private String currentMap;
     private int level;
@@ -142,6 +141,7 @@ public class GameController {
      * @param path Path to the map file.
      */
     public void loadGame(String path) {
+        loadTime = 0;
         FileHandler fh = new FileHandler(path);
         makeControllers(fh);
 
@@ -215,8 +215,14 @@ public class GameController {
             currentProfile.deleteProfile();
             currentProfile.saveProfile();
         }
-        currentMap = "./levelfiles/" + LevelMenu.levels[level] + ".txt";
-        loadGame(currentMap);
+
+        if (level == LevelMenu.levels.length) {
+            restart();
+            return;
+        } else {
+            currentMap = "./levelfiles/" + LevelMenu.levels[level] + ".txt";
+            loadGame(currentMap);
+        }
     }
 
     /**
@@ -285,14 +291,14 @@ public class GameController {
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
-            if (loadTime == 0) {
-                endTime = currentTimeMillis() - startTime;
-            } else if (loadTime < 0) {
-                endTime = currentTimeMillis() - loadTime;
-            }
+            // if (loadTime == 0) {
+            //     endTime = currentTimeMillis() - startTime;
+            // } else if (loadTime < 0) {
+            //     endTime = currentTimeMillis() - loadTime;
+            // }
 
-            System.out.println("You took " + endTime / 1000 + " seconds!");
-
+            int time = currentTimeMillis() - startTime + loadTime;
+            System.out.println("You took " + time / 1000 + " seconds!");
 
             nextLevel();
             // Win game

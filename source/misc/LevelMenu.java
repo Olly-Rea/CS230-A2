@@ -27,8 +27,9 @@ public class LevelMenu extends Menu {
     private static String MAP_DIR = "./levelfiles/";
     private static String SAVE_DIR = "./savefiles/";
 
-    private VBox selection = new VBox();
     private ListView<String> mapChoices = new ListView<String>();
+    private Button goButton;
+    private VBox selection = new VBox();
     private String selected = null;
     private String path = MAP_DIR;
 
@@ -39,7 +40,7 @@ public class LevelMenu extends Menu {
         menuLayout.getStylesheets().add("./assets/styles/level.css");
 
         // go button
-        Button goButton = new Button("Go");
+        goButton = new Button("Go");
         goButton.setOnAction((ActionEvent e)->{
             if (selected == null) {
                 this.toggle();
@@ -47,6 +48,7 @@ public class LevelMenu extends Menu {
             };
             gc.loadGame(path + selected + ".txt");
         });
+        goButton.setDisable(true);
 
         menuLayout.getChildren().add(goButton);
         menuLayout.getChildren().add(selection);
@@ -61,6 +63,7 @@ public class LevelMenu extends Menu {
         maps.getSelectionModel().selectedItemProperty().addListener(
             (ObservableValue<? extends String> ov, String oldVal, String val) -> {
                 selected = val;
+                goButton.setDisable(false);
             }
         );
         return maps;
