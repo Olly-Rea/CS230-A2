@@ -156,7 +156,7 @@ public class GameController {
     /**
      * Method to return a new savefile
      *
-     * @param path
+     * @param path path to save data to
      */
     public void saveGame(String saveName) {
         String[] mapExport = mapController.exportMap(entityController);
@@ -191,6 +191,10 @@ public class GameController {
     public static int currentTimeMillis() {
       return (int) (System.currentTimeMillis());
     }
+    /**
+    * Loads saved time from map file
+    * @param sc scanner
+    */
     public void loadTime(Scanner sc) {
       try {
         loadTime = sc.nextInt();
