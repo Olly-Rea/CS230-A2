@@ -43,6 +43,10 @@ public class ColouredDoor extends Door {
 		}
 	}
 
+        public boolean isLightSource() {
+            return false;
+        }
+        
 	public boolean isOpenable(Player p) {
 		ItemType key = null;
 		switch (colour) {

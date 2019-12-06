@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
  */
 public abstract class Menu {
     
-    protected VBox menuLayout = new VBox(60);
+    protected VBox menuLayout = new VBox(10);
 
     public Menu() {
         menuLayout.setVisible(false);

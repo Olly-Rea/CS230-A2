@@ -24,6 +24,10 @@ public class Water extends Cell {
         super(CellType.WATER, x, y);
     }
 
+    public boolean isLightSource() {
+        return false;
+    }
+    
     public char getChar() {
         return 'W';
     }
