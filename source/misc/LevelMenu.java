@@ -13,7 +13,6 @@ import java.io.FileNotFoundException;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -43,8 +42,6 @@ public class LevelMenu extends Menu {
         // set not visible
         super();
 
-        menuLayout.getStylesheets().add("./assets/styles/level.css");
-
         // go button
         ImageView selectLevelButton = null;
         try {
@@ -52,17 +49,16 @@ public class LevelMenu extends Menu {
         } catch (FileNotFoundException e) {
             System.err.println("new profile button path wasn't found");
         }
-        
+
         // Go button
         goButton = new Button();
-        
-//      goButton.setDisable(true);
 
+//      goButton.setDisable(true);
         // Add the button graphic and scale the button
         goButton.setGraphic(selectLevelButton);
         goButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         // Add the event handler
-        goButton.setOnAction((ActionEvent e)->{
+        goButton.setOnAction((ActionEvent e) -> {
             if (selected == null) {
                 this.toggle();
                 return;
@@ -76,16 +72,16 @@ public class LevelMenu extends Menu {
 
         this.scaleMenu();
     }
-    
+
     private ListView<String> setupMapChoice(String[] files) {
         ListView<String> maps = new ListView<>();
         maps.setItems(FXCollections.observableArrayList(files));
         maps.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         maps.getSelectionModel().selectedItemProperty().addListener(
-            (ObservableValue<? extends String> ov, String oldVal, String val) -> {
-                selected = val;
-                goButton.setDisable(false);
-            }
+                (ObservableValue<? extends String> ov, String oldVal, String val) -> {
+                    selected = val;
+                    goButton.setDisable(false);
+                }
         );
         return maps;
     }

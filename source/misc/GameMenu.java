@@ -5,9 +5,14 @@
  */
 package misc;
 
+//Local imports
 import controllers.GameController;
+
+//java imports
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+//JavaFX imports
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

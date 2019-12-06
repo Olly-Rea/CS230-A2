@@ -21,7 +21,7 @@ import misc.Profile;
  */
 public class CreateProfileMenu extends Menu {
 
-    public CreateProfileMenu(SelectProfileMenu parent, GameController gc) {
+    public CreateProfileMenu(GameController gc) {
         // set not visible
         super();
 
@@ -33,18 +33,13 @@ public class CreateProfileMenu extends Menu {
             Profile p = Profile.fromLine(input.getText());
             p.saveProfile();
             gc.setProfile(p);
+            this.toggle();
         });
 
-        HBox newProfile = new HBox(30);
-
-        newProfile.getChildren().add(putName);
-        newProfile.getChildren().add(input);
-        newProfile.getChildren().add(submit);
-        
-        menuLayout.getChildren().add(newProfile);
+        menuLayout.getChildren().add(putName);
+        menuLayout.getChildren().add(input);
+        menuLayout.getChildren().add(submit);
         
         scaleMenu();
     }
-
-
 }

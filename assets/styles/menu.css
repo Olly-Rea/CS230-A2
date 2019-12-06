@@ -40,3 +40,13 @@
 	-fx-transform-x: -80px;
 	-fx-transform-y: -20px;
 }
+
+.label {
+	-fx-background-color: rgba(160,119,72,1);
+}
+.text-field {
+	-fx-min-width: 460px;
+	-fx-max-width: 460px;
+	-fx-min-height: 50px;
+	-fx-font-size: 20pt;
+}

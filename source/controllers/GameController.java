@@ -20,6 +20,7 @@ import misc.Profile;
 import misc.SelectProfileMenu;
 import misc.GameMenu;
 import misc.LevelMenu;
+import misc.CreateProfileMenu;
 import utils.*;
 
 import java.io.FileInputStream;
@@ -48,6 +49,7 @@ public class GameController {
     
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
+    private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
     private Profile currentProfile;
     private int startTime;
     private int loadTime;
@@ -71,6 +73,7 @@ public class GameController {
         root.getChildren().add(levelMenu.render());
         root.getChildren().add(leaderboardMenu.render());
         root.getChildren().add(selectProfileMenu.render());
+        root.getChildren().add(createProfileMenu.render());
 
         selectProfileMenu.toggle();
     }
@@ -196,9 +199,13 @@ public class GameController {
 
     public void setProfile(Profile p) {
         this.currentProfile = p;
-        selectProfileMenu.toggle();
         levelMenu.loadLevels(p.getLevel());
         levelMenu.toggle();
+    }
+    
+    public void createProfile() {
+        selectProfileMenu.toggle();
+        createProfileMenu.toggle();
     }
 
     public void loadSaves() {
