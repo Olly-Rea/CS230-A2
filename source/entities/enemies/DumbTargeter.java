@@ -20,6 +20,12 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * DumbTargeter class which always moves in the direction of the player
+ *
+ * @author Scott Barr
+ * @version 1.0
+ */
 public class DumbTargeter extends Enemy {
 
     private static final String ASSET_PATH = "./assets/visuals/entities/enemies/dumbTargeter.png";
@@ -40,9 +46,10 @@ public class DumbTargeter extends Enemy {
     private Direction dir;
 
     /**
-     * Instantiates a new targeting enemy.
+     * Instantiates a DumbTargeter enemy.
      *
      * @param vector the position of targeting enemy
+     * @param player the player it will move towards
      */
     public DumbTargeter(Vector vector, Player p) {
         super(vector, p);
@@ -73,6 +80,12 @@ public class DumbTargeter extends Enemy {
         }
     }
 
+    
+    /**
+     * Find all possible moves the DumbTargeter can take
+     * 
+     * @return potential an ArrayList of possible moves
+     */
     private ArrayList<Direction> getDirection() {
         // Initialise variables
         Vector playerPos = player.getPos();
@@ -95,6 +108,11 @@ public class DumbTargeter extends Enemy {
         return potential;
     }
 
+	/**
+	 * Generates a string containing this enemies direction, location and type
+	 * 
+	 * @return String
+	 */
     public String export() {
         return String.format("DT %d %d", pos.getX(), pos.getY());
     }

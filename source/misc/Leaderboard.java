@@ -1,14 +1,14 @@
 package misc;
 
+import java.io.File;
+import utils.FileHandler;
+
 /**
  * Loads profile list and shows the top times of the level.
  *
- * @author Alexandros
+ * @author Alexandros, Daniel Clenaghan
+ * @version 1.0
  */
-import java.io.File;
-
-import utils.FileHandler;
-
 public class Leaderboard {
 
 	public static final String LEADERBOARD_DIR = "./leaderboards/";
@@ -16,8 +16,11 @@ public class Leaderboard {
 	private String[] topNames;
 	private String path;
 
+	/**
+	 * Create and populate a leaderboard with info from a file
+	 * @param path
+	 */
 	public Leaderboard(String path) {
-		// Populate leaderboard with info from file
 		this.path = path;
 		FileHandler reader = new FileHandler(path);
 		int[] topScores = new int[3];
@@ -46,6 +49,11 @@ public class Leaderboard {
 		reader.writeFile(path, writeToFile, false);
 	}
 
+	/**
+	 * Check if a time is lower than those already in the leaderboard
+	 * @param profile
+	 * @param time
+	 */
 	public void addTime(Profile profile, int time) {
 		if (time < topScores[0]) {
 			topScores[2] = topScores[1];
@@ -71,6 +79,10 @@ public class Leaderboard {
 		writer.writeFile(path, newBoard, false);
 	}
 
+	/**
+	 * Output the leaderboard as a string array
+	 * @return array
+	 */
 	public String[] displayBoard() {
 		String[] lb = new String[3];
 		for (int i = 0; i < 3; i++) {

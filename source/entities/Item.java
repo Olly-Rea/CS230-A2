@@ -5,6 +5,12 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Item that can be placed in the entity grid and picked up by the player
+ * 
+ * @author TODO
+ * @version 1.0
+ */
 public class Item extends Entity {
 
     private ItemType type;
@@ -54,6 +60,11 @@ public class Item extends Entity {
         }        
     }
 
+    /**
+     * Get char used from map file to generate each item
+     * 
+     * @return char
+     */
     public char getChar() {
         switch (type) {
             case REDKEY:return 'r';
@@ -76,6 +87,9 @@ public class Item extends Entity {
         return type;
     }
 
+    /**
+     * Render the item to the screen
+     */
     public ImageView render() {
         return new ImageView(assetImg);
     }

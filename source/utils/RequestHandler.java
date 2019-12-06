@@ -10,7 +10,8 @@ import java.net.URL;
 /**
  * Handles http requests.
  *
- * @author
+ * @author Scott Barr, Alex 
+ * @version 1.0
  */
 public class RequestHandler {
 
@@ -47,6 +48,11 @@ public class RequestHandler {
         return null;
     }
 
+    /**
+     * TODO
+     * @param puzzle
+     * @return
+     */
     public static String decipher(String puzzle) {
         char[] chars = puzzle.toCharArray();
         int val = 1;

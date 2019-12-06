@@ -33,6 +33,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
+ * Game controller manages the logic of the game. It creates the other three controllers and
+ * contains the methods to access them. It is also responsible for out of game functions such 
+ * as: saving and loading, profile manipulation, Leaderboard creation and player rendering
+ * 
+ * @version 1.0
+ * @author Scott Barr, Olly Rea, Daniel Clenaghan
  *
  */
 public class GameController {
@@ -71,7 +77,7 @@ public class GameController {
         root.getChildren().add(gameMenu.render());
         root.getChildren().add(levelMenu.render());
         root.getChildren().add(selectProfileMenu.render());
-        loadGame("./levelfiles/test1.txt");
+        loadGame("./levelfiles/test3.txt");
     }
 
     public void restart() {

@@ -13,15 +13,12 @@ import java.util.Scanner;
 import javafx.scene.layout.GridPane;
 
 /**
- * MapController.java
- *
- * @version 1.0.0
- * @author Olly Rea
- */
-/**
  * MapController is a class to manage the map and all methods related to it. It
  * consists of a 2D array of cells and contains the methods required to alter
  * and manipulate them
+ *
+ * @version 1.0.0
+ * @author Olly Rea
  */
 public class MapController {
 
@@ -63,7 +60,7 @@ public class MapController {
      * Returns cell at location of a vector
      *
      * @param pos
-     * @return
+     * @return Vector
      */
     public Cell getCell(Vector pos) {
         return map[pos.getY()][pos.getX()];
@@ -75,7 +72,7 @@ public class MapController {
      *
      * @param pos position vector of the cell
      * @param dir direction of the next cell
-     * @return
+     * @return Cell
      */
     public Cell getNextCell(Vector pos, Direction dir) {
         return map[pos.getY() + dir.Y][pos.getX() + dir.X];
@@ -126,6 +123,11 @@ public class MapController {
         return mapExport.toArray(new String[mapExport.size()]);
     }
 
+    /**
+     * Exports cells with complex behaviors to a string array
+     * 
+     * @return String array
+     */
     public String[] exportSpecific() {
         ArrayList<String> mapSpecifics = new ArrayList<>();
         ArrayList<Teleporter> teleporters = new ArrayList<>();
@@ -212,6 +214,10 @@ public class MapController {
         // move the map instead of the player to maintain centred focus
     }
 
+    /**
+     * Shift the center render point for the map in a directed 
+     * @param dir
+     */
     public void moveMap(Direction dir) {
 
         int x = 0;
@@ -234,6 +240,11 @@ public class MapController {
 
     }
 
+    /**
+     * Link two teleporter cells together from a text file
+     * 
+     * @param sc
+     */
     public void linkTeleporters(Scanner sc) {
         int x1 = sc.nextInt();
         int y1 = sc.nextInt();
@@ -258,11 +269,12 @@ public class MapController {
     }
 
     /**
+     * Creates a cell at a given location with a type
      *
      * @param x x coordinate of the cell
      * @param y y coordinate of the cell
      * @param c character in the text file to be translated into a Cell object
-     * @return
+     * @return Cell
      */
     public static Cell makeCell(int x, int y, char c) {
         switch (c) {
@@ -280,16 +292,4 @@ public class MapController {
             default  : return new Ground(x, y);
         }
     }
-
-    /*
-
-     There will be two layers;
-     - the Player 'layer', and
-     - the world layer,
-
-     Entities move within the world layer, and then the world layer is moved
-     around the player 'layer', while the player 'layer' stays still (central to
-     the screen).
-
-     */
 }

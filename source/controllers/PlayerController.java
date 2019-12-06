@@ -13,15 +13,16 @@ import utils.*;
 /**
  * Class to handle player movement and rendering
  *
- * @author Scott, Danny
+ * @author Scott Barr, Daniel Clenaghan
  */
 public class PlayerController {
 
     private Player player;
 
     /**
-     * @param player the player object to be controlled
-     * @author Danny
+     * Create PlayerController with a player entity
+     * 
+     * @param player 
      */
     public PlayerController(Player player) {
         this.player = player;
@@ -33,7 +34,6 @@ public class PlayerController {
      *
      * @param dir the direction the player is attempting to move
      * @param mc the map controller to find the Cell in the dir
-     * @author Danny
      */
     public void move(Direction dir, MapController mc) {
         Cell target = mc.getNextCell(player.getPos(), dir);
@@ -59,7 +59,6 @@ public class PlayerController {
      * @param cell the cell in the direction the player wants to move
      * @return a boolean value true if the move is valid, i.e not walikng into a
      * wall, false if the move is invalid and not possible
-     * @author Danny
      */
     private boolean validMove(Cell targetCell) {
         CellType moveType = targetCell.getType();
@@ -70,6 +69,10 @@ public class PlayerController {
     }
 
 
+    /**
+     * Fill in a player's inventory from a save file
+     * @param sc
+     */
 	public void createInventory(Scanner sc) {
 		int[] inventory = new int[7];
 		try {
@@ -90,7 +93,6 @@ public class PlayerController {
 	 *             required for that cell type
 	 * @return a boolean value, if true, the player is on a block which kills the
 	 *         player, otherwise player is still alive
-	 * @author Danny
 	 */
 	public boolean checkStatus(MapController map) {
         Cell current = map.getCell(getPlayerPos());
@@ -102,6 +104,7 @@ public class PlayerController {
 		}
 		return false;
 	}
+	
     /**
      * Check if player is on a goal cell
      *
@@ -116,8 +119,8 @@ public class PlayerController {
     }
 
     /**
-     * @return Returns the vector of the players current position
-     * @author Danny
+     * The vector of the players current position
+     * @return Vector
      */
     public Vector getPlayerPos() {
         return player.getPos();
@@ -134,8 +137,6 @@ public class PlayerController {
 
     /**
      * Renders the player
-     *
-     * @author xxxxx
      */
     public GridPane renderPlayer() {
         // Create the Player GridPane
@@ -163,7 +164,6 @@ public class PlayerController {
 	 * green,blue,yellow}
 	 *
 	 * @return an array of ints representing the players position and inventory
-	 * @author Danny
 	 */
 	public String[] export() {
 		String[] export = new String[2];

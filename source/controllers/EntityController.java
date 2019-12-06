@@ -1,8 +1,10 @@
 package controllers;
 
 /**
- * @author Scott Barr, James Hogg
- * @version 1.1
+ * Stores information and method related to items and enemies
+ * 
+ * @author Scott Barr, James Hogg, Daniel Clenaghan
+ * @version 1.0
  */
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -136,6 +138,13 @@ public class EntityController {
         }
     }
 
+    /**
+     * Get entity from the entity grid at location 
+     * 
+     * @param x
+     * @param y
+     * @return entity
+     */
     public Entity getEntity(int x, int y) {
         return entityGrid[y][x];
     }
@@ -151,22 +160,6 @@ public class EntityController {
             export[i] = enemies.get(i).export();
         }
         return export;
-
-        // private String[] exportArray;
-        // private int numberOfColumns = entityGrid.length();
-        // private int numberOfRows;
-        // private int exportArrayIndex = 0;
-        // private String exportData;
-        // for (int i; i < numberOfColumns; i++) {
-        // numberOfRows = entityGrid[i].length();
-        // for (int j; j < numberOfRows; j++) {
-        // if entityGrid[i][j] != " " {
-        // exportData = entityGrid[i][j] + " " + (entityGrid[i][j]).getPos();
-        // exportArray[exportArrayIndex] = exportData;
-        // exportArrayIndex++;
-        // }
-        // }
-        // } return exportArray;s
     }
 
     /**
@@ -254,9 +247,10 @@ public class EntityController {
     }
 
     /**
+     * create an enemy using a text line from a map file
      *
      * @param line a scanner of the line with the enemy details
-     * @return
+     * @return enemy 
      */
     public static Enemy makeEnemy(Scanner line, Player p) {
         int x = line.nextInt();
@@ -280,7 +274,7 @@ public class EntityController {
      * Returns a new item based on the char in the map text file
      *
      * @param x the x position of the item
-     * @param y the y positio of the item
+     * @param y the y position of the item
      * @param c the character in the map file
      * @return an instance of an item depending on the character given
      */
@@ -309,7 +303,6 @@ public class EntityController {
      * Renders the entities respective assets on a GridPane at their locations
      * based on the entityGrid
      *
-     * @return
      */
     public GridPane renderEntities() {
         // Clear the entity GridPane for fresh render

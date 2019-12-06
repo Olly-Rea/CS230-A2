@@ -9,14 +9,11 @@ import javafx.scene.image.ImageView;
 import utils.Vector;
 
 /**
- * Teleporter.java
+ * The class for the cell type Teleporter. It will store a Vector for both
+ * itself and a linked Teleporter. Will also hold the information for rendering
  *
  * @version 1.0.0
- * @author Daniel Clenaghan
- */
-/**
- * The class for the cell type Teleporter. It will store a Vector for both
- * itself and a linked Teleporter
+ * @author Danny
  */
 public class Teleporter extends Cell {
 
@@ -69,7 +66,11 @@ public class Teleporter extends Cell {
     public Teleporter getLinked() {
         return linkedTele;
     }
-
+    
+    /**
+     * Method to get the char used in the map text file to generate this cell
+     * @return Char
+     */
     public char getChar() {
         return 'T';
     }

@@ -7,6 +7,12 @@ import entities.Player;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * CToken door class to store information on the amount of tokens required and chack if a given
+ * player has the required tokens to open. Will also render the cell into the map 
+ * @version 1.0
+ * @author TODO
+ */
 public class TokenDoor extends Door {
 
     private static final String IMAGE_NAME = "Boulder";

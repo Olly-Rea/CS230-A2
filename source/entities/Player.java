@@ -157,14 +157,13 @@ public class Player extends Entity {
 	}
 
 	/**
-	 * Check for and use tokens from the player's inventory
+	 * Check for tokens from the player's inventory
 	 *
 	 * @param tokensReq Tokens required
 	 * @return true if the tokens are present in the inventory, false otherwise
 	 */
 	public boolean useTokens(int tokensReq) {
 		if (tokensReq <= tokens) {
-			tokens = tokens - tokensReq;
 			return true;
 		} else {
 			return false;

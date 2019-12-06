@@ -14,7 +14,8 @@ import java.io.File;
  * terminates the program. Also, it reads every single line and stops when it
  * finds a null one.
  *
- * @author
+ * @author TODO
+ * @version 1.0
  */
 public class FileHandler {
 
@@ -88,12 +89,22 @@ public class FileHandler {
         }
     }
 
+    /**
+     * TODO
+     * @param dir
+     * @return
+     */
     public static File[] getFiles(String dir) {
         ArrayList<String> files = new ArrayList<>();
         File folder = new File(dir);   
         return folder.listFiles();
     }
 
+    /**
+     * TODO
+     * @param f
+     * @return
+     */
     public static String getFileName(File f) {
         String[] file = f.getName().split("\\.");
         return file[0];

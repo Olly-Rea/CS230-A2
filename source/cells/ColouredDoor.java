@@ -8,11 +8,23 @@ import entities.Player;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Represents a door with a colour type attached to it. Contains method to check if
+ * it can be opened or not
+ * 
+ * @version 1.0
+ * @author TODO
+ */
 public class ColouredDoor extends Door {
 
 	public final DoorColour colour;
 	private Image image;
 
+    /**
+     * Create a fire cell at location (x,y)
+     * @param x
+     * @param y
+     */
 	public ColouredDoor(int x, int y, DoorColour colour) {
 		super(x, y);
 		this.colour = colour;
@@ -43,6 +55,11 @@ public class ColouredDoor extends Door {
 		}
 	}
 
+	/**
+	 * Checks a player's inventory to see if they have the required key to open the door
+	 * 
+	 * @return boolean
+	 */
 	public boolean isOpenable(Player p) {
 		ItemType key = null;
 		switch (colour) {
@@ -62,6 +79,10 @@ public class ColouredDoor extends Door {
 		return p.useKey(key);
 	}
 
+    /**
+     * Return the character used in the map file for this cell
+     * @return char
+     */
 	public char getChar() {
 		switch (colour) {
 			case RED : return 'R';
