@@ -1,16 +1,17 @@
 package misc;
 
-/**
- * Contains a name and the highest level completed by profile.
- *
-	//TODO:
- * @author Alexandros
- */
 import java.io.File;
 import java.util.Scanner;
 
 import utils.FileHandler;
 
+
+/**
+ * Contains a name and the highest level completed by profile.
+ *
+ * @author Alexandros, Daniel Clenaghan, Scott Barr
+ * @version 1.0
+ */
 public class Profile {
 
     public static final String PROFILE_PATH = "./savefiles/profiles.txt";
@@ -18,13 +19,17 @@ public class Profile {
 
     private String name;
     private int highest;
-    
-	//TODO:
+
+    /**
+     * Instantiate a profile
+     * @param name
+     * @param highestLevel
+     */
     public Profile(String name, int highestLevel) {
     	this.name = name;
     	this.highest = highestLevel;
 	}
-	
+
 	//TODO:
 	public static Profile fromLine(String line) {
 		Scanner sc = new Scanner(line);
@@ -33,22 +38,31 @@ public class Profile {
 		return sc.hasNext() ? new Profile(name, sc.nextInt()) : new Profile(name, 1);
 	}
 
-	//TODO:
+    /**
+     * @return name
+     */
     public String getName() {
     	return name;
     }
-    
-	//TODO:
+
+    /**
+     * @return highest
+     */
     public int getLevel() {
     	return highest;
     }
-	
-	public void incLevel(int level) {
-		highest = level > highest ? level+1 : level;
+
+    /**
+     * Return the profile information as a string
+     */
+	@Override
+	public String toString() {
+		return String.format("%s - Highest Level : %d", name, highest);
 	}
 
-
-	//TODO:
+	/**
+	 * Saves the profile to a text file
+	 */
     public void saveProfile() {
 		String[] profile = {name+":"+highest};
 		new File(SAVE_DIR + name + "/").mkdir();
@@ -62,7 +76,7 @@ public class Profile {
 		FileHandler fh = new FileHandler(PROFILE_PATH);
 		String[] profileLines = fh.readLines();
 		Profile[] profiles = new Profile[profileLines.length];
-		
+
 		for (int i = 0; i < profiles.length; i++) {
 			Profile check = fromLine(profileLines[i]);
 			profiles[i] = this.equals(check) ? null : check;
@@ -75,14 +89,11 @@ public class Profile {
 			}
 		}
 	}
-	
-	//TODO:
-	@Override
-	public String toString() {
-		return String.format("%s - Highest Level : %d", name, highest);
+	public void incLevel(int level) {
+		highest = level >= highest ? level+1 : level;
 	}
 
-	
+
 	//TODO:
 	@Override
 	public boolean equals(Object other) {

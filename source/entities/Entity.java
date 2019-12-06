@@ -4,10 +4,10 @@ import javafx.scene.image.ImageView;
 import utils.Vector;
 
 /**
+ * An Entity is a non-cell sometimes non-static object within the environment
+ *      
  * @author James Hogg
- * @version 1.0 An Entity is a non-cell sometimes non-static object within the
- *          environment
- *
+ * @version 1.0 
  */
 public abstract class Entity {
 

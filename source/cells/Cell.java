@@ -1,11 +1,16 @@
 package cells;
 
-//Local imports
 import utils.Vector;
 
 //JavaFX imports
 import javafx.scene.image.ImageView;
 
+/**
+ * The super class for all cell types. Has general methods to return location and cell type
+ * 
+ * @version 1.0
+ * @author TODO
+ */
 public abstract class Cell {
 
     //The type of cell (i.e ground, wall)
@@ -53,5 +58,9 @@ public abstract class Cell {
         return cellPos;
     }
     
+    /**
+     * Return the character used in the map file for this cell
+     * @return char
+     */
     public abstract char getChar();
 }

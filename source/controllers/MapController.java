@@ -14,16 +14,12 @@ import java.util.Scanner;
 import javafx.scene.layout.GridPane;
 
 /**
- * MapController.java
- *
- * @version 1.0.0
- * @author Olly Rea, Scott Barr
- */
-
-/**
  * MapController is a class to manage the map and all methods related to it. It
  * consists of a 2D array of cells and contains the methods required to alter
  * and manipulate them
+ *
+ * @version 1.0.0
+ * @author Olly Rea
  */
 public class MapController {
 
@@ -65,7 +61,7 @@ public class MapController {
      * Returns cell at location of a vector
      *
      * @param pos
-     * @return
+     * @return Vector
      */
     public Cell getCell(Vector pos) {
         return map[pos.getY()][pos.getX()];
@@ -77,7 +73,7 @@ public class MapController {
      *
      * @param pos position vector of the cell
      * @param dir direction of the next cell
-     * @return
+     * @return Cell
      */
     public Cell getNextCell(Vector pos, Direction dir) {
         return map[pos.getY() + dir.Y][pos.getX() + dir.X];
@@ -129,9 +125,9 @@ public class MapController {
         return mapExport.toArray(new String[mapExport.size()]);
     }
 
-    /** 
+    /**
      * Method to export the specifics of certain map cells
-     * 
+     *
      * @return a string array of the map's specifics
      */
     public String[] exportSpecific() {
@@ -199,8 +195,8 @@ public class MapController {
 
     /**
      * Method to link two Teleporters together
-     * 
-     * @param sc 
+     *
+     * @param sc
      */
     public void linkTeleporters(Scanner sc) {
         int x1 = sc.nextInt();
@@ -227,11 +223,11 @@ public class MapController {
 
     /**
      * Method to create Cells based on the input character from a read map file
-     * 
+     *
      * @param x x coordinate of the cell
      * @param y y coordinate of the cell
      * @param c character in the text file to be translated into a Cell object
-     * @return
+     * @return Cell
      */
     public static Cell makeCell(int x, int y, char c) {
         switch (c) {

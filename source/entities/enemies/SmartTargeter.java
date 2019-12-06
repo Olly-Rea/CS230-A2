@@ -13,13 +13,16 @@ import utils.Vector;
 //Java imports
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 
 //JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
+ * Subclass of the Enemy class; SmartTargeter
  * SmartTargeter class which always takes the path which leads to the Player.
  *
  * @author Scott Barr
@@ -115,7 +118,26 @@ public class SmartTargeter extends Enemy {
 
         if (dir != null) { // if dir is null then do not move.
             pos.add(dir); // otherwise add the dir to the positon.
+        } else {
+        	ArrayList<Direction> validMoves = new ArrayList<Direction>();
+        	if (checkValid(Direction.DOWN, map, ec)){validMoves.add(Direction.DOWN);}
+        	if (checkValid(Direction.UP, map, ec)){validMoves.add(Direction.UP);}
+        	if (checkValid(Direction.LEFT, map, ec)){validMoves.add(Direction.LEFT);}
+        	if (checkValid(Direction.RIGHT, map, ec)){validMoves.add(Direction.RIGHT);}
+        	Random random = new Random();
+        	pos.add(validMoves.get(random.nextInt(validMoves.size()))); 
+        	
+            }
         }
+    
+    
+    private Boolean checkValid(Direction dir, MapController map, EntityController ec) {
+        Cell next = map.getNextCell(pos, dir);
+        boolean existsEntity = ec.entityPresent(pos, dir);
+        if (!(next instanceof Ground) || existsEntity) {
+            return false;
+        }
+        return true;
     }
 
     public String export() {

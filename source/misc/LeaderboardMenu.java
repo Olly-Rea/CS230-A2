@@ -1,0 +1,85 @@
+package misc;
+
+import controllers.GameController;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import java.util.ArrayList;
+import javafx.scene.control.Label;
+
+import misc.Profile;
+
+
+public class LeaderboardMenu extends Menu {
+	
+	private static String MAP_DIR = "";
+
+	private Leaderboard leaderboard;
+	private ArrayList<String> lbList;
+	private String levelName;
+    private VBox selection = new VBox();
+    private Label first;
+	private Label second;
+	private Label third;
+	private Label player;
+    private String path = MAP_DIR;
+
+	public LeaderboardMenu(GameController gc) {
+		// set not visible
+		super();
+
+		
+		ArrayList<String> lbList = new ArrayList<String>(); 
+		lbList = gc.getLeaderboard();
+		
+		Label first = new Label("NULL");
+		Label second = new Label("NULL");
+		Label third = new Label("NULL");
+		selection.getChildren().add(first);
+		selection.getChildren().add(second);
+		selection.getChildren().add(third);
+		
+		Label player = new Label();
+
+		Button nextLevel = new Button("Proceed to next level");
+		nextLevel.setOnAction((ActionEvent e) -> {
+            gc.nextLevel();
+			// Close + start next level
+		});
+
+		Button back = new Button("Return to level screen");
+		back.setOnAction((ActionEvent e) -> {
+			gc.toLevelSelect();
+		});
+		
+		menuLayout.getChildren().add(selection);
+		menuLayout.getChildren().add(back);
+		menuLayout.getChildren().add(nextLevel);
+		
+	}
+	
+	public void loadLeaderboard(int currentMapNum, GameController gc) {
+		ArrayList<String> lbList = new ArrayList<String>(); 
+		lbList = gc.getLeaderboard();
+        selection.getChildren().clear();
+		Label first = new Label(lbList.get(0));
+		Label second = new Label(lbList.get(1));
+		Label third = new Label(lbList.get(2));
+		selection.getChildren().add(first);
+		selection.getChildren().add(second);
+		selection.getChildren().add(third);
+		selection.getChildren().add(player);
+		
+	}
+	
+	/**
+	 * Displays the player's score under the leader board
+	 * @param profile
+	 * @param time
+	 */
+	public void displayPlayer(Profile profile, int time) {
+		String playerScore = "Your score: " + profile.getName() + " : " + time;
+		Label player = new Label(playerScore);
+		this.player = player;
+	}
+}

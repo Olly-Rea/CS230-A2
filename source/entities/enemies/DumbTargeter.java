@@ -21,8 +21,10 @@ import javafx.scene.image.ImageView;
 
 /**
  * Subclass of the Enemy class; DumbTargeter
- * 
+ * Will always move in the lateral direction of the player
+ *
  * @author Scott Barr
+ * @version 1.0
  */
 public class DumbTargeter extends Enemy {
 
@@ -43,9 +45,10 @@ public class DumbTargeter extends Enemy {
     private Direction dir;
 
     /**
-     * Instantiates a new targeting enemy.
+     * Instantiates a DumbTargeter enemy.
      *
      * @param vector the position of targeting enemy
+     * @param player the player it will move towards
      */
     public DumbTargeter(Vector vector, Player p) {
         super(vector, p);
@@ -64,13 +67,13 @@ public class DumbTargeter extends Enemy {
         // For any potential directions check whether that direction is a valid move
         for (int i = 0; i < potential.size(); i++) {
             Direction d = potential.get(i);
-            Cell next = map.getNextCell(pos, d); 
+            Cell next = map.getNextCell(pos, d);
             boolean existsEntity = ec.entityPresent(pos, d);
             if (next instanceof Ground && !existsEntity) {
                 dir = d;
             }
         }
-        
+
         if (!player.getPos().equals(pos) && dir != null) {
             pos.add(dir);
         }
@@ -78,7 +81,7 @@ public class DumbTargeter extends Enemy {
 
     /**
      * Method to get the current direction of the DumbTargeter
-     * 
+     *
      * @return an ArrayList of potential directions the DumbTargeter could head
      */
     private ArrayList<Direction> getDirection() {
@@ -105,9 +108,9 @@ public class DumbTargeter extends Enemy {
 
     /**
      * Method to export the specifics of this DumbTargeter to a String
-     * 
-     * @return a String containing the specifics of this enemy, as required by 
-     *         the map file format 
+     *
+     * @return a String containing the specifics of this enemy, as required by
+     *         the map file format
      */
     public String export() {
         return String.format("%d %d DT", pos.getX(), pos.getY());

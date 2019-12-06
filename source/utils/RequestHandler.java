@@ -10,7 +10,8 @@ import java.net.URL;
 /**
  * Handles http requests.
  *
- * @author
+ * @author Scott Barr, Alex
+ * @version 1.0
  */
 public class RequestHandler {
 

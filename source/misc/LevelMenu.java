@@ -35,7 +35,7 @@ public class LevelMenu extends Menu {
 
     public LevelMenu(GameController gc) {
         // set not visible
-        super();        
+        super();
 
         menuLayout.getStylesheets().add("./assets/styles/level.css");
 
@@ -52,7 +52,7 @@ public class LevelMenu extends Menu {
 
         menuLayout.getChildren().add(goButton);
         menuLayout.getChildren().add(selection);
-        
+
         scaleMenu();
     }
 

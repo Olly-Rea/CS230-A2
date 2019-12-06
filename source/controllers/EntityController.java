@@ -1,9 +1,5 @@
 package controllers;
 
-/**
- * @author Scott Barr, James Hogg
- * @version 1.1
- */
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,6 +14,12 @@ import utils.Vector;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+/**
+ * Stores information and method related to items and enemies
+ *
+ * @author Scott Barr, James Hogg, Daniel Clenaghan
+ * @version 1.0
+ */
 public class EntityController {
 
     private Entity[][] entityGrid;
@@ -61,10 +63,10 @@ public class EntityController {
 
     /**
      * Method for enemies to check if an item exists in their path
-     * 
+     *
      * @param pos the position of the enemy
      * @param dir the direction the enemy is travelling in
-     * @return if an item is present in the next 
+     * @return if an item is present in the next
      */
     public boolean entityPresent(Vector pos, Direction dir) {
         return entityGrid[pos.getY() + dir.Y][pos.getX() + dir.X] instanceof Entity;
@@ -148,7 +150,7 @@ public class EntityController {
 
     /**
      * Method to return the Entity at the coordinates x and y
-     * 
+     *
      * @param x the x ordinate to look at
      * @param y the y ordinate to look at
      * @return the Entity at (x,y) - [y,x] in the array
@@ -255,9 +257,10 @@ public class EntityController {
     }
 
     /**
+     * create an enemy using a text line from a map file
      *
      * @param line a scanner of the line with the enemy details
-     * @return
+     * @return enemy
      */
     public static Enemy makeEnemy(Scanner line, Player p) {
         int x = line.nextInt();
@@ -310,7 +313,6 @@ public class EntityController {
      * Renders the entities respective assets on a GridPane at their locations
      * based on the entityGrid
      *
-     * @return
      */
     public GridPane renderEntities() {
         // Clear the entity GridPane for fresh render
