@@ -44,7 +44,7 @@ public class GameController {
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private Profile currentProfile;
     private int startTime;
-    private String currentMap;
+    private int currentMap;
 
     // X and Y variables for render translate methods
     private double renderX = 0;
@@ -246,6 +246,7 @@ public class GameController {
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
+            currentMap += 1;
             // Win game
         }
     }
