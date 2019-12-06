@@ -51,11 +51,14 @@ public class FileHandler {
         }
     }
 
-    // public String[] readLines() {
-    //     try {
-    //         return reader.lines();
-    //     }
-    // }
+    // TODO: s
+    public String[] readLines() {
+        ArrayList<String> lines = new ArrayList<>();
+        while (hasNext()) {
+            lines.add(nextLine());
+        }
+        return lines.toArray(new String[lines.size()]);
+    }
 
     /**
      * Checks if the reader is at the end of file.
@@ -69,6 +72,7 @@ public class FileHandler {
             reader.reset();
             return test > 0 ? true : false;
         } catch (IOException e) {
+            System.err.println(e.getMessage());
             return false; // TODO: Handle
         }
     }
@@ -96,15 +100,28 @@ public class FileHandler {
             writer.close();
         } catch (IOException e) {
             System.err.println(e.getMessage());
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());
         }
     }
 
+    // TODO:
+    public static void clearFile(String path) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
+            writer.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    // TODO:
     public static File[] getFiles(String dir) {
-        ArrayList<String> files = new ArrayList<>();
         File folder = new File(dir);   
         return folder.listFiles();
     }
 
+    // TODO:
     public static String getFileName(File f) {
         String[] file = f.getName().split("\\.");
         return file[0];

@@ -30,8 +30,6 @@ import java.io.FileNotFoundException;
  */
 public class GameController {
 
-    private static final String PROFILE_PATH = "./profile/profiles.txt";
-    private static final String MAP_DIR = "...";
     private static final String SAVE_DIR = "./savefiles/";
     private static final String LEADERBOARD_DIR = "...";
     public static final double SCALE_VAL = 0.6;
