@@ -22,7 +22,7 @@ import utils.FileHandler;
 
 public class LeaderboardMenu extends Menu {
 	
-	private static String MAP_DIR = "./levelfiles/";
+	private static String MAP_DIR = "";
 
 	private Leaderboard leaderboard;
 	private ArrayList<String> lbList;
@@ -53,14 +53,13 @@ public class LeaderboardMenu extends Menu {
 
 		Button nextLevel = new Button("Proceed to next level");
 		nextLevel.setOnAction((ActionEvent e) -> {
-            //gc.nextLevel();
+            gc.nextLevel();
 			// Close + start next level
 		});
 
 		Button back = new Button("Return to level screen");
 		back.setOnAction((ActionEvent e) -> {
 			gc.toLevelSelect();
-			// Return to map select
 		});
 		
 		menuLayout.getChildren().add(selection);

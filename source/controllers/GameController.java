@@ -37,7 +37,7 @@ import java.io.FileNotFoundException;
 public class GameController {
 
     private static final String SAVE_DIR = "./savefiles/";
-    private static final String LEADERBOARD_DIR = "...";
+    private static final String LEADERBOARD_DIR = "./leaderboards/";
     public static final double SCALE_VAL = 0.6;
 
     private MapController mapController;
@@ -45,7 +45,9 @@ public class GameController {
     private EntityController entityController;
     private GameMenu gameMenu = new GameMenu(this);
     private LevelMenu levelMenu = new LevelMenu(this);
+    
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
+    private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
     private Profile currentProfile;
     private int startTime;
     private int endTime;
@@ -68,6 +70,7 @@ public class GameController {
         root.getChildren().add(gameGroup);
         root.getChildren().add(gameMenu.render());
         root.getChildren().add(levelMenu.render());
+        root.getChildren().add(leaderboardMenu.render());
         root.getChildren().add(selectProfileMenu.render());
 
         selectProfileMenu.toggle();
@@ -76,6 +79,11 @@ public class GameController {
     public void restart() {
         loadGame(currentMap);
     }
+    
+    public void toLevelSelect() {
+		leaderboardMenu.toggle();
+		levelMenu.toggle();
+	}
 
     /**
      * Creates a 2d Entity Map and Cell Map and stores them in the mapController and
@@ -284,35 +292,46 @@ public class GameController {
         // Check if player is dead
         if (playerController.checkStatus(mapController)
                 || entityController.enemyCollision(playerController.getPlayer())) {
-            System.out.println("YOU DIED");
             restart();
         }
 
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
-            System.out.println("YOU WIN");
             if (loadTime == 0) {
                 endTime = currentTimeMillis() - startTime;
             } else if (loadTime < 0) {
                 endTime = currentTimeMillis() - loadTime;
             }
-
-            System.out.println("You took " + endTime / 1000 + " seconds!");
-
-
-            nextLevel();
-            // Win game
+            addTime(endTime);
+			leaderboardMenu.displayPlayer(currentProfile, endTime);
+			leaderboardMenu.loadLeaderboard(level,this);
+			leaderboardMenu.toggle();
         }
     }
+    public void addTime(int time) {
+		String fullPath = LEADERBOARD_DIR + "Level_" + level + "_lb";
+		System.out.println(level);
+		Leaderboard lb = new Leaderboard(fullPath);
+
+		lb.addTime(currentProfile, time);
+	}
 
     /**
      * Shows a leaderboard for a specific map in {@code LEADERBOARD_DIR}.
      *
      * @param path The file path inside {@code LEADERBOARD_DIR} for the map.
      */
-    public void showLeaderboard(String path) {
-
-    }
+    public ArrayList<String> getLeaderboard() {
+		if (level == 0) {
+			String fullPath = LEADERBOARD_DIR + "Level_1" + "_lb";
+			Leaderboard lb = new Leaderboard(fullPath);
+			return lb.displayBoard();
+		} else {
+			String fullPath = LEADERBOARD_DIR + "Level_" + level + "_lb";
+			Leaderboard lb = new Leaderboard(fullPath);
+			return lb.displayBoard();
+		}
+	}
 
     /**
      * adds a time to the map time file in {@code LEADERBOARD_DIR}.

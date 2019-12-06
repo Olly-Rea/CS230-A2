@@ -89,11 +89,8 @@ public class Profile {
 			}
 		}
 	}
-
-	//TODO:
-	@Override
-	public String toString() {
-		return String.format("%s - Highest Level : %d", name, highest);
+	public void incLevel(int level) {
+		highest = level > highest ? level+1 : level;
 	}
 
 
