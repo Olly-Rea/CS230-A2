@@ -45,6 +45,7 @@ public class GameController {
     private Profile currentProfile;
     private int startTime = currentTimeMillis();
     private int endTime;
+    private int loadTime;
     private String currentMap;
 
     // X and Y variables for render translate methods
@@ -126,6 +127,9 @@ public class GameController {
             case "INVENTORY":
                 playerController.createInventory(sc);
                 break;
+            case "TIME":
+              gameController.loadTime(sc);
+              break;
         }
 
         sc.close();
@@ -186,6 +190,13 @@ public class GameController {
     */
     public static int currentTimeMillis() {
       return (int) (System.currentTimeMillis());
+    }
+    public void loadTime(Scanner sc) {
+      try {
+        loadTime = sc.nextInt();
+      } catch (NoSuchElementException e) {
+        System.err.println("load time invalid");
+      }
     }
 
     /**
@@ -255,8 +266,12 @@ public class GameController {
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
+            if (loadTime == 0) {
             endTime = currentTimeMillis() - startTime;
+          } else if (loadTime < 0) {
+            } endTime = currentTimeMillis() - loadTime;
             System.out.println("You took " + endTime/1000 + " seconds!");
+
             // Win game
         }
     }
@@ -278,7 +293,7 @@ public class GameController {
     public void addMapTime(String path) {
       int saveTime = currentTimeMillis() - startTime;
       String timeAsString = Integer.toString(saveTime);
-      String[] output = {timeAsString};
+      String[] output = {"TIME", timeAsString};
       FileHandler.writeFile(path, output, false);
     }
 
