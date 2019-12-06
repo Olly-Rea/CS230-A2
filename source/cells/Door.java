@@ -5,7 +5,7 @@ import entities.Player;
 /**
  * The super class for cells of type door.
  *
- * @author advait kumar
+ * @author Advait Kumar
  * @version 1.00
  */
 public abstract class Door extends Cell {

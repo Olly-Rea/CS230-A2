@@ -8,8 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * CToken door class to store information on the amount of tokens required and chack if a given
- * player has the required tokens to open. Will also render the cell into the map 
+ * Token door class to store information on the amount of tokens required for a door and check if a given
+ * player has the tokens required to open. Will also render the cell into the map.
  * @version 1.0
  * @author TODO
  */

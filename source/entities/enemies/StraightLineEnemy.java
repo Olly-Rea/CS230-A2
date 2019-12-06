@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
+ * Subclass of the Enemy class; StraightLineEnemy
  * A class describing a straight line enemy which can either move horizontally or vertically
  *
  * @author Scott Barr

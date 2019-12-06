@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 
 /**
  * Subclass of the Enemy class; DumbTargeter
+ * Will always move in the lateral direction of the player
  *
  * @author Scott Barr
  * @version 1.0

@@ -16,6 +16,10 @@ public class Water extends Cell {
     private static final String IMAGE_NAME = "Water";
     private Image image;
 
+    /**
+     * Set image from file location
+     * @param path
+     */
     public void setImage(String path) {
         // String path = ASSET_PATH + "walls/" + imageName;
         try {

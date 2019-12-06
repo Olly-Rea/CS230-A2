@@ -17,6 +17,11 @@ public class Ground extends Cell {
     private static final String IMAGE_NAME = "Floor_Dark";
     private Image image;
 
+    /**
+     * Create a ground cell at a given location (x,y)
+     * @param x
+     * @param y
+     */
     public Ground(int x, int y) {
         super(CellType.GROUND, x, y);
         try {
@@ -25,15 +30,6 @@ public class Ground extends Cell {
             image = null;
             System.err.println("Ground image path not found");
         }
-    }
-
-    /**
-     * Create a ground cell at a given location (x,y)
-     * @param x
-     * @param y
-     */
-    public Ground(int x, int y) {
-        super(CellType.GROUND, x, y);
     }
 
     /**

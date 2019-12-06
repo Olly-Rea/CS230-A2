@@ -31,9 +31,6 @@ import java.io.FileNotFoundException;
  *
  * @version 1.0
  * @author Scott Barr, Olly Rea, Daniel Clenaghan
- *
- * @version 1.0.0
- * @author Olly Rea, Scott Barr
  */
 public class GameController {
 

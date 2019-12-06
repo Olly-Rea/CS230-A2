@@ -13,7 +13,7 @@ import utils.*;
 /**
  * Class to handle player movement and rendering
  *
- * @author Scott, Danny, Olly
+ * @author Scott Barr, Daniel Clenaghan, Olly Rea
  */
 public class PlayerController {
 

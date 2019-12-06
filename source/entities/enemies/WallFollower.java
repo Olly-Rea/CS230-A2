@@ -22,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
+ * Subclass of the Enemy class; WallFollower
  * A class describing a WallFollower Enemy which follows a wall anticlockwise or
  * clockwise.
  *

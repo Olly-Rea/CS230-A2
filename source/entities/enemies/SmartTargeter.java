@@ -20,10 +20,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
+ * Subclass of the Enemy class; SmartTargeter
  * SmartTargeter class which always takes the path which leads to the Player.
  *
  * @author Scott Barr
- * @version 1.0
  */
 public class SmartTargeter extends Enemy {
 
@@ -38,14 +38,19 @@ public class SmartTargeter extends Enemy {
         }
     }
 
-	private Direction dir;
+    private Direction dir;
+
+    public SmartTargeter(Vector pos, Player player) {
+        super(pos, player);
+    }
 
     /**
-     * Creates a new SmartTargeter enemy at position {@code pos} with a player for it
-     * to attempt to move towards
+     * Creates a distance grid which flood fills from the players position until
+     * every possible connecting cell is filled.
      *
-     * @param pos the initial position of the enemy
-     * @param player
+     * @param map The map containing the cells
+     * @return A 2d Array of integers the same size as the map filled with
+     * distances from the Players position.
      */
     private Integer[][] makeDistGrid(MapController map, EntityController ec) {
         // Initialise Variables
@@ -119,61 +124,9 @@ public class SmartTargeter extends Enemy {
     }
 
     /**
-     * Calculates the SmartTargeter's next move based on the map and the player's position from entity
-     * controller
-     *
-     * @param ex EntityController to find the player's position
-     * @param map MapController used to figure out the surroundings of the
-     * enemy.
+     * Renders the Enemy to the screen
      */
-	public void algorithm(MapController map, EntityController ec) {
-		// Generate the distance grid and set minDist to null and dir to null
-		Integer[][] distGrid = makeDistGrid(map, ec);
-		Integer minDist = null;
-		dir = null;
-
-		// If the distGrid at the enemies position is 0 then do not move
-		if (!player.getPos().equals(pos) && distGrid[pos.getY()][pos.getX()] != null) {
-			for (Direction d : Direction.values()) { // for all Directions (UP, RIGHT, DOWN, LEFT)
-				Cell next = map.getNextCell(new Vector(pos.getX(), pos.getY()), d); // get the next cell in that
-																					// direction
-				boolean existsEntity = ec.entityPresent(pos, d);
-				if (next instanceof Ground && !existsEntity) { // Confirm it's a ground cell
-					Integer dist = distGrid[pos.getY() + d.Y][pos.getX() + d.X]; // check the distance at that cell in
-					// distGrid
-					// If minDist is null and dist isn't null then set minDist to be dist
-					// and set facing direction of the enemy to be the direction d
-					if (minDist == null && dist != null) {
-						minDist = dist;
-						dir = d;
-					} else { // otherwise if dist is smaller than minDist set the new direction as d
-						if (dist < minDist) {
-							minDist = dist;
-							dir = d;
-						}
-					}
-				}
-			}
-		}
-
-		if (dir != null) { // if dir is null then do not move.
-			pos.add(dir); // otherwise add the dir to the positon.
-		}
-	}
-
-	/**
-	 * Generates a string containing this enemies direction, location and type
-	 *
-	 * @return String
-	 */
-	public String export() {
-		return String.format("ST %d %d", pos.getX(), pos.getY());
-	}
-
-	/**
-	 * Renders the Enemy to the screen
-	 */
-	public ImageView render() {
-		return new ImageView(image);
-	}
+    public ImageView render() {
+        return new ImageView(image);
+    }
 }

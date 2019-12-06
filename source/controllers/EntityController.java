@@ -1,11 +1,5 @@
 package controllers;
 
-/**
- * Stores information and method related to items and enemies
- *
- * @author Scott Barr, James Hogg, Daniel Clenaghan
- * @version 1.0
- */
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,6 +14,12 @@ import utils.Vector;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+/**
+ * Stores information and method related to items and enemies
+ *
+ * @author Scott Barr, James Hogg, Daniel Clenaghan
+ * @version 1.0
+ */
 public class EntityController {
 
     private Entity[][] entityGrid;

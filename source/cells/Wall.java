@@ -25,6 +25,10 @@ public class Wall extends Cell {
         super(CellType.WALL, x, y);
     }
 
+    /**
+     * Set image from a file location
+     * @param path
+     */
     public void setImage(String path) {
         // String path = ASSET_PATH + "walls/" + imageName;
         try {
