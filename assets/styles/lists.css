@@ -1,0 +1,28 @@
+
+.list-view {
+    -fx-background-color:rgba(0,0,0,0);
+    -fx-alignment:center;
+}
+
+.list-cell:empty {
+    -fx-opacity:0;
+}
+
+.list-cell {
+    -fx-background-color:rgb(70, 36, 2);
+    -fx-text-fill:rgb(101, 55, 28)
+}
+
+.list-cell:hover {
+    -fx-background-color:rgb(120, 61, 2);
+} 
+.list-cell:focused {
+    -fx-background-color:rgb(80, 40, 0);
+    -fx-border-color:rgb(62, 28, 9);
+}
+
+
+
+VBox {
+    -fx-alignment : center;
+}

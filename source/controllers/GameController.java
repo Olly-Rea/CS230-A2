@@ -43,6 +43,7 @@ public class GameController {
     private Profile currentProfile;
     private int startTime;
     private String currentMap;
+    private int level;
 
     // X and Y variables for render translate methods
     private double renderX = 0;
@@ -66,8 +67,6 @@ public class GameController {
 
     public void restart() {
         loadGame(currentMap);
-        levelMenu.toggle();
-        render();
     }
 
     /**
@@ -80,6 +79,10 @@ public class GameController {
     private void makeControllers(FileHandler fh) {
         String init = fh.nextLine();
         Scanner sc = new Scanner(init);
+        level = sc.nextInt();
+        sc.close();
+        init = fh.nextLine();
+        sc = new Scanner(init);
         int mapWidth = sc.nextInt();
         int mapHeight = sc.nextInt();
 
@@ -143,7 +146,11 @@ public class GameController {
         }
 
         currentMap = path;
-        levelMenu.toggle();
+        if (levelMenu.isVisible()){
+            levelMenu.toggle();
+        }
+
+        render();
     }
 
     /**
@@ -159,7 +166,8 @@ public class GameController {
 
         String path = SAVE_DIR + currentProfile.getName() + "/" + saveName + ".txt";
 
-        FileHandler.writeFile(path, mapExport,    false);
+        FileHandler.writeFile(path, level,        false);
+        FileHandler.writeFile(path, mapExport,    true);
         FileHandler.writeFile(path, playerExport, true);
         FileHandler.writeFile(path, mapSpecific,  true);
         FileHandler.writeFile(path, entityExport, true);
@@ -175,6 +183,16 @@ public class GameController {
     public void loadSaves() {
         levelMenu.loadSaves(currentProfile);
         levelMenu.toggle();
+    }
+
+    public void nextLevel() {
+        if (level+1 > currentProfile.getLevel()) {
+            currentProfile.incLevel(level);
+            currentProfile.deleteProfile();
+            currentProfile.saveProfile();
+        }
+        currentMap = "./levelfiles/" + LevelMenu.levels[level] + ".txt";
+        loadGame(currentMap);
     }
 
     /**
@@ -244,7 +262,7 @@ public class GameController {
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
-            //gc.loadGame();
+            nextLevel();
         }
     }
 

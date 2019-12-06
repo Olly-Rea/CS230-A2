@@ -46,7 +46,6 @@ public class LevelMenu extends Menu {
                 return;
             };
             gc.loadGame(path + selected + ".txt");
-            gc.render();
         });
 
         menuLayout.getChildren().add(goButton);

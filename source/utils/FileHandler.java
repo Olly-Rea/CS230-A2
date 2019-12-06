@@ -106,6 +106,20 @@ public class FileHandler {
         }
     }
 
+    public static void writeFile(String path, Object o, boolean append) {
+        BufferedWriter writer = null;
+        File file = new File(path);
+        try {
+            writer = new BufferedWriter(new FileWriter(file, append));
+            writer.write(o.toString() + "\n");
+            writer.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
     // TODO:
     public static void clearFile(String path) {
         try {

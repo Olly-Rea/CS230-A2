@@ -43,6 +43,9 @@ public class Profile {
     	return highest;
     }
 	
+	public void incLevel(int level) {
+		highest = level > highest ? level+1 : level;
+	}
 
 
 	//TODO:
