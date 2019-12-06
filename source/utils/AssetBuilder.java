@@ -88,17 +88,17 @@ public class AssetBuilder {
         
         if (NorthWest) {
             assetPath += "Light/Ground_Light1";
-        } else if (North) {
+        } else if (North /*|| (North && NorthEast) || (North && NorthWest)*/) {
             assetPath += "Light/Ground_Light2";
         } else if (NorthEast) {
             assetPath += "Light/Ground_Light3";
-        } else if (West) {
+        } else if (West /*|| (West && SouthWest) || (North && NorthWest)*/) {
             assetPath += "Light/Ground_Light4";
-        } else if (East) {
+        } else if (East /*|| (East && SouthEast) || (East && NorthEast)*/) {
             assetPath += "Light/Ground_Light5";
         } else if (SouthWest) {
             assetPath += "Light/Ground_Light6";
-        } else if (South) {
+        } else if (South /*|| (South && SouthEast) || (South && SouthWest)*/) {
             assetPath += "Light/Ground_Light7";
         } else if (SouthEast) {
             assetPath += "Light/Ground_Light8";
@@ -137,6 +137,9 @@ public class AssetBuilder {
         return basePath + WATER_MAP.get(bitMaskingAlgorithm(x, y, CellType.WATER)) + ".jpg";
     }
 
+    //Add boolean value for lighting
+    //Add SOME wall checks
+    
      /**
      * BitMasking algorithm to calculate which graphic should be used for a tile 
      * based on the tiles surrounding it; with checks for map edges

@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.transform.Scale;
 
 /**
  *
@@ -29,6 +30,7 @@ public class GameMenu extends Menu {
         //Create the game menu title
         Label outputLabel = new Label("THIS IS OUR GAME");
         menuLayout.getChildren().add(outputLabel);
+        double scaleVal = GameController.SCALE_VAL;
         
         //BUTTON LAYOUTS BELOW
         
@@ -39,34 +41,51 @@ public class GameMenu extends Menu {
         ImageView exitGameButton = null;
 
         try {
-            newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/exitGameButton.png")));
-            saveGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/saveGameButton.png")));
-            //newGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-            loadGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/loadGameButton.png")));
-            //loadGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-            exitGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/exitGameButton.png")));
-            //exitGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));                    
+            newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/newGameButton.png")));
+            newGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         } catch (FileNotFoundException e) {
-            newGameButton = null;
+            System.err.println("A button path wasn't found");
+        }
+        try {
+            saveGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/saveGameButton.png")));
+            saveGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        } catch (FileNotFoundException e) {
+            System.err.println("A button path wasn't found");
+        }
+        try {
+            loadGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/loadGameButton.png")));
+            loadGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        } catch (FileNotFoundException e) {
+            System.err.println("A button path wasn't found");
+        }
+        try {
+            exitGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/exitGameButton.png")));
+            exitGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));                    
+        } catch (FileNotFoundException e) {
             System.err.println("A button path wasn't found");
         }
         
         //Create the newGame button, assign the graphic, and add to VBox
-        Button newGame = new Button("New Game");
+        Button newGame = new Button();
         newGame.setGraphic(newGameButton);
+        newGame.setStyle("-fx-border-style: none; -fx-background-color:rgba(0,0,0,0)");
         newGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+                newGame.setStyle("-fx-scale: 0.8");
                 gc.restart();
+                toggle();
             }
         });
         menuLayout.getChildren().add(newGame);
         
         
         //Create the loadGame button, assign the graphic, and add to VBox
-        Button loadGame = new Button("Load Game");
+        Button loadGame = new Button();
         loadGame.setGraphic(loadGameButton);
+        loadGame.setStyle("-fx-border-style: none; -fx-background-color:rgba(0,0,0,0)");
         loadGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+                loadGame.setStyle("-fx-scale: 0.8");
                 gc.loadSaves();
                 toggle();
                 //Create load game scene
@@ -77,9 +96,10 @@ public class GameMenu extends Menu {
                 //Create the loadGame button, assign the graphic, and add to VBox
         Button saveGame = new Button();
         saveGame.setGraphic(saveGameButton);
-        saveGame.setStyle("-fx-border-style: none; -fx-background:none");
+        saveGame.setStyle("-fx-border-style: none; -fx-background-color:rgba(0,0,0,0)");
         saveGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+                saveGame.setStyle("-fx-scale: 0.8");
                 TextInputDialog dialog = new TextInputDialog("Enter the filename");
                 String result = "";
                 while (result.length() == 0) {
@@ -94,10 +114,12 @@ public class GameMenu extends Menu {
         
         
         //Create the exitGame button, assign the graphic, and add to VBox
-        Button exitGame = new Button("Exit Game");
+        Button exitGame = new Button();
         exitGame.setGraphic(exitGameButton);
+        exitGame.setStyle("-fx-border-style: none; -fx-background-color:rgba(0,0,0,0)");
         exitGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
+                exitGame.setStyle("-fx-scale: 0.8");
                 Platform.exit();
             }
         });
