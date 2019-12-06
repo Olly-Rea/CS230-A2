@@ -244,7 +244,7 @@ public class GameController {
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
-            // Win game
+            //gc.loadGame();
         }
     }
 

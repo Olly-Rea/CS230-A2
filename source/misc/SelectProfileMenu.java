@@ -79,6 +79,8 @@ public class SelectProfileMenu extends Menu {
         menuLayout.getChildren().add(deleteProfile);
         menuLayout.getChildren().add(newProfile);
         menuLayout.getChildren().add(createProfileMenu.render());
+        
+        scaleMenu();
     }
 
     private void makeSelection() {

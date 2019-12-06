@@ -49,6 +49,8 @@ public class LevelMenu extends Menu {
 
         menuLayout.getChildren().add(goButton);
         menuLayout.getChildren().add(selection);
+        
+        scaleMenu();
     }
 
     private ListView<String> setupMapChoice(String[] files) {

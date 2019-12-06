@@ -119,13 +119,7 @@ public class GameMenu extends Menu {
         });
         menuLayout.getChildren().add(exitGame);
         
-        double menuWidth = 1380 - menuLayout.getWidth();
-        double menuHeight = 1380 - menuLayout.getHeight();
-
-        menuLayout.setPadding(new Insets((menuHeight/4.5)*scaleVal, 
-                        (menuWidth/4.5)*scaleVal, 
-                        (menuHeight/4.5)*scaleVal, 
-                        (menuWidth/4.5)*scaleVal));
+        scaleMenu();
         
     }    
 }
