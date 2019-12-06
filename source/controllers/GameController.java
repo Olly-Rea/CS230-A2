@@ -37,7 +37,7 @@ import java.io.FileNotFoundException;
 public class GameController {
 
 	private static final String PROFILE_PATH = "./profile/profiles.txt";
-	private static final String MAP_DIR = "...";
+	private static final String MAP_DIR = "./levelfiles/";
 	private static final String SAVE_DIR = "...";
 	private static final String LEADERBOARD_DIR = "./leaderboards/";
 	public static final double SCALE_VAL = 0.6;
@@ -74,13 +74,20 @@ public class GameController {
 
 		selectProfileMenu.toggle();
 	}
+	
+	public void toLevelSelect() {
+		leaderboardMenu.toggle();
+		levelMenu.toggle();
+		
+	}
 
 	public void restart() {
 		loadGame(currentMap);
 		levelMenu.toggle();
 		render();
 	}
-
+	
+	
 	/**
 	 * Creates a 2d Entity Map and Cell Map and stores them in the mapController and
 	 * entityController
@@ -256,8 +263,8 @@ public class GameController {
 
 		// Check if game is won
 		if (playerController.checkGoal(mapController)) {
-			// Stop timer
-			// Call add time to leaderboard
+			// Int time = TIMER RESULT
+			// addTime(time,currentMap);
 			leaderboardMenu.displayPlayer(currentProfile, currentMapNum);
 			leaderboardMenu.loadLeaderboard(currentMapNum,this);
 			leaderboardMenu.toggle();
@@ -276,7 +283,7 @@ public class GameController {
 			Leaderboard lb = new Leaderboard(fullPath);
 			return lb.displayBoard();
 		} else {
-			String fullPath = LEADERBOARD_DIR + "Level_" + currentMap + "_lb";
+			String fullPath = LEADERBOARD_DIR + "Level_" + currentMapNum + "_lb";
 			Leaderboard lb = new Leaderboard(fullPath);
 			return lb.displayBoard();
 		}

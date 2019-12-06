@@ -21,6 +21,8 @@ import controllers.GameController;
 import utils.FileHandler;
 
 public class LeaderboardMenu extends Menu {
+	
+	private static String MAP_DIR = "./levelfiles/";
 
 	private Leaderboard leaderboard;
 	private ArrayList<String> lbList;
@@ -30,6 +32,7 @@ public class LeaderboardMenu extends Menu {
 	private Label second;
 	private Label third;
 	private Label player;
+    private String path = MAP_DIR;
 
 	public LeaderboardMenu(GameController gc) {
 		// set not visible
@@ -50,11 +53,13 @@ public class LeaderboardMenu extends Menu {
 
 		Button nextLevel = new Button("Proceed to next level");
 		nextLevel.setOnAction((ActionEvent e) -> {
+            gc.nextLevel();
 			// Close + start next level
 		});
 
 		Button back = new Button("Return to level screen");
 		back.setOnAction((ActionEvent e) -> {
+			gc.toLevelSelect();
 			// Return to map select
 		});
 		
@@ -78,8 +83,13 @@ public class LeaderboardMenu extends Menu {
 		
 	}
 	
+	/**
+	 * Displays the player's score under the leader board
+	 * @param profile
+	 * @param time
+	 */
 	public void displayPlayer(Profile profile, int time) {
-		String playerScore = profile.getName() + " + " + time;
+		String playerScore = "Your score: " + profile.getName() + " : " + time;
 		Label player = new Label(playerScore);
 		this.player = player;
 	}
