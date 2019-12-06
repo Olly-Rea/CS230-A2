@@ -13,7 +13,7 @@ import utils.FileHandler;
 
 public class Profile {
 
-	public static final String PROFILE_PATH = "./savefiles/profiles.txt";
+    public static final String PROFILE_PATH = "./savefiles/profiles.txt";
     private static final String SAVE_DIR = "./savefiles/";
 
     private String name;
