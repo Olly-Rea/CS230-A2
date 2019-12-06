@@ -7,6 +7,8 @@ package misc;
 
 
 import controllers.GameController;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +18,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import utils.FileHandler;
 import java.util.ArrayList;
+import javafx.geometry.Insets;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.transform.Scale;
 
 import misc.Profile;
 
@@ -30,27 +36,57 @@ public class SelectProfileMenu extends Menu {
 
     private Profile selection = null;
 
-
     public SelectProfileMenu(GameController gc) {
-        // set not visible
-        super();
 
+        super();
         createProfileMenu = new CreateProfileMenu(this, gc);
 
-        Button newProfile = new Button("Create New Profile");
+        ImageView newProfileButton = null;
+        ImageView selectProfileButton = null;
+        ImageView deleteProfileButton = null;
+
+        try {
+            newProfileButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/newProfileButton.png")));
+        } catch (FileNotFoundException e) {
+            System.err.println("new profile button path wasn't found");
+        }
+        try {
+            selectProfileButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/selectProfileButton.png")));
+        } catch (FileNotFoundException e) {
+            System.err.println("select profile button path wasn't found");
+        }
+        try {
+            deleteProfileButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/deleteProfileButton.png")));
+        } catch (FileNotFoundException e) {
+            System.err.println("new game button path wasn't found");
+        }
+        
+        Button newProfile = new Button();
+        // Add the button graphic and scale the button
+        newProfile.setGraphic(newProfileButton);
+        newProfile.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        // Add the event handler
         newProfile.setOnAction((ActionEvent e) -> {
             createProfileMenu.toggle();
             // newProfile.setVisible(false);
         });
 
-        Button useProfile = new Button("No player selected");
+        Button useProfile = new Button();
         useProfile.setDisable(true);
+        // Add the button graphic and scale the button
+        useProfile.setGraphic(selectProfileButton);
+        useProfile.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        // Add the event handler
         useProfile.setOnAction((ActionEvent e) -> {
             gc.setProfile(selection);
         });
 
-        Button deleteProfile = new Button("Delete Profile");
+        Button deleteProfile = new Button();
         deleteProfile.setDisable(true);
+        // Add the button graphic and scale the button
+        deleteProfile.setGraphic(deleteProfileButton);
+        deleteProfile.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        // Add the event handler
         deleteProfile.setOnAction((ActionEvent e) -> {
             selection.deleteProfile();
             useProfile.setDisable(true);
@@ -65,10 +101,10 @@ public class SelectProfileMenu extends Menu {
                     selection = val;
                     useProfile.setDisable(false);
                     deleteProfile.setDisable(false);
-                    useProfile.setText(String.format("Use %s!", val.getName()));
+                    //useProfile.setText(String.format("Use %s!", val.getName()));
                 } else {
                     selection = null;
-                    useProfile.setText("No player selected!");
+                    //useProfile.setText("No player selected!");
                 }
             
             }
@@ -81,13 +117,13 @@ public class SelectProfileMenu extends Menu {
         menuLayout.getChildren().add(createProfileMenu.render());
         
         scaleMenu();
+        
     }
 
     private void makeSelection() {
         ObservableList<Profile> items = FXCollections.observableArrayList(getProfiles());
         selectionList.setItems(items);
         selectionList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-
     }
 
     private Profile[] getProfiles() {
@@ -99,4 +135,16 @@ public class SelectProfileMenu extends Menu {
         }
         return profiles.toArray(new Profile[profiles.size()]);
     }
+    
+    @Override
+    public void scaleMenu() {
+        double menuWidth = 1380 - (menuLayout.getWidth());
+        double menuHeight = 1380 - (menuLayout.getHeight()) ;
+
+        menuLayout.setPadding(new Insets((menuHeight/7.5)*scaleVal, 
+                        (menuWidth/4.5)*scaleVal, 
+                        (menuHeight/4.5)*scaleVal, 
+                        (menuWidth/4.5)*scaleVal));
+    }
+    
 }

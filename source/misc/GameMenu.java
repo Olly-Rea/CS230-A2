@@ -27,10 +27,9 @@ public class GameMenu extends Menu {
 
     public GameMenu(GameController gc) {
         super();
-        menuLayout.getStylesheets().add("File:./assets/styles/button.css");
 
-        //BUTTON LAYOUTS BELOW
-        
+
+        menuLayout.setSpacing(80);
         //add the New Game button to the menu VBox
         ImageView newGameButton = null;
         ImageView loadGameButton = null;
@@ -62,10 +61,8 @@ public class GameMenu extends Menu {
         Button newGame = new Button();
         newGame.setGraphic(newGameButton);
         newGame.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-        newGame.setStyle("-fx-border-style: none; -fx-background-color:rgba(0,0,0,0)");
         newGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                newGame.setStyle("-fx-scale: 0.8");
                 gc.restart();
                 toggle();
             }
@@ -76,10 +73,8 @@ public class GameMenu extends Menu {
         Button loadGame = new Button();
         loadGame.setGraphic(loadGameButton);
         loadGame.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-        loadGame.setStyle("-fx-border-style: none; -fx-background-color:rgba(0,0,0,0)");
         loadGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                loadGame.setStyle("-fx-scale: 0.8");
                 gc.loadSaves();
                 toggle();
                 //Create load game scene
@@ -93,7 +88,6 @@ public class GameMenu extends Menu {
         saveGame.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         saveGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                saveGame.setStyle("-fx-scale: 0.8");
                 TextInputDialog dialog = new TextInputDialog("Enter the filename");
                 String result = "";
                 while (result.length() == 0) {
@@ -110,10 +104,8 @@ public class GameMenu extends Menu {
         Button exitGame = new Button();
         exitGame.setGraphic(exitGameButton);
         exitGame.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-        exitGame.setStyle("-fx-border-style: none; -fx-background-color:rgba(0,0,0,0)");
         exitGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                exitGame.setStyle("-fx-scale: 0.8");
                 Platform.exit();
             }
         });

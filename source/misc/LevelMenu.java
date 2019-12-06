@@ -8,13 +8,19 @@ package misc;
 import controllers.GameController;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.transform.Scale;
 import utils.FileHandler;
 
 /**
@@ -36,8 +42,22 @@ public class LevelMenu extends Menu {
         // set not visible
         super();        
 
-        // go button
-        Button goButton = new Button("Go");
+        ImageView selectLevelButton = null;
+        try {
+            selectLevelButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/selectLevelButton.png")));
+        } catch (FileNotFoundException e) {
+            System.err.println("new profile button path wasn't found");
+        }
+        
+        // Go button
+        Button goButton = new Button();
+        
+//      goButton.setDisable(true);
+
+        // Add the button graphic and scale the button
+        goButton.setGraphic(selectLevelButton);
+        goButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        // Add the event handler
         goButton.setOnAction((ActionEvent e)->{
             if (selected == null) {
                 this.toggle();
@@ -47,12 +67,12 @@ public class LevelMenu extends Menu {
             gc.render();
         });
 
-        menuLayout.getChildren().add(goButton);
         menuLayout.getChildren().add(selection);
+        menuLayout.getChildren().add(goButton);
         
-        scaleMenu();
+        this.scaleMenu();
     }
-
+    
     private ListView<String> setupMapChoice(String[] files) {
         ListView<String> maps = new ListView<>();
         maps.setItems(FXCollections.observableArrayList(files));

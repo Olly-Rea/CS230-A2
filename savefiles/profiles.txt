@@ -1,7 +1,7 @@
-player1:7
-player2:0
-player3:0
-player4:0
-player5:0
-player6:0
-aa:0
+player1:8
+player2:1
+player3:1
+player4:1
+player5:1
+player6:1
+aa:1
