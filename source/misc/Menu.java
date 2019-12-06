@@ -17,10 +17,11 @@ import javafx.scene.layout.VBox;
 public abstract class Menu {
     
     double scaleVal = GameController.SCALE_VAL;
-    protected VBox menuLayout = new VBox(10);
+    protected VBox menuLayout = new VBox(50);
 
     public Menu() {
         menuLayout.setVisible(false);
+        menuLayout.getStylesheets().add("File:./assets/styles/menu.css");
     }
 
     public VBox render() {

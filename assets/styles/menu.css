@@ -1,0 +1,42 @@
+ .root {
+	-fx-font-family: "Courier New";
+ }
+ 
+ VBox .menuLayout {
+	-fx-alignment: center;
+}
+
+.list-cell {
+	-fx-background-color: rgba(0,0,0,0.5);
+	-fx-text-fill: white;
+	-fx-font-size: 20pt;
+}
+ 
+.list-view {
+	-fx-background-image: url("../visuals/cells/Ground/Ground_Dark.jpg");
+	-fx-background-repeat: repeat;   
+	-fx-max-width: 460px;
+	-fx-max-height: 300px;
+	-fx-padding: 0;
+}
+ 
+ .list-cell:empty {
+	 -fx-opacity: 0;
+ }
+ 
+ .list-cell:hover, .list-cell:selected {
+	-fx-background-color: rgba(160,119,72, 0.5);
+	/*-fx-text-fill:rgb(0,0,0);*/
+ }
+
+.button {
+	-fx-border-style: none;
+	-fx-background-color: rgba(0,0,0,0);
+	-fx-padding: 0 0 -60 0;
+}
+.button:pressed {
+    -fx-scale-x: 0.96;
+    -fx-scale-y: 0.96;
+	-fx-transform-x: -80px;
+	-fx-transform-y: -20px;
+}

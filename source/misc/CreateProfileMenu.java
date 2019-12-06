@@ -42,6 +42,8 @@ public class CreateProfileMenu extends Menu {
         newProfile.getChildren().add(submit);
         
         menuLayout.getChildren().add(newProfile);
+        
+        scaleMenu();
     }
 
 
