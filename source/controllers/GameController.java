@@ -123,11 +123,7 @@ public class GameController {
             case "DOOR":
                 mapController.initDoor(sc);
                 break;
-<<<<<<< HEAD
-            case "INVENTORY" :
-=======
             case "INVENTORY":
->>>>>>> Master
                 playerController.createInventory(sc);
                 break;
         }
@@ -163,14 +159,6 @@ public class GameController {
         String[] mapSpecific = mapController.exportSpecific();
         String[] playerExport = playerController.export();
         String[] entityExport = entityController.export();
-<<<<<<< HEAD
-
-        FileHandler.writeFile(path, mapExport, false);
-        FileHandler.writeFile(path, playerExport, true);
-        FileHandler.writeFile(path, mapSpecific, true);
-        FileHandler.writeFile(path, entityExport, true);
-=======
->>>>>>> Master
 
         String path = SAVE_DIR + currentProfile.getName() + "/" + saveName + ".txt";
 
@@ -178,6 +166,7 @@ public class GameController {
         FileHandler.writeFile(path, playerExport, true);
         FileHandler.writeFile(path, mapSpecific,  true);
         FileHandler.writeFile(path, entityExport, true);
+        addMapTime(path);
     }
 
     public void setProfile(Profile p) {
@@ -336,16 +325,9 @@ public class GameController {
             gameGroup.getChildren().add(playerGroup);
             renderPlayer();
         }
-<<<<<<< HEAD
-        ImageView featherEdge = new ImageView(assetImg);
-        featherEdge.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-        root.getChildren().add(featherEdge);
-
-=======
     }
 
     public void renderPlayer() {
->>>>>>> Master
         //Calculate the value the playerLayer offsets the player by
         double playerOffset = (400*1.2) * SCALE_VAL+0.2;
         //Offset the map to focus on the player start position
@@ -359,38 +341,8 @@ public class GameController {
         } else {
             renderY = (playerController.getPlayerPos().getY()) + playerOffset;
         }
-<<<<<<< HEAD
-
-        root.getChildren().get(0).setLayoutX(renderX);
-        root.getChildren().get(1).setLayoutX(renderX);
-        root.getChildren().get(0).setLayoutY(renderY);
-        root.getChildren().get(1).setLayoutY(renderY);
-
-    }
-
-    public void renderMove(Group root, int x, int y, double scaleVal) {
-
-        renderX += x*scaleVal;
-        renderY += y*scaleVal;
-
-        if (renderX <= 400) {
-            root.getChildren().get(0).setLayoutX(renderX);
-            root.getChildren().get(1).setLayoutX(renderX);
-        } else {
-            renderX = 400;
-        }
-
-        if (renderY <= 400) {
-            root.getChildren().get(0).setLayoutY(renderY);
-            root.getChildren().get(1).setLayoutY(renderY);
-        } else {
-            renderY = 400;
-        }
-
-=======
         //render the map and entity layer beehind the player - adjusted for current scaling values
         ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutX(renderX-30);
         ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutY(renderY+10);
->>>>>>> Master
     }
 }
