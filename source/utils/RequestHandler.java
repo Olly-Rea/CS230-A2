@@ -17,7 +17,7 @@ public class RequestHandler {
     /**
      * Sends a get request to the url with specific query parameters.
      *
-     * @param url
+     * @param uri used to create a new url
      * @param params
      */
     public static String get(String uri) {
@@ -37,7 +37,10 @@ public class RequestHandler {
 
         return null;
     }
-
+    /**
+    * Deciphers the puzzle taken from the Url
+    * @param puzzle the puzzle to be deciphered
+    */
     public static String decipher(String puzzle) {
         char[] chars = puzzle.toCharArray();
         int val = 1;

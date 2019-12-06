@@ -24,7 +24,7 @@ public class EntityController {
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     GridPane entityGridPane = new GridPane();
-    
+
     /**
      * Sets entityGrid and enemies
      *
@@ -128,7 +128,7 @@ public class EntityController {
      * @param map the map will be passed through to each enemy to assist their
      * next move calculation.
      */
-    public void moveEnemies(MapController map) {
+    public void moveEnemies(MapController map, EntityController ec) {
         for (int i = 0; i < enemies.size(); i++) {
             // Get the enemy to move
             Enemy moveEnemy = enemies.get(i);
@@ -138,7 +138,7 @@ public class EntityController {
             x = moveEnemy.getPos().getX();
             y = moveEnemy.getPos().getY();
             entityGrid[y][x] = null;
-            moveEnemy.algorithm(map, this);
+            moveEnemy.algorithm(map, ec);
             x = moveEnemy.getPos().getX();
             y = moveEnemy.getPos().getY();
             entityGrid[y][x] = moveEnemy;
@@ -281,7 +281,7 @@ public class EntityController {
      * Returns a new item based on the char in the map text file
      *
      * @param x the x position of the item
-     * @param y the y positio of the item
+     * @param y the y position of the item
      * @param c the character in the map file
      * @return an instance of an item depending on the character given
      */

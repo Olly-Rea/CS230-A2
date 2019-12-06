@@ -42,6 +42,8 @@ public class GameController {
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private Profile currentProfile;
     private int startTime;
+    private int endTime;
+    private int loadTime;
     private String currentMap;
     private int level;
 
@@ -70,8 +72,8 @@ public class GameController {
     }
 
     /**
-     * Creates a 2d Entity Map and Cell Map and stores them in the mapController
-     * and entityController
+     * Creates a 2d Entity Map and Cell Map and stores them in the mapController and
+     * entityController
      *
      * @param fh The Handler reading the Map/LoadFile
      * @return A 2d array of cells to construct the MapController with
@@ -111,21 +113,24 @@ public class GameController {
         String keyword = sc.next();
 
         switch (keyword) {
-            case "PLAYER":
-                playerController = new PlayerController(EntityController.makePlayer(sc));
-                break;
-            case "ENEMY":
-                entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
-                break;
-            case "TELEPORTER":
-                mapController.linkTeleporters(sc);
-                break;
-            case "DOOR":
-                mapController.initDoor(sc);
-                break;
-            case "INVENTORY":
-                playerController.createInventory(sc);
-                break;
+        case "PLAYER":
+            playerController = new PlayerController(EntityController.makePlayer(sc));
+            break;
+        case "ENEMY":
+            entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
+            break;
+        case "TELEPORTER":
+            mapController.linkTeleporters(sc);
+            break;
+        case "DOOR":
+            mapController.initDoor(sc);
+            break;
+        case "INVENTORY":
+            playerController.createInventory(sc);
+            break;
+        case "TIME":
+            loadTime(sc);
+            break;
         }
 
         sc.close();
@@ -146,17 +151,18 @@ public class GameController {
         }
 
         currentMap = path;
-        if (levelMenu.isVisible()){
+        if (levelMenu.isVisible()) {
             levelMenu.toggle();
         }
 
+        startTime = currentTimeMillis();
         render();
     }
 
     /**
      * Method to return a new savefile
      *
-     * @param path
+     * @param path path to save data to
      */
     public void saveGame(String saveName) {
         String[] mapExport = mapController.exportMap(entityController);
@@ -166,11 +172,12 @@ public class GameController {
 
         String path = SAVE_DIR + currentProfile.getName() + "/" + saveName + ".txt";
 
-        FileHandler.writeFile(path, level,        false);
-        FileHandler.writeFile(path, mapExport,    true);
+        FileHandler.writeFile(path, level, false);
+        FileHandler.writeFile(path, mapExport, true);
         FileHandler.writeFile(path, playerExport, true);
-        FileHandler.writeFile(path, mapSpecific,  true);
+        FileHandler.writeFile(path, mapSpecific, true);
         FileHandler.writeFile(path, entityExport, true);
+        addMapTime(path);
     }
 
     public void setProfile(Profile p) {
@@ -185,8 +192,25 @@ public class GameController {
         levelMenu.toggle();
     }
 
+    /**
+     * Converts current system time to Integer
+     *
+     */
+    public static int currentTimeMillis() {
+        return (int) (System.currentTimeMillis());
+    }
+
+    /**
+     * Loads saved time from map file
+     * 
+     * @param sc scanner
+     */
+    public void loadTime(Scanner sc) {
+        loadTime = sc.nextInt();
+    }
+
     public void nextLevel() {
-        if (level+1 > currentProfile.getLevel()) {
+        if (level + 1 > currentProfile.getLevel()) {
             currentProfile.incLevel(level);
             currentProfile.deleteProfile();
             currentProfile.saveProfile();
@@ -204,45 +228,44 @@ public class GameController {
         // Get the firection to move in
         Direction dir = null;
         switch (e.getCode()) {
-            case W:
-            case UP:
-                dir = Direction.UP;
-                break;
-            case A:
-            case LEFT:
-                dir = Direction.LEFT;
-                break;
-            case S:
-            case DOWN:
-                dir = Direction.DOWN;
-                break;
-            case D:
-            case RIGHT:
-                dir = Direction.RIGHT;
-                break;
-            case ESCAPE:
-                gameMenu.toggle();
-                return;
-            case F1:
-                levelMenu.toggle();
-                return;
-            case F2:
-                selectProfileMenu.toggle();
-                return;
-            default:
-                return;
+        case W:
+        case UP:
+            dir = Direction.UP;
+            break;
+        case A:
+        case LEFT:
+            dir = Direction.LEFT;
+            break;
+        case S:
+        case DOWN:
+            dir = Direction.DOWN;
+            break;
+        case D:
+        case RIGHT:
+            dir = Direction.RIGHT;
+            break;
+        case ESCAPE:
+            gameMenu.toggle();
+            return;
+        case F1:
+            levelMenu.toggle();
+            return;
+        case F2:
+            selectProfileMenu.toggle();
+            return;
+        default:
+            return;
         }
         if (gameMenu.isVisible()) {
             return;
         }
 
-        //Make the move based on this direction
+        // Make the move based on this direction
         playerController.move(dir, mapController);
-        //Update the player asset so that the player is facing the last direction moved
+        // Update the player asset so that the player is facing the last direction moved
         playerController.getPlayer().updatePlayerAsset(dir);
         playerController.renderPlayer();
         renderPlayer();
-
 
         // Check entity grid
         entityController.checkItem(playerController.getPlayer());
@@ -250,7 +273,7 @@ public class GameController {
         renderPlayer();
 
         // Update enemies
-        entityController.moveEnemies(mapController);
+        entityController.moveEnemies(mapController, entityController);
 
         // Check if player is dead
         if (playerController.checkStatus(mapController)
@@ -262,7 +285,17 @@ public class GameController {
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
+            if (loadTime == 0) {
+                endTime = currentTimeMillis() - startTime;
+            } else if (loadTime < 0) {
+                endTime = currentTimeMillis() - loadTime;
+            }
+
+            System.out.println("You took " + endTime / 1000 + " seconds!");
+
+
             nextLevel();
+            // Win game
         }
     }
 
@@ -281,12 +314,15 @@ public class GameController {
      * @param path THe file path for the map.
      */
     public void addMapTime(String path) {
-
+        int saveTime = currentTimeMillis() - startTime;
+        // String timeAsString = Integer.toString(saveTime);
+        // String[] output = { "TIME", timeAsString };
+        FileHandler.writeFile(path, "TIME "+saveTime, true);
     }
 
     /**
-     * Initial render method to display the map and orient it to the player
-     * start position
+     * Initial render method to display the map and orient it to the player start
+     * position
      */
     public void render() {
         if (currentMap != null) {
@@ -307,9 +343,9 @@ public class GameController {
             Group playerGroup = new Group();
             // Render Player in center of screen last
             GridPane playerLayer = playerController.renderPlayer();
-            playerLayer.getTransforms().add(new Scale(SCALE_VAL+0.2, SCALE_VAL+0.2, 0, 0));
+            playerLayer.getTransforms().add(new Scale(SCALE_VAL + 0.2, SCALE_VAL + 0.2, 0, 0));
             playerGroup.getChildren().add(playerLayer);
-            playerGroup.getChildren().get(0).setLayoutX(-200*SCALE_VAL+0.2);
+            playerGroup.getChildren().get(0).setLayoutX(-200 * SCALE_VAL + 0.2);
             // Render the feather-edge effect around the outside of the screen
             Image assetImg;
             try {
@@ -322,7 +358,7 @@ public class GameController {
             featherEdge.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
             playerGroup.getChildren().add(featherEdge);
 
-            //Add the two layers to the gameGroup layer
+            // Add the two layers to the gameGroup layer
             gameGroup.getChildren().add(worldGroup);
             gameGroup.getChildren().add(playerGroup);
             renderPlayer();
@@ -330,9 +366,9 @@ public class GameController {
     }
 
     public void renderPlayer() {
-        //Calculate the value the playerLayer offsets the player by
-        double playerOffset = (400*1.2) * SCALE_VAL+0.2;
-        //Offset the map to focus on the player start position
+        // Calculate the value the playerLayer offsets the player by
+        double playerOffset = (400 * 1.2) * SCALE_VAL + 0.2;
+        // Offset the map to focus on the player start position
         if (playerController.getPlayerPos().getX() > 1) {
             renderX = ((playerController.getPlayerPos().getX() - 1) * (-200 * SCALE_VAL)) + playerOffset;
         } else {
@@ -343,8 +379,9 @@ public class GameController {
         } else {
             renderY = (playerController.getPlayerPos().getY()) + playerOffset;
         }
-        //render the map and entity layer beehind the player - adjusted for current scaling values
-        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutX(renderX-30);
-        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutY(renderY+10);
+        // render the map and entity layer beehind the player - adjusted for current
+        // scaling values
+        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutX(renderX - 30);
+        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutY(renderY + 10);
     }
 }
