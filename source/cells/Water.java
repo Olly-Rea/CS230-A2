@@ -9,14 +9,15 @@ import javafx.scene.image.ImageView;
 public class Water extends Cell {
 
     private static final String IMAGE_NAME = "Water";
-    private static Image image;
+    private Image image;
 
-    static {
+    public void setImage(String path) {
+        // String path = ASSET_PATH + "walls/" + imageName;
         try {
-            image = new Image(new FileInputStream(ASSET_PATH + IMAGE_NAME + ".jpg"));
+            image = new Image(new FileInputStream(path));
         } catch (FileNotFoundException e) {
             image = null;
-            System.err.println("Water image path not found");
+            System.err.println("Wall image path not found at '" + path + "'");
         }
     }
 

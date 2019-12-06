@@ -1,32 +1,36 @@
 package entities.enemies;
 
-import controllers.EntityController;
 //Local imports
 import controllers.MapController;
+import controllers.EntityController;
 import cells.Cell;
-import cells.CellType;
 import cells.Ground;
 import entities.Enemy;
 import entities.Player;
 import utils.Direction;
 import utils.Vector;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 //Java imports
 import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 //JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Subclass of the Enemy class; DumbTargeter
+ * 
+ * @author Scott Barr
+ */
 public class DumbTargeter extends Enemy {
 
-    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/dumbTargeter.png";
     private static Image image;
 
     static {
         try {
-            image = new Image(new FileInputStream(ASSET_PATH));
+            image = new Image(new FileInputStream(ASSET_PATH + "Dumb/Mummy_Up.png"));
         } catch (FileNotFoundException e) {
             image = null;
             System.err.println("DumbTargeter image path not found");
@@ -36,7 +40,6 @@ public class DumbTargeter extends Enemy {
     /**
      * The player.
      */
-    private Player player;
     private Direction dir;
 
     /**
@@ -45,8 +48,7 @@ public class DumbTargeter extends Enemy {
      * @param vector the position of targeting enemy
      */
     public DumbTargeter(Vector vector, Player p) {
-        super(vector);
-        this.player = p;
+        super(vector, p);
     }
 
     /**
@@ -56,10 +58,33 @@ public class DumbTargeter extends Enemy {
      * @param map The MapController to obtain the details of the environment
      */
     public void algorithm(MapController map, EntityController ec) {
+
+        ArrayList<Direction> potential = getDirection();
+        dir = null;
+        // For any potential directions check whether that direction is a valid move
+        for (int i = 0; i < potential.size(); i++) {
+            Direction d = potential.get(i);
+            Cell next = map.getNextCell(pos, d); 
+            boolean existsEntity = ec.entityPresent(pos, d);
+            if (next instanceof Ground && !existsEntity) {
+                dir = d;
+            }
+        }
+        
+        if (!player.getPos().equals(pos) && dir != null) {
+            pos.add(dir);
+        }
+    }
+
+    /**
+     * Method to get the current direction of the DumbTargeter
+     * 
+     * @return an ArrayList of potential directions the DumbTargeter could head
+     */
+    private ArrayList<Direction> getDirection() {
         // Initialise variables
         Vector playerPos = player.getPos();
         ArrayList<Direction> potential = new ArrayList<>();
-
         // If players x position > enemy pos then RIGHT is potential
         if (playerPos.getX() > pos.getX()) {
             potential.add(Direction.RIGHT);
@@ -74,21 +99,18 @@ public class DumbTargeter extends Enemy {
             potential.add(dir = Direction.UP);
         }
 
-        // For any potential directions check whether that direction is a valid move
-        for (int i = 0; i < potential.size(); i++) {
-            Direction d = potential.get(i);
-            Cell next = map.getNextCell(pos, d);
-            boolean existsEntity = ec.entityPresent(pos, dir);
-            if (next instanceof Ground && !existsEntity) {
-                dir = d;
-            }
-        }
 
-        pos.add(dir);
+        return potential;
     }
 
+    /**
+     * Method to export the specifics of this DumbTargeter to a String
+     * 
+     * @return a String containing the specifics of this enemy, as required by 
+     *         the map file format 
+     */
     public String export() {
-        return String.format("DT %d %d", pos.getX(), pos.getY());
+        return String.format("%d %d DT", pos.getX(), pos.getY());
     }
 
     /**

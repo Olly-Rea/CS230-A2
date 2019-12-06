@@ -7,13 +7,16 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Local imports
 import entities.*;
 import entities.enemies.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import utils.Direction;
 import utils.Rotation;
 import utils.Vector;
+
+//JavaFX imports
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class EntityController {
 
@@ -56,6 +59,13 @@ public class EntityController {
         }
     }
 
+    /**
+     * Method for enemies to check if an item exists in their path
+     * 
+     * @param pos the position of the enemy
+     * @param dir the direction the enemy is travelling in
+     * @return if an item is present in the next 
+     */
     public boolean entityPresent(Vector pos, Direction dir) {
         return entityGrid[pos.getY() + dir.Y][pos.getX() + dir.X] instanceof Entity;
     }
@@ -136,12 +146,27 @@ public class EntityController {
         }
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Method to return the Entity at the coordinates x and y
+     * 
+     * @param x the x ordinate to look at
+     * @param y the y ordinate to look at
+     * @return the Entity at (x,y) - [y,x] in the array
+     */
+    public Entity getEntity(int x, int y) {
+        return entityGrid[y][x];
+    }
+
+>>>>>>> Master
     /**
      * Returns an array of Strings of the state of the entities in the game.
      *
      * @return String array, 1 for each entity defining their details.
      */
     public String[] export() {
+<<<<<<< HEAD
         // private String[] exportArray;
         // private int numberOfColumns = entityGrid.length();
         // private int numberOfRows;
@@ -158,6 +183,13 @@ public class EntityController {
         // }
         // } return exportArray;s
         return null;
+=======
+        String[] export = new String[enemies.size()];
+        for (int i = 0; i < export.length; i++) {
+            export[i] = "ENEMY " + enemies.get(i).export();
+        }
+        return export;
+>>>>>>> Master
     }
 
     /**
@@ -180,19 +212,19 @@ public class EntityController {
      * @param pos the position the enemy is created at
      * @return the instance of the StraightLineEnemy
      */
-    private static StraightLineEnemy makeSL(Scanner line, Vector pos) {
+    private static StraightLineEnemy makeSL(Scanner line, Vector pos, Player player) {
         String faceDir = line.next();
         switch (faceDir) {
             case "UP":
-                return new StraightLineEnemy(pos, Direction.UP);
+                return new StraightLineEnemy(pos, player, Direction.UP);
             case "RIGHT":
-                return new StraightLineEnemy(pos, Direction.RIGHT);
+                return new StraightLineEnemy(pos, player, Direction.RIGHT);
             case "DOWN":
-                return new StraightLineEnemy(pos, Direction.DOWN);
+                return new StraightLineEnemy(pos, player, Direction.DOWN);
             case "LEFT":
-                return new StraightLineEnemy(pos, Direction.LEFT);
+                return new StraightLineEnemy(pos, player, Direction.LEFT);
             default:
-                return new StraightLineEnemy(pos, Direction.UP);
+                return new StraightLineEnemy(pos, player, Direction.UP);
         }
     }
 
@@ -204,7 +236,7 @@ public class EntityController {
      * @param pos the position the enemy is created at
      * @return the instance of the StraightLineEnemy
      */
-    private static WallFollower makeWF(Scanner line, Vector pos) {
+    private static WallFollower makeWF(Scanner line, Vector pos, Player player) {
         Direction dir;
         Rotation rot;
 
@@ -214,26 +246,34 @@ public class EntityController {
         switch (faceDir) {
             case "UP":
                 dir = Direction.UP;
-            case "RIGHT":
+                break;
+                case "RIGHT":
                 dir = Direction.RIGHT;
-            case "DOWN":
+                break;
+                case "DOWN":
                 dir = Direction.DOWN;
+                break;
             case "LEFT":
                 dir = Direction.LEFT;
+                break;
             default:
                 dir = Direction.UP;
+                break;
         }
 
         switch (rotation) {
             case "CW":
                 rot = Rotation.CW;
+                break;
             case "ACW":
                 rot = Rotation.ACW;
+                break;
             default:
                 rot = Rotation.ACW;
+                break;
         }
 
-        return new WallFollower(pos, dir, rot);
+        return new WallFollower(pos, player, dir, rot);
     }
 
     /**
@@ -247,9 +287,9 @@ public class EntityController {
         String type = line.next();
         switch (type) {
             case "SL":
-                return makeSL(line, new Vector(x, y));
+                return makeSL(line, new Vector(x, y), p);
             case "WF":
-                return makeWF(line, new Vector(x, y));
+                return makeWF(line, new Vector(x, y), p);
             case "DT":
                 return new DumbTargeter(new Vector(x, y), p);
             case "ST":

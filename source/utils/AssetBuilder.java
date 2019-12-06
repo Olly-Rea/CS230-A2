@@ -2,6 +2,7 @@ package utils;
 
 //Local imports
 import cells.*;
+
 //Java imports
 import java.util.HashMap;
 
@@ -72,29 +73,47 @@ public class AssetBuilder {
     }
 
     /**
-     * Possible Method to connect water textures
-     *
-     * @return the path to the correct water texture
-     */
-    public String waterCheck() {
-        return "";
-    }
-
-    /**
      * Method to check which wall graphic should be assigned to a wall cell -
-     * Checks the surrounding cells - 9x9 grid - to determine the graphic
      *
      * @param x The x value of the wall cell
      * @param y The y value of the wall cell
      * @return the path to the correct wall texture
      */
     public String getWallType(int x, int y) {
-
         // Create the base of the path string
-        String basePath = "./assets/visuals/cells/walls/";
-        // Array reference value
-        int wallRef = 0;
+        String basePath = "./assets/visuals/cells/Walls/";
+        // Return a string with the wall type from the array reference value
+        return basePath + WALL_MAP.get(bitMaskingAlgorithm(x, y, CellType.WALL)) + ".jpg";
+    }
+    
+    /**
+     * Method to check which wall graphic should be assigned to a wall cell -
+     *
+     * @param x The x value of the wall cell
+     * @param y The y value of the wall cell
+     * @return the path to the correct wall texture
+     */    
+    public String getWaterType(int x, int y) {
+        // Create the base of the path string
+        String basePath = "./assets/visuals/cells/Water/";     
+        // Return a string with the water type from the array reference value
+        return basePath + WATER_MAP.get(bitMaskingAlgorithm(x, y, CellType.WATER)) + ".jpg";
+    }
 
+     /**
+     * BitMasking algorithm to calculate which graphic should be used for a tile 
+     * based on the tiles surrounding it; with checks for map edges
+     *
+     * @param x The x value of the wall cell
+     * @param y The y value of the wall cell
+     * @param type The CellType of the input cell
+     * 
+     * @return the path to the correct wall texture
+     */
+    private int bitMaskingAlgorithm(int x, int y, CellType type) {
+        
+        int assetRef = 0;
+        
         // Top row booleans
         boolean NorthWest = false;
         boolean North = false;
@@ -118,11 +137,11 @@ public class AssetBuilder {
             NorthEast = true;
             //Calc middle row
             West = true;
-            East = map[y][x + 1].getType() == CellType.WALL;
+            East = map[y][x + 1].getType() == type;
             //Calc bottom row
             SouthWest = true;
-            South = map[y + 1][x].getType() == CellType.WALL;
-            SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+            South = map[y + 1][x].getType() == type;
+            SouthEast = map[y + 1][x + 1].getType() == type;
         
         // Top-Right corner
         } else if (y == 0 && x == map[y].length - 1) {
@@ -132,11 +151,11 @@ public class AssetBuilder {
             North = true;
             NorthEast = true;
             //Calc middle row
-            West = map[y][x - 1].getType() == CellType.WALL;
+            West = map[y][x - 1].getType() == type;
             East = true;
             //Calc bottom row
-            SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
-            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthWest = map[y + 1][x - 1].getType() == type;
+            South = map[y + 1][x].getType() == type;
             SouthEast = true;
 
         //Bottom-Left corner
@@ -144,11 +163,11 @@ public class AssetBuilder {
 
             //Edge-case top row is always true
             NorthWest = true;
-            North = map[y - 1][x].getType() == CellType.WALL;
-            NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+            North = map[y - 1][x].getType() == type;
+            NorthEast = map[y - 1][x + 1].getType() == type;
             //Calc middle row
             West = true;
-            East = map[y][x + 1].getType() == CellType.WALL;
+            East = map[y][x + 1].getType() == type;
             //Calc bottom row
             SouthWest = true;
             South = true;
@@ -158,11 +177,11 @@ public class AssetBuilder {
         } else if (y == map.length - 1 && x == map[y].length - 1) {
 
             //Edge-case top row is always true
-            NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
-            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthWest = map[y - 1][x - 1].getType() == type;
+            North = map[y - 1][x].getType() == type;
             NorthEast = true;
             //Calc middle row
-            West = map[y][x - 1].getType() == CellType.WALL;
+            West = map[y][x - 1].getType() == type;
             East = true;
             //Calc bottom row
             SouthWest = true;
@@ -177,23 +196,23 @@ public class AssetBuilder {
             North = true;
             NorthEast = true;
             //Calc middle row
-            West = map[y][x - 1].getType() == CellType.WALL;
-            East = map[y][x + 1].getType() == CellType.WALL;
+            West = map[y][x - 1].getType() == type;
+            East = map[y][x + 1].getType() == type;
             //Calc bottom row
-            SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
-            South = map[y + 1][x].getType() == CellType.WALL;
-            SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+            SouthWest = map[y + 1][x - 1].getType() == type;
+            South = map[y + 1][x].getType() == type;
+            SouthEast = map[y + 1][x + 1].getType() == type;
 
         // Check for 'y = max length' edge of map
         } else if (y == map.length - 1 && (x >= 1 && x < map[y].length - 1)) {
             
             //Calc top row
-            NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
-            North = map[y - 1][x].getType() == CellType.WALL;
-            NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+            NorthWest = map[y - 1][x - 1].getType() == type;
+            North = map[y - 1][x].getType() == type;
+            NorthEast = map[y - 1][x + 1].getType() == type;
             //Calc middle row
-            West = map[y][x - 1].getType() == CellType.WALL;
-            East = map[y][x + 1].getType() == CellType.WALL;     
+            West = map[y][x - 1].getType() == type;
+            East = map[y][x + 1].getType() == type;     
             //Edge-case bottom row is always true
             SouthWest = true;
             South = true;
@@ -204,86 +223,85 @@ public class AssetBuilder {
 
             //Calc top row (Edge-case West is always true)
             NorthWest = true;
-            North = map[y - 1][x].getType() == CellType.WALL;
-            NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+            North = map[y - 1][x].getType() == type;
+            NorthEast = map[y - 1][x + 1].getType() == type;
             //Calc middle row (Edge-case West is always true)
             West = true;
-            East = map[y][x + 1].getType() == CellType.WALL;
+            East = map[y][x + 1].getType() == type;
             //Calc bottom row (Edge-case West is always true)
             SouthWest = true;
-            South = map[y + 1][x].getType() == CellType.WALL;
-            SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+            South = map[y + 1][x].getType() == type;
+            SouthEast = map[y + 1][x + 1].getType() == type;
             
         // Check for 'x = max length' edge of map to prevent indexOutOfBounds exception
         } else if (x == map[y].length - 1 && (y >= 1 && y < map.length - 1)) {
             
             //Calc top row (Edge-case East is always true)
-            NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
-            North = map[y - 1][x].getType() == CellType.WALL;
+            NorthWest = map[y - 1][x - 1].getType() == type;
+            North = map[y - 1][x].getType() == type;
             NorthEast = true;
             //Calc middle row (Edge-case East is always true)
-            West = map[y][x - 1].getType() == CellType.WALL;
+            West = map[y][x - 1].getType() == type;
             East = true;
             //Calc bottom row (Edge-case East is always true)
-            SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
-            South = map[y + 1][x].getType() == CellType.WALL;
+            SouthWest = map[y + 1][x - 1].getType() == type;
+            South = map[y + 1][x].getType() == type;
             SouthEast = true;
 
         // Otherwise, perform all checks to get the correct wall asset
         } else if ((x >= 1 && x < map[y].length - 1) && (y >= 1 && y < map.length - 1)) {
 
             //Calc top row
-            NorthWest = map[y - 1][x - 1].getType() == CellType.WALL;
-            North = map[y - 1][x].getType() == CellType.WALL;
-            NorthEast = map[y - 1][x + 1].getType() == CellType.WALL;
+            NorthWest = map[y - 1][x - 1].getType() == type;
+            North = map[y - 1][x].getType() == type;
+            NorthEast = map[y - 1][x + 1].getType() == type;
             //Calc middle row
-            West = map[y][x - 1].getType() == CellType.WALL;
-            East = map[y][x + 1].getType() == CellType.WALL;
+            West = map[y][x - 1].getType() == type;
+            East = map[y][x + 1].getType() == type;
             //Calc bottom row
-            SouthWest = map[y + 1][x - 1].getType() == CellType.WALL;
-            South = map[y + 1][x].getType() == CellType.WALL;
-            SouthEast = map[y + 1][x + 1].getType() == CellType.WALL;
+            SouthWest = map[y + 1][x - 1].getType() == type;
+            South = map[y + 1][x].getType() == type;
+            SouthEast = map[y + 1][x + 1].getType() == type;
 
         } else {
             //If something somehow goes wrong, set the wall cell as wall_1
-            wallRef = 0;
+            assetRef = 0;
         }
         
         
         //Top row
         if (NorthWest && North && West) {
-            wallRef += 1;
+            assetRef += 1;
         }
         if (North) {
-            wallRef += 1 << 1;
+            assetRef += 1 << 1;
         }
         if (NorthEast && North && East) {
-            wallRef += 1 << 2;
+            assetRef += 1 << 2;
         }
 
         //Middle Row
         if (West) {
-            wallRef += 1 << 3;
+            assetRef += 1 << 3;
         }
         if (East) {
-            wallRef += 1 << 4;
+            assetRef += 1 << 4;
         }
 
         //Bottom Row
         if (SouthWest && South && West) {
-            wallRef += 1 << 5;
+            assetRef += 1 << 5;
         }
         if (South) {
-            wallRef += 1 << 6;
+            assetRef += 1 << 6;
         }
         if (SouthEast && South && East) {
-            wallRef += 1 << 7;
+            assetRef += 1 << 7;
         }
         
-
-        return basePath + WALL_MAP.get(wallRef) + ".jpg";
+        return assetRef;        
     }
-
+    
 
     /*
 
@@ -292,11 +310,6 @@ public class AssetBuilder {
         - check floor cells for lighting effects
             - Give cells an "isLightSource" boolean value; perform bitmasking
               check based on that
-
-        - check for water tiles
-            - Will need identical setup to walls
-
-    Try and make the bitmasking method generic for all use-cases
 
      */
 }
