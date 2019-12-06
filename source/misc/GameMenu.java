@@ -5,15 +5,18 @@
  */
 package misc;
 
+//Local imports
 import controllers.GameController;
+
+//java imports
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+//JavaFX imports
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

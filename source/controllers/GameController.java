@@ -17,6 +17,7 @@ import misc.Profile;
 import misc.SelectProfileMenu;
 import misc.GameMenu;
 import misc.LevelMenu;
+import misc.CreateProfileMenu;
 import utils.*;
 
 import java.io.FileInputStream;
@@ -40,6 +41,7 @@ public class GameController {
     private GameMenu gameMenu = new GameMenu(this);
     private LevelMenu levelMenu = new LevelMenu(this);
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
+    private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
     private Profile currentProfile;
     private int startTime;
     private String currentMap;
@@ -60,6 +62,7 @@ public class GameController {
         root.getChildren().add(gameMenu.render());
         root.getChildren().add(levelMenu.render());
         root.getChildren().add(selectProfileMenu.render());
+        root.getChildren().add(createProfileMenu.render());
 
         selectProfileMenu.toggle();
     }
@@ -170,6 +173,11 @@ public class GameController {
         selectProfileMenu.toggle();
         levelMenu.loadLevels(p.getLevel());
         levelMenu.toggle();
+    }
+    
+    public void createProfile() {
+        selectProfileMenu.toggle();
+        createProfileMenu.toggle();
     }
 
     public void loadSaves() {

@@ -5,7 +5,6 @@
  */
 package misc;
 
-
 import controllers.GameController;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,7 +30,6 @@ import misc.Profile;
  */
 public class SelectProfileMenu extends Menu {
 
-    private CreateProfileMenu createProfileMenu;
     private ListView<Profile> selectionList = new ListView<>();
 
     private Profile selection = null;
@@ -39,7 +37,6 @@ public class SelectProfileMenu extends Menu {
     public SelectProfileMenu(GameController gc) {
 
         super();
-        createProfileMenu = new CreateProfileMenu(this, gc);
 
         ImageView newProfileButton = null;
         ImageView selectProfileButton = null;
@@ -60,16 +57,6 @@ public class SelectProfileMenu extends Menu {
         } catch (FileNotFoundException e) {
             System.err.println("new game button path wasn't found");
         }
-        
-        Button newProfile = new Button();
-        // Add the button graphic and scale the button
-        newProfile.setGraphic(newProfileButton);
-        newProfile.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-        // Add the event handler
-        newProfile.setOnAction((ActionEvent e) -> {
-            createProfileMenu.toggle();
-            // newProfile.setVisible(false);
-        });
 
         Button useProfile = new Button();
         useProfile.setDisable(true);
@@ -96,28 +83,34 @@ public class SelectProfileMenu extends Menu {
 
         makeSelection();
         selectionList.getSelectionModel().selectedItemProperty().addListener(
-            (ObservableValue<? extends Profile> ov, Profile oldVal, Profile val) -> {
-                if (val != null) {
-                    selection = val;
-                    useProfile.setDisable(false);
-                    deleteProfile.setDisable(false);
-                    //useProfile.setText(String.format("Use %s!", val.getName()));
-                } else {
-                    selection = null;
-                    //useProfile.setText("No player selected!");
+                (ObservableValue<? extends Profile> ov, Profile oldVal, Profile val) -> {
+                    if (val != null) {
+                        selection = val;
+                        useProfile.setDisable(false);
+                        deleteProfile.setDisable(false);
+                    } else {
+                        selection = null;
+                    }
                 }
-            
-            }
         );
+
+        Button newProfile = new Button();
+        // Add the button graphic and scale the button
+        newProfile.setGraphic(newProfileButton);
+        newProfile.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        // Add the event handler
+        newProfile.setOnAction((ActionEvent e) -> {
+            gc.createProfile();
+            this.render();
+        });
 
         menuLayout.getChildren().add(selectionList);
         menuLayout.getChildren().add(useProfile);
         menuLayout.getChildren().add(deleteProfile);
         menuLayout.getChildren().add(newProfile);
-        menuLayout.getChildren().add(createProfileMenu.render());
-        
+
         scaleMenu();
-        
+
     }
 
     private void makeSelection() {
@@ -130,21 +123,21 @@ public class SelectProfileMenu extends Menu {
         FileHandler reader = new FileHandler(Profile.PROFILE_PATH);
         ArrayList<Profile> profiles = new ArrayList<>();
         while (reader.hasNext()) {
-           Profile p = Profile.fromLine(reader.nextLine());
-           profiles.add(p);
+            Profile p = Profile.fromLine(reader.nextLine());
+            profiles.add(p);
         }
         return profiles.toArray(new Profile[profiles.size()]);
     }
-    
+
     @Override
     public void scaleMenu() {
         double menuWidth = 1380 - (menuLayout.getWidth());
-        double menuHeight = 1380 - (menuLayout.getHeight()) ;
+        double menuHeight = 1380 - (menuLayout.getHeight());
 
-        menuLayout.setPadding(new Insets((menuHeight/7.5)*scaleVal, 
-                        (menuWidth/4.5)*scaleVal, 
-                        (menuHeight/4.5)*scaleVal, 
-                        (menuWidth/4.5)*scaleVal));
+        menuLayout.setPadding(new Insets((menuHeight / 7.5) * scaleVal,
+                (menuWidth / 4.5) * scaleVal,
+                (menuHeight / 4.5) * scaleVal,
+                (menuWidth / 4.5) * scaleVal));
     }
-    
+
 }
