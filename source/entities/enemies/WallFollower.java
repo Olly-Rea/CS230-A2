@@ -1,11 +1,9 @@
 package entities.enemies;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 //Local imports
 import cells.Cell;
 import cells.CellType;
+import cells.Ground;
 import cells.Wall;
 import controllers.EntityController;
 import controllers.MapController;
@@ -13,6 +11,12 @@ import utils.Direction;
 import utils.Rotation;
 import utils.Vector;
 import entities.Enemy;
+import entities.Player;
+
+//Java imports
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 //JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,12 +32,11 @@ public class WallFollower extends Enemy {
     /**
      * Path to the WallFollower image
      */
-    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/wallFollower.png";
     private static Image image;
 
     static {
         try {
-            image = new Image(new FileInputStream(ASSET_PATH));
+            image = new Image(new FileInputStream(ASSET_PATH + "Wall/Scorpion_Right.png"));
         } catch (FileNotFoundException e) {
             image = null;
             System.err.println("WallFollower image path not found");
@@ -42,7 +45,6 @@ public class WallFollower extends Enemy {
 
     private Direction dir;
     private Rotation type;
-    private Vector pos;
 
     /**
      * Creates a new WallFollower enemy at position {@code pos}.
@@ -51,9 +53,9 @@ public class WallFollower extends Enemy {
      * @param dir the initial facing direction of the enemy
      * @param type the type of enemy, anticlockwise or clockwise
      */
-    public WallFollower(Vector pos, Direction dir, Rotation type) {
-        super(pos);
-        this.pos = pos;
+    public WallFollower(Vector pos, Player player, Direction dir, Rotation type) {
+        super(pos, player);
+        this.dir = dir;
         this.type = type;
     }
 
@@ -64,9 +66,7 @@ public class WallFollower extends Enemy {
      * enemy.
      */
     public void algorithm(MapController map, EntityController ec) {
-        Cell next = map.getNextCell(pos, dir);
-        boolean existsEntity = ec.entityPresent(pos, dir);
-        while (checkWall(map, ec) && (next instanceof Wall || existsEntity)) {
+        while (checkWall(map, ec) && (!(map.getNextCell(pos, dir) instanceof Ground) ||  ec.entityPresent(pos, dir))) {
             turn(type.reverse());
         }
 
@@ -74,7 +74,9 @@ public class WallFollower extends Enemy {
             turn(type);
         }
 
-        this.pos.add(dir);
+        if (!pos.equals(player.getPos())) {
+            this.pos.add(dir);
+        }
     }
 
     /**
@@ -86,8 +88,8 @@ public class WallFollower extends Enemy {
     private boolean checkWall(MapController map, EntityController ec) {
         Direction checkDir = type == Rotation.ACW ? dir.acw() : dir.cw();
         Cell checkCell = map.getNextCell(pos, checkDir);
-        boolean existsEntity = ec.entityPresent(pos, dir);
-        return (checkCell instanceof Wall || existsEntity);
+        boolean existsEntity = ec.entityPresent(pos, checkDir);
+        return (!(checkCell instanceof Ground) || existsEntity);
     }
 
     /**
@@ -103,9 +105,9 @@ public class WallFollower extends Enemy {
             dir = dir.cw();
         }
     }
-    
+
     public String export() {
-        return String.format("WF %d %d %s %s", pos.getX(), pos.getY(), dir, type);
+        return String.format("%d %d WF %s %s", pos.getX(), pos.getY(), dir, type);
     }
 
     /**
