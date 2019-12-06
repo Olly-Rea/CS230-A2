@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.layout.VBox;
 import utils.FileHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,23 +24,29 @@ public class LeaderboardMenu extends Menu {
 
 	private Leaderboard leaderboard;
 	private ArrayList<String> lbList;
-	private int levelNum;
+	private String levelName;
+    private VBox selection = new VBox();
+    private Label first;
+	private Label second;
+	private Label third;
+	private Label player;
 
 	public LeaderboardMenu(GameController gc) {
 		// set not visible
 		super();
 
-		// get level?
+		
 		ArrayList<String> lbList = new ArrayList<String>(); 
 		lbList = gc.getLeaderboard();
-//		lbList.add("Dave_1");
-//		lbList.add("Dave_2");
-//		lbList.add("Dave_3");
 		
-		Label first = new Label(lbList.get(0));
-		Label second = new Label(lbList.get(1));
-		Label third = new Label(lbList.get(2));
-		//Label player = new Label(lbList.get(0));
+		Label first = new Label("NULL");
+		Label second = new Label("NULL");
+		Label third = new Label("NULL");
+		selection.getChildren().add(first);
+		selection.getChildren().add(second);
+		selection.getChildren().add(third);
+		
+		Label player = new Label();
 
 		Button nextLevel = new Button("Proceed to next level");
 		nextLevel.setOnAction((ActionEvent e) -> {
@@ -51,11 +58,29 @@ public class LeaderboardMenu extends Menu {
 			// Return to map select
 		});
 		
-		menuLayout.getChildren().add(first);
-		menuLayout.getChildren().add(second);
-		menuLayout.getChildren().add(third);
+		menuLayout.getChildren().add(selection);
 		menuLayout.getChildren().add(back);
 		menuLayout.getChildren().add(nextLevel);
-
+		
+	}
+	
+	public void loadLeaderboard(int currentMapNum, GameController gc) {
+		ArrayList<String> lbList = new ArrayList<String>(); 
+		lbList = gc.getLeaderboard();
+        selection.getChildren().clear();
+		Label first = new Label(lbList.get(0));
+		Label second = new Label(lbList.get(1));
+		Label third = new Label(lbList.get(2));
+		selection.getChildren().add(first);
+		selection.getChildren().add(second);
+		selection.getChildren().add(third);
+		selection.getChildren().add(player);
+		
+	}
+	
+	public void displayPlayer(Profile profile, int time) {
+		String playerScore = profile.getName() + " + " + time;
+		Label player = new Label(playerScore);
+		this.player = player;
 	}
 }

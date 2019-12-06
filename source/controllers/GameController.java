@@ -52,6 +52,7 @@ public class GameController {
 	private Profile currentProfile;
 	private int startTime;
 	private String currentMap;
+	private int currentMapNum;
 
 	// X and Y variables for render translate methods
 	private double renderX = 0;
@@ -255,8 +256,12 @@ public class GameController {
 
 		// Check if game is won
 		if (playerController.checkGoal(mapController)) {
+			// Stop timer
+			// Call add time to leaderboard
+			leaderboardMenu.displayPlayer(currentProfile, currentMapNum);
+			leaderboardMenu.loadLeaderboard(currentMapNum,this);
 			leaderboardMenu.toggle();
-			// Win game
+
 		}
 	}
 
@@ -266,12 +271,12 @@ public class GameController {
 	 * @param path The file path inside {@code LEADERBOARD_DIR} for the map.
 	 */
 	public ArrayList<String> getLeaderboard() {
-		if (currentMap == null) {
+		if (currentMapNum == 0) {
 			String fullPath = LEADERBOARD_DIR + "Level_1" + "_lb";
 			Leaderboard lb = new Leaderboard(fullPath);
 			return lb.displayBoard();
 		} else {
-			String fullPath = LEADERBOARD_DIR + currentMap + "_lb";
+			String fullPath = LEADERBOARD_DIR + "Level_" + currentMap + "_lb";
 			Leaderboard lb = new Leaderboard(fullPath);
 			return lb.displayBoard();
 		}
