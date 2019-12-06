@@ -42,6 +42,8 @@ public class LevelMenu extends Menu {
         // set not visible
         super();
 
+        selection.getStyleClass().add("selection");
+        
         // go button
         ImageView selectLevelButton = null;
         try {
@@ -52,8 +54,6 @@ public class LevelMenu extends Menu {
 
         // Go button
         goButton = new Button();
-
-//      goButton.setDisable(true);
         // Add the button graphic and scale the button
         goButton.setGraphic(selectLevelButton);
         goButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));

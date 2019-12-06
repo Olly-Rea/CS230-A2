@@ -1,15 +1,22 @@
  .root {
-	-fx-font-family: "Courier New";
  }
  
- VBox .menuLayout {
-	-fx-alignment: center;
+VBox {
+	-fx-background-color: rgba(0,0,0,0.5);
+	-fx-min-height: 1000;
+}
+
+VBox > VBox {
+	-fx-min-height: 200px;
+	-fx-max-height: 350px;
+	-fx-background-color: rgba(0,0,0,0);
 }
 
 .list-cell {
 	-fx-background-color: rgba(0,0,0,0.5);
 	-fx-text-fill: white;
-	-fx-font-size: 20pt;
+	-fx-font-family: "Apple Boy BTN";
+	-fx-font-size: 22pt;
 }
  
 .list-view {
@@ -20,9 +27,13 @@
 	-fx-padding: 0;
 }
  
- .list-cell:empty {
-	 -fx-opacity: 0;
+.list-cell:empty {
+	 -fx-opacity: 1;
  }
+ 
+.list-cell:empty:hover {
+	-fx-background-color: rgba(0,0,0,0.5);
+}
  
  .list-cell:hover, .list-cell:selected {
 	-fx-background-color: rgba(160,119,72, 0.5);
