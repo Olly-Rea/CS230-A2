@@ -1,6 +1,8 @@
 package misc;
 
 import java.io.File;
+import java.util.ArrayList;
+
 import utils.FileHandler;
 
 /**
@@ -83,13 +85,13 @@ public class Leaderboard {
 	 * Output the leaderboard as a string array
 	 * @return array
 	 */
-	public String[] displayBoard() {
-		String[] lb = new String[3];
+	public ArrayList<String> displayBoard() {
+		ArrayList<String> lb = new ArrayList<String>();
 		for (int i = 0; i < 3; i++) {
 			if (topScores[i] == 9999) {
-				lb[i] = topNames[i] + " : " + "_";
+				lb.add(topNames[i] + " : " + "_");
 			} else {
-				lb[i] = topNames[i] + " : " + topScores[i];
+				lb.add(topNames[i] + " : " + topScores[i]);
 			}
 		}
 		return lb;
