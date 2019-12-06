@@ -25,6 +25,8 @@ public class GameMenu extends Menu {
 
     public GameMenu(GameController gc) {
         super();        
+        menuLayout.getStylesheets().add("File:./assets/styles/button.css");
+        
         //Create the group to export and the VBox to store the menu buttons
         //Create the game menu title
         Label outputLabel = new Label("THIS IS OUR GAME");
@@ -39,7 +41,7 @@ public class GameMenu extends Menu {
         ImageView exitGameButton = null;
 
         try {
-            newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/exitGameButton.png")));
+            newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/newGameButton.png")));
             saveGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/saveGameButton.png")));
             //newGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
             loadGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/loadGameButton.png")));
@@ -47,7 +49,6 @@ public class GameMenu extends Menu {
             exitGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/exitGameButton.png")));
             //exitGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));                    
         } catch (FileNotFoundException e) {
-            newGameButton = null;
             System.err.println("A button path wasn't found");
         }
         
@@ -77,7 +78,7 @@ public class GameMenu extends Menu {
                 //Create the loadGame button, assign the graphic, and add to VBox
         Button saveGame = new Button();
         saveGame.setGraphic(saveGameButton);
-        saveGame.setStyle("-fx-border-style: none; -fx-background:none");
+        // saveGame.getStylesheets().add("./assets/styles/button.css");
         saveGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 TextInputDialog dialog = new TextInputDialog("Enter the filename");
