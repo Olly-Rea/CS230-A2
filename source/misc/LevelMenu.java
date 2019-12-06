@@ -36,6 +36,8 @@ public class LevelMenu extends Menu {
         // set not visible
         super();        
 
+        menuLayout.getStylesheets().add("./assets/styles/level.css");
+
         // go button
         Button goButton = new Button("Go");
         goButton.setOnAction((ActionEvent e)->{
