@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -45,9 +46,16 @@ public class FileHandler {
         try {
             return reader.readLine();
         } catch (IOException e) {
-            return "";
+            System.err.println(e.getMessage());
+            return null;
         }
     }
+
+    // public String[] readLines() {
+    //     try {
+    //         return reader.lines();
+    //     }
+    // }
 
     /**
      * Checks if the reader is at the end of file.
@@ -74,16 +82,31 @@ public class FileHandler {
      */
     public static void writeFile(String path, String[] lines, boolean append) {
         BufferedWriter writer = null;
+        
         File file = new File(path);
+
         try {
             writer = new BufferedWriter(new FileWriter(file, append));
             for (int i = 0; i < lines.length; i++) {
                 // writer.write(lines[i]);
-                writer.write(lines[i] + "\n");
+                if (lines[i] != null) {
+                    writer.write(lines[i] + "\n");
+                }
             }
             writer.close();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public static File[] getFiles(String dir) {
+        ArrayList<String> files = new ArrayList<>();
+        File folder = new File(dir);   
+        return folder.listFiles();
+    }
+
+    public static String getFileName(File f) {
+        String[] file = f.getName().split("\\.");
+        return file[0];
     }
 }

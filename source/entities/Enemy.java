@@ -14,11 +14,15 @@ import utils.Vector;
  */
 public abstract class Enemy extends Entity {
 
+    protected Player player;
+    protected static final String ASSET_PATH = "./assets/visuals/entities/Enemies/";
+
     /**
      * Constructs an enemy
      */
-    public Enemy(Vector pos) {
+    public Enemy(Vector pos, Player player) {
         super(pos);
+        this.player = player;
     }
 
     /**

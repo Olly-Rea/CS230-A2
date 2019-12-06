@@ -1,11 +1,7 @@
 package entities.enemies;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.LinkedList;
-
+//Local imports
 import cells.Cell;
-import cells.CellType;
 import cells.Ground;
 import controllers.EntityController;
 import controllers.MapController;
@@ -13,6 +9,13 @@ import entities.Enemy;
 import entities.Player;
 import utils.Direction;
 import utils.Vector;
+
+//Java imports
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.LinkedList;
+
+//JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -23,12 +26,11 @@ import javafx.scene.image.ImageView;
  */
 public class SmartTargeter extends Enemy {
 
-    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/smartTargeter.png";
     private static Image image;
 
     static {
         try {
-            image = new Image(new FileInputStream(ASSET_PATH));
+            image = new Image(new FileInputStream(ASSET_PATH + "Smart/smartTargeter.png"));
         } catch (FileNotFoundException e) {
             image = null;
             System.err.println("SmartTargeter image path not found");
@@ -36,11 +38,9 @@ public class SmartTargeter extends Enemy {
     }
 
     private Direction dir;
-    private Player player;
 
     public SmartTargeter(Vector pos, Player player) {
-        super(pos);
-        this.player = player;
+        super(pos, player);
     }
 
     /**
@@ -67,14 +67,14 @@ public class SmartTargeter extends Enemy {
             for (Direction d : Direction.values()) { // For all directions (UP/RIGHT/DOWN/LEFT)
                 int x = q.getPos().getX();
                 int y = q.getPos().getY();
-                Cell next = map.getNextCell(new Vector(x, y), d); // get the next cell
-                boolean existsEntity = ec.entityPresent(pos, dir);
+                Cell next = map.getNextCell(q.getPos(), d); // get the next cell
+                boolean existsEntity = ec.entityPresent(pos, d);
                 if (next instanceof Ground && !existsEntity) { // if the cell is of type GROUND
                     int dist = distGrid[y][x] + 1; // distance is incremented by 1
                     // if distGrid at next position is empty then add it to the queue & set to dist
                     Integer val = distGrid[next.getPos().getY()][next.getPos().getX()];
                     if (val == null) {
-                        val = dist;
+                        distGrid[next.getPos().getY()][next.getPos().getX()] = dist;
                         queue.add(next);
                     }
                 }
@@ -91,10 +91,10 @@ public class SmartTargeter extends Enemy {
         dir = null;
 
         // If the distGrid at the enemies position is 0 then do not move
-        if (distGrid[pos.getY()][pos.getX()] != 0) {
+        if (!player.getPos().equals(pos) && distGrid[pos.getY()][pos.getX()] != null) {
             for (Direction d : Direction.values()) { // for all Directions (UP, RIGHT, DOWN, LEFT)
                 Cell next = map.getNextCell(new Vector(pos.getX(), pos.getY()), d); // get the next cell in that direction
-                boolean existsEntity = ec.entityPresent(pos, dir);
+                boolean existsEntity = ec.entityPresent(pos, d);
                 if (next instanceof Ground && !existsEntity) { // Confirm it's a ground cell
                     Integer dist = distGrid[pos.getY() + d.Y][pos.getX() + d.X]; // check the distance at that cell in
                     // distGrid
@@ -119,7 +119,7 @@ public class SmartTargeter extends Enemy {
     }
 
     public String export() {
-        return String.format("ST %d %d", pos.getX(), pos.getY());
+        return String.format("%d %d ST", pos.getX(), pos.getY());
     }
 
     /**
