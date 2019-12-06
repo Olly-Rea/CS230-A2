@@ -171,11 +171,7 @@ public class GameController {
         FileHandler.writeFile(path, mapSpecific,  true);
         FileHandler.writeFile(path, entityExport, true);
         addMapTime(path);
-<<<<<<< HEAD
         }
-=======
-    }
->>>>>>> beaca18cebca8c83bdc52bf8cbf8cb5b1ee24726
 
     public void setProfile(Profile p) {
         this.currentProfile = p;
@@ -203,7 +199,7 @@ public class GameController {
       try {
         loadTime = sc.nextInt();
       } catch (NoSuchElementException e) {
-        System.err.println("load time invalid");
+        System.err.println("save time not set");
       }
     }
 
