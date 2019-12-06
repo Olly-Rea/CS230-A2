@@ -38,7 +38,8 @@ public abstract class Cell {
      * @return the ImageView node for the MapController GridPane
      */
     public abstract ImageView render();
-
+    public abstract boolean isLightSource();
+    
     /**
      * Method to return the type of cell.
      *

@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
 public class Wall extends Cell {
 
     private Image image = null;
-    
+
     /**
      * Create a wall cell at location (x,y)
      * @param x
@@ -26,9 +26,13 @@ public class Wall extends Cell {
     }
 
     /**
-     * Set image from a file location
-     * @param path
-     */
+    * Set image from a file location
+    * @param path
+    */
+    public boolean isLightSource() {
+        return false;
+    }
+
     public void setImage(String path) {
         // String path = ASSET_PATH + "walls/" + imageName;
         try {

@@ -24,12 +24,11 @@ public class Goal extends Cell {
             System.err.println("Goal image path not found");
         }
     }
-    
-    /**
-     * Create a goal cell at location (x,y)
-     * @param x
-     * @param y
-     */
+
+    public boolean isLightSource() {
+        return false;
+    }
+
     public Goal(int x, int y) {
         super(CellType.GOAL, x, y);
     }

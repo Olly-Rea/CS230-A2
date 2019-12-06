@@ -34,6 +34,9 @@ public class Fire extends Cell {
         super(CellType.FIRE, x, y);
     }
 
+    public boolean isLightSource() {
+        return true;
+    }
 
     /**
      * Return the character used in the map file for this cell

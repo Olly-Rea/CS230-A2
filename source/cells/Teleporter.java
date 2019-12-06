@@ -38,6 +38,10 @@ public class Teleporter extends Cell {
         super(CellType.TELEPORTER, x, y);
     }
 
+    public boolean isLightSource() {
+        return false;
+    }
+    
     /**
      * Method to link two teleporters together
      *

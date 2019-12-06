@@ -52,11 +52,14 @@ public class FileHandler {
         }
     }
 
-    // public String[] readLines() {
-    //     try {
-    //         return reader.lines();
-    //     }
-    // }
+    // TODO: s
+    public String[] readLines() {
+        ArrayList<String> lines = new ArrayList<>();
+        while (hasNext()) {
+            lines.add(nextLine());
+        }
+        return lines.toArray(new String[lines.size()]);
+    }
 
     /**
      * Checks if the reader is at the end of file.
@@ -70,6 +73,8 @@ public class FileHandler {
             reader.reset();
             return test > 0 ? true : false;
         } catch (IOException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
             return false; // TODO: Handle
         }
     }
@@ -83,7 +88,7 @@ public class FileHandler {
      */
     public static void writeFile(String path, String[] lines, boolean append) {
         BufferedWriter writer = null;
-        
+
         File file = new File(path);
 
         try {
@@ -97,6 +102,32 @@ public class FileHandler {
             writer.close();
         } catch (IOException e) {
             System.err.println(e.getMessage());
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static void writeFile(String path, Object o, boolean append) {
+        BufferedWriter writer = null;
+        File file = new File(path);
+        try {
+            writer = new BufferedWriter(new FileWriter(file, append));
+            writer.write(o.toString() + "\n");
+            writer.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    // TODO:
+    public static void clearFile(String path) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
+            writer.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
     }
 
@@ -106,8 +137,7 @@ public class FileHandler {
      * @return
      */
     public static File[] getFiles(String dir) {
-        ArrayList<String> files = new ArrayList<>();
-        File folder = new File(dir);   
+        File folder = new File(dir);
         return folder.listFiles();
     }
 

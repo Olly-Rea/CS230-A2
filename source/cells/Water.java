@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 
 public class Water extends Cell {
 
-    private static final String IMAGE_NAME = "Water";
     private Image image;
 
     /**
@@ -29,7 +28,7 @@ public class Water extends Cell {
             System.err.println("Wall image path not found at '" + path + "'");
         }
     }
-    
+
     /**
      * Create a water cell at location (x,y)
      * @param x
@@ -39,10 +38,15 @@ public class Water extends Cell {
         super(CellType.WATER, x, y);
     }
 
-    /**
-     * Return the character used in the map file for this cell
-     * @return char
-     */
+
+   /**
+    * Return the character used in the map file for this cell
+    * @return char
+    */
+    public boolean isLightSource() {
+        return false;
+    }
+
     public char getChar() {
         return 'W';
     }

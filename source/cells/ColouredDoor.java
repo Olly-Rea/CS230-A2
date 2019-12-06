@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 /**
  * Represents a door with a colour type attached to it. Contains method to check if
  * it can be opened or not
- * 
+ *
  * @version 1.0
  * @author TODO
  */
@@ -50,16 +50,15 @@ public class ColouredDoor extends Door {
 		try {
 			image = new Image(new FileInputStream(ASSET_PATH + "Boulders/" + imageName + ".jpg"));
 		} catch (FileNotFoundException e) {
-			image = null; 
+			image = null;
 			System.err.println(colour + " ColouredDoor image path not found");
 		}
 	}
 
-	/**
-	 * Checks a player's inventory to see if they have the required key to open the door
-	 * 
-	 * @return boolean
-	 */
+        public boolean isLightSource() {
+            return false;
+        }
+
 	public boolean isOpenable(Player p) {
 		ItemType key = null;
 		switch (colour) {

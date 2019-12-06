@@ -163,6 +163,9 @@ public class MapController {
         for (int y = 0; y < map.length; y++) {
             for (int x = 0; x < map[y].length; x++) {
                 Cell cell = map[y][x];
+                if (cell instanceof Ground) {
+                    ((Ground) cell).setImage(assetUtil.groundCheck(x, y));
+                }
                 if (cell instanceof Wall) {
                     ((Wall) cell).setImage(assetUtil.getWallType(x, y));
                 }

@@ -130,7 +130,7 @@ public class EntityController {
      * @param map the map will be passed through to each enemy to assist their
      * next move calculation.
      */
-    public void moveEnemies(MapController map) {
+    public void moveEnemies(MapController map, EntityController ec) {
         for (int i = 0; i < enemies.size(); i++) {
             // Get the enemy to move
             Enemy moveEnemy = enemies.get(i);
@@ -140,7 +140,7 @@ public class EntityController {
             x = moveEnemy.getPos().getX();
             y = moveEnemy.getPos().getY();
             entityGrid[y][x] = null;
-            moveEnemy.algorithm(map, this);
+            moveEnemy.algorithm(map, ec);
             x = moveEnemy.getPos().getX();
             y = moveEnemy.getPos().getY();
             entityGrid[y][x] = moveEnemy;

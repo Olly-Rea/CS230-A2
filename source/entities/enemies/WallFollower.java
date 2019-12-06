@@ -2,9 +2,7 @@ package entities.enemies;
 
 //Local imports
 import cells.Cell;
-import cells.CellType;
 import cells.Ground;
-import cells.Wall;
 import controllers.EntityController;
 import controllers.MapController;
 import utils.Direction;

@@ -26,7 +26,8 @@ import misc.Profile;
 public class SelectProfileMenu extends Menu {
 
     private CreateProfileMenu createProfileMenu;
-    private ListView<Profile> selectionList;
+    private ListView<Profile> selectionList = new ListView<>();
+
     private Profile selection = null;
 
 
@@ -48,23 +49,41 @@ public class SelectProfileMenu extends Menu {
             gc.setProfile(selection);
         });
 
+        Button deleteProfile = new Button("Delete Profile");
+        deleteProfile.setDisable(true);
+        deleteProfile.setOnAction((ActionEvent e) -> {
+            selection.deleteProfile();
+            useProfile.setDisable(true);
+            deleteProfile.setDisable(true);
+            makeSelection();
+        });
+
         makeSelection();
         selectionList.getSelectionModel().selectedItemProperty().addListener(
             (ObservableValue<? extends Profile> ov, Profile oldVal, Profile val) -> {
-                selection = val;
-                useProfile.setDisable(false);
-                useProfile.setText(String.format("Use %s!", val.getName()));
+                if (val != null) {
+                    selection = val;
+                    useProfile.setDisable(false);
+                    deleteProfile.setDisable(false);
+                    useProfile.setText(String.format("Use %s!", val.getName()));
+                } else {
+                    selection = null;
+                    useProfile.setText("No player selected!");
+                }
+            
             }
         );
 
         menuLayout.getChildren().add(selectionList);
         menuLayout.getChildren().add(useProfile);
+        menuLayout.getChildren().add(deleteProfile);
         menuLayout.getChildren().add(newProfile);
         menuLayout.getChildren().add(createProfileMenu.render());
+        
+        scaleMenu();
     }
 
     private void makeSelection() {
-        selectionList = new ListView<>();
         ObservableList<Profile> items = FXCollections.observableArrayList(getProfiles());
         selectionList.setItems(items);
         selectionList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
