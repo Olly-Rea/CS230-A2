@@ -15,13 +15,13 @@ import javafx.scene.image.ImageView;
  */
 public class TokenDoor extends Door {
 
-    private static final String IMAGE_NAME = "Boulder";
+    private static final String IMAGE_NAME = "Boulder_Token";
     private static Image image;
 	private int tokens;
 
     static {
         try {
-            image = new Image(new FileInputStream(ASSET_PATH + IMAGE_NAME + ".jpg"));
+            image = new Image(new FileInputStream(ASSET_PATH + "Boulders/"+ IMAGE_NAME + ".jpg"));
         } catch (FileNotFoundException e) {
             image = null;
             System.err.println("Boulder image path not found");

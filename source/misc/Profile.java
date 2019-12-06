@@ -15,12 +15,13 @@ import utils.FileHandler;
 public class Profile {
 
 	public static final String PROFILE_PATH = "./savefiles/profiles.txt";
+    private static final String SAVE_DIR = "./savefiles/";
 
     private String name;
     private int highest;
-    
+
     /**
-     * Instantiate a profile 
+     * Instantiate a profile
      * @param name
      * @param highestLevel
      */
@@ -35,14 +36,14 @@ public class Profile {
     public String getName() {
     	return name;
     }
-    
+
     /**
      * @return highest
      */
     public int getLevel() {
     	return highest;
     }
-	
+
     /**
      * Return the profile information as a string
      */
@@ -56,9 +57,14 @@ public class Profile {
 	 */
     public void saveProfile() {
 		String[] profile = {name+":"+highest};
+        new File(SAVE_DIR + name + "/").mkdir();
 		FileHandler.writeFile(PROFILE_PATH, profile, true);
 	}
-	
+
+	public void deleteProfile() {
+
+	}
+
     /**
      * Creates a Profile from a line of text
      * @param line
@@ -68,6 +74,6 @@ public class Profile {
 		Scanner sc = new Scanner(line);
 		sc.useDelimiter(":");
 		String name = sc.next();
-		return sc.hasNext() ? new Profile(name, sc.nextInt()) : new Profile(name, 0);
+		return sc.hasNext() ? new Profile(name, sc.nextInt()) : new Profile(name, 1);
 	}
 }

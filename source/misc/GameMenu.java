@@ -13,9 +13,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 
 /**
  *
@@ -35,13 +35,16 @@ public class GameMenu extends Menu {
         //add the New Game button to the menu VBox
         ImageView newGameButton = null;
         ImageView loadGameButton = null;
+        ImageView saveGameButton = null;
         ImageView exitGameButton = null;
+
         try {
-            newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/newGameButton.png")));
+            newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/exitGameButton.png")));
+            saveGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/saveGameButton.png")));
             //newGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-            loadGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/loadGameButton.png")));
+            loadGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/loadGameButton.png")));
             //loadGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-            exitGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/exitGameButton.png")));
+            exitGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/exitGameButton.png")));
             //exitGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));                    
         } catch (FileNotFoundException e) {
             newGameButton = null;
@@ -64,11 +67,30 @@ public class GameMenu extends Menu {
         loadGame.setGraphic(loadGameButton);
         loadGame.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                String savefilePath = "./savefiles";
+                gc.loadSaves();
+                toggle();
                 //Create load game scene
             }
         });
         menuLayout.getChildren().add(loadGame);
+
+                //Create the loadGame button, assign the graphic, and add to VBox
+        Button saveGame = new Button();
+        saveGame.setGraphic(saveGameButton);
+        saveGame.setStyle("-fx-border-style: none; -fx-background:none");
+        saveGame.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                TextInputDialog dialog = new TextInputDialog("Enter the filename");
+                String result = "";
+                while (result.length() == 0) {
+                    result = dialog.showAndWait().get();
+                }
+                gc.saveGame(result);
+                toggle();
+                //Create load game scene
+            }
+        });
+        menuLayout.getChildren().add(saveGame);
         
         
         //Create the exitGame button, assign the graphic, and add to VBox

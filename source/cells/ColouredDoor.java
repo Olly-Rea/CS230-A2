@@ -32,23 +32,23 @@ public class ColouredDoor extends Door {
 		String imageName;
 		switch (colour) {
 		case RED:
-			imageName = "Boulder";
+			imageName = "Boulder_Red";
 			break;
 		case GREEN:
-			imageName = "Boulder";
+			imageName = "Boulder_Green";
 			break;
 		case BLUE:
-			imageName = "Boulder";
+			imageName = "Boulder_Blue";
 			break;
 		case YELLOW:
-			imageName = "Boulder";
+			imageName = "Boulder_Purple";
 			break;
 		default:
-			imageName = "Boulder";
+			imageName = "Boulder_Token";
 		}
 
 		try {
-			image = new Image(new FileInputStream(ASSET_PATH + imageName + ".jpg"));
+			image = new Image(new FileInputStream(ASSET_PATH + "Boulders/" + imageName + ".jpg"));
 		} catch (FileNotFoundException e) {
 			image = null; 
 			System.err.println(colour + " ColouredDoor image path not found");

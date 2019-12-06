@@ -5,21 +5,12 @@
  */
 package misc;
 
-import controllers.GameController;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+//Local imports
 import javafx.scene.layout.VBox;
 
 /**
  *
- * @author Olive
+ * @author Olly Rea
  */
 public abstract class Menu {
     
@@ -27,16 +18,16 @@ public abstract class Menu {
 
     public Menu() {
         menuLayout.setVisible(false);
-    }    
-    
-    public VBox render() {
-        return menuLayout;       
     }
-    
+
+    public VBox render() {
+        return menuLayout;
+    }
+
     public void toggle() {
         menuLayout.setVisible(!menuLayout.isVisible());
     }
-    
+
     public boolean isVisible() {
         return menuLayout.isVisible();
     }

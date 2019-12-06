@@ -2,20 +2,23 @@ package controllers;
 
 /**
  * Stores information and method related to items and enemies
- * 
+ *
  * @author Scott Barr, James Hogg, Daniel Clenaghan
  * @version 1.0
  */
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Local imports
 import entities.*;
 import entities.enemies.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import utils.Direction;
 import utils.Rotation;
 import utils.Vector;
+
+//JavaFX imports
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class EntityController {
 
@@ -23,7 +26,7 @@ public class EntityController {
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     GridPane entityGridPane = new GridPane();
-    
+
     /**
      * Sets entityGrid and enemies
      *
@@ -58,6 +61,13 @@ public class EntityController {
         }
     }
 
+    /**
+     * Method for enemies to check if an item exists in their path
+     *
+     * @param pos the position of the enemy
+     * @param dir the direction the enemy is travelling in
+     * @return if an item is present in the next
+     */
     public boolean entityPresent(Vector pos, Direction dir) {
         return entityGrid[pos.getY() + dir.Y][pos.getX() + dir.X] instanceof Entity;
     }
@@ -139,11 +149,11 @@ public class EntityController {
     }
 
     /**
-     * Get entity from the entity grid at location 
-     * 
-     * @param x
-     * @param y
-     * @return entity
+     * Method to return the Entity at the coordinates x and y
+     *
+     * @param x the x ordinate to look at
+     * @param y the y ordinate to look at
+     * @return the Entity at (x,y) - [y,x] in the array
      */
     public Entity getEntity(int x, int y) {
         return entityGrid[y][x];
@@ -157,7 +167,7 @@ public class EntityController {
     public String[] export() {
         String[] export = new String[enemies.size()];
         for (int i = 0; i < export.length; i++) {
-            export[i] = enemies.get(i).export();
+            export[i] = "ENEMY " + enemies.get(i).export();
         }
         return export;
     }
@@ -250,7 +260,7 @@ public class EntityController {
      * create an enemy using a text line from a map file
      *
      * @param line a scanner of the line with the enemy details
-     * @return enemy 
+     * @return enemy
      */
     public static Enemy makeEnemy(Scanner line, Player p) {
         int x = line.nextInt();

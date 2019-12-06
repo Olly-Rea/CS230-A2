@@ -1,8 +1,5 @@
 package entities.enemies;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 //Local imports
 import cells.Cell;
 import cells.CellType;
@@ -15,6 +12,11 @@ import utils.Rotation;
 import utils.Vector;
 import entities.Enemy;
 import entities.Player;
+
+//Java imports
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 //JavaFX imports
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,12 +33,11 @@ public class WallFollower extends Enemy {
     /**
      * Path to the WallFollower image
      */
-    private static final String ASSET_PATH = "./assets/visuals/entities/enemies/wallFollower.png";
     private static Image image;
 
     static {
         try {
-            image = new Image(new FileInputStream(ASSET_PATH));
+            image = new Image(new FileInputStream(ASSET_PATH + "Wall/Scorpion_Right.png"));
         } catch (FileNotFoundException e) {
             image = null;
             System.err.println("WallFollower image path not found");
@@ -105,14 +106,14 @@ public class WallFollower extends Enemy {
             dir = dir.cw();
         }
     }
-    
+
     /**
      * Generates a string containing this enemies direction, location and type
-     * 
+     *
      * @return String
      */
     public String export() {
-        return String.format("WF %d %d %s %s", pos.getX(), pos.getY(), dir, type);
+        return String.format("%d %d WF %s %s", pos.getX(), pos.getY(), dir, type);
     }
 
     /**

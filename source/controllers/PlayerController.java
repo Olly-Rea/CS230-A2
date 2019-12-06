@@ -13,16 +13,17 @@ import utils.*;
 /**
  * Class to handle player movement and rendering
  *
- * @author Scott Barr, Daniel Clenaghan
+ * @author Scott, Danny, Olly
  */
 public class PlayerController {
 
     private Player player;
 
+    // Create the Player GridPane
+    GridPane playerGridPane = new GridPane();
+
     /**
-     * Create PlayerController with a player entity
-     * 
-     * @param player 
+     * @param player the player object to be controlled
      */
     public PlayerController(Player player) {
         this.player = player;
@@ -33,7 +34,7 @@ public class PlayerController {
      * cell based on their inventory
      *
      * @param dir the direction the player is attempting to move
-     * @param mc the map controller to find the Cell in the dir
+     * @param mc the map controller to find the Cell in that dir
      */
     public void move(Direction dir, MapController mc) {
         Cell target = mc.getNextCell(player.getPos(), dir);
@@ -68,43 +69,40 @@ public class PlayerController {
         return true;
     }
 
-
     /**
-     * Fill in a player's inventory from a save file
+     * Method to create the player inventory
      * @param sc
      */
-	public void createInventory(Scanner sc) {
-		int[] inventory = new int[7];
-		try {
-			for (int i = 0; i < 7; i++) {
-				inventory[i] = sc.nextInt();
-			}
-			player.setInventory(inventory);
-		} catch (NoSuchElementException e) {
-			System.err.println("Inventory declaration is invalid");
-		}
+    public void createInventory(Scanner sc) {
+        int[] inventory = new int[7];
+        try {
+            for (int i = 0; i < 7; i++) {
+                inventory[i] = sc.nextInt();
+            }
+            player.setInventory(inventory);
+        } catch (NoSuchElementException e) {
+            System.err.println("Inventory declaration is invalid");
+        }
 
-	}
+    }
 
-	/**
-	 * Check if the cell requires a shoe type and if the player posseses it
-	 *
-	 * @param cell the cell being checked against the player, if a certain item is
-	 *             required for that cell type
-	 * @return a boolean value, if true, the player is on a block which kills the
-	 *         player, otherwise player is still alive
-	 */
-	public boolean checkStatus(MapController map) {
+    /**
+     * Check if the cell requires a shoe type and if the player posseses it
+     *
+     * @return a boolean value, if true, the player is on a block which kills
+     * the player, otherwise player is still alive
+     */
+    public boolean checkStatus(MapController map) {
         Cell current = map.getCell(getPlayerPos());
-        
-		if (current instanceof Fire && !player.hasFireBoots()) {
-			return true;
-		} else if (current instanceof Water && !player.hasFlippers()) {
-			return true;
-		}
-		return false;
-	}
-	
+
+        if (current instanceof Fire && !player.hasFireBoots()) {
+            return true;
+        } else if (current instanceof Water && !player.hasFlippers()) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Check if player is on a goal cell
      *
@@ -119,8 +117,7 @@ public class PlayerController {
     }
 
     /**
-     * The vector of the players current position
-     * @return Vector
+     * @return Returns the vector of the players current position
      */
     public Vector getPlayerPos() {
         return player.getPos();
@@ -139,8 +136,7 @@ public class PlayerController {
      * Renders the player
      */
     public GridPane renderPlayer() {
-        // Create the Player GridPane
-        GridPane playerGridPane = new GridPane();
+        playerGridPane.getChildren().clear();
 
         for (int x = 0; x < 7; x++) {
             for (int y = 0; y < 7; y++) {
@@ -150,7 +146,7 @@ public class PlayerController {
                     // Create and add a blank pane
                     // - used to create correct spacing in the rendered GridPane
                     Pane blankSpace = new Pane();
-                    blankSpace.setMinSize(200, 200);
+                    blankSpace.setMinSize(200, 150);
                     playerGridPane.add(blankSpace, x, y);
                 }
             }
@@ -159,23 +155,23 @@ public class PlayerController {
         return playerGridPane;
     }
 
-	/**
-	 * Method to get a int array {X,Y,fireShoes, flippers,tokens, red,
-	 * green,blue,yellow}
-	 *
-	 * @return an array of ints representing the players position and inventory
-	 */
-	public String[] export() {
-		String[] export = new String[2];
-		
-		String inv = "";
-		for (int i : player.getInventory()) {
-			inv += i + " ";
-		}
+    /**
+     * Method to get a int array {X,Y,fireShoes, flippers,tokens, red,
+     * green,blue,yellow}
+     *
+     * @return an array of ints representing the players position and inventory
+     */
+    public String[] export() {
+        String[] export = new String[2];
 
-		export[0] = String.format("PLAYER %d %d", player.getPos().getX(), player.getPos().getY());
-		export[1] = String.format("INVENTORY " + inv);
+        String inv = "";
+        for (int i : player.getInventory()) {
+            inv += i + " ";
+        }
 
-		return export;
-	}
+        export[0] = String.format("PLAYER %d %d", player.getPos().getX(), player.getPos().getY());
+        export[1] = String.format("INVENTORY " + inv);
+
+        return export;
+    }
 }
