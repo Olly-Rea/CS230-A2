@@ -45,6 +45,7 @@ public class GameController {
     private Profile currentProfile;
     private int startTime = currentTimeMillis();
     private int endTime;
+    private int loadTime;
     private String currentMap;
 
     // X and Y variables for render translate methods
@@ -126,6 +127,9 @@ public class GameController {
             case "INVENTORY":
                 playerController.createInventory(sc);
                 break;
+            case "TIME":
+              gameController.loadTime(sc);
+              break;
         }
 
         sc.close();
@@ -152,7 +156,7 @@ public class GameController {
     /**
      * Method to return a new savefile
      *
-     * @param path
+     * @param path path to save data to
      */
     public void saveGame(String saveName) {
         String[] mapExport = mapController.exportMap(entityController);
@@ -167,7 +171,11 @@ public class GameController {
         FileHandler.writeFile(path, mapSpecific,  true);
         FileHandler.writeFile(path, entityExport, true);
         addMapTime(path);
+<<<<<<< HEAD
         }
+=======
+    }
+>>>>>>> beaca18cebca8c83bdc52bf8cbf8cb5b1ee24726
 
     public void setProfile(Profile p) {
         this.currentProfile = p;
@@ -186,6 +194,17 @@ public class GameController {
     */
     public static int currentTimeMillis() {
       return (int) (System.currentTimeMillis());
+    }
+    /**
+    * Loads saved time from map file
+    * @param sc scanner
+    */
+    public void loadTime(Scanner sc) {
+      try {
+        loadTime = sc.nextInt();
+      } catch (NoSuchElementException e) {
+        System.err.println("load time invalid");
+      }
     }
 
     /**
@@ -255,8 +274,12 @@ public class GameController {
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
+            if (loadTime == 0) {
             endTime = currentTimeMillis() - startTime;
+          } else if (loadTime < 0) {
+            } endTime = currentTimeMillis() - loadTime;
             System.out.println("You took " + endTime/1000 + " seconds!");
+
             // Win game
         }
     }
@@ -278,7 +301,7 @@ public class GameController {
     public void addMapTime(String path) {
       int saveTime = currentTimeMillis() - startTime;
       String timeAsString = Integer.toString(saveTime);
-      String[] output = {timeAsString};
+      String[] output = {"TIME", timeAsString};
       FileHandler.writeFile(path, output, false);
     }
 
