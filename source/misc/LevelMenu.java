@@ -28,7 +28,7 @@ import utils.FileHandler;
  */
 public class LevelMenu extends Menu {
 
-    public static final String[] levels = {"Level_1", "Level_2", "test1", "test2", "test3", "test4", "test5", "Test_Map_A2"};
+    public static final String[] levels = {"Level_1", "Level_2", "Level_3", "test1", "test2", "test3", "test4", "test5", "Test_Map_A2"};
     private static String MAP_DIR = "./levelfiles/";
     private static String SAVE_DIR = "./savefiles/";
 

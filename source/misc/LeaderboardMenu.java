@@ -10,19 +10,14 @@ import javafx.scene.control.Label;
 import misc.Profile;
 
 
+/**
+ * 
+ * @author Daniel Clenaghan
+ */
 public class LeaderboardMenu extends Menu {
 	
-	private static String MAP_DIR = "";
-
-	private Leaderboard leaderboard;
-	private ArrayList<String> lbList;
-	private String levelName;
     private VBox selection = new VBox();
-    private Label first;
-	private Label second;
-	private Label third;
 	private Label player;
-    private String path = MAP_DIR;
 
 	public LeaderboardMenu(GameController gc) {
 		// set not visible
@@ -39,8 +34,6 @@ public class LeaderboardMenu extends Menu {
 		selection.getChildren().add(second);
 		selection.getChildren().add(third);
 		
-		Label player = new Label();
-
 		Button nextLevel = new Button("Proceed to next level");
 		nextLevel.setOnAction((ActionEvent e) -> {
             gc.nextLevel();

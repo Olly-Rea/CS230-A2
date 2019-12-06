@@ -74,7 +74,6 @@ public class FileHandler {
             return test > 0 ? true : false;
         } catch (IOException e) {
             System.err.println(e.getMessage());
-            e.printStackTrace();
             return false; // TODO: Handle
         }
     }

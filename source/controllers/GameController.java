@@ -199,6 +199,7 @@ public class GameController {
 
     public void setProfile(Profile p) {
         this.currentProfile = p;
+        if (selectProfileMenu.isVisible()) selectProfileMenu.toggle();
         levelMenu.loadLevels(p.getLevel());
         levelMenu.toggle();
     }
@@ -278,16 +279,10 @@ public class GameController {
         case ESCAPE:
             gameMenu.toggle();
             return;
-        case F1:
-            levelMenu.toggle();
-            return;
-        case F2:
-            selectProfileMenu.toggle();
-            return;
         default:
             return;
         }
-        if (gameMenu.isVisible()) {
+        if (gameMenu.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
             return;
         }
 
