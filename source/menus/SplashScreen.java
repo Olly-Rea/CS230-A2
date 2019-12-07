@@ -1,11 +1,17 @@
 package menus;
 
-//JavaFX imports
+//Local imports
+import controllers.GameController;
+
+//Java imports
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+//JavaFX imports
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.transform.Scale;
 
 /**
  * Class to display blank(ish) screens with a message on it
@@ -35,12 +41,20 @@ public class SplashScreen extends Menu {
      * @param orignialMsg the original message to display on the splashScreen 
      *        on creation - this is originally the MOTD on game startup
      */
-    public SplashScreen(String orignialMsg) {
-        message = new Label(orignialMsg);
+    public SplashScreen(GameController gc, String motd) {
+        menuTitle.getTransforms().add(new Scale(gc.SCALE_VAL, gc.SCALE_VAL, 0, 0));
+        menuTitle.setStyle("-fx-translate-y: 60px");
+        continueText.setStyle("-fx-translate-x: 120px; -fx-font-size: 15pt");
+        
+        message = new Label(motd);
+        message.setStyle("-fx-min-width: 600px; -fx-max-width: 600px; -fx-translate-x: -70px");
         menuLayout.getChildren().add(menuTitle);
         menuLayout.getChildren().add(message);
-        toggleContinue();
         menuLayout.getChildren().add(continueText);
+        message.toFront();
+        continueText.toFront();
+        
+        scaleMenu();
     }
 
     /**
@@ -64,12 +78,6 @@ public class SplashScreen extends Menu {
      * Method to toggle the visibility of the "continue" text
      */
     public void toggleContinue() {
-        if (continueShown) {
-            continueShown = !continueShown;
-            continueText.setStyle("-fx-font-color: rgba(255,255,255,0)");
-        } else {
-            continueShown= !continueShown;
-            continueText.setStyle("-fx-font-color: rgba(255,255,255,1)");
-        }
+        continueText.setVisible(!continueText.isVisible());
     }
 }
