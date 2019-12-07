@@ -132,9 +132,6 @@ public class DumbTargeter extends Enemy {
                 case RIGHT:
                     currAsset += "Mummy_Right";
                     break;
-                default:
-                    currAsset += "Mummy_Down";
-                    break;
             } 
         } else {
             currAsset += "Mummy_Down";
