@@ -47,6 +47,7 @@ public class GameController {
     private int endTime;
     private int loadTime;
     private String currentMap;
+    private boolean levelComplete = false;
 
     // X and Y variables for render translate methods
     private double renderX = 0;
@@ -212,7 +213,26 @@ public class GameController {
     public int getCurrentTime() {
       return currentTimeMillis();
     }
-
+    public String timer() {
+      String output;
+      int minutes;
+      int seconds;
+      startTime = this.startTime/1000
+      int previousSecond = startTime;
+      while (levelComplete = false) {
+        currentTime = (currentTimeMillis()/1000);
+        if (currentTime > previousSecond) {
+          previousSecond += 1;
+          seconds += 1;
+          if (seconds > 59) {
+            minutes += 1;
+            seconds = 0;
+          }
+        }
+        output = Integer.toString(minutes) + ":" + Integer.toString(seconds);
+        return output;
+      }
+    }
     /**
      * Progresses the game 1 step and handles the key pressed.
      *
@@ -274,16 +294,15 @@ public class GameController {
         if (playerController.checkStatus(mapController)
                 || entityController.enemyCollision(playerController.getPlayer())) {
             System.out.println("YOU DIED");
+            levelComplete = false;
             restart();
         }
 
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
-            if (loadTime == 0) {
-            endTime = currentTimeMillis() - startTime;
-          } else if (loadTime < 0) {
-            } endTime = currentTimeMillis() - loadTime;
+            levelComplete = true;
+            endTime = currentTimeMillis() - loadTime;
             System.out.println("You took " + endTime/1000 + " seconds!");
 
             // Win game
