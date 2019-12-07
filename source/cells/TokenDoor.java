@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
  * Token door class to store information on the amount of tokens required for a door and check if a given
  * player has the tokens required to open. Will also render the cell into the map.
  * @version 1.0
- * @author TODO
+ * @author Scott Barr
  */
 public class TokenDoor extends Door {
 
@@ -38,6 +38,11 @@ public class TokenDoor extends Door {
         super(x, y);
     }
 
+    /**
+     * Implementation of isLightSource 
+     * 
+     * @return false
+     */
     public boolean isLightSource() {
         return false;
     }

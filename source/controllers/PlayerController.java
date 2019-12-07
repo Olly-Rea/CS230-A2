@@ -64,7 +64,6 @@ public class PlayerController {
     private boolean validMove(Cell targetCell) {
         CellType moveType = targetCell.getType();
         if (moveType == CellType.WALL || moveType == CellType.DOOR) {
-            SoundHandler.playBump();
             return false;
         }
         return true;

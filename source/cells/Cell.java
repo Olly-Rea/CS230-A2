@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
  * The super class for all cell types. Has general methods to return location and cell type
  * 
  * @version 1.0
- * @author TODO
+ * @author Scott Barr
  */
 public abstract class Cell {
 
@@ -24,8 +24,8 @@ public abstract class Cell {
      * Cell Constructor; Instantiates a new cell.
      *
      * @param type the type of cell being instantiated
-     * @param x the x ordinate of the cell
-     * @param y the y ordinate of the cell
+     * @param x the x coordinate of the cell
+     * @param y the y coordinate of the cell
      */
     public Cell(CellType type, int x, int y) {
         this.type = type;
