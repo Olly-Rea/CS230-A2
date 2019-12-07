@@ -22,7 +22,7 @@ public abstract class Menu {
     public Menu() {
         menuLayout.setVisible(false);
         menuLayout.getStylesheets().add("File:./assets/styles/menu.css");
-    }
+}
 
     public VBox render() {
         return menuLayout;

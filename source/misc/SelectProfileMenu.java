@@ -65,6 +65,7 @@ public class SelectProfileMenu extends Menu {
         useProfile.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         // Add the event handler
         useProfile.setOnAction((ActionEvent e) -> {
+            this.toggle();
             gc.setProfile(selection);
         });
 

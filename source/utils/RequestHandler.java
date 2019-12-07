@@ -56,3 +56,5 @@ public class RequestHandler {
         return new String(chars);
     }
 }
+
+// http://cswebcat.swan.ac.uk/puzzle?solution=
