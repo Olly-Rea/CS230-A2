@@ -42,15 +42,7 @@ public class LeaderboardMenu extends Menu {
         
         ArrayList<String> lbList = new ArrayList<String>();
         lbList = gc.getLeaderboard();
-
-        Label first = new Label("NULL");
-        Label second = new Label("NULL");
-        Label third = new Label("NULL");
-        selection.getChildren().add(first);
-        selection.getChildren().add(second);
-        selection.getChildren().add(third);
-
-        Label player = new Label();
+        
 
         ImageView nextLevelButton = null;
         ImageView returnButton = null;
@@ -66,6 +58,7 @@ public class LeaderboardMenu extends Menu {
             System.err.println("select profile button path wasn't found");
         }
         
+
         Button nextLevel = new Button();
         // Add the button graphic and scale the button
         nextLevel.setGraphic(nextLevelButton);

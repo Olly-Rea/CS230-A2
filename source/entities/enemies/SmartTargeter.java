@@ -109,7 +109,7 @@ public class SmartTargeter extends Enemy {
 
         if (dir != null) { // if dir is null then do not move.
             pos.add(dir); // otherwise add the dir to the positon.
-        } else {
+        } else if (!(player.getPos().equals(pos))){
             ArrayList<Direction> validMoves = new ArrayList<Direction>();
             if (checkValid(Direction.DOWN, map, ec)) {
                 validMoves.add(Direction.DOWN);
@@ -125,8 +125,8 @@ public class SmartTargeter extends Enemy {
             }
             Random random = new Random();
             pos.add(validMoves.get(random.nextInt(validMoves.size())));
-
         }
+
     }
 
     private Boolean checkValid(Direction dir, MapController map, EntityController ec) {

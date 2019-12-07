@@ -170,7 +170,6 @@ public class Player extends Entity {
      */
     public boolean useTokens(int tokensReq) {
         if (tokensReq <= tokens) {
-            tokens = tokens - tokensReq;
             return true;
         } else {
             return false;

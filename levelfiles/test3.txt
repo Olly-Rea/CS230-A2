@@ -1,9 +1,12 @@
 5
-7 5
+7 9
 #######
-#  #  #
-#  #  #
+#     #
+#  w  #
+#WWWWW#
+#     #
+#  f  #
+#FFFFF#
 #     #
 #######
-PLAYER 4 1
-ENEMY 1 1 DT
+PLAYER 1 1
