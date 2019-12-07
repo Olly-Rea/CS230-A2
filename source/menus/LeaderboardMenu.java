@@ -111,10 +111,10 @@ public class LeaderboardMenu extends Menu {
      * Displays the player's score under the leader board
      *
      * @param profile
-     * @param time
+     * @param d
      */
-    public void displayPlayer(Profile profile, int time) {
-        String playerScore = "Your score: " + profile.getName() + " : " + time;
+    public void displayPlayer(Profile profile, double d) {
+        String playerScore = "Your score: " + profile.getName() + " : " + d;
         Label player = new Label(playerScore);
         this.player = player;
     }

@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 //Local imports
 import java.util.Scanner;
 import cells.Cell;
@@ -49,10 +50,10 @@ public class GameController {
     private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
     private Profile currentProfile;
     private int startTime;
-    private int loadTime;
+    private double loadTime;
     private String currentMap;
     private boolean levelComplete = false;
-    priave int level;
+    private int level;
 
     // X and Y variables for render translate methods
     private double renderX = 0;
@@ -226,41 +227,41 @@ public class GameController {
      * @param sc scanner
      */
     public void loadTime(Scanner sc) {
-        loadTime = sc.nextInt();
-      } catch (NoSuchElementException e) {
-        System.err.println("save time not set");
-        loadTime = startTime;
-      }
+    	try {
+    		loadTime = sc.nextDouble();
+    	} catch (NoSuchElementException e) {
+    		System.err.println("save time not set");
+    		loadTime = startTime;
+    	}
     }
     /**
     *getter for level time to display in menu
     */
     public int getStartTime() {
-      return startTime
+      return startTime;
     }
     public int getCurrentTime() {
       return currentTimeMillis();
     }
     public String timer() {
-      String output;
-      int minutes;
-      int seconds;
-      startTime = this.startTime/1000
+      String output = "";
+      int minutes = 0;
+      int seconds = 0;
+      startTime = this.startTime/1000;
       int previousSecond = startTime;
       while (levelComplete = false) {
-        currentTime = (currentTimeMillis()/1000);
+        int currentTime = (currentTimeMillis()/1000);
         if (currentTime > previousSecond) {
           previousSecond += 1;
           seconds += 1;
-          if (seconds = 59) {
+          if (seconds == 59) {
             minutes += 1;
             seconds = 0;
           }
         }
         output = Integer.toString(minutes) + ":" + Integer.toString(seconds);
         return output;
-        window.setTitle("Game " + gc.timer());
-      }
+      } return output;
     }
     public void nextLevel() {
 
@@ -279,7 +280,6 @@ public class GameController {
             currentMap = "./levelfiles/" + LevelMenu.levels[level] + ".txt";
             loadGame(currentMap);
         }
-    }
     }
     /**
      * Progresses the game 1 step and handles the key pressed.
@@ -349,25 +349,33 @@ public class GameController {
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
             levelComplete = true;
-            endTime = currentTimeMillis() - loadTime;
-            System.out.println("You took " + endTime/1000 + " seconds!");
-
-            int time = currentTimeMillis() - startTime + loadTime;
-            System.out.println("You took " + time / 1000 + " seconds!");
-
-            addTime(time);
-            leaderboardMenu.displayPlayer(currentProfile, time);
-            leaderboardMenu.loadLeaderboard(level, this);
-            leaderboardMenu.toggle();
+            double adjustedTime = 0.00;
+            if (loadTime < 0) {
+            	double endTime = currentTimeMillis() - loadTime;
+            	adjustedTime = (double) endTime/1000;
+            	System.out.println("You took " + adjustedTime + " seconds!");
+            	addTime(adjustedTime);
+                leaderboardMenu.displayPlayer(currentProfile, (adjustedTime));
+                leaderboardMenu.loadLeaderboard(level, this);
+                leaderboardMenu.toggle();
+            } else {
+            	double time = currentTimeMillis() - startTime + loadTime;
+            	adjustedTime = (double) time/1000;
+            	System.out.println("You took " + adjustedTime + " seconds!");
+            	addTime(adjustedTime);
+                leaderboardMenu.displayPlayer(currentProfile, (time/1000));
+                leaderboardMenu.loadLeaderboard(level, this);
+                leaderboardMenu.toggle();
+            }
         }
     }
 
-    public void addTime(int time) {
+    public void addTime(double adjustedTime) {
         String fullPath = LEADERBOARD_DIR + "Level_" + level + "_lb";
         System.out.println(level);
         Leaderboard lb = new Leaderboard(fullPath);
 
-        lb.addTime(currentProfile, time);
+        lb.addTime(currentProfile, adjustedTime);
     }
 
     /**
