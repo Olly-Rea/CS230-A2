@@ -37,16 +37,22 @@ public class GameController {
     private static final String LEADERBOARD_DIR = "./leaderboards/";
     public static final double SCALE_VAL = 0.6;
 
+    //Create the game controllers
     private MapController mapController;
     private PlayerController playerController;
     private EntityController entityController;
+    
+    //Create the utility handler classes
     private SoundHandler soundHandler;
+    private RequestHandler requestHandler = new RequestHandler();
+    //Create the game menus
     private GameMenu gameMenu = new GameMenu(this);
     private LevelMenu levelMenu = new LevelMenu(this);
-
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
     private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
+    
+    //Create all other variables required for game runtime
     private Profile currentProfile;
     private int startTime;
     private int loadTime;
@@ -64,6 +70,13 @@ public class GameController {
      * Constructor for the GameController class
      */
     public GameController(Group root) {
+        //Create the motd handler and add it to the SplashScreen
+        String motdURL = "http://cswebcat.swan.ac.uk";
+        String puzzle = requestHandler.get(motdURL+"/puzzle");
+        String code = requestHandler.decipher(puzzle);
+        final String motd = requestHandler.get(motdURL + "/message?solution=" + code);
+        SplashScreen splashScreen = new SplashScreen(this, motd);
+
         this.root = root;
         root.getChildren().add(gameGroup);
         root.getChildren().add(gameMenu.render());
@@ -71,9 +84,15 @@ public class GameController {
         root.getChildren().add(leaderboardMenu.render());
         root.getChildren().add(selectProfileMenu.render());
         root.getChildren().add(createProfileMenu.render());
+        // root.getChildren().add(splashScreen.render());
+        // splashScreen.toggle();
+        
+        //Show the menu screen
         selectProfileMenu.toggle();
         
-        soundHandler = new SoundHandler();
+        //Instantiate the soundHandler
+        // soundHandler = new SoundHandler();
+        // soundHandler.fadeIn(10);
     }
 
     public void restart() {
@@ -230,7 +249,6 @@ public class GameController {
     }
 
     public void nextLevel() {
-
         leaderboardMenu.toggle();
 
         if (level + 1 > currentProfile.getLevel()) {
@@ -241,7 +259,6 @@ public class GameController {
 
         if (level == LevelMenu.levels.length) {
             restart();
-            return;
         } else {
             currentMap = "./levelfiles/" + LevelMenu.levels[level] + ".txt";
             loadGame(currentMap);
