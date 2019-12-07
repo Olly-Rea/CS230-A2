@@ -15,11 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-<<<<<<< HEAD:source/misc/GameMenu.java
 import javafx.scene.text.*;
-=======
-import javafx.scene.transform.Scale;
->>>>>>> Olly:source/menus/GameMenu.java
 
 /**
  * @author Scott Barr, Olly Rea
@@ -28,19 +24,9 @@ public class GameMenu extends Menu {
 
     public GameMenu(GameController gc) {
         super();
-<<<<<<< HEAD:source/misc/GameMenu.java
-        //Create the group to export and the VBox to store the menu buttons
-        //Create the game menu title
-        Label outputLabel = new Label("THIS IS OUR GAME");
-        menuLayout.getChildren().add(outputLabel);
-
-        //BUTTON LAYOUTS BELOW
-
-=======
 
 
         menuLayout.setSpacing(80);
->>>>>>> Olly:source/menus/GameMenu.java
         //add the New Game button to the menu VBox
         ImageView newGameButton = null;
         ImageView loadGameButton = null;
@@ -64,10 +50,6 @@ public class GameMenu extends Menu {
         }
         try {
             exitGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/exitGameButton.png")));
-<<<<<<< HEAD:source/misc/GameMenu.java
-            //exitGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-=======
->>>>>>> Olly:source/menus/GameMenu.java
         } catch (FileNotFoundException e) {
             System.err.println("exit game button path wasn't found");
         }
@@ -90,12 +72,7 @@ public class GameMenu extends Menu {
             }
         });
         menuLayout.getChildren().add(newGame);
-<<<<<<< HEAD:source/misc/GameMenu.java
 
-
-=======
-        
->>>>>>> Olly:source/menus/GameMenu.java
         //Create the loadGame button, assign the graphic, and add to VBox
         Button loadGame = new Button();
         loadGame.setGraphic(loadGameButton);
@@ -126,12 +103,7 @@ public class GameMenu extends Menu {
             }
         });
         menuLayout.getChildren().add(saveGame);
-<<<<<<< HEAD:source/misc/GameMenu.java
 
-
-=======
-        
->>>>>>> Olly:source/menus/GameMenu.java
         //Create the exitGame button, assign the graphic, and add to VBox
         Button exitGame = new Button();
         exitGame.setGraphic(exitGameButton);
@@ -142,12 +114,8 @@ public class GameMenu extends Menu {
             }
         });
         menuLayout.getChildren().add(exitGame);
-<<<<<<< HEAD:source/misc/GameMenu.java
-    }
-=======
-        
+
         scaleMenu();
-        
-    }    
->>>>>>> Olly:source/menus/GameMenu.java
+
+    }
 }

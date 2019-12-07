@@ -51,11 +51,8 @@ public class GameController {
     private int startTime;
     private int loadTime;
     private String currentMap;
-<<<<<<< HEAD
     private boolean levelComplete = false;
-=======
-    private int level;
->>>>>>> Olly
+    priave int level;
 
     // X and Y variables for render translate methods
     private double renderX = 0;
@@ -76,7 +73,7 @@ public class GameController {
         root.getChildren().add(selectProfileMenu.render());
         root.getChildren().add(createProfileMenu.render());
         selectProfileMenu.toggle();
-        
+
         //soundHandler = new SoundHandler();
     }
 
@@ -230,7 +227,6 @@ public class GameController {
      */
     public void loadTime(Scanner sc) {
         loadTime = sc.nextInt();
-<<<<<<< HEAD
       } catch (NoSuchElementException e) {
         System.err.println("save time not set");
         loadTime = startTime;
@@ -265,9 +261,7 @@ public class GameController {
         return output;
         window.setTitle("Game " + gc.timer());
       }
-=======
     }
-
     public void nextLevel() {
 
         leaderboardMenu.toggle();
@@ -285,7 +279,7 @@ public class GameController {
             currentMap = "./levelfiles/" + LevelMenu.levels[level] + ".txt";
             loadGame(currentMap);
         }
->>>>>>> Olly
+    }
     }
     /**
      * Progresses the game 1 step and handles the key pressed.
@@ -346,23 +340,17 @@ public class GameController {
         // Check if player is dead
         if (playerController.checkStatus(mapController)
                 || entityController.enemyCollision(playerController.getPlayer())) {
-<<<<<<< HEAD
             System.out.println("YOU DIED");
             levelComplete = false;
-=======
->>>>>>> Olly
             restart();
         }
 
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
-<<<<<<< HEAD
             levelComplete = true;
             endTime = currentTimeMillis() - loadTime;
             System.out.println("You took " + endTime/1000 + " seconds!");
-=======
->>>>>>> Olly
 
             int time = currentTimeMillis() - startTime + loadTime;
             System.out.println("You took " + time / 1000 + " seconds!");
