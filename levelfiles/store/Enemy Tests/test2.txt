@@ -1,9 +1,10 @@
 4
-7 5
-#######
-#     #
-#  #  #
-#     #
-#######
-PLAYER 1 1
-ENEMY 2 2 WF UP CW
+9 5
+#########
+#       #
+# #   # #
+#       #
+#########
+PLAYER 4 1
+ENEMY 2 1 WF UP CW
+ENEMY 6 1 WF UP ACW
