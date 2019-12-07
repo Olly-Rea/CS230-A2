@@ -15,12 +15,8 @@ import cells.Cell;
 import entities.Entity;
 import entities.Item;
 import misc.Leaderboard;
-import misc.LeaderboardMenu;
 import misc.Profile;
-import misc.SelectProfileMenu;
-import misc.GameMenu;
-import misc.LevelMenu;
-import misc.CreateProfileMenu;
+import menus.*;
 import utils.*;
 
 import java.io.FileInputStream;
@@ -44,9 +40,10 @@ public class GameController {
     private MapController mapController;
     private PlayerController playerController;
     private EntityController entityController;
+    private SoundHandler soundHandler;
     private GameMenu gameMenu = new GameMenu(this);
     private LevelMenu levelMenu = new LevelMenu(this);
-    
+
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
     private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
@@ -74,22 +71,23 @@ public class GameController {
         root.getChildren().add(leaderboardMenu.render());
         root.getChildren().add(selectProfileMenu.render());
         root.getChildren().add(createProfileMenu.render());
-
         selectProfileMenu.toggle();
+        
+        soundHandler = new SoundHandler();
     }
 
     public void restart() {
         loadGame(currentMap);
     }
-    
+
     public void toLevelSelect() {
-		leaderboardMenu.toggle();
-		levelMenu.toggle();
-	}
+        leaderboardMenu.toggle();
+        levelMenu.toggle();
+    }
 
     /**
-     * Creates a 2d Entity Map and Cell Map and stores them in the mapController and
-     * entityController
+     * Creates a 2d Entity Map and Cell Map and stores them in the mapController
+     * and entityController
      *
      * @param fh The Handler reading the Map/LoadFile
      * @return A 2d array of cells to construct the MapController with
@@ -129,24 +127,24 @@ public class GameController {
         String keyword = sc.next();
 
         switch (keyword) {
-        case "PLAYER":
-            playerController = new PlayerController(EntityController.makePlayer(sc));
-            break;
-        case "ENEMY":
-            entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
-            break;
-        case "TELEPORTER":
-            mapController.linkTeleporters(sc);
-            break;
-        case "DOOR":
-            mapController.initDoor(sc);
-            break;
-        case "INVENTORY":
-            playerController.createInventory(sc);
-            break;
-        case "TIME":
-            loadTime(sc);
-            break;
+            case "PLAYER":
+                playerController = new PlayerController(EntityController.makePlayer(sc));
+                break;
+            case "ENEMY":
+                entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
+                break;
+            case "TELEPORTER":
+                mapController.linkTeleporters(sc);
+                break;
+            case "DOOR":
+                mapController.initDoor(sc);
+                break;
+            case "INVENTORY":
+                playerController.createInventory(sc);
+                break;
+            case "TIME":
+                loadTime(sc);
+                break;
         }
 
         sc.close();
@@ -203,7 +201,7 @@ public class GameController {
         levelMenu.loadLevels(p.getLevel());
         levelMenu.toggle();
     }
-    
+
     public void createProfile() {
         selectProfileMenu.toggle();
         createProfileMenu.toggle();
@@ -240,7 +238,6 @@ public class GameController {
             currentProfile.deleteProfile();
             currentProfile.saveProfile();
         }
-
 
         if (level == LevelMenu.levels.length) {
             restart();
@@ -315,18 +312,19 @@ public class GameController {
             System.out.println("You took " + time / 1000 + " seconds!");
 
             addTime(time);
-			leaderboardMenu.displayPlayer(currentProfile, time);
-			leaderboardMenu.loadLeaderboard(level,this);
-			leaderboardMenu.toggle();
+            leaderboardMenu.displayPlayer(currentProfile, time);
+            leaderboardMenu.loadLeaderboard(level, this);
+            leaderboardMenu.toggle();
         }
     }
-    public void addTime(int time) {
-		String fullPath = LEADERBOARD_DIR + "Level_" + level + "_lb";
-		System.out.println(level);
-		Leaderboard lb = new Leaderboard(fullPath);
 
-		lb.addTime(currentProfile, time);
-	}
+    public void addTime(int time) {
+        String fullPath = LEADERBOARD_DIR + "Level_" + level + "_lb";
+        System.out.println(level);
+        Leaderboard lb = new Leaderboard(fullPath);
+
+        lb.addTime(currentProfile, time);
+    }
 
     /**
      * Shows a leaderboard for a specific map in {@code LEADERBOARD_DIR}.
@@ -334,16 +332,16 @@ public class GameController {
      * @param path The file path inside {@code LEADERBOARD_DIR} for the map.
      */
     public ArrayList<String> getLeaderboard() {
-		if (level == 0) {
-			String fullPath = LEADERBOARD_DIR + "Level_1" + "_lb";
-			Leaderboard lb = new Leaderboard(fullPath);
-			return lb.displayBoard();
-		} else {
-			String fullPath = LEADERBOARD_DIR + "Level_" + level + "_lb";
-			Leaderboard lb = new Leaderboard(fullPath);
-			return lb.displayBoard();
-		}
-	}
+        if (level == 0) {
+            String fullPath = LEADERBOARD_DIR + "Level_1" + "_lb";
+            Leaderboard lb = new Leaderboard(fullPath);
+            return lb.displayBoard();
+        } else {
+            String fullPath = LEADERBOARD_DIR + "Level_" + level + "_lb";
+            Leaderboard lb = new Leaderboard(fullPath);
+            return lb.displayBoard();
+        }
+    }
 
     /**
      * adds a time to the map time file in {@code LEADERBOARD_DIR}.
@@ -354,12 +352,12 @@ public class GameController {
         int saveTime = currentTimeMillis() - startTime;
         // String timeAsString = Integer.toString(saveTime);
         // String[] output = { "TIME", timeAsString };
-        FileHandler.writeFile(path, "TIME "+saveTime, true);
+        FileHandler.writeFile(path, "TIME " + saveTime, true);
     }
 
     /**
-     * Initial render method to display the map and orient it to the player start
-     * position
+     * Initial render method to display the map and orient it to the player
+     * start position
      */
     public void render() {
         if (currentMap != null) {

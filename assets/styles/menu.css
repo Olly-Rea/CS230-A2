@@ -43,7 +43,7 @@ VBox > VBox {
 .button {
 	-fx-border-style: none;
 	-fx-background-color: rgba(0,0,0,0);
-	-fx-padding: 0 0 -60 0;
+	-fx-padding: 0 0 -60px 0;
 }
 .button:pressed {
     -fx-scale-x: 0.96;
@@ -53,11 +53,16 @@ VBox > VBox {
 }
 
 .label {
-	-fx-background-color: rgba(160,119,72,1);
+	-fx-min-width: 460px;
+	-fx-max-width: 460px;
+	-fx-font-size: 22pt;
+	-fx-font-family: "Apple Boy BTN";
+	-fx-font-color: white;
 }
 .text-field {
 	-fx-min-width: 460px;
 	-fx-max-width: 460px;
 	-fx-min-height: 50px;
-	-fx-font-size: 20pt;
+	-fx-font-family: "Apple Boy BTN";
+	-fx-font-size: 22pt;
 }
