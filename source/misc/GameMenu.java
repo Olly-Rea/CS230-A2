@@ -53,7 +53,7 @@ public class GameMenu extends Menu {
         }
         //add current level time to menu
         int currentTime = GameController.getCurrentTime() - GameController.getStartTime();
-        Text time = new Text(10, 50, "Current Time: " + currentTime);
+        Text time = new Text(10, 50, "Current Time: " + (currentTime)/1000) + " seconds";
         time.setFont(new Font(20));
         menuLayout.getChildren().add(time);
 
