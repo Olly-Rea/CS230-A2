@@ -1,0 +1,11 @@
+3
+6 6
+######
+#    #
+# #  #
+#    #
+#   ##
+######
+PLAYER 1 1
+ENEMY 4 2 SL UP
+ENEMY 1 4 SL LEFT
