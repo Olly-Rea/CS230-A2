@@ -224,7 +224,7 @@ public class GameController {
         if (currentTime > previousSecond) {
           previousSecond += 1;
           seconds += 1;
-          if (seconds > 59) {
+          if (seconds = 59) {
             minutes += 1;
             seconds = 0;
           }
