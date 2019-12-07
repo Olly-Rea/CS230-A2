@@ -52,7 +52,7 @@ public class GameController {
     private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
     private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
     private SplashScreen splashScreen;
-    
+
     //Create all other variables required for game runtime
     private Profile currentProfile;
     private int startTime;
@@ -214,6 +214,7 @@ public class GameController {
 
     public void setProfile(Profile p) {
         this.currentProfile = p;
+        if (selectProfileMenu.isVisible()) selectProfileMenu.toggle();
         levelMenu.loadLevels(p.getLevel());
         levelMenu.toggle();
     }
@@ -272,35 +273,29 @@ public class GameController {
         // Get the firection to move in
         Direction dir = null;
         switch (e.getCode()) {
-            case W:
-            case UP:
-                dir = Direction.UP;
-                break;
-            case A:
-            case LEFT:
-                dir = Direction.LEFT;
-                break;
-            case S:
-            case DOWN:
-                dir = Direction.DOWN;
-                break;
-            case D:
-            case RIGHT:
-                dir = Direction.RIGHT;
-                break;
-            case ESCAPE:
-                gameMenu.toggle();
-                return;
-            case F1:
-                levelMenu.toggle();
-                return;
-            case F2:
-                selectProfileMenu.toggle();
-                return;
-            default:
-                return;
+        case W:
+        case UP:
+            dir = Direction.UP;
+            break;
+        case A:
+        case LEFT:
+            dir = Direction.LEFT;
+            break;
+        case S:
+        case DOWN:
+            dir = Direction.DOWN;
+            break;
+        case D:
+        case RIGHT:
+            dir = Direction.RIGHT;
+            break;
+        case ESCAPE:
+            gameMenu.toggle();
+            return;
+        default:
+            return;
         }
-        if (gameMenu.isVisible()) {
+        if (gameMenu.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
             return;
         }
 

@@ -32,16 +32,8 @@ public class WallFollower extends Enemy {
     /**
      * Path to the WallFollower image
      */
-    private static Image image;
+    private Image image;
 
-    static {
-        try {
-            image = new Image(new FileInputStream(ASSET_PATH + "Wall/Scorpion_Right.png"));
-        } catch (FileNotFoundException e) {
-            image = null;
-            System.err.println("WallFollower image path not found");
-        }
-    }
 
     private Direction dir;
     private Rotation type;
@@ -119,6 +111,33 @@ public class WallFollower extends Enemy {
      * Renders the Enemy to the screen
      */
     public ImageView render() {
+        String currAsset = ASSET_PATH + "Wall/";
+        if (dir != null) {
+            switch (dir) {
+                case UP:
+                    currAsset += "Scorpion_UP";
+                    break;
+                case DOWN:
+                    currAsset += "Scorpion_DOWN";
+                    break;
+                case LEFT:
+                    currAsset += "Scorpion_LEFT";
+                    break;
+                case RIGHT:
+                    currAsset += "Scorpion_RIGHT";
+                    break;
+            }
+        } else {
+            currAsset += "Scorpion_DOWN";
+        }
+
+        try {
+            image = new Image(new FileInputStream(currAsset + ".png"));
+        } catch (FileNotFoundException e) {
+            image = null;
+            System.err.println("SmartTargeter image path not found");
+        }
+
         return new ImageView(image);
     }
 

@@ -28,21 +28,12 @@ import javafx.scene.image.ImageView;
  */
 public class DumbTargeter extends Enemy {
 
-    private static Image image;
-
-    static {
-        try {
-            image = new Image(new FileInputStream(ASSET_PATH + "Dumb/Mummy_Up.png"));
-        } catch (FileNotFoundException e) {
-            image = null;
-            System.err.println("DumbTargeter image path not found");
-        }
-    }
+    private Image image;
 
     /**
      * The player.
      */
-    private Direction dir;
+    private Direction dir = null;
 
     /**
      * Instantiates a DumbTargeter enemy.
@@ -52,6 +43,12 @@ public class DumbTargeter extends Enemy {
      */
     public DumbTargeter(Vector vector, Player p) {
         super(vector, p);
+        try {
+            image = new Image(new FileInputStream(ASSET_PATH + "Dumb/Mummy_Up.png"));
+        } catch (FileNotFoundException e) {
+            image = null;
+            System.err.println("DumbTargeter image path not found");
+        }
     }
 
     /**
@@ -120,7 +117,37 @@ public class DumbTargeter extends Enemy {
      * Renders the Enemy to the screen
      */
     public ImageView render() {
+        String currAsset = "Dumb/";
+        if (dir != null) {
+            switch (dir) {
+                case UP:
+                    currAsset += "Mummy_Up";
+                    break;
+                case DOWN:
+                    currAsset += "Mummy_Down";
+                    break;
+                case LEFT:
+                    currAsset += "Mummy_Left";
+                    break;
+                case RIGHT:
+                    currAsset += "Mummy_Right";
+                    break;
+            } 
+        } else {
+            currAsset += "Mummy_Down";
+        }
+        
+
+        try {
+            image = new Image(new FileInputStream(ASSET_PATH + currAsset + ".png"));
+        } catch (FileNotFoundException e) {
+            image = null;
+            System.err.println("DumbTargeter image path not found");
+        }
+
         return new ImageView(image);
     }
+
+    
 
 }
