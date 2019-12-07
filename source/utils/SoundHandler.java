@@ -45,8 +45,8 @@ public class SoundHandler {
         play();
     }
 
-    public static void playSound(MediaPlayer mp, boolean wait) {
-        if (!mp.getStatus().equals(Status.PLAYING) || !wait) {
+    public static void playSound(MediaPlayer mp) {
+        if (!mp.getStatus().equals(Status.PLAYING)) {
             mp.play();
             mp.setOnEndOfMedia(() -> {
                 mp.seek(mp.getStartTime());
@@ -56,12 +56,12 @@ public class SoundHandler {
     }
 
     public static void playBump() {
-        playSound(bumpSound, true);
+        playSound(bumpSound);
     }
 
     public static void playTokenCollect() {
         tokenSound.setVolume(0.2);
-        playSound(tokenSound, false);
+        playSound(tokenSound);
     }
 
     /**
