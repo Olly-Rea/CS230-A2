@@ -25,7 +25,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window) throws IOException {
-        window.setTitle("Game" + timer());
+        window.setTitle("Game" + gc.timer());
         window.setResizable(false);
 
         Group root = new Group();

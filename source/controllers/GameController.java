@@ -231,6 +231,7 @@ public class GameController {
         }
         output = Integer.toString(minutes) + ":" + Integer.toString(seconds);
         return output;
+        window.setTitle("Game " + gc.timer());
       }
     }
     /**
