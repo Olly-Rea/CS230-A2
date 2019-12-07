@@ -1,14 +1,5 @@
 package controllers;
 
-//JavaFX imports
-import javafx.scene.Group;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.transform.Scale;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.util.ArrayList;
 //Local imports
 import java.util.Scanner;
 import cells.Cell;
@@ -19,8 +10,17 @@ import misc.Profile;
 import menus.*;
 import utils.*;
 
+//JavaFX imports
+import javafx.scene.Group;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.transform.Scale;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  * Game controller manages the logic of the game. It creates the other three
@@ -41,7 +41,7 @@ public class GameController {
     private MapController mapController;
     private PlayerController playerController;
     private EntityController entityController;
-    
+
     //Create the utility handler classes
     private SoundHandler soundHandler;
     private RequestHandler requestHandler = new RequestHandler();
@@ -51,6 +51,7 @@ public class GameController {
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
     private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
+    private SplashScreen splashScreen;
     
     //Create all other variables required for game runtime
     private Profile currentProfile;
@@ -72,10 +73,10 @@ public class GameController {
     public GameController(Group root) {
         //Create the motd handler and add it to the SplashScreen
         String motdURL = "http://cswebcat.swan.ac.uk";
-        String puzzle = requestHandler.get(motdURL+"/puzzle");
+        String puzzle = requestHandler.get(motdURL + "/puzzle");
         String code = requestHandler.decipher(puzzle);
         final String motd = requestHandler.get(motdURL + "/message?solution=" + code);
-        SplashScreen splashScreen = new SplashScreen(this, motd);
+        splashScreen = new SplashScreen(this, motd);
 
         this.root = root;
         root.getChildren().add(gameGroup);
@@ -84,14 +85,12 @@ public class GameController {
         root.getChildren().add(leaderboardMenu.render());
         root.getChildren().add(selectProfileMenu.render());
         root.getChildren().add(createProfileMenu.render());
-        //root.getChildren().add(splashScreen.render());
-        //splashScreen.toggle();
-        
-        //Show the menu screen
-        selectProfileMenu.toggle();
-        
+        root.getChildren().add(splashScreen.render());
+        //Display the splashScreen
+        splashScreen.toggle();
+        //selectProfileMenu.toggle();
         //Instantiate the soundHandler
-        soundHandler = new SoundHandler();
+        //soundHandler = new SoundHandler();
     }
 
     public void restart() {
@@ -323,6 +322,8 @@ public class GameController {
         // Check if player is dead
         if (playerController.checkStatus(mapController)
                 || entityController.enemyCollision(playerController.getPlayer())) {
+            splashScreen.morphScreen();
+            splashScreen.toggle();
             restart();
         }
 

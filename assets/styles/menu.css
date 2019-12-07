@@ -57,7 +57,9 @@ VBox > VBox {
 	-fx-max-width: 460px;
 	-fx-font-size: 22pt;
 	-fx-font-family: "Apple Boy BTN";
-	-fx-font-color: white;
+	-fx-wrap-text: true;
+	-fx-text-alignment: center;
+	-fx-text-fill: white;
 }
 .text-field {
 	-fx-min-width: 460px;
