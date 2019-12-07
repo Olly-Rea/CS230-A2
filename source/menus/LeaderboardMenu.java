@@ -1,19 +1,27 @@
-package misc;
+package menus;
 
+//Local imports
 import controllers.GameController;
+import misc.Profile;
+
+//Java imports
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
+//JavaFX imports
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import java.util.ArrayList;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.Scale;
+import misc.Leaderboard;
 
-import misc.Profile;
-
+/**
+ * @author Scott Barr, Olly Rea
+ */
 public class LeaderboardMenu extends Menu {
 
     private static String MAP_DIR = "";

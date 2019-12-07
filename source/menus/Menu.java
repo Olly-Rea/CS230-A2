@@ -1,17 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package misc;
+package menus;
 
 //Local imports
 import controllers.GameController;
+
+//JavaFX imports
 import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
 
 /**
- *
  * @author Olly Rea
  */
 public abstract class Menu {

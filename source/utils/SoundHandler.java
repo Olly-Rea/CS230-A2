@@ -1,32 +1,56 @@
 package utils;
 
-import javafx.scene.media;
+//JavaFX imports
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+/**
+ * @author Alex Melenikos, Olly Rea
+ */
 public class SoundHandler {
 
-    //Constructor of the class
-    public SoundHandler (String path) {
-        Media media = new Media("C:/GitHub/CS230-A2/assets/sounds/Cave background ambience/Cave.mp3");
+    private static final String AUDIO_PATH = "./assets/sounds/";
+    private String[] sounds = {"Cave", "songMenu1"};
+
+    private MediaPlayer mediaPlayer;
+
+    /**
+     * Constructor of the class
+     */
+    public SoundHandler () {
+        Media media = new Media("File://" + AUDIO_PATH + "songMenu1.mp3");
         mediaPlayer = new MediaPlayer(media);
+        play();
     }
 
-    //A static method to play the audio that is selected.
-    public static void play () {
+    /**
+     * Method to play the audio that is selected.
+     */
+    public void play () {
         mediaPlayer.setAutoPlay(true);
     }
 
-    //A static method to stop the audio that is playing
-    public static void stop() {
-        mediaPlayer.setOnStopped();
-    }
-    
-    //A static method to mute the current song/ambience that is playing
-    public static void mute() {
-        mediaPlayer.SetMute(true);
+    /**
+     * A method to stop the audio that is playing
+     */
+    public void stop() {
+        mediaPlayer.stop();
     }
 
-    
+    /**
+     * A method to mute the current song/ambience that is playing
+     */
+    public void mute() {
+        mediaPlayer.setMute(true);
+    }
 
-      
-
+    /**
+     * A method to play a sound effect
+     *
+     * @param soundRef the sound reference for the String array sounds
+     */
+    public void playSoundEffect(int soundRef) {
+        Media media = new Media("file://" + AUDIO_PATH + sounds[soundRef] + ".mp3");
+        play();
+    }
 }

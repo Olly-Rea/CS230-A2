@@ -1,13 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package misc;
+package menus;
 
+//Local imports
 import controllers.GameController;
+import utils.FileHandler;
+import misc.Profile;
+
+//java iimports
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
+//JavaFX imports
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,18 +18,13 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import utils.FileHandler;
-import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.Scale;
 
-import misc.Profile;
-
 /**
- *
- * @author Olive
+ * @author Scott Barr, Olly Rea
  */
 public class SelectProfileMenu extends Menu {
 

@@ -1,15 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package misc;
+package menus;
 
+//Local imports
 import controllers.GameController;
+import utils.FileHandler;
+import misc.Profile;
 
+//Java imports
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+//JavaFX imports
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -20,15 +21,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
-import utils.FileHandler;
 
 /**
- *
- * @author Olive
+ * @author Scott Barr, Olly Rea
  */
 public class LevelMenu extends Menu {
 
-    public static final String[] levels = {"Level_1", "Level_2", "test1", "test2", "test3", "test4", "test5", "Test_Map_A2"};
+    public static final String[] levels = {"Level_1", "Level_2", "test1", "test2", "test3", "test4", "test5", "test6", "Test_Map_A2"};
     private static String MAP_DIR = "./levelfiles/";
     private static String SAVE_DIR = "./savefiles/";
 
