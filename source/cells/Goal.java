@@ -6,6 +6,11 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Class to render the goal cell
+ * @version 1.0
+ * @author TODO
+ */
 public class Goal extends Cell {
 
     private static final String IMAGE_NAME = "Goal";
@@ -20,10 +25,18 @@ public class Goal extends Cell {
         }
     }
 
+    public boolean isLightSource() {
+        return false;
+    }
+
     public Goal(int x, int y) {
         super(CellType.GOAL, x, y);
     }
 
+    /**
+     * Return the character used in the map file for this cell
+     * @return char
+     */
     public char getChar() {
         return '!';
     }

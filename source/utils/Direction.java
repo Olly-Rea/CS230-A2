@@ -3,6 +3,9 @@ package utils;
 /**
  * Utilty enum for Directions WallFollower class can rotate direction when
  * required through {@code Direction.cw()} or {@code Direction.acw()}.
+ * 
+ * @author Scott Barr
+ * @version 1.0
  */
 public enum Direction {
     UP(0, -1) {

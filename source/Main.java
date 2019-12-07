@@ -33,9 +33,14 @@ public class Main extends Application {
 
         // 1400 - 20 from the window size due to 'non-resizeable' window change
         final double WINDOW_SIZE = 1380 * GameController.SCALE_VAL;
+<<<<<<< HEAD
 
         Scene scene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE, Color.rgb(30, 16, 0));
 
+=======
+        
+        Scene scene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE, Color.rgb(30, 16, 0));      
+>>>>>>> Olly
         gc.render();
 
         scene.setOnKeyPressed(e -> {

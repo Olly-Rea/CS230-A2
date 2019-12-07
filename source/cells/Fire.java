@@ -6,6 +6,11 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Class to render the fire cell
+ * @version 1.0
+ * @author TODO
+ */
 public class Fire extends Cell {
 
     private static final String IMAGE_NAME = "Fire";
@@ -20,11 +25,23 @@ public class Fire extends Cell {
         }
     }
 
+    /**
+     * Create a fire cell at location (x,y)
+     * @param x
+     * @param y
+     */
     public Fire(int x, int y) {
         super(CellType.FIRE, x, y);
     }
 
+    public boolean isLightSource() {
+        return true;
+    }
 
+    /**
+     * Return the character used in the map file for this cell
+     * @return char
+     */
     public char getChar() {
         return 'F';
     }

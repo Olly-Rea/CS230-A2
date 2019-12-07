@@ -8,46 +8,54 @@ import javafx.scene.transform.Scale;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
 //Local imports
 import java.util.Scanner;
 import cells.Cell;
 import entities.Entity;
 import entities.Item;
+import misc.Leaderboard;
 import misc.Profile;
-import misc.SelectProfileMenu;
-import misc.GameMenu;
-import misc.LevelMenu;
+import menus.*;
 import utils.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
- * GameController.java
+ * Game controller manages the logic of the game. It creates the other three
+ * controllers and contains the methods to access them. It is also responsible
+ * for out of game functions such as: saving and loading, profile manipulation,
+ * Leaderboard creation and player rendering
  *
- * @version 1.0.0
- * @author Olly Rea, Scott Barr
+ * @version 1.0
+ * @author Scott Barr, Olly Rea, Daniel Clenaghan
  */
 public class GameController {
 
-    private static final String PROFILE_PATH = "./profile/profiles.txt";
-    private static final String MAP_DIR = "...";
     private static final String SAVE_DIR = "./savefiles/";
-    private static final String LEADERBOARD_DIR = "...";
+    private static final String LEADERBOARD_DIR = "./leaderboards/";
     public static final double SCALE_VAL = 0.6;
 
     private MapController mapController;
     private PlayerController playerController;
     private EntityController entityController;
+    private SoundHandler soundHandler;
     private GameMenu gameMenu = new GameMenu(this);
     private LevelMenu levelMenu = new LevelMenu(this);
+
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
+    private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
+    private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
     private Profile currentProfile;
-    private int startTime = currentTimeMillis();
-    private int endTime;
+    private int startTime;
     private int loadTime;
     private String currentMap;
+<<<<<<< HEAD
     private boolean levelComplete = false;
+=======
+    private int level;
+>>>>>>> Olly
 
     // X and Y variables for render translate methods
     private double renderX = 0;
@@ -64,15 +72,21 @@ public class GameController {
         root.getChildren().add(gameGroup);
         root.getChildren().add(gameMenu.render());
         root.getChildren().add(levelMenu.render());
+        root.getChildren().add(leaderboardMenu.render());
         root.getChildren().add(selectProfileMenu.render());
-
+        root.getChildren().add(createProfileMenu.render());
         selectProfileMenu.toggle();
+        
+        //soundHandler = new SoundHandler();
     }
 
     public void restart() {
         loadGame(currentMap);
+    }
+
+    public void toLevelSelect() {
+        leaderboardMenu.toggle();
         levelMenu.toggle();
-        render();
     }
 
     /**
@@ -85,6 +99,10 @@ public class GameController {
     private void makeControllers(FileHandler fh) {
         String init = fh.nextLine();
         Scanner sc = new Scanner(init);
+        level = sc.nextInt();
+        sc.close();
+        init = fh.nextLine();
+        sc = new Scanner(init);
         int mapWidth = sc.nextInt();
         int mapHeight = sc.nextInt();
 
@@ -129,8 +147,8 @@ public class GameController {
                 playerController.createInventory(sc);
                 break;
             case "TIME":
-              gameController.loadTime(sc);
-              break;
+                loadTime(sc);
+                break;
         }
 
         sc.close();
@@ -142,6 +160,7 @@ public class GameController {
      * @param path Path to the map file.
      */
     public void loadGame(String path) {
+        loadTime = 0;
         FileHandler fh = new FileHandler(path);
         makeControllers(fh);
 
@@ -151,7 +170,12 @@ public class GameController {
         }
 
         currentMap = path;
-        levelMenu.toggle();
+        if (levelMenu.isVisible()) {
+            levelMenu.toggle();
+        }
+
+        startTime = currentTimeMillis();
+        render();
     }
 
     /**
@@ -167,38 +191,46 @@ public class GameController {
 
         String path = SAVE_DIR + currentProfile.getName() + "/" + saveName + ".txt";
 
-        FileHandler.writeFile(path, mapExport,    false);
+        FileHandler.writeFile(path, level, false);
+        FileHandler.writeFile(path, mapExport, true);
         FileHandler.writeFile(path, playerExport, true);
-        FileHandler.writeFile(path, mapSpecific,  true);
+        FileHandler.writeFile(path, mapSpecific, true);
         FileHandler.writeFile(path, entityExport, true);
         addMapTime(path);
         }
 
     public void setProfile(Profile p) {
         this.currentProfile = p;
-        selectProfileMenu.toggle();
         levelMenu.loadLevels(p.getLevel());
         levelMenu.toggle();
+    }
+
+    public void createProfile() {
+        selectProfileMenu.toggle();
+        createProfileMenu.toggle();
     }
 
     public void loadSaves() {
         levelMenu.loadSaves(currentProfile);
         levelMenu.toggle();
     }
+
     /**
-    * Converts current system time to Integer
-    *
-    */
+     * Converts current system time to Integer
+     *
+     */
     public static int currentTimeMillis() {
-      return (int) (System.currentTimeMillis());
+        return (int) (System.currentTimeMillis());
     }
+
     /**
-    * Loads saved time from map file
-    * @param sc scanner
-    */
+     * Loads saved time from map file
+     *
+     * @param sc scanner
+     */
     public void loadTime(Scanner sc) {
-      try {
         loadTime = sc.nextInt();
+<<<<<<< HEAD
       } catch (NoSuchElementException e) {
         System.err.println("save time not set");
         loadTime = startTime;
@@ -233,6 +265,27 @@ public class GameController {
         return output;
         window.setTitle("Game " + gc.timer());
       }
+=======
+    }
+
+    public void nextLevel() {
+
+        leaderboardMenu.toggle();
+
+        if (level + 1 > currentProfile.getLevel()) {
+            currentProfile.incLevel(level);
+            currentProfile.deleteProfile();
+            currentProfile.saveProfile();
+        }
+
+        if (level == LevelMenu.levels.length) {
+            restart();
+            return;
+        } else {
+            currentMap = "./levelfiles/" + LevelMenu.levels[level] + ".txt";
+            loadGame(currentMap);
+        }
+>>>>>>> Olly
     }
     /**
      * Progresses the game 1 step and handles the key pressed.
@@ -275,13 +328,12 @@ public class GameController {
             return;
         }
 
-        //Make the move based on this direction
+        // Make the move based on this direction
         playerController.move(dir, mapController);
-        //Update the player asset so that the player is facing the last direction moved
+        // Update the player asset so that the player is facing the last direction moved
         playerController.getPlayer().updatePlayerAsset(dir);
         playerController.renderPlayer();
         renderPlayer();
-
 
         // Check entity grid
         entityController.checkItem(playerController.getPlayer());
@@ -289,25 +341,45 @@ public class GameController {
         renderPlayer();
 
         // Update enemies
-        entityController.moveEnemies(mapController);
+        entityController.moveEnemies(mapController, entityController);
 
         // Check if player is dead
         if (playerController.checkStatus(mapController)
                 || entityController.enemyCollision(playerController.getPlayer())) {
+<<<<<<< HEAD
             System.out.println("YOU DIED");
             levelComplete = false;
+=======
+>>>>>>> Olly
             restart();
         }
 
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
+<<<<<<< HEAD
             levelComplete = true;
             endTime = currentTimeMillis() - loadTime;
             System.out.println("You took " + endTime/1000 + " seconds!");
+=======
+>>>>>>> Olly
 
-            // Win game
+            int time = currentTimeMillis() - startTime + loadTime;
+            System.out.println("You took " + time / 1000 + " seconds!");
+
+            addTime(time);
+            leaderboardMenu.displayPlayer(currentProfile, time);
+            leaderboardMenu.loadLeaderboard(level, this);
+            leaderboardMenu.toggle();
         }
+    }
+
+    public void addTime(int time) {
+        String fullPath = LEADERBOARD_DIR + "Level_" + level + "_lb";
+        System.out.println(level);
+        Leaderboard lb = new Leaderboard(fullPath);
+
+        lb.addTime(currentProfile, time);
     }
 
     /**
@@ -315,8 +387,16 @@ public class GameController {
      *
      * @param path The file path inside {@code LEADERBOARD_DIR} for the map.
      */
-    public void showLeaderboard(String path) {
-
+    public ArrayList<String> getLeaderboard() {
+        if (level == 0) {
+            String fullPath = LEADERBOARD_DIR + "Level_1" + "_lb";
+            Leaderboard lb = new Leaderboard(fullPath);
+            return lb.displayBoard();
+        } else {
+            String fullPath = LEADERBOARD_DIR + "Level_" + level + "_lb";
+            Leaderboard lb = new Leaderboard(fullPath);
+            return lb.displayBoard();
+        }
     }
 
     /**
@@ -325,10 +405,10 @@ public class GameController {
      * @param path THe file path for the map.
      */
     public void addMapTime(String path) {
-      int saveTime = currentTimeMillis() - startTime;
-      String timeAsString = Integer.toString(saveTime);
-      String[] output = {"TIME", timeAsString};
-      FileHandler.writeFile(path, output, false);
+        int saveTime = currentTimeMillis() - startTime;
+        // String timeAsString = Integer.toString(saveTime);
+        // String[] output = { "TIME", timeAsString };
+        FileHandler.writeFile(path, "TIME " + saveTime, true);
     }
 
     /**
@@ -354,9 +434,9 @@ public class GameController {
             Group playerGroup = new Group();
             // Render Player in center of screen last
             GridPane playerLayer = playerController.renderPlayer();
-            playerLayer.getTransforms().add(new Scale(SCALE_VAL+0.2, SCALE_VAL+0.2, 0, 0));
+            playerLayer.getTransforms().add(new Scale(SCALE_VAL + 0.2, SCALE_VAL + 0.2, 0, 0));
             playerGroup.getChildren().add(playerLayer);
-            playerGroup.getChildren().get(0).setLayoutX(-200*SCALE_VAL+0.2);
+            playerGroup.getChildren().get(0).setLayoutX(-200 * SCALE_VAL + 0.2);
             // Render the feather-edge effect around the outside of the screen
             Image assetImg;
             try {
@@ -369,7 +449,7 @@ public class GameController {
             featherEdge.getTransforms().add(new Scale(SCALE_VAL, SCALE_VAL, 0, 0));
             playerGroup.getChildren().add(featherEdge);
 
-            //Add the two layers to the gameGroup layer
+            // Add the two layers to the gameGroup layer
             gameGroup.getChildren().add(worldGroup);
             gameGroup.getChildren().add(playerGroup);
             renderPlayer();
@@ -377,9 +457,9 @@ public class GameController {
     }
 
     public void renderPlayer() {
-        //Calculate the value the playerLayer offsets the player by
-        double playerOffset = (400*1.2) * SCALE_VAL+0.2;
-        //Offset the map to focus on the player start position
+        // Calculate the value the playerLayer offsets the player by
+        double playerOffset = (400 * 1.2) * SCALE_VAL + 0.2;
+        // Offset the map to focus on the player start position
         if (playerController.getPlayerPos().getX() > 1) {
             renderX = ((playerController.getPlayerPos().getX() - 1) * (-200 * SCALE_VAL)) + playerOffset;
         } else {
@@ -390,8 +470,9 @@ public class GameController {
         } else {
             renderY = (playerController.getPlayerPos().getY()) + playerOffset;
         }
-        //render the map and entity layer beehind the player - adjusted for current scaling values
-        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutX(renderX-30);
-        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutY(renderY+10);
+        // render the map and entity layer beehind the player - adjusted for current
+        // scaling values
+        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutX(renderX - 30);
+        ((Group) root.getChildren().get(0)).getChildren().get(0).setLayoutY(renderY + 10);
     }
 }

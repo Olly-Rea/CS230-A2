@@ -19,8 +19,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * 
+ * Subclass of the Enemy class; StraightLineEnemy
+ * A class describing a straight line enemy which can either move horizontally or vertically
+ *
  * @author Scott Barr
+ * @version 1.0
  */
 public class StraightLineEnemy extends Enemy {
 
@@ -40,7 +43,7 @@ public class StraightLineEnemy extends Enemy {
     /**
      * Straight line.
      *
-     * @param vector the position of th straight line enemy
+     * @param vector the position of the straight line enemy
      * @param dir The direction the enemy is facing initially
      */
     public StraightLineEnemy(Vector pos, Player player, Direction dir) {
@@ -66,7 +69,12 @@ public class StraightLineEnemy extends Enemy {
             this.pos.add(dir);
         }
     }
-    
+
+    /**
+     * Generates a string containing this enemies direction, location and type
+     *
+     * @return String
+     */
     public String export() {
         return String.format("%d %d SL %s", pos.getX(), pos.getY(), dir);
     }

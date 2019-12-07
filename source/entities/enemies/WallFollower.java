@@ -2,9 +2,7 @@ package entities.enemies;
 
 //Local imports
 import cells.Cell;
-import cells.CellType;
 import cells.Ground;
-import cells.Wall;
 import controllers.EntityController;
 import controllers.MapController;
 import utils.Direction;
@@ -22,10 +20,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
+ * Subclass of the Enemy class; WallFollower
  * A class describing a WallFollower Enemy which follows a wall anticlockwise or
  * clockwise.
  *
- * @author ???, Scott Barr
+ * @author Scott Barr
+ * @version 1.0
  */
 public class WallFollower extends Enemy {
 
@@ -106,6 +106,11 @@ public class WallFollower extends Enemy {
         }
     }
 
+    /**
+     * Generates a string containing this enemies direction, location and type
+     *
+     * @return String
+     */
     public String export() {
         return String.format("%d %d WF %s %s", pos.getX(), pos.getY(), dir, type);
     }

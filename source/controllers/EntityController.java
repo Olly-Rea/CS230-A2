@@ -1,9 +1,5 @@
 package controllers;
 
-/**
- * @author Scott Barr, James Hogg
- * @version 1.1
- */
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,6 +14,12 @@ import utils.Vector;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+/**
+ * Stores information and method related to items and enemies
+ *
+ * @author Scott Barr, James Hogg, Daniel Clenaghan
+ * @version 1.0
+ */
 public class EntityController {
 
     private Entity[][] entityGrid;
@@ -61,10 +63,10 @@ public class EntityController {
 
     /**
      * Method for enemies to check if an item exists in their path
-     * 
+     *
      * @param pos the position of the enemy
      * @param dir the direction the enemy is travelling in
-     * @return if an item is present in the next 
+     * @return if an item is present in the next
      */
     public boolean entityPresent(Vector pos, Direction dir) {
         return entityGrid[pos.getY() + dir.Y][pos.getX() + dir.X] instanceof Entity;
@@ -128,7 +130,7 @@ public class EntityController {
      * @param map the map will be passed through to each enemy to assist their
      * next move calculation.
      */
-    public void moveEnemies(MapController map) {
+    public void moveEnemies(MapController map, EntityController ec) {
         for (int i = 0; i < enemies.size(); i++) {
             // Get the enemy to move
             Enemy moveEnemy = enemies.get(i);
@@ -138,7 +140,7 @@ public class EntityController {
             x = moveEnemy.getPos().getX();
             y = moveEnemy.getPos().getY();
             entityGrid[y][x] = null;
-            moveEnemy.algorithm(map);
+            moveEnemy.algorithm(map, ec);
             x = moveEnemy.getPos().getX();
             y = moveEnemy.getPos().getY();
             entityGrid[y][x] = moveEnemy;
@@ -146,11 +148,9 @@ public class EntityController {
         }
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Method to return the Entity at the coordinates x and y
-     * 
+     *
      * @param x the x ordinate to look at
      * @param y the y ordinate to look at
      * @return the Entity at (x,y) - [y,x] in the array
@@ -159,37 +159,17 @@ public class EntityController {
         return entityGrid[y][x];
     }
 
->>>>>>> Master
     /**
      * Returns an array of Strings of the state of the entities in the game.
      *
      * @return String array, 1 for each entity defining their details.
      */
     public String[] export() {
-<<<<<<< HEAD
-        // private String[] exportArray;
-        // private int numberOfColumns = entityGrid.length();
-        // private int numberOfRows;
-        // private int exportArrayIndex = 0;
-        // private String exportData;
-        // for (int i; i < numberOfColumns; i++) {
-        // numberOfRows = entityGrid[i].length();
-        // for (int j; j < numberOfRows; j++) {
-        // if entityGrid[i][j] != " " {
-        // exportData = entityGrid[i][j] + " " + (entityGrid[i][j]).getPos();
-        // exportArray[exportArrayIndex] = exportData;
-        // exportArrayIndex++;
-        // }
-        // }
-        // } return exportArray;s
-        return null;
-=======
         String[] export = new String[enemies.size()];
         for (int i = 0; i < export.length; i++) {
             export[i] = "ENEMY " + enemies.get(i).export();
         }
         return export;
->>>>>>> Master
     }
 
     /**
@@ -277,9 +257,10 @@ public class EntityController {
     }
 
     /**
+     * create an enemy using a text line from a map file
      *
      * @param line a scanner of the line with the enemy details
-     * @return
+     * @return enemy
      */
     public static Enemy makeEnemy(Scanner line, Player p) {
         int x = line.nextInt();
@@ -332,7 +313,6 @@ public class EntityController {
      * Renders the entities respective assets on a GridPane at their locations
      * based on the entityGrid
      *
-     * @return
      */
     public GridPane renderEntities() {
         // Clear the entity GridPane for fresh render

@@ -4,7 +4,8 @@ package utils;
  * Needed to find whether the wall follower's rotation is clockwise or anti
  * clockwise
  *
- * @author Scott
+ * @author Scott Barr
+ * @version 1.0
  */
 public enum Rotation {
     CW {
