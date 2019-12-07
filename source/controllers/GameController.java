@@ -200,7 +200,17 @@ public class GameController {
         loadTime = sc.nextInt();
       } catch (NoSuchElementException e) {
         System.err.println("save time not set");
+        loadTime = startTime;
       }
+    }
+    /**
+    *getter for level time to display in menu
+    */
+    public int getStartTime() {
+      return startTime
+    }
+    public int getCurrentTime() {
+      return currentTimeMillis();
     }
 
     /**

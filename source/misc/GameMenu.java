@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.*;
 
 /**
  *
@@ -24,14 +25,14 @@ import javafx.scene.image.ImageView;
 public class GameMenu extends Menu {
 
     public GameMenu(GameController gc) {
-        super();        
+        super();
         //Create the group to export and the VBox to store the menu buttons
         //Create the game menu title
         Label outputLabel = new Label("THIS IS OUR GAME");
         menuLayout.getChildren().add(outputLabel);
-        
+
         //BUTTON LAYOUTS BELOW
-        
+
         //add the New Game button to the menu VBox
         ImageView newGameButton = null;
         ImageView loadGameButton = null;
@@ -45,12 +46,17 @@ public class GameMenu extends Menu {
             loadGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/loadGameButton.png")));
             //loadGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
             exitGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/exitGameButton.png")));
-            //exitGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));                    
+            //exitGameButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
         } catch (FileNotFoundException e) {
             newGameButton = null;
             System.err.println("A button path wasn't found");
         }
-        
+        //add current level time to menu
+        int currentTime = GameController.getCurrentTime() - GameController.getStartTime();
+        Text time = new Text(10, 50, "Current Time: " + currentTime);
+        time.setFont(new Font(20));
+        menuLayout.getChildren().add(time);
+
         //Create the newGame button, assign the graphic, and add to VBox
         Button newGame = new Button("New Game");
         newGame.setGraphic(newGameButton);
@@ -60,8 +66,8 @@ public class GameMenu extends Menu {
             }
         });
         menuLayout.getChildren().add(newGame);
-        
-        
+
+
         //Create the loadGame button, assign the graphic, and add to VBox
         Button loadGame = new Button("Load Game");
         loadGame.setGraphic(loadGameButton);
@@ -91,8 +97,8 @@ public class GameMenu extends Menu {
             }
         });
         menuLayout.getChildren().add(saveGame);
-        
-        
+
+
         //Create the exitGame button, assign the graphic, and add to VBox
         Button exitGame = new Button("Exit Game");
         exitGame.setGraphic(exitGameButton);
@@ -101,6 +107,6 @@ public class GameMenu extends Menu {
                 Platform.exit();
             }
         });
-        menuLayout.getChildren().add(exitGame);    
-    }    
+        menuLayout.getChildren().add(exitGame);
+    }
 }
