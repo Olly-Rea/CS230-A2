@@ -13,7 +13,7 @@ import utils.*;
 /**
  * Class to handle player movement and rendering
  *
- * @author Scott, Danny, Olly
+ * @author Scott Barr, Daniel Clenaghan, Olly Rea
  */
 public class PlayerController {
 
@@ -64,6 +64,7 @@ public class PlayerController {
     private boolean validMove(Cell targetCell) {
         CellType moveType = targetCell.getType();
         if (moveType == CellType.WALL || moveType == CellType.DOOR) {
+            SoundHandler.playBump();
             return false;
         }
         return true;
@@ -71,7 +72,7 @@ public class PlayerController {
 
     /**
      * Method to create the player inventory
-     * @param sc 
+     * @param sc
      */
     public void createInventory(Scanner sc) {
         int[] inventory = new int[7];
@@ -133,7 +134,7 @@ public class PlayerController {
     }
 
     /**
-     * Renders the player     
+     * Renders the player
      */
     public GridPane renderPlayer() {
         playerGridPane.getChildren().clear();

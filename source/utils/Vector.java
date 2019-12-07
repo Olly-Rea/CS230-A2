@@ -9,6 +9,9 @@ package utils;
 /**
  * This is a simple class designed to store the x and y location of an object in
  * the map
+ * 
+ * @version 1.0
+ * @author TODO
  */
 public class Vector {
 
@@ -41,11 +44,19 @@ public class Vector {
         return y;
     }
 
+    /**
+     * Change the vector using a given direction
+     * @param d
+     */
     public void add(Direction d) {
         this.x += d.X;
         this.y += d.Y;
     }
-
+    
+    /**
+     * Check if two vectors are equal
+     * @param other the vector to be checked
+     */
     @Override
     public boolean equals(Object other) {
         if (other instanceof Vector) {

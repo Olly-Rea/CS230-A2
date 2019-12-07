@@ -6,12 +6,31 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Class to render the wall cell
+ * @version 1.0
+ * @author TODO
+ */
+
 public class Wall extends Cell {
 
     private Image image = null;
 
+    /**
+     * Create a wall cell at location (x,y)
+     * @param x
+     * @param y
+     */
     public Wall(int x, int y) {
         super(CellType.WALL, x, y);
+    }
+
+    /**
+    * Set image from a file location
+    * @param path
+    */
+    public boolean isLightSource() {
+        return false;
     }
 
     public void setImage(String path) {
@@ -24,6 +43,10 @@ public class Wall extends Cell {
         }
     }
 
+    /**
+     * Return the character used in the map file for this cell
+     * @return char
+     */
     public char getChar() {
         return '#';
     }

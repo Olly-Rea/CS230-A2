@@ -21,34 +21,34 @@ import javafx.scene.image.ImageView;
 
 /**
  * Subclass of the Enemy class; DumbTargeter
- * 
+ * Will always move in the lateral direction of the player
+ *
  * @author Scott Barr
+ * @version 1.0
  */
 public class DumbTargeter extends Enemy {
 
-    private static Image image;
+    private Image image;
 
-    static {
+    /**
+     * The player.
+     */
+    private Direction dir = null;
+
+    /**
+     * Instantiates a DumbTargeter enemy.
+     *
+     * @param vector the position of targeting enemy
+     * @param player the player it will move towards
+     */
+    public DumbTargeter(Vector vector, Player p) {
+        super(vector, p);
         try {
             image = new Image(new FileInputStream(ASSET_PATH + "Dumb/Mummy_Up.png"));
         } catch (FileNotFoundException e) {
             image = null;
             System.err.println("DumbTargeter image path not found");
         }
-    }
-
-    /**
-     * The player.
-     */
-    private Direction dir;
-
-    /**
-     * Instantiates a new targeting enemy.
-     *
-     * @param vector the position of targeting enemy
-     */
-    public DumbTargeter(Vector vector, Player p) {
-        super(vector, p);
     }
 
     /**
@@ -64,13 +64,13 @@ public class DumbTargeter extends Enemy {
         // For any potential directions check whether that direction is a valid move
         for (int i = 0; i < potential.size(); i++) {
             Direction d = potential.get(i);
-            Cell next = map.getNextCell(pos, d); 
+            Cell next = map.getNextCell(pos, d);
             boolean existsEntity = ec.entityPresent(pos, d);
             if (next instanceof Ground && !existsEntity) {
                 dir = d;
             }
         }
-        
+
         if (!player.getPos().equals(pos) && dir != null) {
             pos.add(dir);
         }
@@ -78,7 +78,7 @@ public class DumbTargeter extends Enemy {
 
     /**
      * Method to get the current direction of the DumbTargeter
-     * 
+     *
      * @return an ArrayList of potential directions the DumbTargeter could head
      */
     private ArrayList<Direction> getDirection() {
@@ -105,9 +105,9 @@ public class DumbTargeter extends Enemy {
 
     /**
      * Method to export the specifics of this DumbTargeter to a String
-     * 
-     * @return a String containing the specifics of this enemy, as required by 
-     *         the map file format 
+     *
+     * @return a String containing the specifics of this enemy, as required by
+     *         the map file format
      */
     public String export() {
         return String.format("%d %d DT", pos.getX(), pos.getY());
@@ -117,7 +117,37 @@ public class DumbTargeter extends Enemy {
      * Renders the Enemy to the screen
      */
     public ImageView render() {
+        String currAsset = "Dumb/";
+        if (dir != null) {
+            switch (dir) {
+                case UP:
+                    currAsset += "Mummy_Up";
+                    break;
+                case DOWN:
+                    currAsset += "Mummy_Down";
+                    break;
+                case LEFT:
+                    currAsset += "Mummy_Left";
+                    break;
+                case RIGHT:
+                    currAsset += "Mummy_Right";
+                    break;
+            } 
+        } else {
+            currAsset += "Mummy_Down";
+        }
+        
+
+        try {
+            image = new Image(new FileInputStream(ASSET_PATH + currAsset + ".png"));
+        } catch (FileNotFoundException e) {
+            image = null;
+            System.err.println("DumbTargeter image path not found");
+        }
+
         return new ImageView(image);
     }
+
+    
 
 }

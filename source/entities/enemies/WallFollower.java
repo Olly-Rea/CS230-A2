@@ -2,9 +2,7 @@ package entities.enemies;
 
 //Local imports
 import cells.Cell;
-import cells.CellType;
 import cells.Ground;
-import cells.Wall;
 import controllers.EntityController;
 import controllers.MapController;
 import utils.Direction;
@@ -22,26 +20,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
+ * Subclass of the Enemy class; WallFollower
  * A class describing a WallFollower Enemy which follows a wall anticlockwise or
  * clockwise.
  *
- * @author ???, Scott Barr
+ * @author Scott Barr
+ * @version 1.0
  */
 public class WallFollower extends Enemy {
 
     /**
      * Path to the WallFollower image
      */
-    private static Image image;
+    private Image image;
 
-    static {
-        try {
-            image = new Image(new FileInputStream(ASSET_PATH + "Wall/Scorpion_Right.png"));
-        } catch (FileNotFoundException e) {
-            image = null;
-            System.err.println("WallFollower image path not found");
-        }
-    }
 
     private Direction dir;
     private Rotation type;
@@ -106,6 +98,11 @@ public class WallFollower extends Enemy {
         }
     }
 
+    /**
+     * Generates a string containing this enemies direction, location and type
+     *
+     * @return String
+     */
     public String export() {
         return String.format("%d %d WF %s %s", pos.getX(), pos.getY(), dir, type);
     }
@@ -114,6 +111,33 @@ public class WallFollower extends Enemy {
      * Renders the Enemy to the screen
      */
     public ImageView render() {
+        String currAsset = ASSET_PATH + "Wall/";
+        if (dir != null) {
+            switch (dir) {
+                case UP:
+                    currAsset += "Scorpion_UP";
+                    break;
+                case DOWN:
+                    currAsset += "Scorpion_DOWN";
+                    break;
+                case LEFT:
+                    currAsset += "Scorpion_LEFT";
+                    break;
+                case RIGHT:
+                    currAsset += "Scorpion_RIGHT";
+                    break;
+            }
+        } else {
+            currAsset += "Scorpion_DOWN";
+        }
+
+        try {
+            image = new Image(new FileInputStream(currAsset + ".png"));
+        } catch (FileNotFoundException e) {
+            image = null;
+            System.err.println("SmartTargeter image path not found");
+        }
+
         return new ImageView(image);
     }
 

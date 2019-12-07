@@ -1,20 +1,22 @@
 package utils;
 
+//Java imports
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Takes a text file and reads it. If it's null it throws an exception and
  * terminates the program. Also, it reads every single line and stops when it
  * finds a null one.
  *
- * @author
+ * @author TODO
+ * @version 1.0
  */
 public class FileHandler {
 
@@ -51,11 +53,14 @@ public class FileHandler {
         }
     }
 
-    // public String[] readLines() {
-    //     try {
-    //         return reader.lines();
-    //     }
-    // }
+    // TODO: s
+    public String[] readLines() {
+        ArrayList<String> lines = new ArrayList<>();
+        while (hasNext()) {
+            lines.add(nextLine());
+        }
+        return lines.toArray(new String[lines.size()]);
+    }
 
     /**
      * Checks if the reader is at the end of file.
@@ -69,7 +74,8 @@ public class FileHandler {
             reader.reset();
             return test > 0 ? true : false;
         } catch (IOException e) {
-            return false; // TODO: Handle
+            System.err.println(e.getMessage());
+            return false;
         }
     }
 
@@ -82,7 +88,7 @@ public class FileHandler {
      */
     public static void writeFile(String path, String[] lines, boolean append) {
         BufferedWriter writer = null;
-        
+
         File file = new File(path);
 
         try {
@@ -96,15 +102,50 @@ public class FileHandler {
             writer.close();
         } catch (IOException e) {
             System.err.println(e.getMessage());
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());
         }
     }
 
+    public static void writeFile(String path, Object o, boolean append) {
+        BufferedWriter writer = null;
+        File file = new File(path);
+        try {
+            writer = new BufferedWriter(new FileWriter(file, append));
+            writer.write(o.toString() + "\n");
+            writer.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    // TODO:
+    public static void clearFile(String path) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
+            writer.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    /**
+     * TODO
+     * @param dir
+     * @return
+     */
     public static File[] getFiles(String dir) {
-        ArrayList<String> files = new ArrayList<>();
-        File folder = new File(dir);   
+        File folder = new File(dir);
         return folder.listFiles();
     }
 
+    /**
+     * TODO
+     * @param f
+     * @return
+     */
     public static String getFileName(File f) {
         String[] file = f.getName().split("\\.");
         return file[0];

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import utils.Direction;
+import utils.SoundHandler;
 import utils.Vector;
 
 /**
@@ -71,13 +72,14 @@ public class Player extends Entity {
      */
     public void addItem(Item item) {
         ItemType add = item.getType();
-        
+
         //Display the graphic of the item being added
         updatePlayerAsset(add);
-        
+
         //Add the item to the player inventory
         switch (add) {
             case TOKEN:
+                SoundHandler.playTokenCollect();
                 tokens++;
                 break;
             case FIREBOOTS:
@@ -86,16 +88,20 @@ public class Player extends Entity {
             case FLIPPERS:
                 hasFlippers = true;
                 break;
-            case REDKEY:                
+            case REDKEY:
+                SoundHandler.playTokenCollect();
                 redKeys++;
                 break;
             case BLUEKEY:
+                SoundHandler.playTokenCollect();
                 blueKeys++;
                 break;
             case GREENKEY:
+                SoundHandler.playTokenCollect();
                 greenKeys++;
                 break;
             case YELLOWKEY:
+                SoundHandler.playTokenCollect();
                 yellowKeys++;
                 break;
         }
@@ -243,7 +249,7 @@ public class Player extends Entity {
 
     /**
      * Method to update the player asset based on the direction of the move made
-     * 
+     *
      * @param dir the direction the player has moved
      * @return an ImageView of the new player asset
      */
@@ -275,13 +281,13 @@ public class Player extends Entity {
         }
         return new ImageView(playerAsset);
     }
-    
+
     /**
      * Overloaded method to update the player asset based on if an item has been found
-     * 
+     *
      * @param item the item to display
      * @return an ImageView of the new player asset
-     */    
+     */
     public ImageView updatePlayerAsset(ItemType item) {
         String currAsset = assetPath + "PlayerItems/";
         switch (item) {
@@ -290,23 +296,28 @@ public class Player extends Entity {
                 break;
             case FLIPPERS:
                 currAsset += "Player_Flippers";
+                SoundHandler.playTokenCollect();
                 break;
             case REDKEY:
                 currAsset += "Player_Redkey";
+                SoundHandler.playTokenCollect();
                 break;
             case BLUEKEY:
                 currAsset += "Player_Bluekey";
+                SoundHandler.playTokenCollect();
                 break;
             case GREENKEY:
                 currAsset += "Player_Greenkey";
+                SoundHandler.playTokenCollect();
                 break;
             case YELLOWKEY:
                 currAsset += "Player_Purplekey";
+                SoundHandler.playTokenCollect();
                 break;
             default:
                 break;
         }
-        
+
         if(item != ItemType.TOKEN) {
             //get the new image file for the player
             try {
@@ -315,8 +326,8 @@ public class Player extends Entity {
                 playerAsset = null;
                 System.err.println("Player_item asset path not found!");
             }
-        }        
+        }
         return new ImageView(playerAsset);
     }
-          
+
 }

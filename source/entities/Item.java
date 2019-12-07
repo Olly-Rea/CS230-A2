@@ -9,8 +9,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * 
- * @author
+ * Item that can be placed in the entity grid and picked up by the player
+ *
+ * @author TODO
+ * @version 1.0
  */
 public class Item extends Entity {
 
@@ -28,14 +30,14 @@ public class Item extends Entity {
         super(x, y);
         this.type = type;
         String assetPath = "./assets/visuals/entities/";
-        
+
         //Set the asset image file dependent on item type
         switch (type) {
             case TOKEN:
                 assetPath += "token";
                 break;
             case FIREBOOTS:
-                assetPath += "fireboots"; 
+                assetPath += "fireboots";
                 break;
             case FLIPPERS:
                 assetPath += "flippers";
@@ -54,15 +56,20 @@ public class Item extends Entity {
                 break;
         }
         assetPath += ".png";
-        
+
         try {
             assetImg = new Image(new FileInputStream(assetPath));
         } catch (FileNotFoundException e) {
             assetImg = null;
             System.err.println(type + " image path not found");
-        }        
+        }
     }
 
+    /**
+     * Get char used from map file to generate each item
+     *
+     * @return char
+     */
     public char getChar() {
         switch (type) {
             case REDKEY:return 'r';
@@ -85,6 +92,9 @@ public class Item extends Entity {
         return type;
     }
 
+    /**
+     * Render the item to the screen
+     */
     public ImageView render() {
         return new ImageView(assetImg);
     }

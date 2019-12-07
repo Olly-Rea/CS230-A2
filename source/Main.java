@@ -35,7 +35,6 @@ public class Main extends Application {
         final double WINDOW_SIZE = 1380 * GameController.SCALE_VAL;
         
         Scene scene = new Scene(root, WINDOW_SIZE, WINDOW_SIZE, Color.rgb(30, 16, 0));      
-
         gc.render();
 
         scene.setOnKeyPressed(e -> {
