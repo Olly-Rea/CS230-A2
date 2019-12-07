@@ -20,29 +20,19 @@ import javafx.scene.transform.Scale;
 import misc.Leaderboard;
 
 /**
- * @author Scott Barr, Olly Rea
+ * Menu to display the leaderboard after a level is finished
+ * 
+ * @author Scott Barr, Olly Rea, Daniel CLenaghan
  */
 public class LeaderboardMenu extends Menu {
 
-    private static String MAP_DIR = "";
 
-    private Leaderboard leaderboard;
-    private ArrayList<String> lbList;
-    private String levelName;
     private VBox selection = new VBox();
-    private Label first;
-    private Label second;
-    private Label third;
     private Label player;
-    private String path = MAP_DIR;
 
     public LeaderboardMenu(GameController gc) {
         // set not visible
         super();
-        
-        ArrayList<String> lbList = new ArrayList<String>();
-        lbList = gc.getLeaderboard();
-        
 
         ImageView nextLevelButton = null;
         ImageView returnButton = null;
