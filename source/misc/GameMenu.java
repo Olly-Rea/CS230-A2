@@ -52,10 +52,12 @@ public class GameMenu extends Menu {
             System.err.println("A button path wasn't found");
         }
         //add current level time to menu
+        /*
         int currentTime = GameController.getCurrentTime() - GameController.getStartTime();
         Text time = new Text(10, 50, "Current Time: " + (currentTime)/1000) + " seconds";
         time.setFont(new Font(20));
         menuLayout.getChildren().add(time);
+        */
 
         //Create the newGame button, assign the graphic, and add to VBox
         Button newGame = new Button("New Game");
