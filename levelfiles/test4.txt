@@ -1,8 +1,9 @@
-6 5
-######
-#   w#
-#    #
-#    #
-######
-PLAYER 3 2
-ENEMY 1 1 WF DOWN CW
+6
+7 5
+#######
+#  #  #
+# T#T #
+#  #  #
+#######
+PLAYER 1 1
+TELEPORTER 2 2 4 2

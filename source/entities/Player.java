@@ -71,10 +71,10 @@ public class Player extends Entity {
      */
     public void addItem(Item item) {
         ItemType add = item.getType();
-        
+
         //Display the graphic of the item being added
         updatePlayerAsset(add);
-        
+
         //Add the item to the player inventory
         switch (add) {
             case TOKEN:
@@ -86,7 +86,7 @@ public class Player extends Entity {
             case FLIPPERS:
                 hasFlippers = true;
                 break;
-            case REDKEY:                
+            case REDKEY:
                 redKeys++;
                 break;
             case BLUEKEY:
@@ -170,7 +170,6 @@ public class Player extends Entity {
      */
     public boolean useTokens(int tokensReq) {
         if (tokensReq <= tokens) {
-            tokens = tokens - tokensReq;
             return true;
         } else {
             return false;
@@ -243,7 +242,7 @@ public class Player extends Entity {
 
     /**
      * Method to update the player asset based on the direction of the move made
-     * 
+     *
      * @param dir the direction the player has moved
      * @return an ImageView of the new player asset
      */
@@ -275,13 +274,13 @@ public class Player extends Entity {
         }
         return new ImageView(playerAsset);
     }
-    
+
     /**
      * Overloaded method to update the player asset based on if an item has been found
-     * 
+     *
      * @param item the item to display
      * @return an ImageView of the new player asset
-     */    
+     */
     public ImageView updatePlayerAsset(ItemType item) {
         String currAsset = assetPath + "PlayerItems/";
         switch (item) {
@@ -306,7 +305,7 @@ public class Player extends Entity {
             default:
                 break;
         }
-        
+
         if(item != ItemType.TOKEN) {
             //get the new image file for the player
             try {
@@ -315,8 +314,8 @@ public class Player extends Entity {
                 playerAsset = null;
                 System.err.println("Player_item asset path not found!");
             }
-        }        
+        }
         return new ImageView(playerAsset);
     }
-          
+
 }

@@ -1,9 +1,5 @@
 package controllers;
 
-/**
- * @author Scott Barr, James Hogg
- * @version 1.1
- */
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -18,13 +14,19 @@ import utils.Vector;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+/**
+ * Stores information and method related to items and enemies
+ *
+ * @author Scott Barr, James Hogg, Daniel Clenaghan
+ * @version 1.0
+ */
 public class EntityController {
 
     private Entity[][] entityGrid;
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private ArrayList<Item> items = new ArrayList<>();
     GridPane entityGridPane = new GridPane();
-    
+
     /**
      * Sets entityGrid and enemies
      *
@@ -61,10 +63,10 @@ public class EntityController {
 
     /**
      * Method for enemies to check if an item exists in their path
-     * 
+     *
      * @param pos the position of the enemy
      * @param dir the direction the enemy is travelling in
-     * @return if an item is present in the next 
+     * @return if an item is present in the next
      */
     public boolean entityPresent(Vector pos, Direction dir) {
         return entityGrid[pos.getY() + dir.Y][pos.getX() + dir.X] instanceof Entity;
@@ -128,7 +130,7 @@ public class EntityController {
      * @param map the map will be passed through to each enemy to assist their
      * next move calculation.
      */
-    public void moveEnemies(MapController map) {
+    public void moveEnemies(MapController map, EntityController ec) {
         for (int i = 0; i < enemies.size(); i++) {
             // Get the enemy to move
             Enemy moveEnemy = enemies.get(i);
@@ -138,7 +140,7 @@ public class EntityController {
             x = moveEnemy.getPos().getX();
             y = moveEnemy.getPos().getY();
             entityGrid[y][x] = null;
-            moveEnemy.algorithm(map, this);
+            moveEnemy.algorithm(map, ec);
             x = moveEnemy.getPos().getX();
             y = moveEnemy.getPos().getY();
             entityGrid[y][x] = moveEnemy;
@@ -148,7 +150,7 @@ public class EntityController {
 
     /**
      * Method to return the Entity at the coordinates x and y
-     * 
+     *
      * @param x the x ordinate to look at
      * @param y the y ordinate to look at
      * @return the Entity at (x,y) - [y,x] in the array
@@ -255,9 +257,10 @@ public class EntityController {
     }
 
     /**
+     * create an enemy using a text line from a map file
      *
      * @param line a scanner of the line with the enemy details
-     * @return
+     * @return enemy
      */
     public static Enemy makeEnemy(Scanner line, Player p) {
         int x = line.nextInt();
@@ -281,7 +284,7 @@ public class EntityController {
      * Returns a new item based on the char in the map text file
      *
      * @param x the x position of the item
-     * @param y the y positio of the item
+     * @param y the y position of the item
      * @param c the character in the map file
      * @return an instance of an item depending on the character given
      */
@@ -310,7 +313,6 @@ public class EntityController {
      * Renders the entities respective assets on a GridPane at their locations
      * based on the entityGrid
      *
-     * @return
      */
     public GridPane renderEntities() {
         // Clear the entity GridPane for fresh render

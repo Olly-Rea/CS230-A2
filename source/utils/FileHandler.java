@@ -1,20 +1,22 @@
 package utils;
 
+//Java imports
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Takes a text file and reads it. If it's null it throws an exception and
  * terminates the program. Also, it reads every single line and stops when it
  * finds a null one.
  *
- * @author
+ * @author TODO
+ * @version 1.0
  */
 public class FileHandler {
 
@@ -73,8 +75,7 @@ public class FileHandler {
             return test > 0 ? true : false;
         } catch (IOException e) {
             System.err.println(e.getMessage());
-            e.printStackTrace();
-            return false; // TODO: Handle
+            return false;
         }
     }
 
@@ -87,7 +88,7 @@ public class FileHandler {
      */
     public static void writeFile(String path, String[] lines, boolean append) {
         BufferedWriter writer = null;
-        
+
         File file = new File(path);
 
         try {
@@ -106,6 +107,20 @@ public class FileHandler {
         }
     }
 
+    public static void writeFile(String path, Object o, boolean append) {
+        BufferedWriter writer = null;
+        File file = new File(path);
+        try {
+            writer = new BufferedWriter(new FileWriter(file, append));
+            writer.write(o.toString() + "\n");
+            writer.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
     // TODO:
     public static void clearFile(String path) {
         try {
@@ -116,13 +131,21 @@ public class FileHandler {
         }
     }
 
-    // TODO:
+    /**
+     * TODO
+     * @param dir
+     * @return
+     */
     public static File[] getFiles(String dir) {
-        File folder = new File(dir);   
+        File folder = new File(dir);
         return folder.listFiles();
     }
 
-    // TODO:
+    /**
+     * TODO
+     * @param f
+     * @return
+     */
     public static String getFileName(File f) {
         String[] file = f.getName().split("\\.");
         return file[0];

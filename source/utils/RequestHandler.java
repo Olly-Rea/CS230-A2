@@ -10,23 +10,15 @@ import java.net.URL;
 /**
  * Handles http requests.
  *
- * @author
+ * @author Scott Barr, Alex
+ * @version 1.0
  */
 public class RequestHandler {
 
-    // public class Main {
-    //     public static void main(String[] args) {
-    //         String url = "http://cswebcat.swan.ac.uk/";
-    //         String puzzle = RequestHandler.get(url + "puzzle");
-    //         String code = RequestHandler.decipher(puzzle);
-    //         String message = RequestHandler.get(url + "message?solution=" + code);
-    //         System.out.println(message);
-    //     }
-    // }
     /**
      * Sends a get request to the url with specific query parameters.
      *
-     * @param url
+     * @param uri used to create a new url
      * @param params
      */
     public static String get(String uri) {
@@ -46,7 +38,10 @@ public class RequestHandler {
 
         return null;
     }
-
+    /**
+    * Deciphers the puzzle taken from the Url
+    * @param puzzle the puzzle to be deciphered
+    */
     public static String decipher(String puzzle) {
         char[] chars = puzzle.toCharArray();
         int val = 1;

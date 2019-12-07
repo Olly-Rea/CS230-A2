@@ -1,8 +1,14 @@
-7 5
+4
+7 9
 #######
-#  #  #
-#  #  #
+#  r R#
+#  b B#
+#  g G#
+#  y Y#
 #     #
+#    D#
+#*** D#
 #######
-PLAYER 4 1
-ENEMY 1 1 ST
+PLAYER 1 1
+DOOR 5 7 3
+DOOR 5 6 3
