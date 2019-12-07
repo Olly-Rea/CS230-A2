@@ -30,7 +30,7 @@ import java.io.FileNotFoundException;
  * Leaderboard creation and player rendering
  *
  * @version 1.0
- * @author Scott Barr, Olly Rea, Daniel Clenaghan
+ * @author Scott Barr, Olly Rea, Daniel Clenaghan, James Hogg
  */
 public class GameController {
 
@@ -243,6 +243,10 @@ public class GameController {
     public int getCurrentTime() {
       return currentTimeMillis();
     }
+    /*
+     * timer that outputs the current time as a string mm:ss every second
+     * @return string of format minutes:(seconds<60)
+     */
     public String timer() {
       String output = "";
       int minutes = 0;
@@ -263,6 +267,10 @@ public class GameController {
         return output;
       } return output;
     }
+    /*
+     * Once a level is completed, shows the leaderboard and saves the level as the new highest for the profile
+     * restarts the level is it is failed, and loads the next level file
+     */
     public void nextLevel() {
 
         leaderboardMenu.toggle();
@@ -369,7 +377,10 @@ public class GameController {
             }
         }
     }
-
+    /*
+     * saves the current level completion time to the leaderboard and the current profile
+     * @param adjustedTime the time which it took to complete the level
+     */
     public void addTime(double adjustedTime) {
         String fullPath = LEADERBOARD_DIR + "Level_" + level + "_lb";
         System.out.println(level);

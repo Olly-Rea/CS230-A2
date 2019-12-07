@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 /**
  * Main.java
+ * Initialises gamecontroller and opens the javafx scene
  *
  * @version 1.0.0
  * @author Olly Rea, Scott Barr

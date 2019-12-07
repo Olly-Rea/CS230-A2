@@ -21,7 +21,8 @@ public class ColouredDoor extends Door {
 	private Image image;
 
     /**
-     * Create a fire cell at location (x,y)
+     * Create a coloured door at location (x,y) with colour (colour)
+     * @param colour
      * @param x
      * @param y
      */
@@ -54,10 +55,17 @@ public class ColouredDoor extends Door {
 			System.err.println(colour + " ColouredDoor image path not found");
 		}
 	}
-
+	/*
+	 * Returns a boolean value depending on whether the entity is a light source or not
+	 */
         public boolean isLightSource() {
             return false;
         }
+    /*
+     * Checks to see if the player(p) has the correct key for the door
+     * @param p
+     * @return boolean based on if player has key or not
+     */
 
 	public boolean isOpenable(Player p) {
 		ItemType key = null;
@@ -94,6 +102,7 @@ public class ColouredDoor extends Door {
 
     /**
      * Renders the Enemy to the screen
+     * @return image outputted to ImageView
      */
     public ImageView render() {
         return new ImageView(image);
