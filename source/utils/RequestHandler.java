@@ -18,8 +18,7 @@ public class RequestHandler {
     /**
      * Sends a get request to the url with specific query parameters.
      *
-     * @param uri used to create a new url
-     * @param params
+     * @param uri The URL to the API
      */
     public static String get(String uri) {
         try {
@@ -38,10 +37,14 @@ public class RequestHandler {
 
         return null;
     }
+
     /**
-    * Deciphers the puzzle taken from the Url
-    * @param puzzle the puzzle to be deciphered
-    */
+     * Deciphers the puzzle taken from the Url by checkign the ordinal value of the
+     * character, adds 1/-1 to the ordinal and if it's over 90 to 65, less than 65
+     * to 90.
+     * 
+     * @param puzzle the puzzle to be deciphered
+     */
     public static String decipher(String puzzle) {
         char[] chars = puzzle.toCharArray();
         int val = 1;
@@ -56,5 +59,3 @@ public class RequestHandler {
         return new String(chars);
     }
 }
-
-// http://cswebcat.swan.ac.uk/puzzle?solution=

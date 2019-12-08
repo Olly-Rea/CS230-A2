@@ -52,7 +52,11 @@ public class FileHandler {
         }
     }
 
-    // TODO: s
+    /**
+     * Method to return a string array of all lines in the file.
+     * 
+     * @return String array consisting of every line in the file.
+     */
     public String[] readLines() {
         ArrayList<String> lines = new ArrayList<>();
         while (hasNext()) {
@@ -81,9 +85,11 @@ public class FileHandler {
     /**
      * Method to save a file to a certain path and specific lines to write.
      *
-     * @param path  Path to the file being created/written to
-     * @param lines the lines of text to be written in the file
-     * @return True if the file was saved correctly, false otherwise
+     * @param path   Path to the file being created/written to
+     * @param lines  the lines of text to be written in the file
+     * @param append Boolean value if true will append to file, otherwise overwrite
+     *               the file.
+     * @return True if the file was saved correctly, false otherwise.
      */
     public static void writeFile(String path, String[] lines, boolean append) {
         BufferedWriter writer = null;
@@ -106,6 +112,16 @@ public class FileHandler {
         }
     }
 
+    /**
+     * Overloaded method of writeFile where it can take any object and write the
+     * line to the file.
+     *
+     * @param path   Path to the file being created/written to
+     * @param lines  the lines of text to be written in the file
+     * @param append Boolean value if true will append to file, otherwise overwrite
+     *               the file.
+     * @return True if the file was saved correctly, false otherwise.
+     */
     public static void writeFile(String path, Object o, boolean append) {
         BufferedWriter writer = null;
         File file = new File(path);
@@ -120,7 +136,11 @@ public class FileHandler {
         }
     }
 
-    // TODO:
+    /**
+     * Method to overwrite the file with a blank file.
+     * 
+     * @param path Path to the file to be overwritten.
+     */
     public static void clearFile(String path) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(path, false));
@@ -131,10 +151,10 @@ public class FileHandler {
     }
 
     /**
-     * TODO
+     * Returns a list of all the files in a directory.
      * 
-     * @param dir
-     * @return
+     * @param dir String path to the directory
+     * @return Array of files inside dir.
      */
     public static File[] getFiles(String dir) {
         File folder = new File(dir);
@@ -142,10 +162,10 @@ public class FileHandler {
     }
 
     /**
-     * TODO
+     * Returns the file name without the extension
      * 
-     * @param f
-     * @return
+     * @param f The File passed to determine the file name
+     * @return The fileName split with . to return the filename without extension.
      */
     public static String getFileName(File f) {
         String[] file = f.getName().split("\\.");
