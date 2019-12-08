@@ -36,7 +36,7 @@ public class DumbTargeter extends Enemy {
      * Instantiates a DumbTargeter enemy.
      *
      * @param vector the position of targeting enemy
-     * @param player the player it will move towards
+     * @param p the player it will move towards
      */
     public DumbTargeter(Vector vector, Player p) {
         super(vector, p);
@@ -53,6 +53,8 @@ public class DumbTargeter extends Enemy {
      * attempt to move next.
      *
      * @param map The MapController to obtain the details of the environment
+     * @param ec  The entityController primarily used for checking if items are in
+     *            the enemies way.
      */
     public void algorithm(MapController map, EntityController ec) {
 

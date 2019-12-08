@@ -44,9 +44,10 @@ public class StraightLineEnemy extends Enemy {
     }
 
     /**
-     * Straight line.
+     *  Instantiates a new StraightLineEnemy.
      *
-     * @param vector the position of the straight line enemy
+     * @param pos the vector position of the straight line enemy
+     * @param player The Player object used to check if the player is in contact with the enemy
      * @param dir    The direction the enemy is facing initially
      */
     public StraightLineEnemy(Vector pos, Player player, Direction dir) {
