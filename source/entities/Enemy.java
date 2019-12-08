@@ -18,7 +18,10 @@ public abstract class Enemy extends Entity {
     protected static final String ASSET_PATH = "./assets/visuals/entities/Enemies/";
 
     /**
-     * Constructs an enemy
+     * Instaniates a new Enemy
+     * 
+     * @param pos    The Vector position of the Enemy
+     * @param player The Reference to the player
      */
     public Enemy(Vector pos, Player player) {
         super(pos);
@@ -27,18 +30,30 @@ public abstract class Enemy extends Entity {
 
     /**
      * Checks to see if the enemy has collided with the player
+     * 
+     * @param playerCon The playerController needed to check if the enemy is in
+     *                  contact with the player
+     * @return A boolean value, true if the player is in contact with the current
+     *         enemy.
      */
     public boolean playerCheck(PlayerController playerCon) {
         return this.pos == playerCon.getPlayerPos() ? true : false;
     }
-    
+
     /**
      * Provides the next move based on the current map state
      *
-     * @param Map The current map state
-     * @return Returns a vector containing the next position
+     * @param map The current map state
+     * @param ec  The entityController primarily used for checking if items are in
+     *            the enemies way.
      */
     public abstract void algorithm(MapController map, EntityController ec);
 
+    /**
+     * Export method to create a definition of the current enemy.
+     * 
+     * @return A string form of the Enemy with all the specific details needed to
+     *         recreate.
+     */
     public abstract String export();
 }

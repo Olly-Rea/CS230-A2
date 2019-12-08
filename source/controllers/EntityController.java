@@ -51,6 +51,7 @@ public class EntityController {
      * collision has occurred.
      *
      * @param player The Player object for position reference.
+     * @param sh The soundHandler used to play certain sounds on certain events.
      */
     public void checkItem(Player player, SoundHandler sh) {
         Vector playerPos = player.getPos();
@@ -136,7 +137,7 @@ public class EntityController {
      * Iterates through each enemy and moves them to their next position.
      *
      * @param map the map will be passed through to each enemy to assist their
-     * next move calculation.
+     * @param ec The entityCotnroller used to set the entityGrid position of the enemy to null.
      */
     public void moveEnemies(MapController map, EntityController ec) {
         for (int i = 0; i < enemies.size(); i++) {
@@ -268,6 +269,7 @@ public class EntityController {
      * create an enemy using a text line from a map file
      *
      * @param line a scanner of the line with the enemy details
+     * @param p The player used on all enemy creation
      * @return A new enemy object
      */
     public static Enemy makeEnemy(Scanner line, Player p) {

@@ -22,13 +22,18 @@ import javafx.scene.transform.Scale;
  * Menu to display the leaderboard after a level is finished
  *
  * @author Olly Rea, Daniel Clenaghan
+ * @version 1.0.0
  */
 public class LeaderboardMenu extends Menu {
-
 
     private VBox selection = new VBox();
     private Label player;
 
+    /**
+     * Instantiates a new LeaderboardMenu
+     * 
+     * @param gc The GameController
+     */
     public LeaderboardMenu(GameController gc) {
         // set not visible
         super();
@@ -37,16 +42,18 @@ public class LeaderboardMenu extends Menu {
         ImageView returnButton = null;
 
         try {
-            nextLevelButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/nextLevelButton.png")));
+            nextLevelButton = new ImageView(
+                    new Image(new FileInputStream("./assets/visuals/menu/Buttons/nextLevelButton.png")));
         } catch (FileNotFoundException e) {
             System.err.println("new profile button path wasn't found");
         }
         try {
-            returnButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/returnButton.png")));
+            returnButton = new ImageView(
+                    new Image(new FileInputStream("./assets/visuals/menu/Buttons/returnButton.png")));
         } catch (FileNotFoundException e) {
             System.err.println("select profile button path wasn't found");
         }
-        
+
         Button nextLevel = new Button();
         // Add the button graphic and scale the button
         nextLevel.setGraphic(nextLevelButton);
@@ -74,6 +81,12 @@ public class LeaderboardMenu extends Menu {
 
     }
 
+    /**
+     * Loads the leaderboard for a specific map
+     * 
+     * @param currentMapNum The level number for the map
+     * @param gc            The GameController
+     */
     public void loadLeaderboard(int currentMapNum, GameController gc) {
         ArrayList<String> lbList = new ArrayList<String>();
         lbList = gc.getLeaderboard();
@@ -85,14 +98,13 @@ public class LeaderboardMenu extends Menu {
         selection.getChildren().add(second);
         selection.getChildren().add(third);
         selection.getChildren().add(player);
-
     }
 
     /**
      * Displays the player's score under the leader board
      *
-     * @param profile
-     * @param time
+     * @param profile The profile of the player
+     * @param time    The time the player achieved for the level
      */
     public void displayPlayer(Profile profile, double time) {
         String playerScore = "Your score: " + profile.getName() + " : " + time;

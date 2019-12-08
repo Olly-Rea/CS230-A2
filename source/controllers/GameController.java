@@ -69,6 +69,8 @@ public class GameController {
 
     /**
      * Constructor for the GameController class
+     * 
+     * @param root The root Group of the scene
      */
     public GameController(Group root) {
         // Create the motd handler and add it to the SplashScreen
@@ -154,7 +156,7 @@ public class GameController {
 
         switch (keyword) {
             case "PLAYER":
-                playerController = new PlayerController(EntityController.makePlayer(sc), soundHandler);
+                playerController = new PlayerController(EntityController.makePlayer(sc));
                 break;
             case "ENEMY":
                 entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
@@ -216,7 +218,7 @@ public class GameController {
      * Method to return a new savefile. Gets all controllers exports and writes
      * them all to one file including the current time spent on the level.
      *
-     * @param path path to save data to
+     * @param saveName path to save data to
      */
     public void saveGame(String saveName) {
         String[] mapExport = mapController.exportMap(entityController);
@@ -278,6 +280,8 @@ public class GameController {
 
     /**
      * Converts current system time to Integer
+     * 
+     * @return The System time converted to an integer.
      */
     public static int currentTimeMillis() {
         return (int) (System.currentTimeMillis());
@@ -406,8 +410,8 @@ public class GameController {
 
     /**
      * Shows a leaderboard for a specific map in {@code LEADERBOARD_DIR}.
-     *
-     * @param path The file path inside {@code LEADERBOARD_DIR} for the map.
+     * 
+     * @return An ArrayList of the strings inside the Leaderboard file
      */
     public ArrayList<String> getLeaderboard() {
         if (level == 0) {

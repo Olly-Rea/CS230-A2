@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import utils.Direction;
-import utils.SoundHandler;
 import utils.Vector;
 
 /**
@@ -68,7 +67,7 @@ public class Player extends Entity {
     /**
      * Adds an item to the players inventory
      *
-     * @param Item The item being added to the players inventory.
+     * @param item The item being added to the players inventory.
      */
     public void addItem(Item item) {
         ItemType add = item.getType();

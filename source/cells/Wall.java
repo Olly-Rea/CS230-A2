@@ -18,8 +18,8 @@ public class Wall extends Cell {
 
     /**
      * Create a wall cell at location (x,y)
-     * @param x
-     * @param y
+     * @param x The horizontal position of the cell
+     * @param y The vertical position of the cell
      */
     public Wall(int x, int y) {
         super(CellType.WALL, x, y);
@@ -36,7 +36,7 @@ public class Wall extends Cell {
     
     /**
     * Set image from a file location
-    * @param path
+    * @param path The path to wall asset
     */
     public void setImage(String path) {
         // String path = ASSET_PATH + "walls/" + imageName;

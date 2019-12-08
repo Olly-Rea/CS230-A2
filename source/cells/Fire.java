@@ -31,8 +31,8 @@ public class Fire extends Cell {
 
     /**
      * Create a fire cell at location (x,y)
-     * @param x horizontal position of the cell
-     * @param y vertical position of the cell
+     * @param x The horizontal position of the cell
+     * @param y The vertical position of the cell
      */
     public Fire(int x, int y) {
         super(CellType.FIRE, x, y);

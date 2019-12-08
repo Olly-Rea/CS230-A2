@@ -21,14 +21,14 @@ public class PlayerController {
 
     // Create the Player GridPane
     GridPane playerGridPane = new GridPane();
-    SoundHandler sh;
-    
+
     /**
+     * Instantiates a new playerController used for controlling the player.
+     * 
      * @param player the player object to be controlled
      */
-    public PlayerController(Player player, SoundHandler sh) {
+    public PlayerController(Player player) {
         this.player = player;
-        this.sh = sh;
     }
 
     /**
@@ -45,7 +45,7 @@ public class PlayerController {
             if (((Door) target).isOpenable(player)) {
                 mc.openDoor(target.getPos().getX(), target.getPos().getY());
             } else {
-                sh.playBump();
+                SoundHandler.playBump();
             }
         }
 
@@ -67,8 +67,8 @@ public class PlayerController {
      */
     private boolean validMove(Cell targetCell) {
         CellType moveType = targetCell.getType();
-        if (moveType == CellType.WALL ) {
-            sh.playBump();
+        if (moveType == CellType.WALL) {
+            SoundHandler.playBump();
             return false;
         }
         if (moveType == CellType.DOOR) {
@@ -97,6 +97,8 @@ public class PlayerController {
     /**
      * Check if the cell requires a shoe type and if the player posseses it
      *
+     * @param map The MapController used to check if the player is on a fire or
+     *            water cell
      * @return a boolean value, if true, the player is on a block which kills the
      *         player, otherwise player is still alive
      */
@@ -116,6 +118,7 @@ public class PlayerController {
      *
      * @param map MapController object required to check if the current players
      *            position is on a goal.
+     * @return Boolean value returns true when the player is on a Goal cell
      */
     public boolean checkGoal(MapController map) {
         Cell current = map.getCell(player.getPos());
