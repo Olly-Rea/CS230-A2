@@ -20,37 +20,19 @@ import javafx.scene.transform.Scale;
 import misc.Leaderboard;
 
 /**
- * @author Scott Barr, Olly Rea
+ * Menu to display the leaderboard after a level is finished
+ *
+ * @author Scott Barr, Olly Rea, Daniel CLenaghan
  */
 public class LeaderboardMenu extends Menu {
 
-    private static String MAP_DIR = "";
 
-    private Leaderboard leaderboard;
-    private ArrayList<String> lbList;
-    private String levelName;
     private VBox selection = new VBox();
-    private Label first;
-    private Label second;
-    private Label third;
     private Label player;
-    private String path = MAP_DIR;
 
     public LeaderboardMenu(GameController gc) {
         // set not visible
         super();
-        
-        ArrayList<String> lbList = new ArrayList<String>();
-        lbList = gc.getLeaderboard();
-
-        Label first = new Label("NULL");
-        Label second = new Label("NULL");
-        Label third = new Label("NULL");
-        selection.getChildren().add(first);
-        selection.getChildren().add(second);
-        selection.getChildren().add(third);
-
-        Label player = new Label();
 
         ImageView nextLevelButton = null;
         ImageView returnButton = null;
@@ -88,7 +70,7 @@ public class LeaderboardMenu extends Menu {
         menuLayout.getChildren().add(selection);
         menuLayout.getChildren().add(back);
         menuLayout.getChildren().add(nextLevel);
-        
+
         scaleMenu();
 
     }
@@ -113,7 +95,7 @@ public class LeaderboardMenu extends Menu {
      * @param profile
      * @param time
      */
-    public void displayPlayer(Profile profile, int time) {
+    public void displayPlayer(Profile profile, double time) {
         String playerScore = "Your score: " + profile.getName() + " : " + time;
         Label player = new Label(playerScore);
         this.player = player;
