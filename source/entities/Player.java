@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import utils.Direction;
+import utils.SoundHandler;
 import utils.Vector;
 
 /**
@@ -78,6 +79,7 @@ public class Player extends Entity {
         //Add the item to the player inventory
         switch (add) {
             case TOKEN:
+                SoundHandler.playTokenCollect();
                 tokens++;
                 break;
             case FIREBOOTS:
@@ -87,15 +89,19 @@ public class Player extends Entity {
                 hasFlippers = true;
                 break;
             case REDKEY:
+                SoundHandler.playTokenCollect();
                 redKeys++;
                 break;
             case BLUEKEY:
+                SoundHandler.playTokenCollect();
                 blueKeys++;
                 break;
             case GREENKEY:
+                SoundHandler.playTokenCollect();
                 greenKeys++;
                 break;
             case YELLOWKEY:
+                SoundHandler.playTokenCollect();
                 yellowKeys++;
                 break;
         }
@@ -290,18 +296,23 @@ public class Player extends Entity {
                 break;
             case FLIPPERS:
                 currAsset += "Player_Flippers";
+                SoundHandler.playTokenCollect();
                 break;
             case REDKEY:
                 currAsset += "Player_Redkey";
+                SoundHandler.playTokenCollect();
                 break;
             case BLUEKEY:
                 currAsset += "Player_Bluekey";
+                SoundHandler.playTokenCollect();
                 break;
             case GREENKEY:
                 currAsset += "Player_Greenkey";
+                SoundHandler.playTokenCollect();
                 break;
             case YELLOWKEY:
                 currAsset += "Player_Purplekey";
+                SoundHandler.playTokenCollect();
                 break;
             default:
                 break;

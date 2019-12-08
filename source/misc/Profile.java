@@ -52,7 +52,7 @@ public class Profile {
     }
 
     /**
-     * Return the profile information as a string
+     * x 
      */
     @Override
     public String toString() {
