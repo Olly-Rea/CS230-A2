@@ -295,7 +295,7 @@ public class GameController {
      * @param e Key Event that was pressed by the user.
      */
     public void gameStep(KeyEvent e) {
-        // Get the firection to move in
+        // Get the direction to move in
         Direction dir = null;
         switch (e.getCode()) {
             case W:
