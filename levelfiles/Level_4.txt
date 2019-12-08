@@ -1,0 +1,19 @@
+4
+15 9
+###############
+##  ###########
+#  ############
+#           ###
+#            ##
+#            !#
+##           ##
+###         ###
+###############
+PLAYER 3 1
+ENEMY 4 5 SL DOWN
+ENEMY 5 7 SL DOWN
+ENEMY 6 5 SL DOWN
+ENEMY 8 7 SL DOWN
+ENEMY 9 6 SL DOWN
+ENEMY 10 5 SL DOWN
+ENEMY 11 4 SL DOWN
