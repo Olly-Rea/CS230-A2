@@ -1,9 +1,9 @@
 package utils;
 
-import java.io.File;
-//JavaFX imports
+//Java imports
 import java.io.File;
 
+//JavaFX imports
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -20,30 +20,35 @@ public class SoundHandler {
     private static final String AUDIO_PATH = "./assets/sounds/";
     private static final String EXTRAS = "Effects/";
 
-    private static final MediaPlayer bumpSound;
-    private static final MediaPlayer tokenSound;
+    private static final MediaPlayer BUMP_SOUND;
+    private final MediaPlayer tokenSound;
     private static MediaPlayer menuMusic;
-    private static final MediaPlayer caveAmbience;
+    private static final MediaPlayer CAVE_AMBIENCE;
 
     static {
-        bumpSound = new MediaPlayer(
+        BUMP_SOUND = new MediaPlayer(
             new Media(new File(AUDIO_PATH + EXTRAS + "wall_bump.wav").toURI().toString()));
-        tokenSound = new MediaPlayer(
-            new Media(new File(AUDIO_PATH + EXTRAS + "collect_gem.mp3").toURI().toString()));
         // Add the menu music and allow it to loop indefinitely
         menuMusic = new MediaPlayer(
             new Media(new File(AUDIO_PATH + "Menu/songMenu1.wav").toURI().toString())); 
         menuMusic.setCycleCount(MediaPlayer.INDEFINITE);
         // Add the cave ambience and allow it to loop indefinitely
-        caveAmbience = new MediaPlayer(
+        CAVE_AMBIENCE = new MediaPlayer(
             new Media(new File(AUDIO_PATH + "Ambience/Cave.wav").toURI().toString())); 
-        caveAmbience.setCycleCount(MediaPlayer.INDEFINITE);
+        CAVE_AMBIENCE.setCycleCount(MediaPlayer.INDEFINITE);
     }
 
     /**
      * Constructor of the class
      */
     public SoundHandler() {
+        //Initialise the token pickup sound
+        tokenSound = new MediaPlayer(
+            new Media(new File(AUDIO_PATH + EXTRAS + "collect_gem.mp3").toURI().toString()));
+        tokenSound.setVolume(0.2);
+        tokenSound.setRate(1.5);
+
+        // Play the menu music
         play(menuMusic);
     }
 
@@ -53,13 +58,11 @@ public class SoundHandler {
      * @param mp the MediaPlayer to play the audio from
      */
     public static void playSound(MediaPlayer mp) {
-        if (!mp.getStatus().equals(Status.PLAYING)) {
-            mp.play();
-            mp.setOnEndOfMedia(() -> {
-                mp.seek(mp.getStartTime());
-                mp.stop();
-            });
-        }
+        mp.play();
+        mp.setOnEndOfMedia(() -> {
+            mp.seek(mp.getStartTime());
+            mp.stop();
+        });        
     }
 
     /**
@@ -67,22 +70,21 @@ public class SoundHandler {
      */
     public void playAmbience() {
         fadeOut(2, menuMusic);
-        play(caveAmbience);
-        fadeIn(2, caveAmbience);       
+        play(CAVE_AMBIENCE);
+        fadeIn(2, CAVE_AMBIENCE);       
     }
     
     /**
      * Method to play a "bump" sound
      */
     public static void playBump() {
-        playSound(bumpSound);
+        playSound(BUMP_SOUND);
     }
 
     /**
      * Method to play a "collect token" sound
      */
-    public static void playTokenCollect() {
-        tokenSound.setVolume(0.2);
+    public void playTokenCollect() {
         playSound(tokenSound);
     }
 

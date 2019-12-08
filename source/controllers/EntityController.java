@@ -63,7 +63,7 @@ public class EntityController {
                 System.out.println("Found: " + ((Item) newItem).getType());
                 player.addItem((Item) newItem);
                 removeItem(playerPos.getY(), playerPos.getX());
-                
+                // Play the token collect sound
                 sh.playTokenCollect();
             }
         }

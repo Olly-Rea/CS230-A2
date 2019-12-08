@@ -17,7 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.transform.Scale;
-import misc.Leaderboard;
 
 /**
  * Menu to display the leaderboard after a level is finished
