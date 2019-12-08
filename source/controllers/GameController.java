@@ -56,8 +56,8 @@ public class GameController {
 
     //Create all other variables required for game runtime
     private Profile currentProfile;
-    private int startTime;
-    private int loadTime;
+    private double startTime;
+    private double loadTime;
     private String currentMap;
     private int level;
     private boolean backAdded = false;
@@ -246,7 +246,7 @@ public class GameController {
      * @param sc scanner
      */
     public void loadTime(Scanner sc) {
-        loadTime = sc.nextInt();
+        loadTime = sc.nextDouble();
     }
 
     public void nextLevel() {
@@ -328,15 +328,15 @@ public class GameController {
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
-
-            int time = currentTimeMillis() - startTime + loadTime;
-            System.out.println("You took " + time / 1000 + " seconds!");
+            double time = 0.00;
+            time = (currentTimeMillis() - startTime + loadTime)/1000;
+            System.out.println("You took " + time + " seconds!");
 
             addTime(time);
             leaderboardMenu.displayPlayer(currentProfile, time);
             leaderboardMenu.loadLeaderboard(level, this);
             leaderboardMenu.toggle();
-            
+
             if (!backAdded) {
                 //Add the back button to the level select menu for future appearences
                 levelMenu.addBackBtn(leaderboardMenu);
@@ -345,7 +345,7 @@ public class GameController {
         }
     }
 
-    public void addTime(int time) {
+    public void addTime(double time) {
         String fullPath = LEADERBOARD_DIR + "Level_" + level + "_lb";
         System.out.println(level);
         Leaderboard lb = new Leaderboard(fullPath);
@@ -376,7 +376,7 @@ public class GameController {
      * @param path THe file path for the map.
      */
     public void addMapTime(String path) {
-        int saveTime = currentTimeMillis() - startTime;
+        double saveTime = currentTimeMillis() - startTime;
         // String timeAsString = Integer.toString(saveTime);
         // String[] output = { "TIME", timeAsString };
         FileHandler.writeFile(path, "TIME " + saveTime, true);
