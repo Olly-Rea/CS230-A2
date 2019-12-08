@@ -325,8 +325,8 @@ public class GameController {
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
-
-            double time = (currentTimeMillis() - startTime + loadTime)/1000;
+            double time = 0.00;
+            time = (currentTimeMillis() - startTime + loadTime)/1000;
             System.out.println("You took " + time + " seconds!");
 
             addTime(time);
