@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * terminates the program. Also, it reads every single line and stops when it
  * finds a null one.
  *
- * @author TODO
+ * @author Scott Barr, Alex Melenikos
  * @version 1.0
  */
 public class FileHandler {
@@ -23,8 +23,8 @@ public class FileHandler {
     private BufferedReader reader;
 
     /**
-     * Reads a file and if it's unable to open it, it throws an exception,
-     * prints a message and exits the program.
+     * Reads a file and if it's unable to open it, it throws an exception, prints a
+     * message and exits the program.
      *
      * @param path The local path of that file.
      */
@@ -39,8 +39,7 @@ public class FileHandler {
     }
 
     /**
-     * Reads every line of the file. If it finds an empty line it returns empty
-     * "".
+     * Reads every line of the file. If it finds an empty line it returns empty "".
      *
      * @return Returns the line of the file or an empty String.
      */
@@ -82,7 +81,7 @@ public class FileHandler {
     /**
      * Method to save a file to a certain path and specific lines to write.
      *
-     * @param path Path to the file being created/written to
+     * @param path  Path to the file being created/written to
      * @param lines the lines of text to be written in the file
      * @return True if the file was saved correctly, false otherwise
      */
@@ -133,6 +132,7 @@ public class FileHandler {
 
     /**
      * TODO
+     * 
      * @param dir
      * @return
      */
@@ -143,6 +143,7 @@ public class FileHandler {
 
     /**
      * TODO
+     * 
      * @param f
      * @return
      */
