@@ -56,8 +56,8 @@ public class GameController {
 
     //Create all other variables required for game runtime
     private Profile currentProfile;
-    private int startTime;
-    private int loadTime;
+    private double startTime;
+    private double loadTime;
     private String currentMap;
     private int level;
     private boolean backAdded = false;
@@ -188,7 +188,7 @@ public class GameController {
             levelMenu.toggle();
         }
 
-        startTime = currentTimeMillis();
+        startTime = (currentTimeMillis() /1000);
         render();
     }
 
