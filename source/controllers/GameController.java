@@ -1,6 +1,5 @@
 package controllers;
 
-<<<<<<< HEAD
 //JavaFX imports
 import javafx.scene.Group;
 import javafx.scene.input.KeyEvent;
@@ -11,8 +10,6 @@ import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-=======
->>>>>>> Master
 //Local imports
 import java.util.Scanner;
 import cells.Cell;
@@ -101,17 +98,14 @@ public class GameController {
         root.getChildren().add(leaderboardMenu.render());
         root.getChildren().add(selectProfileMenu.render());
         root.getChildren().add(createProfileMenu.render());
-<<<<<<< HEAD
         selectProfileMenu.toggle();
 
         //soundHandler = new SoundHandler();
-=======
         root.getChildren().add(splashScreen.render());
         //Display the splashScreen
         splashScreen.toggle(selectProfileMenu);
         //Instantiate the soundHandler
         soundHandler = new SoundHandler();
->>>>>>> Master
     }
 
     public void restart() {
@@ -379,19 +373,16 @@ public class GameController {
         // Check if player is dead
         if (playerController.checkStatus(mapController)
                 || entityController.enemyCollision(playerController.getPlayer())) {
-<<<<<<< HEAD
             System.out.println("YOU DIED");
             levelComplete = false;
             restart();
-=======
             splashScreen.toggle();
->>>>>>> Master
         }
 
         // Check if game is won
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
-<<<<<<< HEAD
+            /*
             levelComplete = true;
             double adjustedTime = 0.00;
             if (loadTime < 0) {
@@ -410,10 +401,12 @@ public class GameController {
                 leaderboardMenu.displayPlayer(currentProfile, (time/1000));
                 leaderboardMenu.loadLeaderboard(level, this);
                 leaderboardMenu.toggle();
-=======
+             */
 
-            int time = currentTimeMillis() - startTime + loadTime;
+
+            double time = currentTimeMillis() - startTime + loadTime;
             System.out.println("You took " + time / 1000 + " seconds!");
+           
 
             addTime(time);
             leaderboardMenu.displayPlayer(currentProfile, time);
@@ -424,7 +417,6 @@ public class GameController {
                 //Add the back button to the level select menu for future appearences
                 levelMenu.addBackBtn(leaderboardMenu);
                 backAdded = true;
->>>>>>> Master
             }
         }
     }
