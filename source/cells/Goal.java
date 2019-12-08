@@ -9,13 +9,17 @@ import javafx.scene.image.ImageView;
 /**
  * Class to render the goal cell
  * @version 1.0
- * @author TODO
+ * @author Scott Barr
  */
 public class Goal extends Cell {
 
+    // Static 
     private static final String IMAGE_NAME = "Goal";
     private static Image image;
 
+    /**
+     * Static constructor to instnatiate the static image
+     */
     static {
         try {
             image = new Image(new FileInputStream(ASSET_PATH + IMAGE_NAME + ".jpg"));
@@ -25,6 +29,11 @@ public class Goal extends Cell {
         }
     }
 
+    /**
+     * Implementation of isLightSource 
+     * 
+     * @return false
+     */
     public boolean isLightSource() {
         return false;
     }

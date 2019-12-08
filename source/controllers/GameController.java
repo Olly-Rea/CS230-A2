@@ -21,7 +21,6 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import javafx.scene.control.Button;
 
 /**
  * Game controller manages the logic of the game. It creates the other three
@@ -38,29 +37,28 @@ public class GameController {
     private static final String LEADERBOARD_DIR = "./leaderboards/";
     public static final double SCALE_VAL = 0.6;
 
-    //Create the game controllers
+    // Create the game controllers
     private MapController mapController;
     private PlayerController playerController;
     private EntityController entityController;
 
-    //Create the utility handler classes
+    // Create the utility handler classes
     private SoundHandler soundHandler;
-    private RequestHandler requestHandler = new RequestHandler();
-    //Create the game menus
+    // Create the game menus
     private GameMenu gameMenu = new GameMenu(this);
-    private LevelMenu levelMenu = new LevelMenu(this);
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
+    private LevelMenu levelMenu = new LevelMenu(this);
     private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
     private SplashScreen splashScreen;
 
-    //Create all other variables required for game runtime
+    // Create all other variables required for game runtime
     private Profile currentProfile;
     private double startTime;
     private double loadTime;
     private String currentMap;
     private int level;
-    private boolean backAdded = false;
+    private boolean runtime = false;
 
     // X and Y variables for render translate methods
     private double renderX = 0;
@@ -73,11 +71,11 @@ public class GameController {
      * Constructor for the GameController class
      */
     public GameController(Group root) {
-        //Create the motd handler and add it to the SplashScreen
+        // Create the motd handler and add it to the SplashScreen
         String motdURL = "http://cswebcat.swan.ac.uk";
-        String puzzle = requestHandler.get(motdURL + "/puzzle");
-        String code = requestHandler.decipher(puzzle);
-        final String motd = requestHandler.get(motdURL + "/message?solution=" + code);
+        String puzzle = RequestHandler.get(motdURL + "/puzzle");
+        String code = RequestHandler.decipher(puzzle);
+        final String motd = RequestHandler.get(motdURL + "/message?solution=" + code);
         splashScreen = new SplashScreen(this, motd);
 
         this.root = root;
@@ -88,24 +86,25 @@ public class GameController {
         root.getChildren().add(selectProfileMenu.render());
         root.getChildren().add(createProfileMenu.render());
         root.getChildren().add(splashScreen.render());
-        //Display the splashScreen
+        // Display the splashScreen
         splashScreen.toggle(selectProfileMenu);
-        //Instantiate the soundHandler
+        // Instantiate the soundHandler
         soundHandler = new SoundHandler();
     }
 
+    /**
+     * Restarts the game from the last loaded file - if save is loaded it will
+     * restart from the saved location and not the level itsefl.
+     */
     public void restart() {
         loadGame(currentMap);
     }
 
-    public void toLevelSelect() {
-        leaderboardMenu.toggle();
-        levelMenu.toggle();
-    }
-
     /**
      * Creates a 2d Entity Map and Cell Map and stores them in the mapController
-     * and entityController
+     * and entityController. The first integer is the level number - this is
+     * used to allow us to get the next level number which is stored in the
+     * levelMenu static array. Next 2 integers are the map width and map height.
      *
      * @param fh The Handler reading the Map/LoadFile
      * @return A 2d array of cells to construct the MapController with
@@ -120,9 +119,10 @@ public class GameController {
         int mapWidth = sc.nextInt();
         int mapHeight = sc.nextInt();
 
-        Cell[][] map = new Cell[mapHeight][mapWidth];
-        Entity[][] entityMap = new Entity[mapHeight][mapWidth];
-        entityController = new EntityController(entityMap);
+        Cell[][] map = new Cell[mapHeight][mapWidth]; // Initialise the 2d Cell array
+        Entity[][] entityMap = new Entity[mapHeight][mapWidth]; // Initialise the 2d Entity array
+        entityController = new EntityController(entityMap); // Initialise the entity controller with the empty 2d Entity
+        // array
 
         for (int y = 0; y < mapHeight; y++) {
             String row = fh.nextLine();
@@ -139,6 +139,14 @@ public class GameController {
         mapController.autotile();
     }
 
+    /**
+     * Handles the map details described after the main map has been created.
+     * PLAYER, ENEMY, TELEPORTER, DOOR, INVENTORY and TIME specifics are
+     * handled.
+     *
+     * @param line The string being used to determine what type of specific is
+     * being created.
+     */
     private void handleSpecific(String line) {
         Scanner sc = new Scanner(line);
         sc.useDelimiter(" ");
@@ -146,7 +154,7 @@ public class GameController {
 
         switch (keyword) {
             case "PLAYER":
-                playerController = new PlayerController(EntityController.makePlayer(sc));
+                playerController = new PlayerController(EntityController.makePlayer(sc), soundHandler);
                 break;
             case "ENEMY":
                 entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
@@ -170,6 +178,7 @@ public class GameController {
 
     /**
      * Loads a path to a map file and to generate objects for use in the game.
+     * Initialises the controllers and handles the map specifics.
      *
      * @param path Path to the map file.
      */
@@ -183,6 +192,17 @@ public class GameController {
             handleSpecific(fh.nextLine());
         }
 
+        if (runtime == false) {
+            // Add the back button to the level select menu for future appearences
+            levelMenu.addBackBtn(leaderboardMenu);
+            // Change the menu music to the gameplay ambience music
+            soundHandler.playAmbience();
+            // Set runtime as true as the gameplay has begun
+            runtime = true;
+        }
+
+        // sets the currentMap to the path used - this is to restart to saves if a save
+        // is loaded
         currentMap = path;
         if (levelMenu.isVisible()) {
             levelMenu.toggle();
@@ -193,7 +213,8 @@ public class GameController {
     }
 
     /**
-     * Method to return a new savefile
+     * Method to return a new savefile. Gets all controllers exports and writes
+     * them all to one file including the current time spent on the level.
      *
      * @param path path to save data to
      */
@@ -213,6 +234,12 @@ public class GameController {
         addMapTime(path);
     }
 
+    /**
+     * Method which sets the profile being used and also proceeds to the next
+     * stage after profile selection which is the level selection.
+     *
+     * @param p The profile object being used for the game.
+     */
     public void setProfile(Profile p) {
         this.currentProfile = p;
         if (selectProfileMenu.isVisible()) {
@@ -222,19 +249,35 @@ public class GameController {
         levelMenu.toggle();
     }
 
+    /**
+     * Method to change the selectProfileMenu to the createProfileMenu.
+     */
     public void createProfile() {
         selectProfileMenu.toggle();
         createProfileMenu.toggle();
     }
 
+    /**
+     * This method loads the levelMenu with all the saves under the current
+     * profile.
+     */
     public void loadSaves() {
         levelMenu.loadSaves(currentProfile);
         levelMenu.toggle();
     }
 
     /**
+     * Toggles the leaderboardMenu then loads the levels up to the profiles
+     * maximum level and toggles the levelMenu itself.
+     */
+    public void toLevelSelect() {
+        leaderboardMenu.toggle();
+        levelMenu.loadLevels(currentProfile.getLevel());
+        levelMenu.toggle();
+    }
+
+    /**
      * Converts current system time to Integer
-     *
      */
     public static int currentTimeMillis() {
         return (int) (System.currentTimeMillis());
@@ -249,9 +292,14 @@ public class GameController {
         loadTime = sc.nextDouble();
     }
 
+    /**
+     * Toggles the leaderboardMenu and loads the next level.
+     */
     public void nextLevel() {
         leaderboardMenu.toggle();
 
+        // If the level is currently higher than the profile being used then increment
+        // the profiles highest level.
         if (level + 1 > currentProfile.getLevel()) {
             currentProfile.incLevel(level);
             currentProfile.deleteProfile();
@@ -272,13 +320,13 @@ public class GameController {
      * @param e Key Event that was pressed by the user.
      */
     public void gameStep(KeyEvent e) {
-        
-        // Check that none of the menus are open
-        if (splashScreen.isVisible() || gameMenu.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
+
+        // Asserts that no menu is visible to continue
+        if (splashScreen.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
             return;
         }
-        
-        // Get the firection to move in
+
+        // Get the direction to move in
         Direction dir = null;
         switch (e.getCode()) {
             case W:
@@ -304,6 +352,10 @@ public class GameController {
                 return;
         }
 
+        if (gameMenu.isVisible()) {
+            return;
+        }
+
         // Make the move based on this direction
         playerController.move(dir, mapController);
         // Update the player asset so that the player is facing the last direction moved
@@ -312,7 +364,7 @@ public class GameController {
         renderPlayer();
 
         // Check entity grid
-        entityController.checkItem(playerController.getPlayer());
+        entityController.checkItem(playerController.getPlayer(), soundHandler);
         playerController.renderPlayer();
         renderPlayer();
 
@@ -329,22 +381,21 @@ public class GameController {
         if (playerController.checkGoal(mapController)) {
             System.out.println("YOU WIN");
             double time = 0.00;
-            time = (currentTimeMillis() - startTime + loadTime)/1000;
+            time = (currentTimeMillis() - startTime + loadTime) / 1000;
             System.out.println("You took " + time + " seconds!");
 
             addTime(time);
             leaderboardMenu.displayPlayer(currentProfile, time);
             leaderboardMenu.loadLeaderboard(level, this);
             leaderboardMenu.toggle();
-
-            if (!backAdded) {
-                //Add the back button to the level select menu for future appearences
-                levelMenu.addBackBtn(leaderboardMenu);
-                backAdded = true;
-            }
         }
     }
 
+    /**
+     * Adds the time to the leaderboard file for the level
+     *
+     * @param time The time in seconds
+     */
     public void addTime(double time) {
         String fullPath = LEADERBOARD_DIR + "Level_" + level + "_lb";
         System.out.println(level);
@@ -427,6 +478,12 @@ public class GameController {
         }
     }
 
+    /**
+     * Changes the position of the map under the player level based on the
+     * players location. Calculate half the width of the Players GridPane and
+     * then translate the map and Entity GridPane the x and y value of the
+     * "offset".
+     */
     public void renderPlayer() {
         // Calculate the value the playerLayer offsets the player by
         double playerOffset = (400 * 1.2) * SCALE_VAL + 0.2;

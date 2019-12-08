@@ -5,17 +5,16 @@ import entities.Player;
 /**
  * The super class for cells of type door.
  *
- * @author Advait Kumar
+ * @author Advait Kumar, Scott Barr
  * @version 1.00
  */
 public abstract class Door extends Cell {
 
     /**
-     * Door Constructor; Instantiates a new door.
+     * Door Super Constructor; Instantiates a new door.
      *
-     * @param cellType
-     * @param x
-     * @param y
+     * @param x horizontal position in the map grid of the door
+     * @param y vertical position in the map grid of the door
      */
     public Door(int x, int y) {
         super(CellType.DOOR, x, y);

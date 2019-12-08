@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
  * it can be opened or not
  *
  * @version 1.0
- * @author TODO
+ * @author Scott Barr, Advait 
  */
 public class ColouredDoor extends Door {
 
@@ -22,8 +22,8 @@ public class ColouredDoor extends Door {
 
     /**
      * Create a fire cell at location (x,y)
-     * @param x
-     * @param y
+     * @param x the x position of the door to be used in the cell super constructor.
+     * @param y the y position of the door to be used in the cell super constructor.
      */
 	public ColouredDoor(int x, int y, DoorColour colour) {
 		super(x, y);
@@ -55,10 +55,22 @@ public class ColouredDoor extends Door {
 		}
 	}
 
-        public boolean isLightSource() {
-            return false;
-        }
+	/**
+     * Implementation of isLightSource 
+     * 
+     * @return false
+     */
+    public boolean isLightSource() {
+        return false;
+    }
 
+	/**
+	 * Checks whether the ColouredDoor is openable by the Player p.
+	 * Checks which colour the door is and attempts to use the key on the door.
+	 * 
+	 * @param p The player object needed to call the useKey method.
+	 * @return If the door is opened then it will return true and the players key will get used.
+	 */
 	public boolean isOpenable(Player p) {
 		ItemType key = null;
 		switch (colour) {

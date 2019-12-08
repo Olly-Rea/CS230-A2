@@ -9,26 +9,34 @@ import javafx.scene.image.ImageView;
 /**
  * Class to render the ground cell
  * @version 1.0
- * @author TODO
+ * @author Scott Barr
  */
-
 public class Ground extends Cell {
 
     private Image image;
 
     /**
      * Create a ground cell at a given location (x,y)
-     * @param x
-     * @param y
+     * @param x horizontal position of the cell
+     * @param y vertical position of the cell
      */
     public Ground(int x, int y) {
         super(CellType.GROUND, x, y);
     }
-    
+
+    /**
+     * Implementation of isLightSource 
+     * 
+     * @return false
+     */
     public boolean isLightSource() {
         return false;
     }
     
+    /**
+     * 
+     * @param path
+     */
     public void setImage(String path) {
         try {
             image = new Image(new FileInputStream(path));

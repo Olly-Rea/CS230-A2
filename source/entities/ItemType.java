@@ -7,11 +7,5 @@ package entities;
  * @version 1.0
  */
 public enum ItemType {
-    TOKEN,
-    FIREBOOTS,
-    FLIPPERS,
-    REDKEY,
-    BLUEKEY,
-    GREENKEY,
-    YELLOWKEY
+    TOKEN, FIREBOOTS, FLIPPERS, REDKEY, BLUEKEY, GREENKEY, YELLOWKEY
 }
