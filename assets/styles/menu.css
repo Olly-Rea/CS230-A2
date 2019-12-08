@@ -1,5 +1,6 @@
  .root {
  }
+
  
 VBox {
 	-fx-background-color: rgba(0,0,0,0.5);
@@ -68,3 +69,4 @@ VBox > VBox {
 	-fx-font-family: "Apple Boy BTN";
 	-fx-font-size: 22pt;
 }
+
