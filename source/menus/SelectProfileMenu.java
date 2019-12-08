@@ -29,9 +29,13 @@ import javafx.scene.transform.Scale;
 public class SelectProfileMenu extends Menu {
 
     private ListView<Profile> selectionList = new ListView<>();
-
     private Profile selection = null;
 
+    /**
+     * Constructor for the SelectProfileMenu
+     * 
+     * @param gc the GameController to allow the menu access to the other menus
+     */
     public SelectProfileMenu(GameController gc) {
 
         super();
@@ -112,12 +116,20 @@ public class SelectProfileMenu extends Menu {
 
     }
 
+    /**
+     * Method to choose the selected profile and proceed through the menus
+     */
     private void makeSelection() {
         ObservableList<Profile> items = FXCollections.observableArrayList(getProfiles());
         selectionList.setItems(items);
         selectionList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
+    /**
+     * Method to retrieve the profiles to display in the menu
+     * 
+     * @return an array of the profiles read from the file
+     */
     private Profile[] getProfiles() {
         FileHandler reader = new FileHandler(Profile.PROFILE_PATH);
         ArrayList<Profile> profiles = new ArrayList<>();
@@ -128,6 +140,9 @@ public class SelectProfileMenu extends Menu {
         return profiles.toArray(new Profile[profiles.size()]);
     }
 
+    /**
+     * Custom scaling method to ensure the menu is centred on the screen
+     */
     @Override
     public void scaleMenu() {
         double menuWidth = 1380 - (menuLayout.getWidth());

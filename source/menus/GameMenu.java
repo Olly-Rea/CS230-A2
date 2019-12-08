@@ -34,7 +34,7 @@ public class GameMenu extends Menu {
         ImageView exitGameButton = null;
 
         try {
-            newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/newGameButton.png")));
+            newGameButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/restartLvlButton.png")));
         } catch (FileNotFoundException e) {
             System.err.println("new game button path wasn't found");
         }
@@ -55,30 +55,17 @@ public class GameMenu extends Menu {
         }
         
         //Create the newGame button, assign the graphic, and add to VBox
-        Button newGame = new Button();
-        newGame.setGraphic(newGameButton);
-        newGame.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-        newGame.setOnAction(new EventHandler<ActionEvent>() {
+        Button restartLvl = new Button();
+        restartLvl.setGraphic(newGameButton);
+        restartLvl.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        restartLvl.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 gc.restart();
                 toggle();
             }
         });
-        menuLayout.getChildren().add(newGame);
+        menuLayout.getChildren().add(restartLvl);
         
-        //Create the loadGame button, assign the graphic, and add to VBox
-        Button loadGame = new Button();
-        loadGame.setGraphic(loadGameButton);
-        loadGame.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
-        loadGame.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                gc.loadSaves();
-                toggle();
-                //Create load game scene
-            }
-        });
-        menuLayout.getChildren().add(loadGame);
-
         //Create the loadGame button, assign the graphic, and add to VBox
         Button saveGame = new Button();
         saveGame.setGraphic(saveGameButton);
@@ -96,6 +83,19 @@ public class GameMenu extends Menu {
             }
         });
         menuLayout.getChildren().add(saveGame);
+        
+        //Create the loadGame button, assign the graphic, and add to VBox
+        Button loadGame = new Button();
+        loadGame.setGraphic(loadGameButton);
+        loadGame.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        loadGame.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                gc.loadSaves();
+                toggle();
+                //Create load game scene
+            }
+        });
+        menuLayout.getChildren().add(loadGame);
         
         //Create the exitGame button, assign the graphic, and add to VBox
         Button exitGame = new Button();

@@ -161,10 +161,7 @@ public class SmartTargeter extends Enemy {
                 case RIGHT:
                     currAsset += "Hellhound_Right";
                     break;
-                default:
-                    currAsset += "Hellhound_Right";
-                    break;
-            }
+                }
         } else {
             currAsset += "Hellhound_Right";
         }

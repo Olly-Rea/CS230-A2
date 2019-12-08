@@ -1,14 +1,5 @@
 package controllers;
 
-//JavaFX imports
-import javafx.scene.Group;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.transform.Scale;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.util.ArrayList;
 //Local imports
 import java.util.Scanner;
 import cells.Cell;
@@ -19,8 +10,18 @@ import misc.Profile;
 import menus.*;
 import utils.*;
 
+//JavaFX imports
+import javafx.scene.Group;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.transform.Scale;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import javafx.scene.control.Button;
 
 /**
  * Game controller manages the logic of the game. It creates the other three
@@ -37,21 +38,29 @@ public class GameController {
     private static final String LEADERBOARD_DIR = "./leaderboards/";
     public static final double SCALE_VAL = 0.6;
 
+    //Create the game controllers
     private MapController mapController;
     private PlayerController playerController;
     private EntityController entityController;
+
+    //Create the utility handler classes
     private SoundHandler soundHandler;
+    private RequestHandler requestHandler = new RequestHandler();
+    //Create the game menus
     private GameMenu gameMenu = new GameMenu(this);
     private LevelMenu levelMenu = new LevelMenu(this);
-
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
     private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
+    private SplashScreen splashScreen;
+
+    //Create all other variables required for game runtime
     private Profile currentProfile;
     private int startTime;
     private int loadTime;
     private String currentMap;
     private int level;
+    private boolean backAdded = false;
 
     // X and Y variables for render translate methods
     private double renderX = 0;
@@ -64,6 +73,13 @@ public class GameController {
      * Constructor for the GameController class
      */
     public GameController(Group root) {
+        //Create the motd handler and add it to the SplashScreen
+        String motdURL = "http://cswebcat.swan.ac.uk";
+        String puzzle = requestHandler.get(motdURL + "/puzzle");
+        String code = requestHandler.decipher(puzzle);
+        final String motd = requestHandler.get(motdURL + "/message?solution=" + code);
+        splashScreen = new SplashScreen(this, motd);
+
         this.root = root;
         root.getChildren().add(gameGroup);
         root.getChildren().add(gameMenu.render());
@@ -71,9 +87,11 @@ public class GameController {
         root.getChildren().add(leaderboardMenu.render());
         root.getChildren().add(selectProfileMenu.render());
         root.getChildren().add(createProfileMenu.render());
-        selectProfileMenu.toggle();
-        
-        //soundHandler = new SoundHandler();
+        root.getChildren().add(splashScreen.render());
+        //Display the splashScreen
+        splashScreen.toggle(selectProfileMenu);
+        //Instantiate the soundHandler
+        soundHandler = new SoundHandler();
     }
 
     public void restart() {
@@ -197,6 +215,9 @@ public class GameController {
 
     public void setProfile(Profile p) {
         this.currentProfile = p;
+        if (selectProfileMenu.isVisible()) {
+            selectProfileMenu.toggle();
+        }
         levelMenu.loadLevels(p.getLevel());
         levelMenu.toggle();
     }
@@ -229,7 +250,6 @@ public class GameController {
     }
 
     public void nextLevel() {
-
         leaderboardMenu.toggle();
 
         if (level + 1 > currentProfile.getLevel()) {
@@ -240,7 +260,6 @@ public class GameController {
 
         if (level == LevelMenu.levels.length) {
             restart();
-            return;
         } else {
             currentMap = "./levelfiles/" + LevelMenu.levels[level] + ".txt";
             loadGame(currentMap);
@@ -275,16 +294,10 @@ public class GameController {
             case ESCAPE:
                 gameMenu.toggle();
                 return;
-            case F1:
-                levelMenu.toggle();
-                return;
-            case F2:
-                selectProfileMenu.toggle();
-                return;
             default:
                 return;
         }
-        if (gameMenu.isVisible()) {
+        if (gameMenu.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
             return;
         }
 
@@ -306,7 +319,7 @@ public class GameController {
         // Check if player is dead
         if (playerController.checkStatus(mapController)
                 || entityController.enemyCollision(playerController.getPlayer())) {
-            restart();
+            splashScreen.toggle();
         }
 
         // Check if game is won
@@ -320,6 +333,12 @@ public class GameController {
             leaderboardMenu.displayPlayer(currentProfile, time);
             leaderboardMenu.loadLeaderboard(level, this);
             leaderboardMenu.toggle();
+            
+            if (!backAdded) {
+                //Add the back button to the level select menu for future appearences
+                levelMenu.addBackBtn(leaderboardMenu);
+                backAdded = true;
+            }
         }
     }
 

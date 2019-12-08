@@ -1,5 +1,6 @@
  .root {
  }
+
  
 VBox {
 	-fx-background-color: rgba(0,0,0,0.5);
@@ -57,7 +58,9 @@ VBox > VBox {
 	-fx-max-width: 460px;
 	-fx-font-size: 22pt;
 	-fx-font-family: "Apple Boy BTN";
-	-fx-font-color: white;
+	-fx-wrap-text: true;
+	-fx-text-alignment: center;
+	-fx-text-fill: white;
 }
 .text-field {
 	-fx-min-width: 460px;
@@ -66,3 +69,4 @@ VBox > VBox {
 	-fx-font-family: "Apple Boy BTN";
 	-fx-font-size: 22pt;
 }
+
