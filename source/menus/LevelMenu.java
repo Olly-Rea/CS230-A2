@@ -27,7 +27,7 @@ import javafx.scene.transform.Scale;
  */
 public class LevelMenu extends Menu {
 
-    public static final String[] levels = {"Level_1", "Level_2", "level_3", "test1", "test2", "test3", "test4", "test5", "test6", "Test_Map_A2"};
+    public static final String[] levels = {"Level_1", "Level_2", "Level_3", "Level_4", "Level_5", "Level_6", "Level_7", "Level_8", "Level_9"};
     private static String MAP_DIR = "./levelfiles/";
     private static String SAVE_DIR = "./savefiles/";
 
@@ -160,7 +160,7 @@ public class LevelMenu extends Menu {
             this.toggle();
             lbM.toggle();
         });
-        
+
         // Add the back button to the menuLayout
         menuLayout.getChildren().add(backButton);
         menuLayout.setStyle("-fx-transform-y: -120px;");
