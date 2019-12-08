@@ -19,7 +19,7 @@ import javafx.scene.layout.GridPane;
  * and manipulate them
  *
  * @version 1.0.0
- * @author Olly Rea
+ * @author Olly Rea, Scott Barr
  */
 public class MapController {
 
@@ -27,7 +27,7 @@ public class MapController {
     private final Cell[][] map;
 
     private GridPane mapGrid = new GridPane();
-    AssetBuilder assetUtil;
+    private AssetBuilder assetUtil;
 
     public final int width;
     public final int height;
@@ -36,8 +36,8 @@ public class MapController {
      * MapController constructor; Instantiates a new MapController
      *
      * @param cellArray The 2D array of cells that make up the MapController
-     * @param width The width of the 2d array
-     * @param height the height of the 2d array
+     * @param width     The width of the 2d array
+     * @param height    the height of the 2d array
      */
     public MapController(Cell[][] cellArray, int width, int height) {
         map = cellArray;
@@ -60,8 +60,8 @@ public class MapController {
     /**
      * Returns cell at location of a vector
      *
-     * @param pos
-     * @return Vector
+     * @param pos The position of the cell to return
+     * @return The Cell at the position of the vector given in the map.
      */
     public Cell getCell(Vector pos) {
         return map[pos.getY()][pos.getX()];
@@ -73,7 +73,7 @@ public class MapController {
      *
      * @param pos position vector of the cell
      * @param dir direction of the next cell
-     * @return Cell
+     * @return Cell in the direction given from the position given.
      */
     public Cell getNextCell(Vector pos, Direction dir) {
         return map[pos.getY() + dir.Y][pos.getX() + dir.X];
@@ -96,6 +96,8 @@ public class MapController {
     /**
      * Exports the current map state as a string array to allow for game saving
      *
+     * @param ec The EntityController needed to export specific characters in the
+     *           main map definition
      * @return String[]
      */
     public String[] exportMap(EntityController ec) {
@@ -142,7 +144,8 @@ public class MapController {
                         Teleporter te2 = te1.getLinked();
                         Vector t1 = te1.getPos();
                         Vector t2 = te2.getPos();
-                        mapSpecifics.add(String.format("TELEPORTER %d %d %d %d", t1.getX(), t1.getY(), t2.getX(), t2.getY()));
+                        mapSpecifics.add(
+                                String.format("TELEPORTER %d %d %d %d", t1.getX(), t1.getY(), t2.getX(), t2.getY()));
                         teleporters.add(te1);
                     }
                 } else if (cell instanceof TokenDoor) {
@@ -157,7 +160,8 @@ public class MapController {
     }
 
     /**
-     * Goes through every cell and sets their image if needed
+     * Uses the AssetBuilder class to determine the asset needed for the cell based
+     * on the cells surroundings.
      */
     public void autotile() {
         for (int y = 0; y < map.length; y++) {
@@ -179,7 +183,7 @@ public class MapController {
     /**
      * Method to render the map to the screen centred on the player's location
      *
-     * @return
+     * @return The GridPane consisting of panes of each Cell.
      */
     public GridPane renderMap() {
         for (int y = 0; y < map.length; y++) {
@@ -194,9 +198,10 @@ public class MapController {
     }
 
     /**
-     * Method to link two Teleporters together
+     * Takes a scanner and gets 2 X coordinates and 2 Y coordinates of the two
+     * Teleporters and links them together.
      *
-     * @param sc
+     * @param sc The scanner used to retrieve the values.
      */
     public void linkTeleporters(Scanner sc) {
         int x1 = sc.nextInt();
@@ -209,9 +214,9 @@ public class MapController {
     }
 
     /**
-     * Method to set the door token requirement
+     * Retrieves the position of the door and the token value and sets the tokens.
      *
-     * @param sc
+     * @param sc The scanner used to retrieve the values.
      */
     public void initDoor(Scanner sc) {
         int x = sc.nextInt();
@@ -231,30 +236,30 @@ public class MapController {
      */
     public static Cell makeCell(int x, int y, char c) {
         switch (c) {
-            case '#':
-                return new Wall(x, y);
-            case ' ':
-                return new Ground(x, y);
-            case 'T':
-                return new Teleporter(x, y);
-            case 'W':
-                return new Water(x, y);
-            case 'F':
-                return new Fire(x, y);
-            case '!':
-                return new Goal(x, y);
-            case 'R':
-                return new ColouredDoor(x, y, DoorColour.RED);
-            case 'G':
-                return new ColouredDoor(x, y, DoorColour.GREEN);
-            case 'B':
-                return new ColouredDoor(x, y, DoorColour.BLUE);
-            case 'Y':
-                return new ColouredDoor(x, y, DoorColour.YELLOW);
-            case 'D':
-                return new TokenDoor(x, y);
-            default:
-                return new Ground(x, y);
+        case '#':
+            return new Wall(x, y);
+        case ' ':
+            return new Ground(x, y);
+        case 'T':
+            return new Teleporter(x, y);
+        case 'W':
+            return new Water(x, y);
+        case 'F':
+            return new Fire(x, y);
+        case '!':
+            return new Goal(x, y);
+        case 'R':
+            return new ColouredDoor(x, y, DoorColour.RED);
+        case 'G':
+            return new ColouredDoor(x, y, DoorColour.GREEN);
+        case 'B':
+            return new ColouredDoor(x, y, DoorColour.BLUE);
+        case 'Y':
+            return new ColouredDoor(x, y, DoorColour.YELLOW);
+        case 'D':
+            return new TokenDoor(x, y);
+        default:
+            return new Ground(x, y);
         }
     }
 }
