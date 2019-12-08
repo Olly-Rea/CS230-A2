@@ -8,7 +8,7 @@ import utils.FileHandler;
 /**
  * Contains a name and the highest level completed by profile.
  *
- * @author Alexandros, Daniel Clenaghan, Scott Barr
+ * @author Alexandros Melenikos, Daniel Clenaghan, Scott Barr
  * @version 1.0
  */
 public class Profile {

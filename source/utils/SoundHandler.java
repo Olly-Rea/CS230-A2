@@ -13,7 +13,7 @@ import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
 /**
- * @author Alex Melenikos, Olly Rea
+ * @author Alexandros Melenikos, Olly Rea
  */
 public class SoundHandler {
 

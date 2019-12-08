@@ -21,7 +21,7 @@ import javafx.scene.transform.Scale;
 /**
  * Menu to display the leaderboard after a level is finished
  *
- * @author Scott Barr, Olly Rea, Daniel CLenaghan
+ * @author Olly Rea, Daniel Clenaghan
  */
 public class LeaderboardMenu extends Menu {
 
