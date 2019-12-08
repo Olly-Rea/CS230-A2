@@ -323,7 +323,7 @@ public class GameController {
         }
         
         // Asserts that no menu is visible to continue
-        if (splashScreen.isVisible() || gameMenu.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
+        if (splashScreen.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
             return;
         }
 
@@ -353,6 +353,10 @@ public class GameController {
             return;
         }
 
+        if (gameMenu.isVisible()) {
+            return;
+        }
+        
         // Make the move based on this direction
         playerController.move(dir, mapController);
         // Update the player asset so that the player is facing the last direction moved

@@ -22,19 +22,22 @@ public class SoundHandler {
 
     private static final MediaPlayer bumpSound;
     private static final MediaPlayer tokenSound;
-    private static final MediaPlayer menuMusic;
+    private static MediaPlayer menuMusic;
     private static final MediaPlayer caveAmbience;
-
 
     static {
         bumpSound = new MediaPlayer(
             new Media(new File(AUDIO_PATH + EXTRAS + "wall_bump.wav").toURI().toString()));
         tokenSound = new MediaPlayer(
             new Media(new File(AUDIO_PATH + EXTRAS + "collect_gem.mp3").toURI().toString()));
+        // Add the menu music and allow it to loop indefinitely
         menuMusic = new MediaPlayer(
             new Media(new File(AUDIO_PATH + "Menu/songMenu1.wav").toURI().toString())); 
+        menuMusic.setCycleCount(MediaPlayer.INDEFINITE);
+        // Add the cave ambience and allow it to loop indefinitely
         caveAmbience = new MediaPlayer(
             new Media(new File(AUDIO_PATH + "Ambience/Cave.wav").toURI().toString())); 
+        caveAmbience.setCycleCount(MediaPlayer.INDEFINITE);
     }
 
     /**
@@ -59,10 +62,13 @@ public class SoundHandler {
         }
     }
 
+    /**
+     * Method to play the ambient sound
+     */
     public void playAmbience() {
         fadeOut(2, menuMusic);
         play(caveAmbience);
-        fadeIn(2, caveAmbience);
+        fadeIn(2, caveAmbience);       
     }
     
     /**
@@ -92,6 +98,7 @@ public class SoundHandler {
      * A method to stop the audio that is playing
      */
     public void stop(MediaPlayer mp) {
+        mp.setAutoPlay(false);
         mp.stop();
     }
 
