@@ -19,7 +19,7 @@ import javafx.scene.layout.GridPane;
  * and manipulate them
  *
  * @version 1.0.0
- * @author Olly Rea, Scott Barr
+ * @author Olly Rea, Scott Barr, Advait Kumar
  */
 public class MapController {
 

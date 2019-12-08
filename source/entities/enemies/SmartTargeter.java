@@ -25,7 +25,7 @@ import javafx.scene.image.ImageView;
  * Subclass of the Enemy class; SmartTargeter SmartTargeter class which always
  * takes the path which leads to the Player.
  *
- * @author Scott Barr
+ * @author Scott Barr, Daniel Clenaghan
  */
 public class SmartTargeter extends Enemy {
 

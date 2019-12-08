@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * terminates the program. Also, it reads every single line and stops when it
  * finds a null one.
  *
- * @author Scott Barr, Alex Melenikos
+ * @author Scott Barr, Alexandros Melenikos
  * @version 1.0
  */
 public class FileHandler {

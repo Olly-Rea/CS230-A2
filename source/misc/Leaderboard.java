@@ -8,7 +8,7 @@ import utils.FileHandler;
 /**
  * Loads profile list and shows the top times of the level.
  *
- * @author Alexandros, Daniel Clenaghan
+ * @author Alexandros Melenikos, Daniel Clenaghan
  * @version 1.0
  */
 public class Leaderboard {
