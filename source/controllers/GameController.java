@@ -188,7 +188,7 @@ public class GameController {
             levelMenu.toggle();
         }
 
-        startTime = (currentTimeMillis() /1000);
+        startTime = currentTimeMillis();
         render();
     }
 
