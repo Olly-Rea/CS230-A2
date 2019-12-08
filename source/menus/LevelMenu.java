@@ -39,7 +39,7 @@ public class LevelMenu extends Menu {
     private String selected = null;
     private String path = MAP_DIR;
 
-    public LevelMenu(GameController gc, SoundHandler sH) {
+    public LevelMenu(GameController gc) {
         // set not visible
         super();
 
@@ -64,7 +64,7 @@ public class LevelMenu extends Menu {
                 this.toggle();
                 return;
             };
-            gc.loadGame(path + selected + ".txt");            
+            gc.loadGame(path + selected + ".txt");        
         });
         goButton.setDisable(true);
 
