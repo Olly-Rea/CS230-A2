@@ -46,9 +46,9 @@ public class GameController {
     private SoundHandler soundHandler;
     // Create the game menus
     private GameMenu gameMenu = new GameMenu(this);
-    private LevelMenu levelMenu = new LevelMenu(this);
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
+    private LevelMenu levelMenu = new LevelMenu(this, soundHandler);
     private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
     private SplashScreen splashScreen;
 
@@ -58,7 +58,7 @@ public class GameController {
     private double loadTime;
     private String currentMap;
     private int level;
-    private boolean backAdded = false;
+    private boolean runtime = false;
 
     // X and Y variables for render translate methods
     private double renderX = 0;
@@ -153,7 +153,7 @@ public class GameController {
 
         switch (keyword) {
         case "PLAYER":
-            playerController = new PlayerController(EntityController.makePlayer(sc));
+            playerController = new PlayerController(EntityController.makePlayer(sc), soundHandler);
             break;
         case "ENEMY":
             entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
@@ -198,6 +198,11 @@ public class GameController {
             levelMenu.toggle();
         }
 
+        // if this is the first game load, replace the menu music with the ambience music
+        if (runtime == false) {
+            soundHandler.playAmbience();
+        }
+        
         startTime = currentTimeMillis();
         render();
     }
@@ -310,6 +315,13 @@ public class GameController {
      */
     public void gameStep(KeyEvent e) {
 
+        if (!runtime) {
+                // Add the back button to the level select menu for future appearences
+                levelMenu.addBackBtn(leaderboardMenu);
+                //Change the menu music to the gameplay ambience music
+                runtime = true;
+        }
+        
         // Asserts that no menu is visible to continue
         if (splashScreen.isVisible() || gameMenu.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
             return;
@@ -349,7 +361,7 @@ public class GameController {
         renderPlayer();
 
         // Check entity grid
-        entityController.checkItem(playerController.getPlayer());
+        entityController.checkItem(playerController.getPlayer(), soundHandler);
         playerController.renderPlayer();
         renderPlayer();
 
@@ -373,12 +385,6 @@ public class GameController {
             leaderboardMenu.displayPlayer(currentProfile, time);
             leaderboardMenu.loadLeaderboard(level, this);
             leaderboardMenu.toggle();
-
-            if (!backAdded) {
-                // Add the back button to the level select menu for future appearences
-                levelMenu.addBackBtn(leaderboardMenu);
-                backAdded = true;
-            }
         }
     }
 

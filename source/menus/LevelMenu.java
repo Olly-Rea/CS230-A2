@@ -4,6 +4,7 @@ package menus;
 import controllers.GameController;
 import utils.FileHandler;
 import misc.Profile;
+import utils.SoundHandler;
 
 //Java imports
 import java.io.File;
@@ -38,7 +39,7 @@ public class LevelMenu extends Menu {
     private String selected = null;
     private String path = MAP_DIR;
 
-    public LevelMenu(GameController gc) {
+    public LevelMenu(GameController gc, SoundHandler sH) {
         // set not visible
         super();
 
@@ -63,7 +64,7 @@ public class LevelMenu extends Menu {
                 this.toggle();
                 return;
             };
-            gc.loadGame(path + selected + ".txt");
+            gc.loadGame(path + selected + ".txt");            
         });
         goButton.setDisable(true);
 
