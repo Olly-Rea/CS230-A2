@@ -213,8 +213,6 @@ public class GameController {
         levelMenu.toggle();
     }
 
-    public void
-
     /**
      * Converts current system time to Integer
      *

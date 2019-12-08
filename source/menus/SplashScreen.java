@@ -1,11 +1,20 @@
 package menus;
 
-//JavaFX imports
+//Local imports
+import controllers.GameController;
+
+//Java imports
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+//JavaFX imports
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.transform.Scale;
+import javafx.util.Duration;
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 
 /**
  * Class to display blank(ish) screens with a message on it
@@ -15,8 +24,7 @@ import javafx.scene.image.ImageView;
 public class SplashScreen extends Menu {
 
     private Label message;
-    private final Label continueText = new Label("Press any key to continue");
-    private boolean continueShown = true;
+    private GameController gc;
     
     //Static image for the Splashscreen
     private static ImageView menuTitle = null;
@@ -28,48 +36,89 @@ public class SplashScreen extends Menu {
             System.err.println("game logo image path wasn't found");
         }
     }
-
+    //Static image for the Splashscreen
+    private static ImageView youDied = null;
+    //Set the MenuTitle image
+    static {
+        try {
+            youDied = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/youDiedGraphic.png")));
+        } catch (FileNotFoundException e) {
+            System.err.println("'you Died' image path wasn't found");
+        }
+    }
+    
     /**
      * Constructor for the SplashScreen
      * 
-     * @param orignialMsg the original message to display on the splashScreen 
-     *        on creation - this is originally the MOTD on game startup
+     * @param motd the MOTD to display on game startup
      */
-    public SplashScreen(String orignialMsg) {
-        message = new Label(orignialMsg);
+    public SplashScreen(GameController gc, String motd) {
+        this.gc = gc;
+        //Add the menu title to the splashScreen
+        menuTitle.getTransforms().add(new Scale(gc.SCALE_VAL+0.2, gc.SCALE_VAL+0.2, 0, 0));
+        menuTitle.setStyle("-fx-translate-x: -80px; -fx-translate-y: -20px");
+        //Add the motd to the splashscreen
+        message = new Label(motd);
+        message.setStyle("-fx-min-width: 600px; -fx-max-width: 600px; -fx-translate-x: -70px; -fx-font-size:16pt");
         menuLayout.getChildren().add(menuTitle);
-        menuLayout.getChildren().add(message);
-        toggleContinue();
-        menuLayout.getChildren().add(continueText);
+        menuLayout.getChildren().add(message);        
+        scaleMenu();
     }
 
     /**
      * Method to update the message displayed on the SplashScreen
-     * 
-     * @param message the new message to replace the old one
      */
-    public void updateMessages(String message) {
-        //Update the message label
-        this.message.setText(message);
-        // Clear previous messages
+    public void morphScreen() {
+        //morph the "game start" splash screen to the "you died" splash screen
         menuLayout.getChildren().clear();
-        //Add the game logo, the new message and the continue text
-        menuLayout.getChildren().add(menuTitle);
-        menuLayout.getChildren().add(this.message);
-        toggleContinue();
-        menuLayout.getChildren().add(continueText);
+        menuLayout.setStyle("-fx-background-color: black");
+        youDied.getTransforms().add(new Scale(gc.SCALE_VAL, gc.SCALE_VAL, 0, 0));
+        youDied.setStyle("-fx-translate-x: 100px; -fx-translate-y: 200px");
+        menuLayout.getChildren().add(youDied);
     }
     
     /**
-     * Method to toggle the visibility of the "continue" text
+     * Custom toggle method to display the SplashScreen before the game menus
+     * 
+     * @param sPM the SelectProfileMenu to display after the SplashScreen
      */
-    public void toggleContinue() {
-        if (continueShown) {
-            continueShown = !continueShown;
-            continueText.setStyle("-fx-font-color: rgba(255,255,255,0)");
-        } else {
-            continueShown= !continueShown;
-            continueText.setStyle("-fx-font-color: rgba(255,255,255,1)");
-        }
+    public void toggle(SelectProfileMenu sPM) {
+        boolean in = menuLayout.isVisible() == false;
+        menuLayout.setVisible(true);
+        FadeTransition ft = new FadeTransition(Duration.millis(3000), menuLayout);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.play();
+        ft.setOnFinished((ActionEvent e) -> {
+            ft.setFromValue(1);
+            ft.setToValue(0);
+            ft.play();
+            ft.setOnFinished((ActionEvent f) -> {
+                menuLayout.setVisible(false);
+                morphScreen();
+                sPM.toggle();
+            });
+        });
+    }    
+    
+    /**
+     * Custom toggle method to show and then hide the "you died" splashscreen
+     */
+    public void toggle() {
+        boolean in = menuLayout.isVisible() == false;
+        menuLayout.setVisible(true);
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), menuLayout);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.play();
+        ft.setOnFinished((ActionEvent e) -> {
+            gc.restart();
+            ft.setFromValue(1);
+            ft.setToValue(0);
+            ft.play();
+            ft.setOnFinished((ActionEvent f) -> {
+                menuLayout.setVisible(false);
+            });
+        });
     }
 }
