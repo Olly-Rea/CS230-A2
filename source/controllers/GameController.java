@@ -272,6 +272,12 @@ public class GameController {
      * @param e Key Event that was pressed by the user.
      */
     public void gameStep(KeyEvent e) {
+        
+        // Check that none of the menus are open
+        if (splashScreen.isVisible() || gameMenu.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
+            return;
+        }
+        
         // Get the firection to move in
         Direction dir = null;
         switch (e.getCode()) {
@@ -296,9 +302,6 @@ public class GameController {
                 return;
             default:
                 return;
-        }
-        if (gameMenu.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
-            return;
         }
 
         // Make the move based on this direction
