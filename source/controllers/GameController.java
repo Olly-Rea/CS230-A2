@@ -44,7 +44,6 @@ public class GameController {
 
     //Create the utility handler classes
     private SoundHandler soundHandler;
-    private RequestHandler requestHandler = new RequestHandler();
     //Create the game menus
     private GameMenu gameMenu = new GameMenu(this);
     private LevelMenu levelMenu = new LevelMenu(this);
@@ -69,13 +68,15 @@ public class GameController {
 
     /**
      * Constructor for the GameController class
+     * 
+     * @param root 
      */
     public GameController(Group root) {
         //Create the motd handler and add it to the SplashScreen
         String motdURL = "http://cswebcat.swan.ac.uk";
-        String puzzle = requestHandler.get(motdURL + "/puzzle");
-        String code = requestHandler.decipher(puzzle);
-        final String motd = requestHandler.get(motdURL + "/message?solution=" + code);
+        String puzzle = RequestHandler.get(motdURL + "/puzzle");
+        String code = RequestHandler.decipher(puzzle);
+        final String motd = RequestHandler.get(motdURL + "/message?solution=" + code);
         splashScreen = new SplashScreen(this, motd);
 
         this.root = root;

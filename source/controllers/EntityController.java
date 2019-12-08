@@ -36,6 +36,11 @@ public class EntityController {
         this.entityGrid = entityGrid;
     }
 
+    /**
+     * Method to return the 2d array of entities
+     * x
+     * @return returns the 2d array of entities
+     */
     public Entity[][] getGrid() {
         return entityGrid;
     }
@@ -260,7 +265,7 @@ public class EntityController {
      * create an enemy using a text line from a map file
      *
      * @param line a scanner of the line with the enemy details
-     * @return enemy
+     * @return A new enemy object
      */
     public static Enemy makeEnemy(Scanner line, Player p) {
         int x = line.nextInt();
@@ -313,6 +318,7 @@ public class EntityController {
      * Renders the entities respective assets on a GridPane at their locations
      * based on the entityGrid
      *
+     * @return A GridPane containing the entities if there are some
      */
     public GridPane renderEntities() {
         // Clear the entity GridPane for fresh render
