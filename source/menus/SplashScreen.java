@@ -71,14 +71,14 @@ public class SplashScreen extends Menu {
     public void morphScreen() {
         //morph the "game start" splash screen to the "you died" splash screen
         menuLayout.getChildren().clear();
+        menuLayout.setStyle("-fx-background-color: black");
         youDied.getTransforms().add(new Scale(gc.SCALE_VAL, gc.SCALE_VAL, 0, 0));
-        youDied.setStyle("-fx-translate-y: -60px");
+        youDied.setStyle("-fx-translate-x: 100px; -fx-translate-y: 200px");
         menuLayout.getChildren().add(youDied);
     }
     
     /**
-     * Custom toggle method to display the splashscreen before the game 
-     * menus display
+     * Custom toggle method to display the SplashScreen before the game menus
      * 
      * @param sPM the SelectProfileMenu to display after the SplashScreen
      */
@@ -94,9 +94,31 @@ public class SplashScreen extends Menu {
             ft.setToValue(0);
             ft.play();
             ft.setOnFinished((ActionEvent f) -> {
-                menuLayout.setVisible(in);
+                menuLayout.setVisible(false);
+                morphScreen();
                 sPM.toggle();
             });
         });
     }    
+    
+    /**
+     * Custom toggle method to show and then hide the "you died" splashscreen
+     */
+    public void toggle() {
+        boolean in = menuLayout.isVisible() == false;
+        menuLayout.setVisible(true);
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), menuLayout);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.play();
+        ft.setOnFinished((ActionEvent e) -> {
+            gc.restart();
+            ft.setFromValue(1);
+            ft.setToValue(0);
+            ft.play();
+            ft.setOnFinished((ActionEvent f) -> {
+                menuLayout.setVisible(false);
+            });
+        });
+    }
 }

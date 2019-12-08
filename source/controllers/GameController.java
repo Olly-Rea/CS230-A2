@@ -315,9 +315,7 @@ public class GameController {
         // Check if player is dead
         if (playerController.checkStatus(mapController)
                 || entityController.enemyCollision(playerController.getPlayer())) {
-            splashScreen.morphScreen();
             splashScreen.toggle();
-            restart();
         }
 
         // Check if game is won
