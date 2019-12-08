@@ -11,7 +11,7 @@ import javafx.scene.image.ImageView;
 /**
  * Item that can be placed in the entity grid and picked up by the player
  *
- * @author TODO:
+ * @author Daniel Clenaghan, Scott Barr
  * @version 1.0
  */
 public class Item extends Entity {
@@ -23,8 +23,8 @@ public class Item extends Entity {
      * Instantiates a new item.
      *
      * @param type the item type
-     * @param x
-     * @param y
+     * @param x The horizontal position of the entity
+     * @param y The vertical position of the entity
      */
     public Item(ItemType type, int x, int y) {
         super(x, y);

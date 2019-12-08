@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * terminates the program. Also, it reads every single line and stops when it
  * finds a null one.
  *
- * @author Scott Barr, Alex Melenikos
+ * @author Scott Barr, Alexandros Melenikos
  * @version 1.0
  */
 public class FileHandler {
@@ -89,7 +89,6 @@ public class FileHandler {
      * @param lines  the lines of text to be written in the file
      * @param append Boolean value if true will append to file, otherwise overwrite
      *               the file.
-     * @return True if the file was saved correctly, false otherwise.
      */
     public static void writeFile(String path, String[] lines, boolean append) {
         BufferedWriter writer = null;
@@ -117,10 +116,9 @@ public class FileHandler {
      * line to the file.
      *
      * @param path   Path to the file being created/written to
-     * @param lines  the lines of text to be written in the file
+     * @param o  the object which will be written using o.toString()
      * @param append Boolean value if true will append to file, otherwise overwrite
      *               the file.
-     * @return True if the file was saved correctly, false otherwise.
      */
     public static void writeFile(String path, Object o, boolean append) {
         BufferedWriter writer = null;

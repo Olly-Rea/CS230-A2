@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 
 /**
  * Class to render the ground cell
+ * 
  * @version 1.0
  * @author Scott Barr
  */
@@ -17,25 +18,27 @@ public class Ground extends Cell {
 
     /**
      * Create a ground cell at a given location (x,y)
-     * @param x horizontal position of the cell
-     * @param y vertical position of the cell
+     * 
+     * @param x The horizontal position of the cell
+     * @param y The vertical position of the cell
      */
     public Ground(int x, int y) {
         super(CellType.GROUND, x, y);
     }
 
     /**
-     * Implementation of isLightSource 
+     * Implementation of isLightSource
      * 
      * @return false
      */
     public boolean isLightSource() {
         return false;
     }
-    
+
     /**
+     * Sets the image to a different value 
      * 
-     * @param path
+     * @param path The path to ground asset
      */
     public void setImage(String path) {
         try {
@@ -48,6 +51,7 @@ public class Ground extends Cell {
 
     /**
      * The char used to generate this cell in the map text file
+     * 
      * @return char
      */
     public char getChar() {
@@ -64,8 +68,8 @@ public class Ground extends Cell {
     }
 
     /**
-     * Method to change the asset of a ground tile to have debris after a
-     * boulder has been broken
+     * Method to change the asset of a ground tile to have debris after a boulder
+     * has been broken
      */
     public void addDebris() {
         try {

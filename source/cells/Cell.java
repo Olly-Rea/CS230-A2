@@ -24,8 +24,8 @@ public abstract class Cell {
      * Cell Constructor; Instantiates a new cell.
      *
      * @param type the type of cell being instantiated
-     * @param x the x coordinate of the cell
-     * @param y the y coordinate of the cell
+     * @param x The horizontal position of the cell
+     * @param y The vertical position of the cell
      */
     public Cell(CellType type, int x, int y) {
         this.type = type;

@@ -128,8 +128,8 @@ public class AssetBuilder {
     /**
      * Possible method to aid in implementation of 'lighting' effects
      *
-     * @param x
-     * @param y
+     * @param x the horizontal position of the cell
+     * @param y the vertical position of the cell
      * @return the path to the correct ground texture
      */
     public String groundCheck(int x, int y) {

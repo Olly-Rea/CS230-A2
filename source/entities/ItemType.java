@@ -3,7 +3,7 @@ package entities;
 /**
  * Class to store the 7 item type enums
  * 
- * @author TODO
+ * @author Advait 
  * @version 1.0
  */
 public enum ItemType {

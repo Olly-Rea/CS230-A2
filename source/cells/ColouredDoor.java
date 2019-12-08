@@ -22,8 +22,9 @@ public class ColouredDoor extends Door {
 
     /**
      * Create a fire cell at location (x,y)
-     * @param x the x position of the door to be used in the cell super constructor.
-     * @param y the y position of the door to be used in the cell super constructor.
+     * @param x The horizontal position of the cell
+     * @param y The vertical position of the cell
+	 * @param colour The colour from DoorColour enum
      */
 	public ColouredDoor(int x, int y, DoorColour colour) {
 		super(x, y);
@@ -106,6 +107,8 @@ public class ColouredDoor extends Door {
 
     /**
      * Renders the Enemy to the screen
+	 * 
+	 * @return The ImageView of the cell
      */
     public ImageView render() {
         return new ImageView(image);

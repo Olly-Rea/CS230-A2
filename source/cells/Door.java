@@ -13,17 +13,19 @@ public abstract class Door extends Cell {
     /**
      * Door Super Constructor; Instantiates a new door.
      *
-     * @param x horizontal position in the map grid of the door
-     * @param y vertical position in the map grid of the door
+     * @param x The horizontal position of the cell
+     * @param y The vertical position of the cell
      */
     public Door(int x, int y) {
         super(CellType.DOOR, x, y);
     }
 
     /**
-     * Checks a player's inventory to see if they have the requirements to open a door
-     * @param p
-     * @return boolean 
+     * Checks a player's inventory to see if they have the requirements to open a
+     * door
+     * 
+     * @param p The player object used to check if the playe can open the door
+     * @return True if the player can open the door, otherwise false.
      */
     public abstract boolean isOpenable(Player p);
 }

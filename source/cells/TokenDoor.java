@@ -31,8 +31,8 @@ public class TokenDoor extends Door {
     /**
      * Constructs a token door at x, y
      *
-     * @param x Cell x
-     * @param y Cell y
+     * @param x The horizontal position of the cell
+     * @param y The vertical position of the cell
      */
     public TokenDoor(int x, int y) {
         super(x, y);
