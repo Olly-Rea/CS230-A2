@@ -68,7 +68,7 @@ public class Player extends Entity {
     /**
      * Adds an item to the players inventory
      *
-     * @param Item
+     * @param Item The item being added to the players inventory.
      */
     public void addItem(Item item) {
         ItemType add = item.getType();
@@ -127,22 +127,6 @@ public class Player extends Entity {
      */
     public int getTokens() {
         return tokens;
-    }
-
-    /**
-     * Method to collect fireshoes
-     *
-     */
-    public void collectFireShoes() {
-        hasFireBoots = true;
-    }
-
-    /**
-     * Method to collect flippers
-     *
-     */
-    public void collectFlippers() {
-        hasFlippers = true;
     }
 
     /**
