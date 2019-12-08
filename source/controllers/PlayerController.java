@@ -21,12 +21,14 @@ public class PlayerController {
 
     // Create the Player GridPane
     GridPane playerGridPane = new GridPane();
-
+    SoundHandler sh;
+    
     /**
      * @param player the player object to be controlled
      */
-    public PlayerController(Player player) {
+    public PlayerController(Player player, SoundHandler sh) {
         this.player = player;
+        this.sh = sh;
     }
 
     /**
@@ -42,6 +44,8 @@ public class PlayerController {
         if (target.getType() == CellType.DOOR) {
             if (((Door) target).isOpenable(player)) {
                 mc.openDoor(target.getPos().getX(), target.getPos().getY());
+            } else {
+                sh.playBump();
             }
         }
 
@@ -63,7 +67,11 @@ public class PlayerController {
      */
     private boolean validMove(Cell targetCell) {
         CellType moveType = targetCell.getType();
-        if (moveType == CellType.WALL || moveType == CellType.DOOR) {
+        if (moveType == CellType.WALL ) {
+            sh.playBump();
+            return false;
+        }
+        if (moveType == CellType.DOOR) {
             return false;
         }
         return true;

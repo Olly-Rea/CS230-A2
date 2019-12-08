@@ -13,6 +13,7 @@ import utils.Vector;
 //JavaFX imports
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import utils.SoundHandler;
 
 /**
  * Stores information and method related to items and enemies
@@ -51,7 +52,7 @@ public class EntityController {
      *
      * @param player The Player object for position reference.
      */
-    public void checkItem(Player player) {
+    public void checkItem(Player player, SoundHandler sh) {
         Vector playerPos = player.getPos();
         // System.out.println(", Item: " +
         // entityGrid[playerPos.getY()][playerPos.getX()]);
@@ -62,6 +63,8 @@ public class EntityController {
                 System.out.println("Found: " + ((Item) newItem).getType());
                 player.addItem((Item) newItem);
                 removeItem(playerPos.getY(), playerPos.getX());
+                // Play the token collect sound
+                sh.playTokenCollect();
             }
         }
     }

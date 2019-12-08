@@ -46,9 +46,9 @@ public class GameController {
     private SoundHandler soundHandler;
     // Create the game menus
     private GameMenu gameMenu = new GameMenu(this);
-    private LevelMenu levelMenu = new LevelMenu(this);
     private SelectProfileMenu selectProfileMenu = new SelectProfileMenu(this);
     private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
+    private LevelMenu levelMenu = new LevelMenu(this);
     private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
     private SplashScreen splashScreen;
 
@@ -58,7 +58,7 @@ public class GameController {
     private double loadTime;
     private String currentMap;
     private int level;
-    private boolean backAdded = false;
+    private boolean runtime = false;
 
     // X and Y variables for render translate methods
     private double renderX = 0;
@@ -101,10 +101,10 @@ public class GameController {
     }
 
     /**
-     * Creates a 2d Entity Map and Cell Map and stores them in the mapController and
-     * entityController. The first integer is the level number - this is used to
-     * allow us to get the next level number which is stored in the levelMenu static
-     * array. Next 2 integers are the map width and map height.
+     * Creates a 2d Entity Map and Cell Map and stores them in the mapController
+     * and entityController. The first integer is the level number - this is
+     * used to allow us to get the next level number which is stored in the
+     * levelMenu static array. Next 2 integers are the map width and map height.
      *
      * @param fh The Handler reading the Map/LoadFile
      * @return A 2d array of cells to construct the MapController with
@@ -122,7 +122,7 @@ public class GameController {
         Cell[][] map = new Cell[mapHeight][mapWidth]; // Initialise the 2d Cell array
         Entity[][] entityMap = new Entity[mapHeight][mapWidth]; // Initialise the 2d Entity array
         entityController = new EntityController(entityMap); // Initialise the entity controller with the empty 2d Entity
-                                                            // array
+        // array
 
         for (int y = 0; y < mapHeight; y++) {
             String row = fh.nextLine();
@@ -141,10 +141,11 @@ public class GameController {
 
     /**
      * Handles the map details described after the main map has been created.
-     * PLAYER, ENEMY, TELEPORTER, DOOR, INVENTORY and TIME specifics are handled.
-     * 
-     * @param line The string being used to determine what type of specific is being
-     *             created.
+     * PLAYER, ENEMY, TELEPORTER, DOOR, INVENTORY and TIME specifics are
+     * handled.
+     *
+     * @param line The string being used to determine what type of specific is
+     * being created.
      */
     private void handleSpecific(String line) {
         Scanner sc = new Scanner(line);
@@ -152,24 +153,24 @@ public class GameController {
         String keyword = sc.next();
 
         switch (keyword) {
-        case "PLAYER":
-            playerController = new PlayerController(EntityController.makePlayer(sc));
-            break;
-        case "ENEMY":
-            entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
-            break;
-        case "TELEPORTER":
-            mapController.linkTeleporters(sc);
-            break;
-        case "DOOR":
-            mapController.initDoor(sc);
-            break;
-        case "INVENTORY":
-            playerController.createInventory(sc);
-            break;
-        case "TIME":
-            loadTime(sc);
-            break;
+            case "PLAYER":
+                playerController = new PlayerController(EntityController.makePlayer(sc), soundHandler);
+                break;
+            case "ENEMY":
+                entityController.addEnemy(EntityController.makeEnemy(sc, playerController.getPlayer()));
+                break;
+            case "TELEPORTER":
+                mapController.linkTeleporters(sc);
+                break;
+            case "DOOR":
+                mapController.initDoor(sc);
+                break;
+            case "INVENTORY":
+                playerController.createInventory(sc);
+                break;
+            case "TIME":
+                loadTime(sc);
+                break;
         }
 
         sc.close();
@@ -191,6 +192,15 @@ public class GameController {
             handleSpecific(fh.nextLine());
         }
 
+        if (runtime == false) {
+            // Add the back button to the level select menu for future appearences
+            levelMenu.addBackBtn(leaderboardMenu);
+            // Change the menu music to the gameplay ambience music
+            soundHandler.playAmbience();
+            // Set runtime as true as the gameplay has begun
+            runtime = true;
+        }
+
         // sets the currentMap to the path used - this is to restart to saves if a save
         // is loaded
         currentMap = path;
@@ -203,8 +213,8 @@ public class GameController {
     }
 
     /**
-     * Method to return a new savefile. Gets all controllers exports and writes them
-     * all to one file including the current time spent on the level.
+     * Method to return a new savefile. Gets all controllers exports and writes
+     * them all to one file including the current time spent on the level.
      *
      * @param path path to save data to
      */
@@ -225,9 +235,9 @@ public class GameController {
     }
 
     /**
-     * Method which sets the profile being used and also proceeds to the next stage
-     * after profile selection which is the level selection.
-     * 
+     * Method which sets the profile being used and also proceeds to the next
+     * stage after profile selection which is the level selection.
+     *
      * @param p The profile object being used for the game.
      */
     public void setProfile(Profile p) {
@@ -248,7 +258,8 @@ public class GameController {
     }
 
     /**
-     * This method loads the levelMenu with all the saves under the current profile.
+     * This method loads the levelMenu with all the saves under the current
+     * profile.
      */
     public void loadSaves() {
         levelMenu.loadSaves(currentProfile);
@@ -256,8 +267,8 @@ public class GameController {
     }
 
     /**
-     * Toggles the leaderboardMenu then loads the levels up to the profiles maximum
-     * level and toggles the levelMenu itself.
+     * Toggles the leaderboardMenu then loads the levels up to the profiles
+     * maximum level and toggles the levelMenu itself.
      */
     public void toLevelSelect() {
         leaderboardMenu.toggle();
@@ -311,33 +322,37 @@ public class GameController {
     public void gameStep(KeyEvent e) {
 
         // Asserts that no menu is visible to continue
-        if (splashScreen.isVisible() || gameMenu.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
+        if (splashScreen.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
             return;
         }
 
         // Get the direction to move in
         Direction dir = null;
         switch (e.getCode()) {
-        case W:
-        case UP:
-            dir = Direction.UP;
-            break;
-        case A:
-        case LEFT:
-            dir = Direction.LEFT;
-            break;
-        case S:
-        case DOWN:
-            dir = Direction.DOWN;
-            break;
-        case D:
-        case RIGHT:
-            dir = Direction.RIGHT;
-            break;
-        case ESCAPE:
-            gameMenu.toggle();
-            return;
-        default:
+            case W:
+            case UP:
+                dir = Direction.UP;
+                break;
+            case A:
+            case LEFT:
+                dir = Direction.LEFT;
+                break;
+            case S:
+            case DOWN:
+                dir = Direction.DOWN;
+                break;
+            case D:
+            case RIGHT:
+                dir = Direction.RIGHT;
+                break;
+            case ESCAPE:
+                gameMenu.toggle();
+                return;
+            default:
+                return;
+        }
+
+        if (gameMenu.isVisible()) {
             return;
         }
 
@@ -349,7 +364,7 @@ public class GameController {
         renderPlayer();
 
         // Check entity grid
-        entityController.checkItem(playerController.getPlayer());
+        entityController.checkItem(playerController.getPlayer(), soundHandler);
         playerController.renderPlayer();
         renderPlayer();
 
@@ -373,18 +388,12 @@ public class GameController {
             leaderboardMenu.displayPlayer(currentProfile, time);
             leaderboardMenu.loadLeaderboard(level, this);
             leaderboardMenu.toggle();
-
-            if (!backAdded) {
-                // Add the back button to the level select menu for future appearences
-                levelMenu.addBackBtn(leaderboardMenu);
-                backAdded = true;
-            }
         }
     }
 
     /**
      * Adds the time to the leaderboard file for the level
-     * 
+     *
      * @param time The time in seconds
      */
     public void addTime(double time) {
@@ -425,8 +434,8 @@ public class GameController {
     }
 
     /**
-     * Initial render method to display the map and orient it to the player start
-     * position
+     * Initial render method to display the map and orient it to the player
+     * start position
      */
     public void render() {
         if (currentMap != null) {
@@ -470,9 +479,10 @@ public class GameController {
     }
 
     /**
-     * Changes the position of the map under the player level based on the players
-     * location. Calculate half the width of the Players GridPane and then translate
-     * the map and Entity GridPane the x and y value of the "offset".
+     * Changes the position of the map under the player level based on the
+     * players location. Calculate half the width of the Players GridPane and
+     * then translate the map and Entity GridPane the x and y value of the
+     * "offset".
      */
     public void renderPlayer() {
         // Calculate the value the playerLayer offsets the player by
