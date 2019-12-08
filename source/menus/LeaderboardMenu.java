@@ -39,7 +39,7 @@ public class LeaderboardMenu extends Menu {
     public LeaderboardMenu(GameController gc) {
         // set not visible
         super();
-        
+
         ArrayList<String> lbList = new ArrayList<String>();
         lbList = gc.getLeaderboard();
 
@@ -65,7 +65,7 @@ public class LeaderboardMenu extends Menu {
         } catch (FileNotFoundException e) {
             System.err.println("select profile button path wasn't found");
         }
-        
+
         Button nextLevel = new Button();
         // Add the button graphic and scale the button
         nextLevel.setGraphic(nextLevelButton);
@@ -88,7 +88,7 @@ public class LeaderboardMenu extends Menu {
         menuLayout.getChildren().add(selection);
         menuLayout.getChildren().add(back);
         menuLayout.getChildren().add(nextLevel);
-        
+
         scaleMenu();
 
     }
@@ -113,7 +113,7 @@ public class LeaderboardMenu extends Menu {
      * @param profile
      * @param time
      */
-    public void displayPlayer(Profile profile, int time) {
+    public void displayPlayer(Profile profile, double time) {
         String playerScore = "Your score: " + profile.getName() + " : " + time;
         Label player = new Label(playerScore);
         this.player = player;
