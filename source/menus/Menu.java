@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 /**
- * @author Olly Rea
+ * @author Olly Rea, Scott Barr
  */
 public abstract class Menu {
     

@@ -1,6 +1,5 @@
 package misc;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import utils.FileHandler;
@@ -8,12 +7,13 @@ import utils.FileHandler;
 /**
  * Loads profile list and shows the top times of the level.
  *
- * @author Alexandros, Daniel Clenaghan
+ * @author Alexandros Melenikos, Daniel Clenaghan
  * @version 1.0
  */
 public class Leaderboard {
 
 	public static final String LEADERBOARD_DIR = "./leaderboards/";
+
 	private double[] topScores;
 	private String[] topNames;
 	private String path;
@@ -21,7 +21,8 @@ public class Leaderboard {
 
 	/**
 	 * Create and populate a leaderboard with info from a file
-	 * @param path
+	 * 
+	 * @param path The path to the leaderboard file
 	 */
 	public Leaderboard(String path) {
 		this.path = path;
@@ -48,13 +49,14 @@ public class Leaderboard {
 		for (int i = 0; i < 3; i++) {
 			writeToFile[i] = topNames[i] + " : " + topScores[i];
 		}
-		reader.writeFile(path, writeToFile, false);
+		FileHandler.writeFile(path, writeToFile, false);
 	}
 
 	/**
 	 * Check if a time is lower than those already in the leaderboard
-	 * @param profile
-	 * @param time
+	 * 
+	 * @param profile The profile being added to the leaderboard
+	 * @param time The time the profile achieved
 	 */
 	public void addTime(Profile profile, double time) {
 		if (time < topScores[0]) {
@@ -73,17 +75,17 @@ public class Leaderboard {
 			topScores[2] = time;
 			topNames[2] = profile.getName();
 		}
-		FileHandler writer = new FileHandler(path);
 		String[] newBoard = new String[3];
-		for(int i = 0; i < 3;i++) {
+		for (int i = 0; i < 3; i++) {
 			newBoard[i] = topNames[i] + " : " + topScores[i];
 		}
-		writer.writeFile(path, newBoard, false);
+		FileHandler.writeFile(path, newBoard, false);
 	}
 
 	/**
 	 * Output the leaderboard as a string array
-	 * @return array
+	 * 
+	 * @return Outputs the ArrayList of the strings from the leaderboard file
 	 */
 	public ArrayList<String> displayBoard() {
 		ArrayList<String> lb = new ArrayList<String>();

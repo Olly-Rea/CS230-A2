@@ -4,7 +4,6 @@ package menus;
 import controllers.GameController;
 import utils.FileHandler;
 import misc.Profile;
-import utils.SoundHandler;
 
 //Java imports
 import java.io.File;

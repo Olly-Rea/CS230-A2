@@ -10,7 +10,7 @@ import java.net.URL;
 /**
  * Handles http requests.
  *
- * @author Scott Barr, Alex
+ * @author Scott Barr, Alexandros Melenikos
  * @version 1.0
  */
 public class RequestHandler {
@@ -19,6 +19,7 @@ public class RequestHandler {
      * Sends a get request to the url with specific query parameters.
      *
      * @param uri The URL to the API
+     * @return The message from the body of the response.
      */
     public static String get(String uri) {
         try {
@@ -44,6 +45,7 @@ public class RequestHandler {
      * to 90.
      * 
      * @param puzzle the puzzle to be deciphered
+     * @return Returns the code to deciphered puzzle code
      */
     public static String decipher(String puzzle) {
         char[] chars = puzzle.toCharArray();

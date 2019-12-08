@@ -9,11 +9,10 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
 /**
- * @author Alex Melenikos, Olly Rea
+ * @author Alexandros Melenikos, Olly Rea
  */
 public class SoundHandler {
 
@@ -26,15 +25,12 @@ public class SoundHandler {
     private static final MediaPlayer CAVE_AMBIENCE;
 
     static {
-        BUMP_SOUND = new MediaPlayer(
-            new Media(new File(AUDIO_PATH + EXTRAS + "wall_bump.wav").toURI().toString()));
+        BUMP_SOUND = new MediaPlayer(new Media(new File(AUDIO_PATH + EXTRAS + "wall_bump.wav").toURI().toString()));
         // Add the menu music and allow it to loop indefinitely
-        menuMusic = new MediaPlayer(
-            new Media(new File(AUDIO_PATH + "Menu/songMenu1.wav").toURI().toString())); 
+        menuMusic = new MediaPlayer(new Media(new File(AUDIO_PATH + "Menu/songMenu1.wav").toURI().toString()));
         menuMusic.setCycleCount(MediaPlayer.INDEFINITE);
         // Add the cave ambience and allow it to loop indefinitely
-        CAVE_AMBIENCE = new MediaPlayer(
-            new Media(new File(AUDIO_PATH + "Ambience/Cave.wav").toURI().toString())); 
+        CAVE_AMBIENCE = new MediaPlayer(new Media(new File(AUDIO_PATH + "Ambience/Cave.wav").toURI().toString()));
         CAVE_AMBIENCE.setCycleCount(MediaPlayer.INDEFINITE);
     }
 
@@ -42,9 +38,8 @@ public class SoundHandler {
      * Constructor of the class
      */
     public SoundHandler() {
-        //Initialise the token pickup sound
-        tokenSound = new MediaPlayer(
-            new Media(new File(AUDIO_PATH + EXTRAS + "collect_gem.mp3").toURI().toString()));
+        // Initialise the token pickup sound
+        tokenSound = new MediaPlayer(new Media(new File(AUDIO_PATH + EXTRAS + "collect_gem.mp3").toURI().toString()));
         tokenSound.setVolume(0.2);
         tokenSound.setRate(1.5);
 
@@ -62,7 +57,7 @@ public class SoundHandler {
         mp.setOnEndOfMedia(() -> {
             mp.seek(mp.getStartTime());
             mp.stop();
-        });        
+        });
     }
 
     /**
@@ -71,9 +66,9 @@ public class SoundHandler {
     public void playAmbience() {
         fadeOut(2, menuMusic);
         play(CAVE_AMBIENCE);
-        fadeIn(2, CAVE_AMBIENCE);       
+        fadeIn(2, CAVE_AMBIENCE);
     }
-    
+
     /**
      * Method to play a "bump" sound
      */
@@ -90,6 +85,8 @@ public class SoundHandler {
 
     /**
      * Method to play the audio that is selected.
+     * 
+     * @param mp the MediaPlayer to play the audio from
      */
     public void play(MediaPlayer mp) {
         mp.setAutoPlay(true);
@@ -98,6 +95,8 @@ public class SoundHandler {
 
     /**
      * A method to stop the audio that is playing
+     * 
+     * @param mp the MediaPlayer to play the audio from
      */
     public void stop(MediaPlayer mp) {
         mp.setAutoPlay(false);
@@ -108,10 +107,10 @@ public class SoundHandler {
      * Method to fade music out
      * 
      * @param length the duration to fade the music out
+     * @param mp     the MediaPlayer to play the audio from
      */
     public void fadeOut(int length, MediaPlayer mp) {
-        Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(length), new KeyValue(mp.volumeProperty(), 0)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(length), new KeyValue(mp.volumeProperty(), 0)));
         timeline.play();
     }
 
@@ -119,6 +118,7 @@ public class SoundHandler {
      * Method to fade music in
      * 
      * @param length the duration to fade the music in
+     * @param mp     the MediaPlayer to play the audio from
      */
     public void fadeIn(int length, MediaPlayer mp) {
         mp.setVolume(0);
@@ -129,6 +129,8 @@ public class SoundHandler {
 
     /**
      * A method to mute the current song/ambience that is playing
+     * 
+     * @param mp the MediaPlayer to play the audio from
      */
     public void mute(MediaPlayer mp) {
         mp.setMute(true);
@@ -138,6 +140,7 @@ public class SoundHandler {
      * A method to set the volume of a MediaPlayer
      * 
      * @param newVol the new volume value (double - range 0 to 1)
+     * @param mp     the MediaPlayer to play the audio from
      */
     public void setVol(double newVol, MediaPlayer mp) {
         mp.setVolume(newVol);

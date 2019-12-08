@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 
 /**
  * Class to render the water cell
+ * 
  * @version 1.0
  * @author TODO
  */
@@ -17,7 +18,8 @@ public class Water extends Cell {
 
     /**
      * Set image from file location
-     * @param path
+     * 
+     * @param path the path to the water asset
      */
     public void setImage(String path) {
         // String path = ASSET_PATH + "walls/" + imageName;
@@ -31,16 +33,16 @@ public class Water extends Cell {
 
     /**
      * Create a water cell at location (x,y)
-     * @param x
-     * @param y
+     * 
+     * @param x The horizontal position of the cell
+     * @param y The vertical position of the cell
      */
     public Water(int x, int y) {
         super(CellType.WATER, x, y);
     }
 
-
     /**
-     * Implementation of isLightSource 
+     * Implementation of isLightSource
      * 
      * @return false
      */
@@ -49,9 +51,10 @@ public class Water extends Cell {
     }
 
     /**
-    * Return the character used in the map file for this cell
-    * @return char
-    */
+     * Return the character used in the map file for this cell
+     * 
+     * @return char
+     */
     public char getChar() {
         return 'W';
     }

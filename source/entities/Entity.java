@@ -5,9 +5,9 @@ import utils.Vector;
 
 /**
  * An Entity is a non-cell sometimes non-static object within the environment
- *      
+ * 
  * @author James Hogg
- * @version 1.0 
+ * @version 1.0
  */
 public abstract class Entity {
 
@@ -46,6 +46,8 @@ public abstract class Entity {
 
     /**
      * Renders the entity on the screen
+     * 
+     * @return ImageView the image view node of the Entity
      */
     public abstract ImageView render();
 

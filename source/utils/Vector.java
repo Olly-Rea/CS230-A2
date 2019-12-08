@@ -40,22 +40,24 @@ public class Vector {
 
     /**
      * Change the vector using a given direction
-     * @param d
+     * 
+     * @param d adds a direction to the vector based off the directions values
      */
     public void add(Direction d) {
         this.x += d.X;
         this.y += d.Y;
     }
-    
+
     /**
      * Check if two vectors are equal
+     * 
      * @param other the vector to be checked
      */
     @Override
     public boolean equals(Object other) {
         if (other instanceof Vector) {
-            Vector v = (Vector)other;
-            return (v.x==x && v.y==y);
+            Vector v = (Vector) other;
+            return (v.x == x && v.y == y);
         }
         return false;
     }
