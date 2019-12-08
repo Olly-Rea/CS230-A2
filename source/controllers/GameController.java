@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import javafx.scene.control.Button;
 
 /**
  * Game controller manages the logic of the game. It creates the other three
@@ -51,13 +52,14 @@ public class GameController {
     private LeaderboardMenu leaderboardMenu = new LeaderboardMenu(this);
     private CreateProfileMenu createProfileMenu = new CreateProfileMenu(this);
     private SplashScreen splashScreen;
-    
+
     //Create all other variables required for game runtime
     private Profile currentProfile;
     private int startTime;
     private int loadTime;
     private String currentMap;
     private int level;
+    private boolean backAdded = false;
 
     // X and Y variables for render translate methods
     private double renderX = 0;
@@ -86,12 +88,11 @@ public class GameController {
         root.getChildren().add(leaderboardMenu.render());
         root.getChildren().add(selectProfileMenu.render());
         root.getChildren().add(createProfileMenu.render());
-        // root.getChildren().add(splashScreen.render());
+        root.getChildren().add(splashScreen.render());
         //Display the splashScreen
-        // splashScreen.toggle();
-        selectProfileMenu.toggle();
+        splashScreen.toggle(selectProfileMenu);
         //Instantiate the soundHandler
-        //soundHandler = new SoundHandler();
+        soundHandler = new SoundHandler();
     }
 
     public void restart() {
@@ -215,7 +216,9 @@ public class GameController {
 
     public void setProfile(Profile p) {
         this.currentProfile = p;
-        if (selectProfileMenu.isVisible()) selectProfileMenu.toggle();
+        if (selectProfileMenu.isVisible()) {
+            selectProfileMenu.toggle();
+        }
         levelMenu.loadLevels(p.getLevel());
         levelMenu.toggle();
     }
@@ -273,27 +276,27 @@ public class GameController {
         // Get the firection to move in
         Direction dir = null;
         switch (e.getCode()) {
-        case W:
-        case UP:
-            dir = Direction.UP;
-            break;
-        case A:
-        case LEFT:
-            dir = Direction.LEFT;
-            break;
-        case S:
-        case DOWN:
-            dir = Direction.DOWN;
-            break;
-        case D:
-        case RIGHT:
-            dir = Direction.RIGHT;
-            break;
-        case ESCAPE:
-            gameMenu.toggle();
-            return;
-        default:
-            return;
+            case W:
+            case UP:
+                dir = Direction.UP;
+                break;
+            case A:
+            case LEFT:
+                dir = Direction.LEFT;
+                break;
+            case S:
+            case DOWN:
+                dir = Direction.DOWN;
+                break;
+            case D:
+            case RIGHT:
+                dir = Direction.RIGHT;
+                break;
+            case ESCAPE:
+                gameMenu.toggle();
+                return;
+            default:
+                return;
         }
         if (gameMenu.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
             return;
@@ -317,9 +320,7 @@ public class GameController {
         // Check if player is dead
         if (playerController.checkStatus(mapController)
                 || entityController.enemyCollision(playerController.getPlayer())) {
-            splashScreen.morphScreen();
             splashScreen.toggle();
-            restart();
         }
 
         // Check if game is won
@@ -333,6 +334,12 @@ public class GameController {
             leaderboardMenu.displayPlayer(currentProfile, time);
             leaderboardMenu.loadLeaderboard(level, this);
             leaderboardMenu.toggle();
+            
+            if (!backAdded) {
+                //Add the back button to the level select menu for future appearences
+                levelMenu.addBackBtn(leaderboardMenu);
+                backAdded = true;
+            }
         }
     }
 

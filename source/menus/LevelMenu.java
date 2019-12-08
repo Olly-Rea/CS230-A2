@@ -27,12 +27,13 @@ import javafx.scene.transform.Scale;
  */
 public class LevelMenu extends Menu {
 
-    public static final String[] levels = {"Level_1", "Level_2", "test1", "test2", "test3", "test4", "test5", "test6", "Test_Map_A2"};
+    public static final String[] levels = {"Level_1", "Level_2", "level_3", "test1", "test2", "test3", "test4", "test5", "test6", "Test_Map_A2"};
     private static String MAP_DIR = "./levelfiles/";
     private static String SAVE_DIR = "./savefiles/";
 
     private ListView<String> mapChoices = new ListView<String>();
     private Button goButton;
+    private Button backButton;
     private VBox selection = new VBox();
     private String selected = null;
     private String path = MAP_DIR;
@@ -42,13 +43,13 @@ public class LevelMenu extends Menu {
         super();
 
         selection.getStyleClass().add("selection");
-        
-        // go button
+
+        // Select level button
         ImageView selectLevelButton = null;
         try {
             selectLevelButton = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/selectLevelButton.png")));
         } catch (FileNotFoundException e) {
-            System.err.println("new profile button path wasn't found");
+            System.err.println("select level button path wasn't found");
         }
 
         // Go button
@@ -72,6 +73,12 @@ public class LevelMenu extends Menu {
         this.scaleMenu();
     }
 
+    /**
+     * Method to add the maps to the level select ListView
+     *
+     * @param files the String array of filenames
+     * @return the ListView of currently available maps
+     */
     private ListView<String> setupMapChoice(String[] files) {
         ListView<String> maps = new ListView<>();
         maps.setItems(FXCollections.observableArrayList(files));
@@ -85,6 +92,11 @@ public class LevelMenu extends Menu {
         return maps;
     }
 
+    /**
+     * Method to load the save files of a player
+     *
+     * @param p the profile to check for save files in
+     */
     public void loadSaves(Profile p) {
         String[] maps = getSaves(p);
         selected = null;
@@ -95,6 +107,11 @@ public class LevelMenu extends Menu {
         selection.getChildren().add(mapChoices);
     }
 
+    /**
+     * Method to load the number of levels the player has currently unlocked
+     *
+     * @param level the current map level the player has achieved
+     */
     public void loadLevels(int level) {
         String[] maps = getMaps(level);
         selected = null;
@@ -123,5 +140,29 @@ public class LevelMenu extends Menu {
         }
 
         return fileNames;
+    }
+
+    public void addBackBtn(LeaderboardMenu lbM) {
+        ImageView backButtonImg = null;
+        try {
+            backButtonImg = new ImageView(new Image(new FileInputStream("./assets/visuals/menu/Buttons/backButton.png")));
+        } catch (FileNotFoundException e) {
+            System.err.println("back button path wasn't found");
+        }
+
+        // Back button
+        backButton = new Button();
+        // Add the button graphic and scale the button
+        backButton.setGraphic(backButtonImg);
+        backButton.getTransforms().add(new Scale(scaleVal, scaleVal, 0, 0));
+        // Add the event handler
+        backButton.setOnAction((ActionEvent e) -> {
+            this.toggle();
+            lbM.toggle();
+        });
+        
+        // Add the back button to the menuLayout
+        menuLayout.getChildren().add(backButton);
+        menuLayout.setStyle("-fx-transform-y: -120px;");
     }
 }
