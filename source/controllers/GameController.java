@@ -21,7 +21,6 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import javafx.scene.control.Button;
 
 /**
  * Game controller manages the logic of the game. It creates the other three
@@ -271,6 +270,11 @@ public class GameController {
      * @param e Key Event that was pressed by the user.
      */
     public void gameStep(KeyEvent e) {
+
+        if (splashScreen.isVisible() || gameMenu.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
+            return;
+        }
+
         // Get the firection to move in
         Direction dir = null;
         switch (e.getCode()) {
@@ -295,9 +299,6 @@ public class GameController {
                 return;
             default:
                 return;
-        }
-        if (gameMenu.isVisible() || levelMenu.isVisible() || leaderboardMenu.isVisible()) {
-            return;
         }
 
         // Make the move based on this direction
