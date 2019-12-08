@@ -30,11 +30,11 @@ public class PlayerController {
     }
 
     /**
-     * Takes a direction and determines if the player can move into the desired
-     * cell based on their inventory
+     * Takes a direction and determines if the player can move into the desired cell
+     * based on their inventory
      *
      * @param dir the direction the player is attempting to move
-     * @param mc the map controller to find the Cell in that dir
+     * @param mc  the map controller to find the Cell in that dir
      */
     public void move(Direction dir, MapController mc) {
         Cell target = mc.getNextCell(player.getPos(), dir);
@@ -59,7 +59,7 @@ public class PlayerController {
      *
      * @param cell the cell in the direction the player wants to move
      * @return a boolean value true if the move is valid, i.e not walikng into a
-     * wall, false if the move is invalid and not possible
+     *         wall, false if the move is invalid and not possible
      */
     private boolean validMove(Cell targetCell) {
         CellType moveType = targetCell.getType();
@@ -71,7 +71,8 @@ public class PlayerController {
 
     /**
      * Method to create the player inventory
-     * @param sc
+     * 
+     * @param sc Scanner used to get the inventory values
      */
     public void createInventory(Scanner sc) {
         int[] inventory = new int[7];
@@ -83,14 +84,13 @@ public class PlayerController {
         } catch (NoSuchElementException e) {
             System.err.println("Inventory declaration is invalid");
         }
-
     }
 
     /**
      * Check if the cell requires a shoe type and if the player posseses it
      *
-     * @return a boolean value, if true, the player is on a block which kills
-     * the player, otherwise player is still alive
+     * @return a boolean value, if true, the player is on a block which kills the
+     *         player, otherwise player is still alive
      */
     public boolean checkStatus(MapController map) {
         Cell current = map.getCell(getPlayerPos());
@@ -106,7 +106,8 @@ public class PlayerController {
     /**
      * Check if player is on a goal cell
      *
-     * @param map
+     * @param map MapController object required to check if the current players
+     *            position is on a goal.
      */
     public boolean checkGoal(MapController map) {
         Cell current = map.getCell(player.getPos());
@@ -117,6 +118,8 @@ public class PlayerController {
     }
 
     /**
+     * Method to return the players vector position.
+     * 
      * @return Returns the vector of the players current position
      */
     public Vector getPlayerPos() {
@@ -126,7 +129,7 @@ public class PlayerController {
     /**
      * Returns the object of the player
      *
-     * @return the player object
+     * @return The player object
      */
     public Player getPlayer() {
         return player;
@@ -134,6 +137,9 @@ public class PlayerController {
 
     /**
      * Renders the player
+     * 
+     * @return GridPane filled with blank panes except the middle which is filled
+     *         with a Pane consisting of the players image asset.
      */
     public GridPane renderPlayer() {
         playerGridPane.getChildren().clear();
