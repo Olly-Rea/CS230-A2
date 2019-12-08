@@ -30,9 +30,6 @@ public class DumbTargeter extends Enemy {
 
     private Image image;
 
-    /**
-     * The player.
-     */
     private Direction dir = null;
 
     /**
@@ -115,6 +112,8 @@ public class DumbTargeter extends Enemy {
 
     /**
      * Renders the Enemy to the screen
+     * 
+     * @return The ImageView of the DumbTargeters current asset.
      */
     public ImageView render() {
         String currAsset = "Dumb/";
@@ -136,7 +135,6 @@ public class DumbTargeter extends Enemy {
         } else {
             currAsset += "Mummy_Down";
         }
-        
 
         try {
             image = new Image(new FileInputStream(ASSET_PATH + currAsset + ".png"));
@@ -147,7 +145,4 @@ public class DumbTargeter extends Enemy {
 
         return new ImageView(image);
     }
-
-    
-
 }

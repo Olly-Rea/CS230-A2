@@ -19,8 +19,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * Subclass of the Enemy class; StraightLineEnemy
- * A class describing a straight line enemy which can either move horizontally or vertically
+ * Subclass of the Enemy class; StraightLineEnemy A class describing a straight
+ * line enemy which can either move horizontally or vertically
  *
  * @author Scott Barr
  * @version 1.0
@@ -29,6 +29,11 @@ public class StraightLineEnemy extends Enemy {
 
     private static Image image;
 
+    private Direction dir;
+
+    /**
+     * Static Constructor for the static image of the straight line follower .
+     */
     static {
         try {
             image = new Image(new FileInputStream(ASSET_PATH + "straightLine.png"));
@@ -38,13 +43,11 @@ public class StraightLineEnemy extends Enemy {
         }
     }
 
-    private Direction dir;
-
     /**
      * Straight line.
      *
      * @param vector the position of the straight line enemy
-     * @param dir The direction the enemy is facing initially
+     * @param dir    The direction the enemy is facing initially
      */
     public StraightLineEnemy(Vector pos, Player player, Direction dir) {
         super(pos, player);
@@ -52,11 +55,12 @@ public class StraightLineEnemy extends Enemy {
     }
 
     /**
-     * The algorithm used by the enemy to calculate next move, checks whether
-     * the next cell in the direction it is facing is a wall, if so it turns
-     * around
+     * The algorithm used by the enemy to calculate next move, checks whether the
+     * next cell in the direction it is facing is a wall, if so it turns around.
      *
-     * @param map the map
+     * @param map The MapController needed to check if the next move is valid.
+     * @param ec  EntityController used to check if other enemies are in the
+     *            vicinity.
      */
     public void algorithm(MapController map, EntityController ec) {
         Cell next = map.getNextCell(pos, dir);
@@ -71,9 +75,11 @@ public class StraightLineEnemy extends Enemy {
     }
 
     /**
-     * Generates a string containing this enemies direction, location and type
-     *
-     * @return String
+     * Exports the SmartTargeter enemy as a single lined description.
+     * 
+     * @return The description of the enemy in X Y ST DIRECTION where X Y is the
+     *         horizontal and vertical position of the enemy, DIRECTION is the
+     *         current facing direction.
      */
     public String export() {
         return String.format("%d %d SL %s", pos.getX(), pos.getY(), dir);
