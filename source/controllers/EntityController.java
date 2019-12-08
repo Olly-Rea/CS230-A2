@@ -13,6 +13,7 @@ import utils.Vector;
 //JavaFX imports
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import utils.SoundHandler;
 
 /**
  * Stores information and method related to items and enemies
@@ -36,6 +37,11 @@ public class EntityController {
         this.entityGrid = entityGrid;
     }
 
+    /**
+     * Method to return the 2d array of entities
+     * x
+     * @return returns the 2d array of entities
+     */
     public Entity[][] getGrid() {
         return entityGrid;
     }
@@ -46,7 +52,7 @@ public class EntityController {
      *
      * @param player The Player object for position reference.
      */
-    public void checkItem(Player player) {
+    public void checkItem(Player player, SoundHandler sh) {
         Vector playerPos = player.getPos();
         // System.out.println(", Item: " +
         // entityGrid[playerPos.getY()][playerPos.getX()]);
@@ -57,6 +63,8 @@ public class EntityController {
                 System.out.println("Found: " + ((Item) newItem).getType());
                 player.addItem((Item) newItem);
                 removeItem(playerPos.getY(), playerPos.getX());
+                // Play the token collect sound
+                sh.playTokenCollect();
             }
         }
     }
@@ -260,7 +268,7 @@ public class EntityController {
      * create an enemy using a text line from a map file
      *
      * @param line a scanner of the line with the enemy details
-     * @return enemy
+     * @return A new enemy object
      */
     public static Enemy makeEnemy(Scanner line, Player p) {
         int x = line.nextInt();
@@ -313,6 +321,7 @@ public class EntityController {
      * Renders the entities respective assets on a GridPane at their locations
      * based on the entityGrid
      *
+     * @return A GridPane containing the entities if there are some
      */
     public GridPane renderEntities() {
         // Clear the entity GridPane for fresh render

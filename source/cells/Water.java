@@ -39,14 +39,19 @@ public class Water extends Cell {
     }
 
 
-   /**
-    * Return the character used in the map file for this cell
-    * @return char
-    */
+    /**
+     * Implementation of isLightSource 
+     * 
+     * @return false
+     */
     public boolean isLightSource() {
         return false;
     }
 
+    /**
+    * Return the character used in the map file for this cell
+    * @return char
+    */
     public char getChar() {
         return 'W';
     }

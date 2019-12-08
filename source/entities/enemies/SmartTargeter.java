@@ -33,6 +33,13 @@ public class SmartTargeter extends Enemy {
 
     private Direction dir;
 
+    /**
+     * Instantiates a new SmartTargeter.
+     * 
+     * @param pos    The initial position of the Enemy
+     * @param player The reference to the player to check if the enemy has made
+     *               contact.
+     */
     public SmartTargeter(Vector pos, Player player) {
         super(pos, player);
     }
@@ -42,8 +49,8 @@ public class SmartTargeter extends Enemy {
      * every possible connecting cell is filled.
      *
      * @param map The map containing the cells
-     * @return A 2d Array of integers the same size as the map filled with
-     * distances from the Players position.
+     * @return A 2d Array of integers the same size as the map filled with distances
+     *         from the Players position.
      */
     private Integer[][] makeDistGrid(MapController map, EntityController ec) {
         // Initialise Variables
@@ -78,6 +85,17 @@ public class SmartTargeter extends Enemy {
         return distGrid;
     }
 
+    /**
+     * The algorithm method for the SmartTargeter is based off BFS to find the
+     * shortest distance from the player to the enemy. It creates an Integer grid
+     * with distances from the player so the Enemy will choose the first Cell around
+     * itself which has the lowest distance.
+     * 
+     * @param map The MapController used to check the cells surrounding for valid
+     *            moves.
+     * @param ec  The EntityController needed to check if there is an item blocking
+     *            the path.
+     */
     public void algorithm(MapController map, EntityController ec) {
         // Generate the distance grid and set minDist to null and dir to null
         Integer[][] distGrid = makeDistGrid(map, ec);
@@ -87,7 +105,8 @@ public class SmartTargeter extends Enemy {
         // If the distGrid at the enemies position is 0 then do not move
         if (!player.getPos().equals(pos) && distGrid[pos.getY()][pos.getX()] != null) {
             for (Direction d : Direction.values()) { // for all Directions (UP, RIGHT, DOWN, LEFT)
-                Cell next = map.getNextCell(new Vector(pos.getX(), pos.getY()), d); // get the next cell in that direction
+                Cell next = map.getNextCell(new Vector(pos.getX(), pos.getY()), d); // get the next cell in that
+                                                                                    // direction
                 boolean existsEntity = ec.entityPresent(pos, d);
                 if (next instanceof Ground && !existsEntity) { // Confirm it's a ground cell
                     Integer dist = distGrid[pos.getY() + d.Y][pos.getX() + d.X]; // check the distance at that cell in
@@ -109,7 +128,7 @@ public class SmartTargeter extends Enemy {
 
         if (dir != null) { // if dir is null then do not move.
             pos.add(dir); // otherwise add the dir to the positon.
-        } else if (!(player.getPos().equals(pos))){
+        } else if (!(player.getPos().equals(pos))) {
             ArrayList<Direction> validMoves = new ArrayList<Direction>();
             if (checkValid(Direction.DOWN, map, ec)) {
                 validMoves.add(Direction.DOWN);
@@ -126,9 +145,17 @@ public class SmartTargeter extends Enemy {
             Random random = new Random();
             pos.add(validMoves.get(random.nextInt(validMoves.size())));
         }
-
     }
 
+    /**
+     * Method to check whether the move is valid in the desired direction.
+     * 
+     * @param dir The desired direction.
+     * @param map The MapController used for checking Surrounding Cells
+     * @param ec  The EntityController used for checking surrounding Entitys
+     * @return A boolean value true if move in the desired direction is valid,
+     *         otherwise false.
+     */
     private Boolean checkValid(Direction dir, MapController map, EntityController ec) {
         Cell next = map.getNextCell(pos, dir);
         boolean existsEntity = ec.entityPresent(pos, dir);
@@ -138,30 +165,38 @@ public class SmartTargeter extends Enemy {
         return true;
     }
 
+    /**
+     * Exports the SmartTargeter enemy as a single lined description.
+     * 
+     * @return The description of the enemy in X Y ST where X Y is the horizontal
+     *         and vertical position of the enemy.
+     */
     public String export() {
         return String.format("%d %d ST", pos.getX(), pos.getY());
     }
 
     /**
      * Renders the Enemy to the screen
+     * 
+     * @return The ImageView of the SmartTargeter current asset.
      */
     public ImageView render() {
         String currAsset = ASSET_PATH + "Smart/";
         if (dir != null) {
             switch (dir) {
-                case UP:
-                    currAsset += "Hellhound_Up";
-                    break;
-                case DOWN:
-                    currAsset += "Hellhound_Down";
-                    break;
-                case LEFT:
-                    currAsset += "Hellhound_Left";
-                    break;
-                case RIGHT:
-                    currAsset += "Hellhound_Right";
-                    break;
-                }
+            case UP:
+                currAsset += "Hellhound_Up";
+                break;
+            case DOWN:
+                currAsset += "Hellhound_Down";
+                break;
+            case LEFT:
+                currAsset += "Hellhound_Left";
+                break;
+            case RIGHT:
+                currAsset += "Hellhound_Right";
+                break;
+            }
         } else {
             currAsset += "Hellhound_Right";
         }

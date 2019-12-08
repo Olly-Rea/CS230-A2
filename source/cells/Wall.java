@@ -26,13 +26,18 @@ public class Wall extends Cell {
     }
 
     /**
-    * Set image from a file location
-    * @param path
-    */
+     * Implementation of isLightSource 
+     * 
+     * @return false
+     */
     public boolean isLightSource() {
         return false;
     }
-
+    
+    /**
+    * Set image from a file location
+    * @param path
+    */
     public void setImage(String path) {
         // String path = ASSET_PATH + "walls/" + imageName;
         try {

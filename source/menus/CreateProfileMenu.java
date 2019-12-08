@@ -24,7 +24,7 @@ import javafx.scene.transform.Scale;
 public class CreateProfileMenu extends Menu {
 
     public CreateProfileMenu(GameController gc) {
-        // set not visible
+
         super();
 
         Label putName = new Label("Enter your profile name:");

@@ -9,13 +9,17 @@ import javafx.scene.image.ImageView;
 /**
  * Class to render the fire cell
  * @version 1.0
- * @author TODO
+ * @author Scott Barr
  */
 public class Fire extends Cell {
 
+    // Static path to the fire image
     private static final String IMAGE_NAME = "Fire";
     private static Image image;
 
+    /**
+     *  Static constructor to instantiate the static image.
+     */  
     static {
         try {
             image = new Image(new FileInputStream(ASSET_PATH + IMAGE_NAME + ".jpg"));
@@ -27,13 +31,18 @@ public class Fire extends Cell {
 
     /**
      * Create a fire cell at location (x,y)
-     * @param x
-     * @param y
+     * @param x horizontal position of the cell
+     * @param y vertical position of the cell
      */
     public Fire(int x, int y) {
         super(CellType.FIRE, x, y);
     }
 
+    /**
+     * Implementation of isLightSource 
+     * 
+     * @return true (fire is a light source)
+     */
     public boolean isLightSource() {
         return true;
     }

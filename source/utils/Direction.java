@@ -57,6 +57,17 @@ public enum Direction {
         this.Y = Y;
     }
 
+    /**
+     * Rotates the direction clockwise relative to the current direction.
+     * 
+     * @return Direction Clockwise from the current.
+     */
     public abstract Direction cw();
+
+    /**
+     * Rotates the direction anticlockwise relative to the current direction.
+     * 
+     * @return Direction Antilockwise from the current.
+     */
     public abstract Direction acw();
 }
