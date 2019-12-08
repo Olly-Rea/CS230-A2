@@ -49,6 +49,8 @@ public class SmartTargeter extends Enemy {
      * every possible connecting cell is filled.
      *
      * @param map The map containing the cells
+     * @param ec  The entityController primarily used for checking if items are in
+     *            the enemies way.
      * @return A 2d Array of integers the same size as the map filled with distances
      *         from the Players position.
      */

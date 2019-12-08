@@ -40,6 +40,7 @@ public class WallFollower extends Enemy {
      * Creates a new WallFollower enemy at position {@code pos}.
      *
      * @param pos  the initial position of the enemy
+     * @param player The Player object used to check if the player is in contact with the enemy
      * @param dir  the initial facing direction of the enemy
      * @param type the type of enemy, anticlockwise or clockwise
      */
@@ -53,6 +54,8 @@ public class WallFollower extends Enemy {
      * Calculates the WallFollowers next move based on the map.
      *
      * @param map MapController used to figure out the surroundings of the enemy.
+     * @param ec  The entityController primarily used for checking if items are in
+     *            the enemies way.
      */
     public void algorithm(MapController map, EntityController ec) {
         while (checkWall(map, ec) && (!(map.getNextCell(pos, dir) instanceof Ground) || ec.entityPresent(pos, dir))) {
