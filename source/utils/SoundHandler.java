@@ -28,7 +28,7 @@ public class SoundHandler {
             new Media(new File(AUDIO_PATH + EXTRAS + "wall_bump.wav").toURI().toString()));
         tokenSound = new MediaPlayer(
             new Media(new File(AUDIO_PATH + EXTRAS + "collect_gem.mp3").toURI().toString()));
-
+        
     }
 
     private String[] sounds = {"Ambience/Cave.wav", "Menu/songMenu1.wav" };
@@ -47,7 +47,7 @@ public class SoundHandler {
 
     /**
      * Method to play any sound
-     *
+     * 
      * @param mp the MediaPlayer to play the audio from
      */
     public static void playSound(MediaPlayer mp) {
@@ -91,7 +91,7 @@ public class SoundHandler {
 
     /**
      * Method to fade music out
-     *
+     * 
      * @param length the duration to fade the music out
      */
     public void fadeOut(int length) {
@@ -102,7 +102,7 @@ public class SoundHandler {
 
     /**
      * Method to fade music in
-     *
+     * 
      * @param length the duration to fade the music in
      */
     public void fadeIn(int length) {
@@ -121,7 +121,7 @@ public class SoundHandler {
 
     /**
      * A method to set the volume of a MediaPlayer
-     *
+     * 
      * @param newVol the new volume value (double - range 0 to 1)
      */
     public void setVol(double newVol) {
@@ -130,7 +130,7 @@ public class SoundHandler {
 
     /**
      * A method to play a sound effect
-     *
+     * 
      * @param soundRef the sound reference for the String array sounds
      */
     public void playSoundEffect(int soundRef) {
