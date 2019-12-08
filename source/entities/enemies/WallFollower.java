@@ -20,9 +20,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * Subclass of the Enemy class; WallFollower
- * A class describing a WallFollower Enemy which follows a wall anticlockwise or
- * clockwise.
+ * Subclass of the Enemy class; WallFollower A class describing a WallFollower
+ * Enemy which follows a wall anticlockwise or clockwise.
  *
  * @author Scott Barr
  * @version 1.0
@@ -34,15 +33,14 @@ public class WallFollower extends Enemy {
      */
     private Image image;
 
-
     private Direction dir;
     private Rotation type;
 
     /**
      * Creates a new WallFollower enemy at position {@code pos}.
      *
-     * @param pos the initial position of the enemy
-     * @param dir the initial facing direction of the enemy
+     * @param pos  the initial position of the enemy
+     * @param dir  the initial facing direction of the enemy
      * @param type the type of enemy, anticlockwise or clockwise
      */
     public WallFollower(Vector pos, Player player, Direction dir, Rotation type) {
@@ -54,11 +52,10 @@ public class WallFollower extends Enemy {
     /**
      * Calculates the WallFollowers next move based on the map.
      *
-     * @param map MapController used to figure out the surroundings of the
-     * enemy.
+     * @param map MapController used to figure out the surroundings of the enemy.
      */
     public void algorithm(MapController map, EntityController ec) {
-        while (checkWall(map, ec) && (!(map.getNextCell(pos, dir) instanceof Ground) ||  ec.entityPresent(pos, dir))) {
+        while (checkWall(map, ec) && (!(map.getNextCell(pos, dir) instanceof Ground) || ec.entityPresent(pos, dir))) {
             turn(type.reverse());
         }
 
@@ -99,9 +96,12 @@ public class WallFollower extends Enemy {
     }
 
     /**
-     * Generates a string containing this enemies direction, location and type
-     *
-     * @return String
+     * Exports the SmartTargeter enemy as a single lined description.
+     * 
+     * @return The description of the enemy in X Y WF DIRECTION ROTATION where X Y
+     *         is the horizontal and vertical position of the enemy, DIRECTION is
+     *         the current facing direction and rotation is the type of wall
+     *         follower (ACW or CW).
      */
     public String export() {
         return String.format("%d %d WF %s %s", pos.getX(), pos.getY(), dir, type);
@@ -109,23 +109,25 @@ public class WallFollower extends Enemy {
 
     /**
      * Renders the Enemy to the screen
+     * 
+     * @return The ImageView of the WallFollowers current asset.
      */
     public ImageView render() {
         String currAsset = ASSET_PATH + "Wall/";
         if (dir != null) {
             switch (dir) {
-                case UP:
-                    currAsset += "Scorpion_UP";
-                    break;
-                case DOWN:
-                    currAsset += "Scorpion_DOWN";
-                    break;
-                case LEFT:
-                    currAsset += "Scorpion_LEFT";
-                    break;
-                case RIGHT:
-                    currAsset += "Scorpion_RIGHT";
-                    break;
+            case UP:
+                currAsset += "Scorpion_UP";
+                break;
+            case DOWN:
+                currAsset += "Scorpion_DOWN";
+                break;
+            case LEFT:
+                currAsset += "Scorpion_LEFT";
+                break;
+            case RIGHT:
+                currAsset += "Scorpion_RIGHT";
+                break;
             }
         } else {
             currAsset += "Scorpion_DOWN";

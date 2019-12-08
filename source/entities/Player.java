@@ -68,42 +68,37 @@ public class Player extends Entity {
     /**
      * Adds an item to the players inventory
      *
-     * @param Item
+     * @param Item The item being added to the players inventory.
      */
     public void addItem(Item item) {
         ItemType add = item.getType();
 
-        //Display the graphic of the item being added
+        // Display the graphic of the item being added
         updatePlayerAsset(add);
 
-        //Add the item to the player inventory
+        // Add the item to the player inventory
         switch (add) {
-            case TOKEN:
-                SoundHandler.playTokenCollect();
-                tokens++;
-                break;
-            case FIREBOOTS:
-                hasFireBoots = true;
-                break;
-            case FLIPPERS:
-                hasFlippers = true;
-                break;
-            case REDKEY:
-                SoundHandler.playTokenCollect();
-                redKeys++;
-                break;
-            case BLUEKEY:
-                SoundHandler.playTokenCollect();
-                blueKeys++;
-                break;
-            case GREENKEY:
-                SoundHandler.playTokenCollect();
-                greenKeys++;
-                break;
-            case YELLOWKEY:
-                SoundHandler.playTokenCollect();
-                yellowKeys++;
-                break;
+        case TOKEN:
+            tokens++;
+            break;
+        case FIREBOOTS:
+            hasFireBoots = true;
+            break;
+        case FLIPPERS:
+            hasFlippers = true;
+            break;
+        case REDKEY:
+            redKeys++;
+            break;
+        case BLUEKEY:
+            blueKeys++;
+            break;
+        case GREENKEY:
+            greenKeys++;
+            break;
+        case YELLOWKEY:
+            yellowKeys++;
+            break;
         }
     }
 
@@ -132,22 +127,6 @@ public class Player extends Entity {
      */
     public int getTokens() {
         return tokens;
-    }
-
-    /**
-     * Method to collect fireshoes
-     *
-     */
-    public void collectFireShoes() {
-        hasFireBoots = true;
-    }
-
-    /**
-     * Method to collect flippers
-     *
-     */
-    public void collectFlippers() {
-        hasFlippers = true;
     }
 
     /**
@@ -190,56 +169,56 @@ public class Player extends Entity {
      */
     public boolean useKey(ItemType item) {
         switch (item) {
-            case REDKEY:
-                if (redKeys > 0) {
-                    redKeys--;
-                    return true;
-                } else {
-                    return false;
-                }
-            case BLUEKEY:
-                if (blueKeys > 0) {
-                    blueKeys--;
-                    return true;
-                } else {
-                    return false;
-                }
-            case GREENKEY:
-                if (greenKeys > 0) {
-                    greenKeys--;
-                    return true;
-                } else {
-                    return false;
-                }
-            case YELLOWKEY:
-                if (yellowKeys > 0) {
-                    yellowKeys--;
-                    return true;
-                } else {
-                    return false;
-                }
-            default:
+        case REDKEY:
+            if (redKeys > 0) {
+                redKeys--;
+                return true;
+            } else {
                 return false;
+            }
+        case BLUEKEY:
+            if (blueKeys > 0) {
+                blueKeys--;
+                return true;
+            } else {
+                return false;
+            }
+        case GREENKEY:
+            if (greenKeys > 0) {
+                greenKeys--;
+                return true;
+            } else {
+                return false;
+            }
+        case YELLOWKEY:
+            if (yellowKeys > 0) {
+                yellowKeys--;
+                return true;
+            } else {
+                return false;
+            }
+        default:
+            return false;
         }
 
     }
 
     /**
-     * Generate an array containing the player's inventory {X,Y,fireShoes,
-     * flippers, tokens, red, green, blue, yellow}
+     * Generate an array containing the player's inventory {X,Y,fireShoes, flippers,
+     * tokens, red, green, blue, yellow}
      *
      * @return int array of player's inventory
      */
     public int[] getInventory() {
         int fireShoes = hasFireBoots ? 1 : 0;
         int flippers = hasFlippers ? 1 : 0;
-        int[] playerSave = {fireShoes, flippers, tokens, redKeys, greenKeys, blueKeys,
-            yellowKeys};
+        int[] playerSave = { fireShoes, flippers, tokens, redKeys, greenKeys, blueKeys, yellowKeys };
         return playerSave;
     }
 
     /**
      * Method to render the player to the screen.
+     * 
      * @return an ImageView of the starting Player Asset
      */
     public ImageView render() {
@@ -255,23 +234,23 @@ public class Player extends Entity {
     public ImageView updatePlayerAsset(Direction dir) {
         String currAsset = assetPath;
         switch (dir) {
-            case UP:
-                currAsset += "Player_Back";
-                break;
-            case DOWN:
-                currAsset += "Player_Front";
-                break;
-            case LEFT:
-                currAsset += "Player_Left";
-                break;
-            case RIGHT:
-                currAsset += "Player_Right";
-                break;
-            default:
-                currAsset += "Player_Front";
-                break;
+        case UP:
+            currAsset += "Player_Back";
+            break;
+        case DOWN:
+            currAsset += "Player_Front";
+            break;
+        case LEFT:
+            currAsset += "Player_Left";
+            break;
+        case RIGHT:
+            currAsset += "Player_Right";
+            break;
+        default:
+            currAsset += "Player_Front";
+            break;
         }
-        //get the new image file for the player
+        // get the new image file for the player
         try {
             playerAsset = new Image(new FileInputStream(currAsset + ".png"));
         } catch (FileNotFoundException e) {
@@ -282,7 +261,8 @@ public class Player extends Entity {
     }
 
     /**
-     * Overloaded method to update the player asset based on if an item has been found
+     * Overloaded method to update the player asset based on if an item has been
+     * found
      *
      * @param item the item to display
      * @return an ImageView of the new player asset
@@ -290,35 +270,30 @@ public class Player extends Entity {
     public ImageView updatePlayerAsset(ItemType item) {
         String currAsset = assetPath + "PlayerItems/";
         switch (item) {
-            case FIREBOOTS:
-                currAsset += "Player_Fireboots";
-                break;
-            case FLIPPERS:
-                currAsset += "Player_Flippers";
-                SoundHandler.playTokenCollect();
-                break;
-            case REDKEY:
-                currAsset += "Player_Redkey";
-                SoundHandler.playTokenCollect();
-                break;
-            case BLUEKEY:
-                currAsset += "Player_Bluekey";
-                SoundHandler.playTokenCollect();
-                break;
-            case GREENKEY:
-                currAsset += "Player_Greenkey";
-                SoundHandler.playTokenCollect();
-                break;
-            case YELLOWKEY:
-                currAsset += "Player_Purplekey";
-                SoundHandler.playTokenCollect();
-                break;
-            default:
-                break;
+        case FIREBOOTS:
+            currAsset += "Player_Fireboots";
+            break;
+        case FLIPPERS:
+            currAsset += "Player_Flippers";
+            break;
+        case REDKEY:
+            currAsset += "Player_Redkey";
+            break;
+        case BLUEKEY:
+            currAsset += "Player_Bluekey";
+            break;
+        case GREENKEY:
+            currAsset += "Player_Greenkey";
+            break;
+        case YELLOWKEY:
+            currAsset += "Player_Purplekey";
+            break;
+        default:
+            break;
         }
 
-        if(item != ItemType.TOKEN) {
-            //get the new image file for the player
+        if (item != ItemType.TOKEN) {
+            // get the new image file for the player
             try {
                 playerAsset = new Image(new FileInputStream(currAsset + ".png"));
             } catch (FileNotFoundException e) {

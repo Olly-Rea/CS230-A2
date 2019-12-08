@@ -33,11 +33,19 @@ public class Teleporter extends Cell {
 
     /**
      * Create a cell of type teleporter with a given position in the map
+     * 
+     * @param x horizontal position of the cell
+     * @param y vertical position of the cell
      */
     public Teleporter(int x, int y) {
         super(CellType.TELEPORTER, x, y);
     }
 
+    /**
+     * Implementation of isLightSource 
+     * 
+     * @return false
+     */
     public boolean isLightSource() {
         return false;
     }

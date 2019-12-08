@@ -55,7 +55,7 @@ public class SplashScreen extends Menu {
     public SplashScreen(GameController gc, String motd) {
         this.gc = gc;
         //Add the menu title to the splashScreen
-        menuTitle.getTransforms().add(new Scale(gc.SCALE_VAL+0.2, gc.SCALE_VAL+0.2, 0, 0));
+        menuTitle.getTransforms().add(new Scale(GameController.SCALE_VAL+0.2, GameController.SCALE_VAL+0.2, 0, 0));
         menuTitle.setStyle("-fx-translate-x: -80px; -fx-translate-y: -20px");
         //Add the motd to the splashscreen
         message = new Label(motd);
@@ -72,7 +72,7 @@ public class SplashScreen extends Menu {
         //morph the "game start" splash screen to the "you died" splash screen
         menuLayout.getChildren().clear();
         menuLayout.setStyle("-fx-background-color: black");
-        youDied.getTransforms().add(new Scale(gc.SCALE_VAL, gc.SCALE_VAL, 0, 0));
+        youDied.getTransforms().add(new Scale(GameController.SCALE_VAL, GameController.SCALE_VAL, 0, 0));
         youDied.setStyle("-fx-translate-x: 100px; -fx-translate-y: 200px");
         menuLayout.getChildren().add(youDied);
     }

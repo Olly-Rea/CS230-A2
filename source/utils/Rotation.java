@@ -21,5 +21,10 @@ public enum Rotation {
         }
     };
 
+    /**
+     * Reverses the rotation from CW to ACW or ACW to CW.
+     * 
+     * @return the opposite Rotation.
+     */
     public abstract Rotation reverse();
 }

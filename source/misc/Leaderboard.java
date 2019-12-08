@@ -14,7 +14,7 @@ import utils.FileHandler;
 public class Leaderboard {
 
 	public static final String LEADERBOARD_DIR = "./leaderboards/";
-	private int[] topScores;
+	private double[] topScores;
 	private String[] topNames;
 	private String path;
 	private int maxValue = 2147483647;
@@ -26,7 +26,7 @@ public class Leaderboard {
 	public Leaderboard(String path) {
 		this.path = path;
 		FileHandler reader = new FileHandler(path);
-		int[] topScores = new int[3];
+		double[] topScores = new double[3];
 		String[] topNames = new String[3];
 		for (int i = 0; i < 3; i++) {
 			if (!(reader.hasNext())) {
@@ -37,7 +37,7 @@ public class Leaderboard {
 				String[] nameScore = line.split(" : ");
 				String name = nameScore[0];
 				String scoreString = nameScore[1];
-				int score = Integer.parseInt(scoreString);
+				double score = Double.parseDouble(scoreString);
 				topNames[i] = name;
 				topScores[i] = score;
 			}
@@ -56,7 +56,7 @@ public class Leaderboard {
 	 * @param profile
 	 * @param time
 	 */
-	public void addTime(Profile profile, int time) {
+	public void addTime(Profile profile, double time) {
 		if (time < topScores[0]) {
 			topScores[2] = topScores[1];
 			topScores[1] = topScores[0];

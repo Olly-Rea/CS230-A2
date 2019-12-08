@@ -22,27 +22,29 @@ public class SoundHandler {
 
     private static final MediaPlayer bumpSound;
     private static final MediaPlayer tokenSound;
+    private static MediaPlayer menuMusic;
+    private static final MediaPlayer caveAmbience;
 
     static {
         bumpSound = new MediaPlayer(
             new Media(new File(AUDIO_PATH + EXTRAS + "wall_bump.wav").toURI().toString()));
         tokenSound = new MediaPlayer(
             new Media(new File(AUDIO_PATH + EXTRAS + "collect_gem.mp3").toURI().toString()));
-        
+        // Add the menu music and allow it to loop indefinitely
+        menuMusic = new MediaPlayer(
+            new Media(new File(AUDIO_PATH + "Menu/songMenu1.wav").toURI().toString())); 
+        menuMusic.setCycleCount(MediaPlayer.INDEFINITE);
+        // Add the cave ambience and allow it to loop indefinitely
+        caveAmbience = new MediaPlayer(
+            new Media(new File(AUDIO_PATH + "Ambience/Cave.wav").toURI().toString())); 
+        caveAmbience.setCycleCount(MediaPlayer.INDEFINITE);
     }
-
-    private String[] sounds = {"Ambience/Cave.wav", "Menu/songMenu1.wav" };
-    private MediaPlayer mediaPlayer;
 
     /**
      * Constructor of the class
      */
     public SoundHandler() {
-        File file = new File(AUDIO_PATH + sounds[1]);
-        Media media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        setVol(0.5);
-        play();
+        play(menuMusic);
     }
 
     /**
@@ -61,6 +63,15 @@ public class SoundHandler {
     }
 
     /**
+     * Method to play the ambient sound
+     */
+    public void playAmbience() {
+        fadeOut(2, menuMusic);
+        play(caveAmbience);
+        fadeIn(2, caveAmbience);       
+    }
+    
+    /**
      * Method to play a "bump" sound
      */
     public static void playBump() {
@@ -78,15 +89,17 @@ public class SoundHandler {
     /**
      * Method to play the audio that is selected.
      */
-    public void play() {
-        mediaPlayer.setAutoPlay(true);
+    public void play(MediaPlayer mp) {
+        mp.setAutoPlay(true);
+        fadeIn(4, mp);
     }
 
     /**
      * A method to stop the audio that is playing
      */
-    public void stop() {
-        mediaPlayer.stop();
+    public void stop(MediaPlayer mp) {
+        mp.setAutoPlay(false);
+        mp.stop();
     }
 
     /**
@@ -94,9 +107,9 @@ public class SoundHandler {
      * 
      * @param length the duration to fade the music out
      */
-    public void fadeOut(int length) {
+    public void fadeOut(int length, MediaPlayer mp) {
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(length), new KeyValue(mediaPlayer.volumeProperty(), 0)));
+                new KeyFrame(Duration.seconds(length), new KeyValue(mp.volumeProperty(), 0)));
         timeline.play();
     }
 
@@ -105,18 +118,18 @@ public class SoundHandler {
      * 
      * @param length the duration to fade the music in
      */
-    public void fadeIn(int length) {
-        mediaPlayer.setVolume(0);
+    public void fadeIn(int length, MediaPlayer mp) {
+        mp.setVolume(0);
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(length), new KeyValue(mediaPlayer.volumeProperty(), 1)));
+                new KeyFrame(Duration.seconds(length), new KeyValue(mp.volumeProperty(), 0.5)));
         timeline.play();
     }
 
     /**
      * A method to mute the current song/ambience that is playing
      */
-    public void mute() {
-        mediaPlayer.setMute(true);
+    public void mute(MediaPlayer mp) {
+        mp.setMute(true);
     }
 
     /**
@@ -124,17 +137,7 @@ public class SoundHandler {
      * 
      * @param newVol the new volume value (double - range 0 to 1)
      */
-    public void setVol(double newVol) {
-        mediaPlayer.setVolume(newVol);
-    }
-
-    /**
-     * A method to play a sound effect
-     * 
-     * @param soundRef the sound reference for the String array sounds
-     */
-    public void playSoundEffect(int soundRef) {
-        Media media = new Media("file://" + AUDIO_PATH + sounds[soundRef] + ".mp3");
-        play();
+    public void setVol(double newVol, MediaPlayer mp) {
+        mp.setVolume(newVol);
     }
 }

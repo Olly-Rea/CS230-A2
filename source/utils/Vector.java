@@ -1,17 +1,11 @@
 package utils;
 
 /**
- * Vector.java
- *
- * @version 1.0.0
- * @author Daniel Clenaghan
- */
-/**
  * This is a simple class designed to store the x and y location of an object in
  * the map
  * 
  * @version 1.0
- * @author TODO
+ * @author Daniel Clenaghan
  */
 public class Vector {
 
