@@ -85,12 +85,11 @@ public class GameController {
         root.getChildren().add(leaderboardMenu.render());
         root.getChildren().add(selectProfileMenu.render());
         root.getChildren().add(createProfileMenu.render());
-        // root.getChildren().add(splashScreen.render());
+        root.getChildren().add(splashScreen.render());
         //Display the splashScreen
-        // splashScreen.toggle();
-        selectProfileMenu.toggle();
+        splashScreen.toggle(selectProfileMenu);
         //Instantiate the soundHandler
-        //soundHandler = new SoundHandler();
+        soundHandler = new SoundHandler();
     }
 
     public void restart() {

@@ -67,8 +67,6 @@ public class SplashScreen extends Menu {
 
     /**
      * Method to update the message displayed on the SplashScreen
-     * 
-     * @param message the new message to replace the old one
      */
     public void morphScreen() {
         //morph the "game start" splash screen to the "you died" splash screen
@@ -77,4 +75,28 @@ public class SplashScreen extends Menu {
         youDied.setStyle("-fx-translate-y: -60px");
         menuLayout.getChildren().add(youDied);
     }
+    
+    /**
+     * Custom toggle method to display the splashscreen before the game 
+     * menus display
+     * 
+     * @param sPM the SelectProfileMenu to display after the SplashScreen
+     */
+    public void toggle(SelectProfileMenu sPM) {
+        boolean in = menuLayout.isVisible() == false;
+        menuLayout.setVisible(true);
+        FadeTransition ft = new FadeTransition(Duration.millis(3000), menuLayout);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.play();
+        ft.setOnFinished((ActionEvent e) -> {
+            ft.setFromValue(1);
+            ft.setToValue(0);
+            ft.play();
+            ft.setOnFinished((ActionEvent f) -> {
+                menuLayout.setVisible(in);
+                sPM.toggle();
+            });
+        });
+    }    
 }
