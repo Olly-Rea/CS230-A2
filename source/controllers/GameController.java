@@ -368,7 +368,7 @@ public class GameController {
         renderPlayer();
 
         // Check entity grid
-        entityController.checkItem(playerController.getPlayer(), soundHandler);
+        entityController.checkItem(playerController.getPlayer());
         playerController.renderPlayer();
         renderPlayer();
 

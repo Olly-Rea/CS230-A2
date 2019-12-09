@@ -53,7 +53,7 @@ public class EntityController {
      * @param player The Player object for position reference.
      * @param sh The soundHandler used to play certain sounds on certain events.
      */
-    public void checkItem(Player player, SoundHandler sh) {
+    public void checkItem(Player player) {
         Vector playerPos = player.getPos();
         // System.out.println(", Item: " +
         // entityGrid[playerPos.getY()][playerPos.getX()]);
@@ -64,8 +64,6 @@ public class EntityController {
                 System.out.println("Found: " + ((Item) newItem).getType());
                 player.addItem((Item) newItem);
                 removeItem(playerPos.getY(), playerPos.getX());
-                // Play the token collect sound
-                sh.playTokenCollect();
             }
         }
     }

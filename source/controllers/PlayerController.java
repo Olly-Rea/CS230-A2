@@ -62,7 +62,7 @@ public class PlayerController {
      * Private method to determine if a move is valid based on player inventory
      *
      * @param cell the cell in the direction the player wants to move
-     * @return a boolean value true if the move is valid, i.e not walikng into a
+     * @return a boolean value true if the move is valid, i.e not walking into a
      *         wall, false if the move is invalid and not possible
      */
     private boolean validMove(Cell targetCell) {

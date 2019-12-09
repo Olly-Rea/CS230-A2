@@ -25,7 +25,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage window) throws IOException {
-        window.setTitle("Game");
+        window.setTitle("Cara Loft: The Caves of Doom");
         window.setResizable(false);
 
         Group root = new Group();
