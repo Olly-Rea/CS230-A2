@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import utils.Direction;
+import utils.SoundHandler;
 import utils.Vector;
 
 /**
@@ -79,24 +80,31 @@ public class Player extends Entity {
         switch (add) {
         case TOKEN:
             tokens++;
+            SoundHandler.playTokenCollect();
             break;
         case FIREBOOTS:
             hasFireBoots = true;
+            SoundHandler.playBootPickup();
             break;
         case FLIPPERS:
             hasFlippers = true;
+            SoundHandler.playBootPickup();
             break;
         case REDKEY:
             redKeys++;
+            SoundHandler.playTokenCollect();
             break;
         case BLUEKEY:
             blueKeys++;
+            SoundHandler.playTokenCollect();
             break;
         case GREENKEY:
             greenKeys++;
+            SoundHandler.playTokenCollect();
             break;
         case YELLOWKEY:
             yellowKeys++;
+            SoundHandler.playTokenCollect();
             break;
         }
     }

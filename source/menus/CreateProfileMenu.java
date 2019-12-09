@@ -23,6 +23,11 @@ import javafx.scene.transform.Scale;
  */
 public class CreateProfileMenu extends Menu {
 
+    /**
+     * Constructor for the CreateProfileMenu
+     * @param gc the GameController to give the menu access to methods it 
+     *        requires for its functionality
+     */
     public CreateProfileMenu(GameController gc) {
 
         super();

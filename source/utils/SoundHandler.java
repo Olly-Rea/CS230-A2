@@ -20,13 +20,20 @@ public class SoundHandler {
     private static final String EXTRAS = "Effects/";
 
     private static final MediaPlayer BUMP_SOUND;
-    private final MediaPlayer tokenSound;
+    private static final MediaPlayer BOOT_PICKUP;
+    private static final MediaPlayer TOKEN_SOUND;
     private static MediaPlayer menuMusic;
     private static final MediaPlayer CAVE_AMBIENCE;
 
     static {
         BUMP_SOUND = new MediaPlayer(new Media(new File(AUDIO_PATH + EXTRAS + "wall_bump.wav").toURI().toString()));
         // Add the menu music and allow it to loop indefinitely
+        BOOT_PICKUP = new MediaPlayer(new Media(new File(AUDIO_PATH + EXTRAS + "collect_boots.wav").toURI().toString()));
+        
+        TOKEN_SOUND = new MediaPlayer(new Media(new File(AUDIO_PATH + EXTRAS + "collect_gem.mp3").toURI().toString()));
+        TOKEN_SOUND.setVolume(0.2);
+        TOKEN_SOUND.setRate(1.5);
+        
         menuMusic = new MediaPlayer(new Media(new File(AUDIO_PATH + "Menu/songMenu1.wav").toURI().toString()));
         menuMusic.setCycleCount(MediaPlayer.INDEFINITE);
         // Add the cave ambience and allow it to loop indefinitely
@@ -39,9 +46,7 @@ public class SoundHandler {
      */
     public SoundHandler() {
         // Initialise the token pickup sound
-        tokenSound = new MediaPlayer(new Media(new File(AUDIO_PATH + EXTRAS + "collect_gem.mp3").toURI().toString()));
-        tokenSound.setVolume(0.2);
-        tokenSound.setRate(1.5);
+        
 
         // Play the menu music
         play(menuMusic);
@@ -79,8 +84,15 @@ public class SoundHandler {
     /**
      * Method to play a "collect token" sound
      */
-    public void playTokenCollect() {
-        playSound(tokenSound);
+    public static void playTokenCollect() {
+        playSound(TOKEN_SOUND);
+    }
+    
+    /**
+     * Method to play a "collect token" sound
+     */
+    public static void playBootPickup() {
+        playSound(BOOT_PICKUP);
     }
 
     /**
