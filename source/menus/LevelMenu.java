@@ -158,7 +158,9 @@ public class LevelMenu extends Menu {
         // Add the event handler
         backButton.setOnAction((ActionEvent e) -> {
             this.toggle();
-            lbM.toggle();
+            if (!path.startsWith(SAVE_DIR)) {
+                lbM.toggle();
+            }
         });
 
         // Add the back button to the menuLayout
