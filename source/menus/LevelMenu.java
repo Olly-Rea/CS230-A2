@@ -27,7 +27,7 @@ import javafx.scene.transform.Scale;
  */
 public class LevelMenu extends Menu {
 
-    public static final String[] levels = {"Level_1", "Level_2", "Level_3", "Level_4", "Level_5", "Level_6", "Level_7", "Level_8", "Level_9"};
+    public static final String[] levels = {"Level_1", "Level_2", "Level_3", "Level_4", "Level_5"};
     private static String MAP_DIR = "./levelfiles/";
     private static String SAVE_DIR = "./savefiles/";
 
@@ -124,7 +124,7 @@ public class LevelMenu extends Menu {
 
     private String[] getMaps(int level) {
         String[] files = new String[level];
-        for (int i = 0; i < level; i++) {
+        for (int i = 0; i < level && i < levels.length; i++) {
             files[i] = levels[i];
         }
         return files;
